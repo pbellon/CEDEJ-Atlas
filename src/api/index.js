@@ -1,8 +1,6 @@
 import { Router } from 'express'
-import post from 'api/post'
+import carto from 'api/carto'
 
 const router = new Router()
-
-router.use('/posts', post)
-
+router.use('/carto', carto)
 export default router

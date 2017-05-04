@@ -14,16 +14,16 @@ export const checkStatus = (response) => {
 
 export const parseJSON = response => response.json()
 
-export const parseSettings = ({ method = 'get', data, locale, ...otherSettings } = {}) => {
-  const headers = {
+export const parseSettings = ({ method = 'get', data, locale, headers={}, ...otherSettings } = {}) => {
+  const defaultHeaders = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    'Accept-Language': locale,
+    'Accept-Language': locale
   }
   const settings = {
     body: data ? JSON.stringify(data) : undefined,
+    headers: Object.assign({}, defaultHeaders, headers),
     method,
-    headers,
     ...otherSettings,
   }
   return settings
@@ -37,7 +37,15 @@ export const parseEndpoint = (endpoint, params) => {
 
 const api = {}
 
-api.request = (endpoint, { params, ...settings } = {}) =>
+api.carto = ({params, ...settings} = {})=>{
+  settings =  parseSettings({ method:'post', ...settings });
+  return fetch(parseEndpoint('/carto', params), settings)
+    .then(checkStatus)
+    .then((response)=>response.blob());
+
+}
+
+api.request = (endpoint, {params, ...settings } = {})=>
   fetch(parseEndpoint(endpoint, params), parseSettings(settings))
     .then(checkStatus)
     .then(parseJSON)
@@ -47,8 +55,9 @@ api.request = (endpoint, { params, ...settings } = {}) =>
 })
 
 ;['post', 'put', 'patch'].forEach((method) => {
-  api[method] = (endpoint, data, settings) => api.request(endpoint, { method, data, ...settings })
+  api[method] = (endpoint, data, settings) => api.request(endpoint, { method, data, ...settings });
 })
+
 
 api.create = (settings = {}) => ({
   settings,

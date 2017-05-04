@@ -9,23 +9,21 @@ import { Provider } from 'react-redux'
 import { createMemoryHistory, RouterContext, match } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import { Router } from 'express'
+import bodyParser from 'body-parser';
+
 import express from 'services/express'
-import mongoose from 'services/mongoose'
 import api from 'api'
 import routes from 'routes'
 import configureStore from 'store/configure'
-import { env, port, ip, mongo, basename } from 'config'
+import { env, port, ip, basename } from 'config'
 import { setCsrfToken } from 'store/actions'
 import Html from 'components/Html'
 
 const router = new Router()
-
-mongoose.connect(mongo.uri)
-
 router.use('/api', cors(), api)
 
 router.use(csrf({ cookie: true }))
-
+router.use(bodyParser.json({limit:'40mb'}))
 router.use((req, res, next) => {
   if (env === 'development') {
     global.webpackIsomorphicTools.refresh()
@@ -56,15 +54,17 @@ router.use((req, res, next) => {
         if (component) {
           while (component && !component[method]) {
             // eslint-disable-next-line no-param-reassign
-            component = component.WrappedComponent
+            component = component.WrappedComponent;
           }
           component &&
           component[method] &&
-          promises.push(component[method]({ req, res, params, location, store }))
+          promises.push(component[method](
+            { req, res, params, location, store }
+          ));
         }
       })
 
-      Promise.all(promises).then(resolve).catch(reject)
+      Promise.all(promises).then(resolve).catch(reject);
     })
 
     const render = (store) => {
@@ -72,15 +72,15 @@ router.use((req, res, next) => {
         <Provider store={store}>
           <RouterContext {...renderProps} />
         </Provider>
-      )
+      );
 
-      const styles = styleSheet.rules().map(rule => rule.cssText).join('\n')
-      const initialState = store.getState()
-      const assets = global.webpackIsomorphicTools.assets()
-      const state = `window.__INITIAL_STATE__ = ${serialize(initialState)}`
-      const markup = <Html {...{ styles, assets, state, content }} />
-      const doctype = '<!doctype html>\n'
-      const html = renderToStaticMarkup(markup)
+      const styles = styleSheet.rules().map(rule => rule.cssText).join('\n');
+      const initialState = store.getState();
+      const assets = global.webpackIsomorphicTools.assets();
+      const state = `window.__INITIAL_STATE__ = ${serialize(initialState)}`;
+      const markup = <Html {...{ styles, assets, state, content }} />;
+      const doctype = '<!doctype html>\n';
+      const html = renderToStaticMarkup(markup);
 
       res.send(doctype + html)
     }
