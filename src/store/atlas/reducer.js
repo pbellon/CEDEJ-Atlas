@@ -5,31 +5,31 @@ const mimeType = (format='pdf')=>{
 }
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actions.CANVAS_RENDER:
+    case actions.CANVAS_RENDERED:
       return {
         ...state,
-        canvasURL: action.data
+        canvasURL: action.url
       }
     case actions.RENDER:
       return {
         ...state,
-        canvasURL: action.canvasURL,
         isRendering: true,
         renderData: action.renderData
-      };
-    case actions.RENDER_SUCCESS:
-      const url = URL.createObjectURL(action.data);
-      return {
-        ...state,
-        isRendering: false,
-        fileURL: url
       };
     case actions.RENDER_FAIL:
       return {
         ...state,
         isRendering: false,
         renderingError: action.error
-      }
+      };
+    case actions.DOWNLOAD:
+      console.log('DOWNLOAD !',action);
+      return {
+        ...state,
+        isRendering:false,
+        url:action.url,
+        format: action.format
+      };
     default:
       return state;
   }

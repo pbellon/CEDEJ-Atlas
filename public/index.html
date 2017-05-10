@@ -12,8 +12,12 @@
   <link rel="icon" href="https://arc.js.org/icon.png" />
 </head>
 <body>
-
-  <main id="app"></main>
+  <div style="z-index: -1; position: relative">
+    <div style="background:white; position:absolute;z-index:1; top:0px;bottom:0px;right:0px;left:0px">
+    </div>
+    <div id="render" style="z-index:0; position: absolute; top: 0px;bottom:0px;right:0px;left:0px"></div>
+  </div>
+  <main id="app" style="z-index:1; position: relative"></main>
   <!-- JS file will be automatically added here by html-webpack-plugin -->
 
 </body>

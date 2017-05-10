@@ -3,23 +3,39 @@ import * as actions from './actions';
 import carto from 'services/carto'
 
 export function* renderMap(renderData) {
-  console.log('renderMap');
   try {
-    const data = yield call(carto.render, {data: renderData});
-    yield put(actions.mapRenderSuccess({ data, renderData }));
+    const data = yield call(carto.render, renderData);
+    yield put(actions.downloadMap(data));
   } catch (e) {
-    console.log('e', e);
     yield put(actions.mapRenderFailure(e));
+  }
+}
+
+export function* downloadMap(renderedMap) {
+  try {
+    const data = yield call(carto.download, renderedMap);
+    yield put(actions.mapDownloadSuccess(data));
+  } catch (e){
+    yield put(actions.mapDownloadFailure(e));
   }
 }
 
 export function * watchRenderMap(){
   while (true) {
-    const { data } = yield take(actions.RENDER);
-    yield call(renderMap, data)
+    const { format } = yield take(actions.RENDER);
+    yield call(renderMap, {format})
+  }
+}
+
+
+export function * watchDownload(){
+  while (true) {
+    const data = yield take(actions.DOWNLOAD);
+    yield call(downloadMap, data)
   }
 }
 
 export default function* (){
   yield fork(watchRenderMap);
+  yield fork(watchDownload);
 }

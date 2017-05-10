@@ -5,12 +5,18 @@ import * as d3 from 'd3';
 
 class Atlas extends Component {
   static propTypes = {
+    print: PropTypes.bool,
     onRender: PropTypes.func,
     width: PropTypes.number,
     height: PropTypes.number
+  };
+
+  static defaultPropTypes = {
+    print: false
   }
 
   componentDidMount(){
+    console.log('components.Atlas.componentDidMount');
     const { data, width, height } = this.props;
     const proj = d3.geoMercator().scale(110).center([ 55.0, 20.00]);
     const node =  d3.select(this.refs.canvas).node();
@@ -21,11 +27,15 @@ class Atlas extends Component {
     path(data);
     ctx.stroke();
     if(this.props.onRender){
-      this.props.onRender(node.toDataURL());
+      debugger;
+      const dataURL = node.toDataURL();
+      console.log(dataURL);
+      this.props.onRender(dataURL);
     }
   }
   render(){
-    const { width, height } = this.props;
+    console.log('components.Atlas.render');
+    const { width, height, print } = this.props;
     return (
       <canvas
         width={ width }

@@ -1,27 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { canvasRender } from 'store/actions';
 
 import AtlasContainer from './Atlas';
 import { ExportForm } from 'containers';
 
 class Prototype extends Component {
-  setImage(data){
-    const action = canvasRender(data);
-    console.log('setImage bande de batards',);
-    this.props.dispatch(action);
-  }
   render(){
     const {
       isRendering,
-      printedFileURL,
-      renderedImage,
       renderingError
     } = this.props;
 
-    if(!isRendering && printedFileURL){
-      window.open(printedFileURL);
-    }
     return (
       <div>
        <ExportForm />
@@ -31,7 +20,7 @@ class Prototype extends Component {
         { !isRendering && renderingError &&
           <span style={ { color: 'red' }}>{ renderingError}</span>
         }
-        <AtlasContainer onRendered={ (img)=>this.setImage(img) }/>
+        <AtlasContainer/>
       </div>
     )
   }
@@ -39,8 +28,6 @@ class Prototype extends Component {
 
 const mapStateToProps = (state)=>{
   return {
-    canvas: state.atlas.canvasURL,
-    printedFileURL: state.atlas.fileURL,
     isRendering: state.atlas.isRendering,
     renderingError: state.atlas.renderingError
   };
