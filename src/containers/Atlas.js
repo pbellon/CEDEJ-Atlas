@@ -7,15 +7,15 @@ import world from 'data/world.json';
 
 
 const AtlasContainer = ({ canvasURL })=>{
-  console.log('Atlas canvasURL ?', canvasURL);
+  console.log('AtlasContainer', canvasURL != null);
   return (
     <div>
       <AtlasLegend/>
       { canvasURL &&
-        <img src={ canvasURL } width={ 900 } height={ 400 }/>
+        <img src={ canvasURL }/>
       }
       { (canvasURL == null) &&
-        <Atlas data={ world } width={ 900 } height={ 400 } print={ true }/>
+        <Atlas width={ 900 } height={ 400 } print={ true }/>
       }
     </div>
   );
