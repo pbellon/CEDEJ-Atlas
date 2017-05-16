@@ -5628,7 +5628,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.0.0, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@~15.5.7:
+prop-types@^15.0.0, prop-types@^15.5.0, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@~15.5.7:
   version "15.5.8"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.8.tgz#6b7b2e141083be38c8595aa51fc55775c7199394"
   dependencies:
@@ -5792,6 +5792,14 @@ react-komposer@^2.0.0:
     lodash.pick "^4.4.0"
     react-stubber "^1.0.0"
     shallowequal "^0.2.2"
+
+react-leaflet@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-1.1.6.tgz#a3a42cbe1d32168223f7e47e6d9f89a52fa358ab"
+  dependencies:
+    lodash "^4.0.0"
+    prop-types "^15.5.0"
+    warning "^3.0.0"
 
 react-modal@^1.2.0, react-modal@^1.2.1, react-modal@^1.6.5:
   version "1.7.7"
