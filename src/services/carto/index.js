@@ -4,8 +4,9 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { Atlas } from 'components';
 import { Atlas as AtlasContainer } from 'containers';
-import styleSheet from 'styled-components/lib/models/StyleSheet';
-import { injectGlobal, ThemeProvider } from 'styled-components'
+
+import { StyleSheetManager, ServerStyleSheet } from 'styled-components';
+import StyleSheet from 'styled-components/lib/models/StyleSheet';
 
 import theme from 'components/themes/default'
 
@@ -23,10 +24,8 @@ const A2px = A2.map((mm)=>mm*3.779528);
 const carto = {};
 
 carto.render = (data)=>{
-  console.log('carto.render', data);
   return new Promise((resolve, reject)=>{
     renderHTML().then((html)=>{
-      console.log('html rendered: ', html);
       convertTo(html, data.format)
         .then((blobURL)=>{ resolve({ url: blobURL, format:data.format }) })
         .catch((error)=>{
@@ -57,23 +56,35 @@ carto.download = ({format, url})=>{
   });
 }
 
+const StyleWrapper = ({children})=>{
+  const sheet = StyleSheet.instance;
+  const style = sheet.toHTML();
+  return (
+    <html>
+      <head dangerouslySetInnerHTML={{ __html: style }}></head>
+      <body>
+        { children }
+      </body>
+    </html>
+  )
+}
+
 const renderHTML = ()=>{
   return new Promise((resolve, reject)=>{
     const renderContainer = document.getElementById('render');
-    console.log('renderContainer: ', renderContainer);
     const props = {
       print: true,
       width: 900,
       height: 400,
       onRender: (canvasURL)=>{
-        const markup = render(<ThemeProvider theme={ theme }>
+        const markup = renderToString(<StyleWrapper>
           <AtlasContainer canvasURL={ canvasURL }/>
-        </ThemeProvider>, renderContainer);
+        </StyleWrapper>);
+        console.log(markup);
         resolve(markup);
       }
     };
     const firstRender = render(<Atlas {...props }/>, renderContainer);
-    console.log('first render');
   });
 };
 
@@ -123,7 +134,6 @@ const convertToPDF = (html, opts)=>{
 
 const convertToPNG = (html)=>{
   const toBlob = (canvas)=>{
-    debugger;
     return canvas.toBlob();
   }
   return new Promise((resolve, reject)=>{

@@ -14,6 +14,14 @@ const html2pdf = (html,pdf)=>{
       if (!canvas) {
         throw new Error('jsPDF canvas plugin not installed');
       }
+      var iframe = document.createElement('iframe');
+      document.body.appendChild(iframe);
+      var doc;
+      doc = iframe.contentDocument;
+      if (doc == undefined || doc == null) {
+        doc = iframe.contentWindow.document;
+      }
+
       canvas.pdf = pdf;
       pdf.annotations = {
 
@@ -65,15 +73,7 @@ const html2pdf = (html,pdf)=>{
       if (typeof html === 'string') {
         // remove all scripts
         html = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
-
-        var iframe = document.createElement('iframe');
-        document.body.appendChild(iframe);
-        var doc;
-        doc = iframe.contentDocument;
-        if (doc == undefined || doc == null) {
-          doc = iframe.contentWindow.document;
-        }
-
+        console.log('html', html);
         doc.open();
         doc.write(html);
         doc.close();
@@ -89,8 +89,7 @@ const html2pdf = (html,pdf)=>{
         });
 
       } else {
-        var body = html;
-        var promise = html2canvas(body, {
+        var promise = html2canvas(html, {
           canvas : canvas,
           onrendered : function(canvas) {
             if (iframe) {

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import styled from 'styled-components'
 import { font, palette } from 'styled-theme'
-import {world} from 'data';
+import { world } from 'data';
 
 import * as d3 from 'd3';
 
@@ -18,7 +18,6 @@ class Atlas extends Component {
   }
 
   componentDidMount(){
-    console.log('components.Atlas.componentDidMount');
     const { width, height } = this.props;
     const proj = d3.geoMercator().scale(110).center([ 55.0, 20.00]);
     const node =  d3.select(this.refs.canvas).node();
