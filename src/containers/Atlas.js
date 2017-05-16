@@ -1,25 +1,25 @@
-import React, { Component } from 'react';
-import  PropTypes  from 'prop-types';
-import { connect } from 'react-redux';
-import { canvasRendered } from 'store/actions';
-import {Atlas, AtlasLegend} from 'components';
-import world from 'data/world.json';
+import React from 'react';
+import PropTypes from 'prop-types';
+// import { connect } from 'react-redux';
 
+import { Atlas, AtlasLegend } from 'components';
 
-const AtlasContainer = ({ canvasURL })=>{
+const AtlasContainer = ({ canvasURL }) => {
   return (
     <div>
-      <AtlasLegend/>
+      <AtlasLegend />
       { canvasURL &&
-        <img src={ canvasURL } width="100%" height="auto"/>
+        <img src={canvasURL} alt={'Render map'} width="100%" height="auto" />
       }
       { (canvasURL == null) &&
-        <Atlas width={ 900 } height={ 400 } print={ true }/>
+        <Atlas width={900} height={400} />
       }
     </div>
   );
-}
+};
+
 AtlasContainer.propTypes = {
   canvasURL: PropTypes.string,
-}
+};
+
 export default AtlasContainer;

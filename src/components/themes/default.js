@@ -1,7 +1,7 @@
 // https://github.com/diegohaz/arc/wiki/Styling
-import { reversePalette } from 'styled-theme/composer'
+import { reversePalette } from 'styled-theme/composer';
 
-const theme = {}
+const theme = {};
 
 theme.palette = {
   primary: ['#1976d2', '#2196f3', '#71bcf7', '#c2e2fb'],
@@ -11,14 +11,14 @@ theme.palette = {
   success: ['#388e3c', '#4caf50', '#7cc47f', '#c8e6c9'],
   grayscale: ['#212121', '#616161', '#9e9e9e', '#bdbdbd', '#e0e0e0', '#eeeeee', '#ffffff'],
   white: ['#fff', '#fff', '#eee'],
-}
+};
 
-theme.reversePalette = reversePalette(theme.palette)
+theme.reversePalette = reversePalette(theme.palette);
 
 theme.fonts = {
   primary: 'Helvetica Neue, Helvetica, Roboto, sans-serif',
   pre: 'Consolas, Liberation Mono, Menlo, Courier, monospace',
   quote: 'Georgia, serif',
-}
+};
 
-export default theme
+export default theme;

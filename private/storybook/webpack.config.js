@@ -1,4 +1,4 @@
-const baseConfig = require('../../webpack.config')
+const baseConfig = require('../../webpack.config');
 
 module.exports = storybookBaseConfig =>
   Object.assign({}, storybookBaseConfig, {
@@ -11,4 +11,4 @@ module.exports = storybookBaseConfig =>
     module: Object.assign({}, storybookBaseConfig.module, {
       loaders: storybookBaseConfig.module.loaders.concat(baseConfig.module.rules.slice(1)),
     }),
-  })
+  });

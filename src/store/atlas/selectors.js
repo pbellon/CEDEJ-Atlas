@@ -1,5 +1,5 @@
 export const initialState = {};
 
-export const format = (state)=>{
+export const format = (state) => {
   return state.renderData.format;
-}
+};

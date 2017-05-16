@@ -1,11 +1,11 @@
-import React from 'react'
-import {ExportForm, Atlas} from 'containers';
+import React from 'react';
+import { ExportForm, Atlas } from 'containers';
 
 const HomePage = () => {
   return (<div>
-    <ExportForm/>
-    <Atlas/>
+    <ExportForm />
+    <Atlas />
   </div>);
-}
+};
 
-export default HomePage
+export default HomePage;

@@ -1,4 +1,4 @@
-const merge = require('lodash/merge')
+const merge = require('lodash/merge');
 
 const config = {
   all: {
@@ -13,6 +13,6 @@ const config = {
   production: {
     apiUrl: 'https://jsonplaceholder.typicode.com',
   },
-}
+};
 
-module.exports = merge(config.all, config[config.all.env])
+module.exports = merge(config.all, config[config.all.env]);

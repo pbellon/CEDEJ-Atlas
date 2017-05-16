@@ -6,103 +6,93 @@
 * http://opensource.org/licenses/mit-license
 */
 import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
-const html2pdf = (html,pdf)=>{
-  return new Promise((resolve, reject)=>{
+const html2pdf = (html, options) => {
+  const pdf = jsPDF(options);
+
+  return new Promise((resolve, reject) => {
     try {
-      var canvas = pdf.canvas;
+      let body;
+      let doc;
+      const iframe = document.createElement('iframe');
+      const canvas = pdf.canvas;
       if (!canvas) {
         throw new Error('jsPDF canvas plugin not installed');
       }
-      var iframe = document.createElement('iframe');
+
       document.body.appendChild(iframe);
-      var doc;
       doc = iframe.contentDocument;
-      if (doc == undefined || doc == null) {
+      if (doc === undefined || doc === null) {
         doc = iframe.contentWindow.document;
       }
 
       canvas.pdf = pdf;
       pdf.annotations = {
-
-        _nameMap : [],
-
-        createAnnotation : function(href,bounds) {
-          var x = pdf.context2d._wrapX(bounds.left);
-          var y = pdf.context2d._wrapY(bounds.top);
-          var page = pdf.context2d._page(bounds.top);
-          var options;
-          var index = href.indexOf('#');
+        _nameMap: [],
+        createAnnotation: (href, bounds) => {
+          const x = pdf.context2d._wrapX(bounds.left);
+          const y = pdf.context2d._wrapY(bounds.top);
+          // const page = pdf.context2d._page(bounds.top);
+          const index = href.indexOf('#');
+          let options;
           if (index >= 0) {
             options = {
-              name : href.substring(index + 1)
+              name: href.substring(index + 1),
             };
           } else {
             options = {
-              url : href
+              url: href,
             };
           }
           pdf.link(x, y, bounds.right - bounds.left, bounds.bottom - bounds.top, options);
         },
 
-        setName : function(name,bounds) {
-          var x = pdf.context2d._wrapX(bounds.left);
-          var y = pdf.context2d._wrapY(bounds.top);
-          var page = pdf.context2d._page(bounds.top);
-          this._nameMap[name] = {
-            page : page,
-            x : x,
-            y : y
-          };
-        }
-
+        setName: (name, bounds) => {
+          const x = pdf.context2d._wrapX(bounds.left);
+          const y = pdf.context2d._wrapY(bounds.top);
+          const page = pdf.context2d._page(bounds.top);
+          this._nameMap[name] = { page, x, y };
+        },
       };
+
       canvas.annotations = pdf.annotations;
 
-      pdf.context2d._pageBreakAt = function(y) {
+      pdf.context2d._pageBreakAt = (y) => {
         this.pageBreaks.push(y);
       };
 
-      pdf.context2d._gotoPage = function(pageOneBased) {
+      pdf.context2d._gotoPage = (pageOneBased) => {
         while (pdf.internal.getNumberOfPages() < pageOneBased) {
           pdf.addPage();
         }
         pdf.setPage(pageOneBased);
-      }
+      };
 
       if (typeof html === 'string') {
         // remove all scripts
-        html = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
-        console.log('html', html);
+        const p = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
         doc.open();
-        doc.write(html);
+        doc.write(html.replace(p, ''));
         doc.close();
-
-        var promise = html2canvas(doc.body, {
-          canvas : canvas,
-          onrendered : (canvas)=>{
-            if (iframe) {
-              iframe.parentElement.removeChild(iframe);
-            }
-            resolve(pdf);
-          }
-        });
-
+        body = doc.body;
       } else {
-        var promise = html2canvas(html, {
-          canvas : canvas,
-          onrendered : function(canvas) {
-            if (iframe) {
-              iframe.parentElement.removeChild(iframe);
-            }
-            resolve(pdf);
-          }
-        });
+        body = html;
       }
-    } catch (e){
+
+      html2canvas(body, {
+        canvas,
+        onrendered: () => {
+          if (iframe) {
+            iframe.parentElement.removeChild(iframe);
+          }
+          resolve(pdf);
+        },
+      });
+    } catch (e) {
       reject(e);
     }
   });
-}
+};
 
 export default html2pdf;
