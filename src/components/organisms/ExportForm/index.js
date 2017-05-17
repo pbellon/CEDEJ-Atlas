@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
@@ -15,29 +15,25 @@ const submitFormat = (values, format, ctx) => {
   ctx.props.onSubmit({ ...values, format }, ctx.props.dispatch);
 };
 
-const ExportForm = ({ handleSubmit, submitting }) => {
-  return (
-    <Form>
-      <Heading level={2}>Exporter la carte</Heading>
-      <Field name="_image" type="hidden" component="input" />
-      <Field name="_csrf" type="hidden" component="input" />
-      <Button
-        type="submit"
-        onClick={handleSubmit(values => { submitFormat(values, 'png', this); })}
-        disabled={submitting}
-      >PNG</Button>
-      <Button
-        type="submit"
-        onClick={handleSubmit(values => { submitFormat(values, 'pdf', this); })}
-        disabled={submitting}
-      >PDF</Button>
-    </Form>
-  );
-};
-
-ExportForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  submitting: PropTypes.bool,
-};
-
-export default ExportForm;
+export default class ExportForm extends Component {
+  render() {
+    const { handleSubmit, submitting } = this.props;
+    return (
+      <Form>
+        <Heading level={2}>Exporter la carte</Heading>
+        <Field name="_image" type="hidden" component="input" />
+        <Field name="_csrf" type="hidden" component="input" />
+        <Button
+          type="submit"
+          onClick={handleSubmit(vals => { submitFormat(vals, 'png', this) })}
+          disabled={submitting}
+        >PNG</Button>
+        <Button
+          type="submit"
+          onClick={handleSubmit(vals => { submitFormat(vals, 'pdf', this) })}
+          disabled={submitting}
+        >PDF</Button>
+      </Form>
+    );
+  }
+}
