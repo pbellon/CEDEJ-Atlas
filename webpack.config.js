@@ -17,6 +17,17 @@ const publicPath = `/${process.env.PUBLIC_PATH || ''}/`.replace('//', '/');
 const sourcePath = path.join(process.cwd(), sourceDir);
 const outputPath = path.join(process.cwd(), 'dist');
 
+const styles = () => () => ({
+  module:{
+    rules: [
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader'
+      },
+    ],
+  },
+});
+
 const babel = () => () => ({
   module: {
     rules: [
@@ -46,6 +57,7 @@ const config = createConfig([
   ]),
   happypack([
     babel(),
+    styles()
   ], {
     cacheContext: { sourceDir },
   }),
