@@ -18,11 +18,11 @@ const sourcePath = path.join(process.cwd(), sourceDir);
 const outputPath = path.join(process.cwd(), 'dist');
 
 const styles = () => () => ({
-  module:{
+  module: {
     rules: [
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader'
+        loader: 'style-loader!css-loader',
       },
     ],
   },
@@ -57,7 +57,7 @@ const config = createConfig([
   ]),
   happypack([
     babel(),
-    styles()
+    styles(),
   ], {
     cacheContext: { sourceDir },
   }),

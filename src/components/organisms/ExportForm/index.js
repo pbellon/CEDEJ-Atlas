@@ -16,6 +16,11 @@ const submitFormat = (values, format, ctx) => {
 };
 
 export default class ExportForm extends Component {
+  static propTypes = {
+    handleSubmit: PropTypes.func.isRequired,
+    submitting: PropTypes.bool,
+  }
+
   render() {
     const { handleSubmit, submitting } = this.props;
     return (
@@ -25,12 +30,12 @@ export default class ExportForm extends Component {
         <Field name="_csrf" type="hidden" component="input" />
         <Button
           type="submit"
-          onClick={handleSubmit(vals => { submitFormat(vals, 'png', this) })}
+          onClick={handleSubmit(vals => { submitFormat(vals, 'png', this); })}
           disabled={submitting}
         >PNG</Button>
         <Button
           type="submit"
-          onClick={handleSubmit(vals => { submitFormat(vals, 'pdf', this) })}
+          onClick={handleSubmit(vals => { submitFormat(vals, 'pdf', this); })}
           disabled={submitting}
         >PDF</Button>
       </Form>
