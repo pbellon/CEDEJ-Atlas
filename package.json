@@ -74,6 +74,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.20.0",
+    "css-loader": "^0.28.1",
     "d3": "^4.8.0",
     "history": "^4.6.1",
     "html2canvas": "^0.5.0-beta4",
@@ -94,6 +95,7 @@
     "redux": "^3.6.0",
     "redux-form": "^6.4.3",
     "redux-saga": "^0.15.0",
+    "style-loader": "^0.17.0",
     "styled-components": "rc",
     "styled-theme": "^0.3.0",
     "styled-tools": "^0.1.2",
