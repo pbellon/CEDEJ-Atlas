@@ -1,12 +1,16 @@
+import leafletImage from 'leaflet-image';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Map, TileLayer } from 'react-leaflet';
-import { CanvasLayer } from 'utils/leaflet';
-import leafletImage from 'leaflet-image';
-
+// import { CanvasLayer } from 'utils/leaflet';
+// import styled from 'styled-components';
 import { world } from 'data';
-
 import * as d3 from 'd3';
+
+import 'leaflet/dist/leaflet.css';
+import './Atlas.css';
+
+import LAYERS from './Layers';
 
 export default class Atlas extends Component {
   static propTypes = {
@@ -23,17 +27,7 @@ export default class Atlas extends Component {
   constructor() {
     super();
     this.projection = d3.geoMercator().scale(110).center([55.0, 20.00]);
-  }
-
-  layers = {
-    base: {
-      url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}.png',
-      maxZoom: 17,
-    },
-    naturalFeatures: {
-      url: 'http://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer/tile/{z}/{y}/{x}.png',
-      maxZoom: 17,
-    },
+    this.layers = LAYERS;
   }
 
   drawCanvas({ canvas }) {
@@ -46,30 +40,29 @@ export default class Atlas extends Component {
   }
 
   bindContainer(mapRef) {
-    if (!this.props.onRender) { return; }
-    const map = mapRef.props.leafletElement;
-    console.log('map', mapRef, map);
-    leafletImage(this.map, (err, canvas) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      this.props.onRender(canvas.toDataURL());
-    });
+    if (this.props.onRender) {
+      this.map = this.map || mapRef.leafletElement;
+      leafletImage(this.map, (err, canvas) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        const url = canvas.toDataURL();
+        console.log('bindContainer url', url);
+        this.props.onRender(url);
+      });
+    }
   }
 
 
   render() {
-    const position = [0, 0];
+    const position = [22, 35];
     const { base, naturalFeatures } = this.layers;
-    const { width, height } = this.props;
+
     return (
       <Map
-        center={position}
-        zoom={13}
+        center={position} zoom={5}
         ref={(ref) => this.bindContainer(ref)}
-        width={width}
-        height={height}
       >
         <TileLayer {...base} />
         <TileLayer {...naturalFeatures} />
