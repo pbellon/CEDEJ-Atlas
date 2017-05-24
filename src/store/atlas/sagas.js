@@ -1,5 +1,7 @@
 import { take, put, call, fork } from 'redux-saga/effects';
 import carto from 'services/carto';
+import api from 'services/api';
+
 import * as actions from './actions';
 
 export function* renderMap(renderData) {
@@ -8,6 +10,16 @@ export function* renderMap(renderData) {
     yield put(actions.downloadMap(data));
   } catch (e) {
     yield put(actions.mapRenderFailure(e));
+  }
+}
+
+export function* downloadMapData(){
+  try {
+    const data = yield call(api.getMapData);
+    console.log('atals.sagas.downloadMapData', data);
+    yield put(actions.dataDownloadSuccess(data));
+  } catch (e) {
+    yield put(actions.dataDownloadFailure(e));
   }
 }
 
@@ -28,14 +40,22 @@ export function* watchRenderMap() {
 }
 
 
-export function* watchDownload() {
+export function* watchDownloadMap() {
   while (true) {
-    const data = yield take(actions.DOWNLOAD);
+    const data = yield take(actions.DOWNLOAD_MAP);
     yield call(downloadMap, data);
+  }
+}
+
+export function* watchDownloadData() {
+  while (true) {
+    const data = yield take(actions.DOWNLOAD_DATA);
+    yield call(downloadMapData, data);
   }
 }
 
 export default function* () {
   yield fork(watchRenderMap);
-  yield fork(watchDownload);
+  yield fork(watchDownloadMap);
+  yield fork(watchDownloadData);
 }

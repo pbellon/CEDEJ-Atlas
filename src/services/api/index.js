@@ -51,6 +51,18 @@ api.request = (endpoint, { params, ...settings } = {}) =>
   api[method] = (endpoint, data, settings) => api.request(endpoint, { method, data, ...settings });
 });
 
+api.getMapData = ()=>{
+  const dataFiles = {
+    temperature: '/data/temperature.json', circle: '/data/circles.json'
+  };
+
+  const get = key => api.get(dataFiles[key]).then(data => ({ [key]:data }));
+
+  return Promise.all(
+    Object.keys(dataFiles).map(get)
+  ).then((data) => data.reduce((a,b) => Object.assign({}, a,b)));
+}
+
 api.create = (settings = {}) => ({
   settings,
 

@@ -1,6 +1,8 @@
 // https://github.com/diegohaz/arc/wiki/Webpack
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const WriteFilePlugin = require('write-file-webpack-plugin');
 const devServer = require('@webpack-blocks/dev-server2');
 const splitVendor = require('webpack-blocks-split-vendor');
 const happypack = require('webpack-blocks-happypack');
@@ -13,7 +15,10 @@ const {
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
 const sourceDir = process.env.SOURCE || 'src';
+const dataDir = process.env.DATA || 'data';
+
 const publicPath = `/${process.env.PUBLIC_PATH || ''}/`.replace('//', '/');
+const dataPath = path.join(process.cwd(), dataDir);
 const sourcePath = path.join(process.cwd(), sourceDir);
 const outputPath = path.join(process.cwd(), 'dist');
 
@@ -54,6 +59,9 @@ const config = createConfig([
       filename: 'index.html',
       template: path.join(process.cwd(), 'public/index.html'),
     }),
+    new CopyWebpackPlugin([
+      { from: dataPath, to: 'data' },
+    ]),
   ]),
   happypack([
     babel(),
@@ -87,6 +95,7 @@ const config = createConfig([
     }),
     sourceMaps(),
     addPlugins([
+      new WriteFilePlugin(),
       new webpack.NamedModulesPlugin(),
     ]),
   ]),

@@ -1,20 +1,26 @@
 import PropTypes from 'prop-types';
-import { GridLayer, PropTypes as propTypes } from 'react-leaflet';
+import { GridLayer } from 'react-leaflet';
 
-import { canvasLayer } from './CanvasOverlay';
+import L from 'leaflet';
 
-const childrenType = propTypes.childrenType;
+// import 'leaflet-canvas-geojson/dist/leaflet-canvas-geojson';
+
+const canvasLayer = (drawCanvas, options) => {
+  return new L.Canvas({ renderer: drawCanvas, ...options});
+};
+
 
 export default class CanvasLayer extends GridLayer {
   static propTypes = {
-    children: childrenType,
+    data: PropTypes.array,
     opacity: PropTypes.number,
-    drawCanvas: PropTypes.func.isRequired,
     zIndex: PropTypes.number,
+    drawCanvas: PropTypes.func.isRequired,
   };
 
-  createLeafletElement(props: Object): Object {
-    const { drawCanvas, ...options } = props;
+  createLeafletElement(props) {
+    const { drawCanvas, ...options} = props;
     return canvasLayer(drawCanvas, this.getOptions(options));
   }
+
 }

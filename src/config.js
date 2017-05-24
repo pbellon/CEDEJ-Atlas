@@ -9,7 +9,9 @@ const config = {
     apiUrl: 'https://jsonplaceholder.typicode.com',
   },
   test: {},
-  development: {},
+  development: {
+    apiUrl: 'http://localhost:3000'
+  },
   production: {
     apiUrl: 'https://jsonplaceholder.typicode.com',
   },

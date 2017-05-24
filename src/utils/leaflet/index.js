@@ -1,1 +1,2 @@
-export { CanvasLayer } from './CanvasLayer';
+import CanvasLayer from './CanvasLayer';
+export { CanvasLayer };
