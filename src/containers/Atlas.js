@@ -5,6 +5,7 @@ import { downloadMapData } from 'store/actions';
 import styled from 'styled-components';
 
 import { Atlas, AtlasLegend } from 'components';
+import { CanvasTest } from 'components/atoms/Atlas';
 
 const Error = styled.span`
   color: red;
@@ -27,7 +28,12 @@ class AtlasContainer extends Component {
           <img src={canvasURL} alt={'Render map'} width="100%" height="auto" />
         }
         { (canvasURL == null) && data &&
-          <Atlas width={900} height={500} data={data} />
+          <div>
+            <CanvasTest width={1200} height={900} data={data} />
+            {
+              // <Atlas width={900} height={500} data={data} />
+            }
+          </div>
         }
       </div>
     );

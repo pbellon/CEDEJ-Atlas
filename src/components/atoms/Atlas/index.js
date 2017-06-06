@@ -1,15 +1,39 @@
+export CanvasTest from './canvas';
 import leafletImage from 'leaflet-image';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Map } from 'react-leaflet';
-import { CanvasLayer } from 'utils/leaflet';
+import { Map, TileLayer, GeoJSON, LayerGroup, Pane, Circle } from 'react-leaflet';
 import L from 'leaflet';
-// import styled from 'styled-components';
 
 import 'leaflet/dist/leaflet.css';
 import './Atlas.css';
 
-import LAYERS from './Layers';
+import { circleStyle } from './styles';
+
+const BASE_LAYER_URL = 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}.png';
+
+const NATURAL_FEATURES_URL = 'http://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer/tile/{z}/{y}/{x}.png';
+
+const NATURAL_FEATURES_ATTRIBUTION = '&copy; Powerded by <a href="http://www.esri.com/">ESRI</a> world reference overlay';
+
+const renderCircles = (data)=>{
+  return data.features.map((circle,key)=>{
+    const coords = circle.geometry.coordinates;
+    const center = [ coords[1], coords[0]];
+    const radius = 10000 + 5000 * parseInt(circle.properties.size_);
+    const style = circleStyle(circle);
+    const circleElem = (
+      <Circle
+        key={key}
+        radius={radius}
+        interactive={false}
+        center={center}
+        {...style} />
+    );
+    return circleElem;
+  });
+};
+
 
 const canvas = L.canvas();
 
@@ -25,10 +49,15 @@ export default class Atlas extends Component {
   static defaultPropTypes = {
     print: false,
   }
-
-  layers = LAYERS
+  constructor(props){
+    super(props);
+    this.state = {
+      mapRef:null,
+    };
+  }
 
   bindContainer(mapRef) {
+    if(mapRef){ this.setState({mapRef: mapRef.leafletElement}); }
     if (this.props.onRender) {
       this.map = this.map || mapRef.leafletElement;
       // TODO: replace by dispatch or props callback
@@ -43,22 +72,28 @@ export default class Atlas extends Component {
     }
   }
 
-
   render() {
     const { data } = this.props;
+    const { mapRef } = this.state;
     const position = [10, 35];
     return (
       <Map
-        renderer={canvas}
         center={position} zoom={4}
         ref={(ref) => this.bindContainer(ref)}
       >
-        { this.layers.map((layer, key)=>{
-          const { type, dataKey, children, ...opts} = layer;
-          const _data = dataKey ? data[dataKey] : null;
-          const _children = children ? children(_data) : null;
-          return React.createElement(type, {key, data:_data, ...opts}, _children);
-        })}
+        <Pane name="background">
+          <TileLayer url={ BASE_LAYER_URL } />
+        </Pane>
+        <Pane name="visualization">
+          { // mapRef && <GeoJSON data={data.temperature} style={ getAreasStyle(mapRef) } />
+          }
+          <LayerGroup>{ renderCircles(data.circle) }</LayerGroup>
+        </Pane>
+        <Pane name="natural-features" style={{opacity:0.7}}>
+          <TileLayer
+            url={ NATURAL_FEATURES_URL }
+            attribution={ NATURAL_FEATURES_ATTRIBUTION }/>
+        </Pane>
       </Map>
     );
   }
