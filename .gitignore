@@ -2,6 +2,7 @@
 .happypack
 dist
 *.log
+*.swp
 node_modules
 coverage
 webpack/webpack-assets.json
