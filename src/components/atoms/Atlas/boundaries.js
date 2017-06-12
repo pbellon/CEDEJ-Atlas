@@ -1,7 +1,24 @@
 import * as d3 from 'd3';
+import * as patterns from './patterns';
 import * as spp from 'svg-path-properties';
 
 const TEETH_GAP = 20;
+
+const hash = (str)=>{
+	// took from https://stackoverflow.com/a/7616484/885541
+	let hash = 0;
+	let i;
+	let chr;
+
+	if (str.length === 0){ return hash; }
+	for (i = 0; i < str.length; i++) {
+		chr = str.charCodeAt(i);
+		hash  = ((hash << 5) - hash) + chr;
+		hash |= 0; // Convert to 32bit integer
+	}
+	return hash;
+};
+
 
 export const BOUNDARIES = {
 	TEETH: 'teeth',
@@ -58,25 +75,26 @@ const triangleAt = (path, l, base=4, height=4)=>{
 	};
 };
 
+const teethBoundaries = ({context, path})=>{
+	const { width, height } = context.canvas;
 
-const drawPath = (context, path)=>{
 	const path2d = new Path2D(path.path);
 	const nbMarkers = Math.floor(path.length/TEETH_GAP);
 
 	context.fillStyle = 'rgba(0,0,0,0)';
-	context.strokeStyle = 'black';
+	context.strokeStyle = 'rgba(0,0,0,0.5)';
 	context.strokeWidth = 2;
 	context.beginPath();
 	context.fill(path2d);
 	context.stroke(path2d);
 
-	context.fillStyle = 'rgba(0,0,0,1)';
+	context.fillStyle = 'rgba(0,0,0,0.5)';
 	for (let i = 1; i <= nbMarkers; i++){
 		const l = i * TEETH_GAP;
 		const { base0, base1, tops }  = triangleAt(path, l);
 		let top = tops.find((p)=>{
 			const isInPath = context.isPointInPath(path2d, p[0], p[1]);
-			return path.exterior ? isInPath : !isInPath;
+			return path.isExterior ? isInPath : !isInPath;
 		});
 		if(!top){ top = tops[0];}		
 		
@@ -89,43 +107,10 @@ const drawPath = (context, path)=>{
 	}
 };
 
-
-const teethBoundaries = ({context, boundaries, projection })=>{
-
-	const { width, height } = context.canvas;
-	const fnPath = d3.geoPath().projection(projection);
-	const fnCanvasPath = d3.geoPath().projection(projection).context(context);
-	const _path = fnPath(boundaries);
-	const centroid = projection(d3.geoCentroid(boundaries)); 
-
-	const pathes = _path.split('M').splice(1).map((p)=>{
-		const _p = `M${p}${p.indexOf('Z')>-1?'':'Z'}`;
-		const props = spp.svgPathProperties(_p);
-		return {
-			properties: props,
-			length: props.getTotalLength(),
-			path: _p,
-			centroid,
-		}
-	});
-
-	if(pathes.length > 1){
-		const exteriorPath = pathes.reduce((a, b)=>a.length > b.length ? a : b);
-		pathes.forEach((p)=>{
-			p.exterior = p.path == exteriorPath.path;
-			drawPath(context, p);
-		});
-	} else {
-		const path = pathes[0];
-		path.exterior = true;
-		drawPath(context, pathes[0]);
-	}
-};
-
 const fullBoundaries = ()=>(null);
 const dashedBoundaries = ()=>(null);
 
-export const addBoundaries = ({pattern, ...options}) => {
+export const addBoundary = ({pattern, ...options}) => {
 	switch (pattern.boundaries) {
 		case BOUNDARIES.TEETH:
 			teethBoundaries({pattern, ...options});
@@ -141,10 +126,43 @@ export const addBoundaries = ({pattern, ...options}) => {
 	}
 };
 
-const initData = (data)=>{
+const initData = ({ boundaries, projection })=>{
+	let pathes = [];
+	let _boundaries = [];
+	const fnPath = d3.geoPath().projection(projection);
 
+	boundaries.forEach((boundary)=>{
+		let extPath;
+		const path = fnPath(boundary);
+		const subPathes = path.split('M').splice(1).map((p)=>{
+			const _p = `M${p}${p.indexOf('Z')>-1?'':'Z'}`;
+			const props = spp.svgPathProperties(_p);
+			return {
+				boundary,
+				properties: props,
+				length: props.getTotalLength(),
+				path: _p,
+				subPath: _p.substring(1, _p.length-1),
+			}
+		});
+
+		if(subPathes.length > 0){
+			extPath = subPathes[0];
+		} else {
+		 	extPath = subPathes.reduce((a,b)=>a.length > b.length ? a : b);
+		}
+		extPath.isExterior = true;
+		_boundaries = _boundaries.concat(subPathes); 
+	});
+	return _boundaries;
 };
 
-const addAllBoundaries = (data)=>{
-
-}
+export const addBoundaries = ({boundaries, projection, ...options})=>{
+	const pathes = initData({ boundaries, projection });
+	pathes.forEach((path)=>{
+		const pattern = patterns.findPattern(path.boundary);
+		if(pattern && pattern.boundaries){
+			addBoundary({ pattern, path, ...options }); 
+		}
+	});
+};

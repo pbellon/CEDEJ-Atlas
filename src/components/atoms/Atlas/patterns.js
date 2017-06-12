@@ -3,7 +3,7 @@
  */
 import { BOUNDARIES } from './boundaries'; 
 
-const PATTERNS = [
+let PATTERNS = [
 	{
     // hyper aride: pas de motif, bordure
     key: '1',
@@ -76,13 +76,18 @@ const createCanvasPattern = ({stripes}) => {
 	return p;
 };
 
-export const initPatterns = (context) => {
-	return PATTERNS.map((pattern) => {
-		if(!pattern.stripes){ return pattern; }
-		const canvasPattern = createCanvasPattern(pattern);
-		return {
-			...pattern,
-			pattern: context.createPattern(canvasPattern, 'repeat'),
-		};
-	});
+export const findPattern = ({properties:{type}}) => {
+	return PATTERNS.find(({key}) => key == type);
 };
+
+export const initPatterns = (context) => {
+	PATTERNS.forEach((pattern) => {
+		if(pattern.stripes){
+			const canvasPattern = createCanvasPattern(pattern);
+			pattern.canvasPattern = context.createPattern(canvasPattern, 'repeat');
+		}
+	});
+	return PATTERNS;
+};
+
+export const allPatterns = ()=>{ return PATTERNS; };
