@@ -76,6 +76,11 @@ const triangleAt = (path, l, base=4, height=4)=>{
 };
 
 const teethBoundaries = ({context, path})=>{
+	// piste d'optimisation:
+	// au lieu de faire (pour chaque triangle) une verif sur l'appartenance
+	// d'un point à un chemin nous pouvons calculer le "centroid" de chaque
+	// chemin puis tester la distance absolue entre ce centre et les sommet
+	// du triangle.
 	const { width, height } = context.canvas;
 
 	const path2d = new Path2D(path.path);
@@ -83,9 +88,10 @@ const teethBoundaries = ({context, path})=>{
 
 	context.fillStyle = 'rgba(0,0,0,0)';
 	context.strokeStyle = 'rgba(0,0,0,0.5)';
-	context.strokeWidth = 2;
+	context.lineWidth = 2;
+	context.lineJoin = 'round'; 
+
 	context.beginPath();
-	context.fill(path2d);
 	context.stroke(path2d);
 
 	context.fillStyle = 'rgba(0,0,0,0.5)';
@@ -134,25 +140,36 @@ const initData = ({ boundaries, projection })=>{
 	boundaries.forEach((boundary)=>{
 		let extPath;
 		const path = fnPath(boundary);
-		const subPathes = path.split('M').splice(1).map((p)=>{
-			const _p = `M${p}${p.indexOf('Z')>-1?'':'Z'}`;
-			const props = spp.svgPathProperties(_p);
-			return {
-				boundary,
-				properties: props,
-				length: props.getTotalLength(),
-				path: _p,
-				subPath: _p.substring(1, _p.length-1),
-			}
-		});
+		if(boundary.properties.OBJECTID_1 == 525){
 
-		if(subPathes.length > 0){
-			extPath = subPathes[0];
+			const subPathes = path.split('M').splice(1).map((p)=>{
+				const _p = `M${p}${p.indexOf('Z')>-1?'':'Z'}`;
+				const props = spp.svgPathProperties(_p);
+				return {
+					boundary,
+					properties: props,
+					length: props.getTotalLength(),
+					path: _p,
+				}
+			});
+
+			if(subPathes.length > 0){
+				extPath = subPathes[0];
+			} else {
+				extPath = subPathes.reduce((a,b)=>a.length > b.length ? a : b);
+			}
+			extPath.isExterior = true;
+			_boundaries = _boundaries.concat(subPathes);
 		} else {
-		 	extPath = subPathes.reduce((a,b)=>a.length > b.length ? a : b);
-		}
-		extPath.isExterior = true;
-		_boundaries = _boundaries.concat(subPathes); 
+			const properties = spp.svgPathProperties(path);
+			_boundaries.push({
+				isExterior: true,
+				boundary,
+				properties,
+				length: properties.getTotalLength(),
+				path
+			});
+		}	
 	});
 	return _boundaries;
 };
