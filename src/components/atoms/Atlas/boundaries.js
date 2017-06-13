@@ -34,21 +34,8 @@ const attrs = (sel, _attrs)=>{
 	return sel;
 };
 
-const svgToImage = (svg)=>{
-	return new Promise((resolve, reject)=>{
-		const source = (new XMLSerializer()).serializeToString(svg); 
-		const blob = new Blob([source], {type:'image/svg+xml;charset=utf-8'});
-		const blobURL = URL.createObjectURL(blob); 
-		const img = new Image();
-		img.onload = ()=>{
-			resolve(img);
-			URL.revokeObjectURL(blobURL);
-		};	
-		img.src = blobURL; 
-	});
-};
-const deg2rad = (deg)=>deg*(Math.PI/180)
-const rad2deg = (rad)=>rad*(180/Math.PI)
+const deg2rad = (deg)=>deg*(Math.PI/180);
+const rad2deg = (rad)=>rad*(180/Math.PI);
 
 const triangleAt = (path, l, base=4, height=4)=>{
 	const point = path.properties.getPointAtLength(l);
@@ -64,10 +51,10 @@ const triangleAt = (path, l, base=4, height=4)=>{
 
 	const sx0 = point.x - height*Math.cos(triangleAngle);
 	const sy0 = point.y - height*Math.sin(triangleAngle);
-	
+
 	const sx1 = point.x + height*Math.cos(triangleAngle);
 	const sy1 = point.y + height*Math.sin(triangleAngle);
-	
+
 	return {
 		base0:[x0,y0],
 		base1:[x1,y1],
@@ -86,15 +73,14 @@ const teethBoundaries = ({context, path})=>{
 	const path2d = new Path2D(path.path);
 	const nbMarkers = Math.floor(path.length/TEETH_GAP);
 
-	context.fillStyle = 'rgba(0,0,0,0)';
-	context.strokeStyle = 'rgba(0,0,0,0.5)';
+	context.strokeStyle = 'rgba(0,0,0,1)';
 	context.lineWidth = 2;
 	context.lineJoin = 'round'; 
 
 	context.beginPath();
 	context.stroke(path2d);
-
-	context.fillStyle = 'rgba(0,0,0,0.5)';
+	context.closePath();
+	context.fillStyle = 'rgba(0,0,0,1)';
 	for (let i = 1; i <= nbMarkers; i++){
 		const l = i * TEETH_GAP;
 		const { base0, base1, tops }  = triangleAt(path, l);
@@ -103,7 +89,7 @@ const teethBoundaries = ({context, path})=>{
 			return path.isExterior ? isInPath : !isInPath;
 		});
 		if(!top){ top = tops[0];}		
-		
+
 		context.beginPath();
 		context.moveTo(base0[0], base0[1]);
 		context.lineTo(base1[0], base1[1]);
@@ -111,10 +97,28 @@ const teethBoundaries = ({context, path})=>{
 		context.fill();
 		context.closePath();
 	}
+	context.closePath();
 };
 
-const fullBoundaries = ()=>(null);
-const dashedBoundaries = ()=>(null);
+const fullBoundaries = ({context, path})=>{
+	const path2d = new Path2D(path.path);
+	context.fillStyle = 'rgba(0, 0, 0, 1)';
+	context.lineWidth = 2;
+	context.beginPath();
+	context.stroke(path2d);
+	context.closePath();
+};
+
+const dashedBoundaries = ({context, path})=>{
+	const path2d = new Path2D(path.path);
+	context.fillStyle = 'rgba(0, 0, 0, 1)';
+	context.lineWidth = 2;
+	context.setLineDash([5,5]);
+	context.beginPath();
+	context.stroke(path2d);
+	context.closePath();
+	context.setLineDash([]);
+};
 
 export const addBoundary = ({pattern, ...options}) => {
 	switch (pattern.boundaries) {

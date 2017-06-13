@@ -1,90 +1,80 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { MapLayer } from 'react-leaflet';
 import { areaColor } from './styles';
 import * as d3 from 'd3';
-import * as patterns from './patterns';
+import * as patternsUtil from './patterns';
 import * as boundaries from './boundaries'; 
 import * as topojson from 'topojson';
+import canvasLayer from './layer';
+import L from 'leaflet';
 
-export default class CanvasTestComponent extends Component {
-  static propTypes = {
-    data: PropTypes.object,
-    width: PropTypes.number,
-    height: PropTypes.number,
-  }
-  constructor(props){
-    super(props);
-    const { temperatures, aridity } = props.data;
-		console.log(props.data);
-    this.temperatures = temperatures.features;
-		this.aridity = aridity.features;
-  }
+const drawArea = ({context, area, drawPath})=>{
+	const color = areaColor(area);
+	context.fillStyle = color;
+	context.strokeStyle = color;
+	context.beginPath();
+	drawPath(area);
+	context.fill();
+}
 
-  aridityPattern({properties}){
-    return this.patterns.find((stripes)=>(stripes.key === properties.type));
-  }
+const	drawPattern = ({context, aridity, drawPath}) => {
+	const pattern = patternsUtil.findPattern(aridity);
+	if(!pattern){ return; }
+	if(!pattern.stripes){ return; }
+	context.fillStyle = pattern.canvasPattern;
+	context.beginPath();
+	drawPath(aridity);
+	context.fill();
+}
 
-  drawCanvas(canvas){
-    const context = this.context = canvas.getContext("2d");
-    const { data, width, height } = this.props;
-    const node = d3.select(canvas);
-    const projection = this.projection = d3.geoMercator().scale(500).center([0, 30]);
-   		
-		this.drawPath = d3.geoPath().projection(projection).context(context);
-    this.patterns = patterns.initPatterns(context);
+export class CanvasDelegate {
+	constructor(data){ this.data = data; }
+	onDrawLayer({canvas, center, zoom:zoomLevel, layer}){
+		const projection = d3.geoTransform({
+		    point:function(x,y){
+					const pointLatLng = new L.LatLng(y,x);
+					const point = layer._map.latLngToLayerPoint(pointLatLng);
+					this.stream.point(point.x,point.y)
+				}
+		});	
+		
+		const zoom = Math.pow(2, 8 + zoomLevel) / 2 / Math.PI; 
+		const context = canvas.getContext("2d");
+		const {temperatures:{features:temperatures},aridity:{features:aridity}} = this.data;
+		const node = d3.select(canvas);
+		const drawPath = d3.geoPath().projection(projection).context(context);
+		const patterns = patternsUtil.initPatterns(context);
 
-    // if (window.devicePixelRatio > 1) {
-    //   const devicePixelRatio = window.devicePixelRatio || 1;
-    //   const backingStoreRatio = context.webkitBackingStorePixelRatio || context.backingStorePixelRatio || 1;
-    //   const ratio = devicePixelRatio / backingStoreRatio;
-    //   node
-    //     .attr('width', width * ratio)
-    //     .attr('height', height * ratio)
-    //     .style('width', `${width} px`)
-    //     .style('height', `${height} px`);
-    // }
+		context.clearRect(0, 0, canvas.width, canvas.height);
 
-    context.globalCompositeOperation = 'source-over';
-    // draw zones with different colors to do
-    // context.globalCompositeOperation = 'destination-in';
-    this.temperatures.forEach((temp)=>this.drawArea(temp));
-
-    context.globalCompositeOperation = 'destination-out';
-    // create aridity textures and substract them from areas paths (if needed)
-    // draw aridity boundaries (for certains kinds of aridity)
-    this.aridity.forEach((aridity)=>this.drawPattern(aridity));
-    
 		context.globalCompositeOperation = 'source-over';
-    boundaries.addBoundaries({
+		// draw zones with different colors to do
+		// context.globalCompositeOperation = 'destination-in';
+		temperatures.forEach((temp)=>drawArea({area:temp, context, drawPath}));
+
+		context.globalCompositeOperation = 'destination-out';
+		// create aridity textures and substract them from areas paths (if needed)
+		// draw aridity boundaries (for certains kinds of aridity)
+		aridity.forEach((aridity)=>drawPattern({aridity, context, drawPath}));
+
+		context.globalCompositeOperation = 'source-over';
+		boundaries.addBoundaries({
 			projection,
 			context,
-			boundaries: this.aridity
-		});
-  }
-
-	drawArea(area){
-    this.context.fillStyle = areaColor(area);
-    this.context.beginPath();
-    this.drawPath(area);
-    this.context.fill();
+			boundaries: aridity
+		}); 
+	}
+}
+export default class CanvasLayer extends MapLayer {
+	static propTypes = {
+		delegate: PropTypes.object,
 	}
 
-
-	drawPattern(aridity){
-    const pattern = this.aridityPattern(aridity);
-		if(!pattern){ return; }
-		if(!pattern.stripes){ return; }
-   	this.context.fillStyle = pattern.pattern;
-    this.context.beginPath();
-    this.drawPath(aridity);
-    this.context.fill();
+	createLeafletElement(props){
+		const { delegate, ...options }= this.getOptions(props);
+		const pane = this.context.map.getPane(this.context.pane);
+		return canvasLayer(delegate, pane, options);
 	}
 
-  render(){
-    const { width, height } = this.props;
-    return <canvas
-      ref={ (ref) => this.drawCanvas(ref) }
-      width={ width }
-      height={ height } />
-  }
 }
