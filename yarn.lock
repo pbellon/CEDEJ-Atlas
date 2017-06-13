@@ -3153,6 +3153,10 @@ fileset@^2.0.2:
     glob "^7.0.3"
     minimatch "^3.0.3"
 
+filesize@^3.2.1:
+  version "3.5.10"
+  resolved "https://registry.yarnpkg.com/filesize/-/filesize-3.5.10.tgz#fc8fa23ddb4ef9e5e0ab6e1e64f679a24a56761f"
+
 fill-range@^2.1.0:
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/fill-range/-/fill-range-2.2.3.tgz#50b77dfd7e469bc7492470963699fe7a8485a723"
@@ -4635,7 +4639,7 @@ lodash.words@^3.0.0:
   dependencies:
     lodash._root "^3.0.0"
 
-lodash@4.x.x, lodash@^4.0.0, lodash@^4.14.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
+lodash@4.x.x, lodash@^4.0.0, lodash@^4.14.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.5.1, lodash@^4.6.1:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -4830,6 +4834,10 @@ mkdirp@0.5.1, mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdi
 mobx@^2.3.4:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/mobx/-/mobx-2.7.0.tgz#cf3d82d18c0ca7f458d8f2a240817b3dc7e54a01"
+
+moment@^2.11.2:
+  version "2.18.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
 ms@0.7.1:
   version "0.7.1"
@@ -5865,8 +5873,8 @@ react-komposer@^2.0.0:
     shallowequal "^0.2.2"
 
 react-leaflet@^1.1.6:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-1.1.6.tgz#a3a42cbe1d32168223f7e47e6d9f89a52fa358ab"
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-1.2.1.tgz#ee240381f0ced00b09ca8cdce5ec599d16850656"
   dependencies:
     lodash "^4.0.0"
     prop-types "^15.5.0"
@@ -6694,6 +6702,10 @@ supports-color@^3.1.0, supports-color@^3.1.1, supports-color@^3.1.2, supports-co
   dependencies:
     has-flag "^1.0.0"
 
+svg-path-properties@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/svg-path-properties/-/svg-path-properties-0.2.1.tgz#ef56b82cbd9a700c9da35c2b6a448f4ad37130b9"
+
 svgo@^0.7.0:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/svgo/-/svgo-0.7.2.tgz#9f5772413952135c6fefbf40afe6a4faa88b4bb5"
@@ -6817,6 +6829,40 @@ to-arraybuffer@^1.0.0:
 to-fast-properties@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-1.0.3.tgz#b83571fa4d8c25b82e231b06e3a3055de4ca1a47"
+
+topojson-client@3, topojson-client@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/topojson-client/-/topojson-client-3.0.0.tgz#1f99293a77ef42a448d032a81aa982b73f360d2f"
+  dependencies:
+    commander "2"
+
+topojson-server@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/topojson-server/-/topojson-server-3.0.0.tgz#378e78e87c3972a7b5be2c5d604369b6bae69c5e"
+  dependencies:
+    commander "2"
+
+topojson-simplify@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/topojson-simplify/-/topojson-simplify-3.0.0.tgz#58527d26ca85bd8589b5800f6c10e93885245ae5"
+  dependencies:
+    commander "2"
+    topojson-client "3"
+
+topojson-simplify@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/topojson-simplify/-/topojson-simplify-3.0.1.tgz#bd631938f405d283c8d846e5c1fad4085699ad51"
+  dependencies:
+    commander "2"
+    topojson-client "3"
+
+topojson@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/topojson/-/topojson-3.0.0.tgz#c2aca1b76435e801dce3f229586bbd5767115ce3"
+  dependencies:
+    topojson-client "3.0.0"
+    topojson-server "3.0.0"
+    topojson-simplify "3.0.0"
 
 toposort@^1.0.0:
   version "1.0.3"
@@ -7289,6 +7335,16 @@ write-file-atomic@^1.1.2:
     graceful-fs "^4.1.11"
     imurmurhash "^0.1.4"
     slide "^1.1.5"
+
+write-file-webpack-plugin@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/write-file-webpack-plugin/-/write-file-webpack-plugin-4.0.2.tgz#70c89a4d99a105e1aed778b21b5f75e7af4da58b"
+  dependencies:
+    chalk "^1.1.1"
+    filesize "^3.2.1"
+    lodash "^4.5.1"
+    mkdirp "^0.5.1"
+    moment "^2.11.2"
 
 write@^0.2.1:
   version "0.2.1"
