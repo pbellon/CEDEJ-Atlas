@@ -5,7 +5,6 @@ import { downloadMapData } from 'store/actions';
 import styled from 'styled-components';
 
 import { Atlas, AtlasLegend } from 'components';
-import { CanvasTest } from 'components/atoms/Atlas';
 
 const Error = styled.span`
   color: red;
@@ -29,25 +28,29 @@ class AtlasContainer extends Component {
         }
         { (canvasURL == null) && data &&
           <div>
-            <CanvasTest width={1200} height={900} data={data} />
-            {
-              // <Atlas width={900} height={500} data={data} />
-            }
-          </div>
-        }
-      </div>
-    );
-  }
+						{
+							// <CanvasTest width={1280*4} height={900*3} scale={1800} center={[-100,50]} data={data} />
+						}
+							<Atlas width={900} height={500} data={data} />
+					</div>
+				}
+				</div>
+				);
+	}
 }
 
 AtlasContainer.propTypes = {
-  canvasURL: PropTypes.string,
-  data: PropTypes.object,
+	canvasURL: PropTypes.string,
+	data: PropTypes.shape({
+		aridity:PropTypes.object,
+		circles:PropTypes.object,
+		temperatures: PropTypes.object,
+	}),
 };
 
 const mapStateToProps = state => ({
-  data: state.atlas.mapData,
-  error: state.atlas.error,
+	data: state.atlas.mapData,
+	error: state.atlas.error,
 });
 
 export default connect(mapStateToProps)(AtlasContainer);
