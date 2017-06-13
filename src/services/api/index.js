@@ -54,8 +54,8 @@ api.request = (endpoint, { params, ...settings } = {}) =>
 api.getMapData = ()=>{
   const dataFiles = {
     aridity: '/data/aridity.json',
-    temperatures: '/data/temperature_f.json',
-    circles: '/data/circle.json'
+    temperatures: '/data/temperatures.json',
+    circles: '/data/circles.json'
   };
 
   const get = key => api.get(dataFiles[key]).then(data => ({ [key]:data }));
