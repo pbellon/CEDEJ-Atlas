@@ -16,7 +16,6 @@ export function* renderMap(renderData) {
 export function* downloadMapData(){
   try {
     const data = yield call(api.getMapData);
-    console.log('atals.sagas.downloadMapData', data);
     yield put(actions.dataDownloadSuccess(data));
   } catch (e) {
     yield put(actions.dataDownloadFailure(e));
