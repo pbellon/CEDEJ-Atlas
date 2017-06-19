@@ -3,3 +3,6 @@
   width: 100%;
   color: blue;
 }
+:global .leaflet-container .leaflet-canvas-layer {
+	transition: transform .5s ease-in;
+}

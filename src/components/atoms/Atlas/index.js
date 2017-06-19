@@ -62,18 +62,17 @@ export default class Atlas extends Component {
     const position = [10, 35];
     return (
       <Map
-        center={position} zoom={4}
+				renderer={canvas}
+        animate={true}
+				center={position} zoom={4}
         ref={(ref) => this.bindContainer(ref)}
       >
-        <Pane name="background" style={{ zIndex: 200 }} >
           <TileLayer url={ BASE_LAYER_URL } />
           <TileLayer
             url={ NATURAL_FEATURES_URL }
             attribution={ NATURAL_FEATURES_ATTRIBUTION }/>
-        </Pane>
-        <Pane name="visualization" style={{ zIndex: 400 }}>
-					<CanvasLayer delegate={ new CanvasDelegate(data) } />
-        </Pane>
+        
+					<CanvasLayer zIndex={ 400 } delegate={ new CanvasDelegate(data) } />
       </Map>
     );
   }

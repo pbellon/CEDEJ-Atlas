@@ -3,7 +3,7 @@ import * as patterns from './patterns';
 import * as spp from 'svg-path-properties';
 
 const TEETH_GAP = 20;
-
+const BOUNDARY_WIDTH = 1.5;
 const hash = (str)=>{
 	// took from https://stackoverflow.com/a/7616484/885541
 	let hash = 0;
@@ -74,7 +74,7 @@ const teethBoundaries = ({context, path})=>{
 	const nbMarkers = Math.floor(path.length/TEETH_GAP);
 
 	context.strokeStyle = 'rgba(0,0,0,1)';
-	context.lineWidth = 2;
+	context.lineWidth = BOUNDARY_WIDTH;
 	context.lineJoin = 'round'; 
 
 	context.beginPath();
@@ -102,8 +102,8 @@ const teethBoundaries = ({context, path})=>{
 
 const fullBoundaries = ({context, path})=>{
 	const path2d = new Path2D(path.path);
-	context.fillStyle = 'rgba(0, 0, 0, 1)';
-	context.lineWidth = 2;
+	context.strokeStyle = 'rgba(0, 0, 0, 1)';
+	context.lineWidth = BOUNDARY_WIDTH;
 	context.beginPath();
 	context.stroke(path2d);
 	context.closePath();
@@ -111,8 +111,8 @@ const fullBoundaries = ({context, path})=>{
 
 const dashedBoundaries = ({context, path})=>{
 	const path2d = new Path2D(path.path);
-	context.fillStyle = 'rgba(0, 0, 0, 1)';
-	context.lineWidth = 2;
+	context.strokeStyle = 'rgba(0, 0, 0, 1)';
+	context.lineWidth = BOUNDARY_WIDTH;
 	context.setLineDash([5,5]);
 	context.beginPath();
 	context.stroke(path2d);
@@ -123,7 +123,8 @@ const dashedBoundaries = ({context, path})=>{
 export const addBoundary = ({pattern, ...options}) => {
 	switch (pattern.boundaries) {
 		case BOUNDARIES.TEETH:
-			teethBoundaries({pattern, ...options});
+			fullBoundaries({pattern, ...options});
+			// teethBoundaries({pattern, ...options});
 			break;
 		case BOUNDARIES.FULL:
 			fullBoundaries({pattern, ...options});

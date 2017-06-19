@@ -30,24 +30,26 @@ const	drawPattern = ({context, aridity, drawPath}) => {
 
 export class CanvasDelegate {
 	constructor(data){ this.data = data; }
-	onDrawLayer({canvas, center, zoom:zoomLevel, layer}){
+	onDrawLayer({canvas, bounds, center, zoom:zoomLevel, layer}){
 		const projection = d3.geoTransform({
 		    point:function(x,y){
 					const pointLatLng = new L.LatLng(y,x);
 					const point = layer._map.latLngToLayerPoint(pointLatLng);
-					this.stream.point(point.x,point.y)
+					this.stream.point(point.x-bounds.left, point.y-bounds.top)
 				}
 		});	
 		
 		const zoom = Math.pow(2, 8 + zoomLevel) / 2 / Math.PI; 
 		const context = canvas.getContext("2d");
-		const {temperatures:{features:temperatures},aridity:{features:aridity}} = this.data;
-		const node = d3.select(canvas);
+		const {
+			temperatures:{ features:temperatures },
+			aridity:{ features:aridity }
+		} = this.data;
 		const drawPath = d3.geoPath().projection(projection).context(context);
 		const patterns = patternsUtil.initPatterns(context);
 
 		context.clearRect(0, 0, canvas.width, canvas.height);
-
+		// context.translate(origin.x, origin.y);
 		context.globalCompositeOperation = 'source-over';
 		// draw zones with different colors to do
 		// context.globalCompositeOperation = 'destination-in';
@@ -63,17 +65,19 @@ export class CanvasDelegate {
 			projection,
 			context,
 			boundaries: aridity
-		}); 
+		});
+		// console.log('onDrawLayer drawn !');
 	}
 }
 export default class CanvasLayer extends MapLayer {
 	static propTypes = {
 		delegate: PropTypes.object,
+		zIndex: PropTypes.number,
 	}
 
 	createLeafletElement(props){
 		const { delegate, ...options }= this.getOptions(props);
-		const pane = this.context.map.getPane(this.context.pane);
+		const { pane } = this.context;
 		return canvasLayer(delegate, pane, options);
 	}
 
