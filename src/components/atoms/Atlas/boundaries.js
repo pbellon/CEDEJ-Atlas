@@ -123,8 +123,8 @@ const dashedBoundaries = ({context, path})=>{
 export const addBoundary = ({pattern, ...options}) => {
 	switch (pattern.boundaries) {
 		case BOUNDARIES.TEETH:
-			fullBoundaries({pattern, ...options});
-			// teethBoundaries({pattern, ...options});
+			// fullBoundaries({pattern, ...options});
+			teethBoundaries({pattern, ...options});
 			break;
 		case BOUNDARIES.FULL:
 			fullBoundaries({pattern, ...options});
@@ -141,7 +141,9 @@ const initData = ({ boundaries, projection })=>{
 	let pathes = [];
 	let _boundaries = [];
 	const fnPath = d3.geoPath().projection(projection);
-
+	// main issue to optimize: 
+	// we need to avoid calling svgPathProperties every time
+	// we draw. 
 	boundaries.forEach((boundary)=>{
 		let extPath;
 		const path = fnPath(boundary);

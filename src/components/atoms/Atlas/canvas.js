@@ -46,13 +46,12 @@ export class CanvasDelegate {
 			aridity:{ features:aridity }
 		} = this.data;
 		const drawPath = d3.geoPath().projection(projection).context(context);
-		const patterns = patternsUtil.initPatterns(context);
+		const patterns = this.patterns = this.patterns || patternsUtil.initPatterns(context);
 
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		// context.translate(origin.x, origin.y);
 		context.globalCompositeOperation = 'source-over';
 		// draw zones with different colors to do
-		// context.globalCompositeOperation = 'destination-in';
 		temperatures.forEach((temp)=>drawArea({area:temp, context, drawPath}));
 
 		context.globalCompositeOperation = 'destination-out';

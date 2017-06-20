@@ -68,10 +68,11 @@ export default class Atlas extends Component {
         ref={(ref) => this.bindContainer(ref)}
       >
           <TileLayer url={ BASE_LAYER_URL } />
-          <TileLayer
+					{ /*
+					<TileLayer
             url={ NATURAL_FEATURES_URL }
             attribution={ NATURAL_FEATURES_ATTRIBUTION }/>
-        
+          */ }
 					<CanvasLayer zIndex={ 400 } delegate={ new CanvasDelegate(data) } />
       </Map>
     );
