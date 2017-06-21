@@ -26,12 +26,12 @@ def cleanJSON(fn, keys_to_keep, ftype='geo', topo_key=None):
 def cleanData():
     cleanJSON('circles.json', ['size_', 'colours']);
     cleanJSON('temperatures.json', ['Temperatur']);
-    cleanJSON('aridity.json', ['type', 'OBJECTID_1']);
+    cleanJSON('aridity.json', ['d_TYPE', 'OBJECTID_1']);
 
 def cleanTopo():
     cleanJSON('topo-circles.json', ['size_', 'colours'], 'topo', 'circles');
     cleanJSON('topo-temperatures.json', ['Temperatur'], 'topo', 'areas');
-    cleanJSON('topo-aridity.json', ['type', 'OBJECTID_1'], 'topo', 'patterns');
+    cleanJSON('topo-aridity.json', ['d_TYPE', 'OBJECTID_1'], 'topo', 'patterns');
 
 def createCirclesData():
     # shpf = open('shapefiles/circles', 'r')

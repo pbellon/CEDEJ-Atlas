@@ -6,22 +6,22 @@ import { BOUNDARIES } from './boundaries';
 let PATTERNS = [
 	{
     // hyper aride: pas de motif, bordure
-    key: '1',
+    key: 'Hyper',
     stripes: null,
     boundaries: BOUNDARIES.TEETH,
   },{
     // aride: pas de motif, bordure pleine
-    key: '2',
+    key: 'Aride',
     stripes: null,
     boundaries: BOUNDARIES.FULL,
   },{
     // semi-aride: motif -45*, bordure partielle (dashed)
-    key: '3',
+    key: 'Semi',
     stripes: { gap:7, rotate: 45, thickness: 1 },
     boundaries: BOUNDARIES.DASHED,
   },{
     // sub-humide: motif -45* + 45, pas de bordure
-    key: '4',
+    key: 'Sub_humide',
     stripes: { gap:7, rotate: 45, thickness: 1, plaid: true },
     boundaries: BOUNDARIES.NONE,
   }
@@ -76,7 +76,7 @@ const createCanvasPattern = ({stripes}) => {
 	return p;
 };
 
-export const findPattern = ({properties:{type}}) => {
+export const findPattern = ({properties:{d_TYPE:type}}) => {
 	return PATTERNS.find(({key}) => key == type);
 };
 

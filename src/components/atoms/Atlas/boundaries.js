@@ -3,7 +3,40 @@ import * as patterns from './patterns';
 import * as spp from 'svg-path-properties';
 
 const TEETH_GAP = 20;
-const BOUNDARY_WIDTH = 1.5;
+const BOUNDARY_WIDTH = 1.33;
+
+// inspiration from svg-path-properties
+class pathProperties {
+
+	constructor(pathStr, id){
+		let path = document.querySelector(`#path-${id}`);
+		if(!path){
+			path = document.createElementNS('http://www.w3.org/2000/svg',"path"); ;
+			path.setAttribute('id', `path-${id}`);
+			const util = document.querySelector('#pathUtil');
+			util.append(path);
+		};
+		path.setAttribute('d', pathStr);
+		this.path = path;
+	}
+
+	tanAt(l){
+		const p1 = this.pointAt(l);
+		const p2 = this.pointAt(l+1);
+		// took from https://github.com/rveciana/svg-path-properties/blob/master/src/linear.js
+		const module = Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
+		return { x: (p2.x - p1.x)/module, y: (p2.y - p1.y)/module };
+	}
+
+	pointAt(l){
+		return this.path.getPointAtLength(l);
+	};
+	
+	totalLength(){
+		return this.path.getTotalLength();
+	}
+}
+
 const hash = (str)=>{
 	// took from https://stackoverflow.com/a/7616484/885541
 	let hash = 0;
@@ -38,8 +71,8 @@ const deg2rad = (deg)=>deg*(Math.PI/180);
 const rad2deg = (rad)=>rad*(180/Math.PI);
 
 const triangleAt = (path, l, base=4, height=4)=>{
-	const point = path.properties.getPointAtLength(l);
-	const tan = path.properties.getTangentAtLength(l);
+	const point = path.properties.pointAt(l);
+	const tan = path.properties.tanAt(l);
 	const angle = Math.atan(tan.y/tan.x);
 	// find the angle to rotate
 	const triangleAngle = deg2rad(rad2deg(angle)-90) ;
@@ -81,6 +114,8 @@ const teethBoundaries = ({context, path})=>{
 	context.stroke(path2d);
 	context.closePath();
 	context.fillStyle = 'rgba(0,0,0,1)';
+	// optimisation possible: faire un prérendu des triangle et dessiner
+	// ensuite les triangle
 	for (let i = 1; i <= nbMarkers; i++){
 		const l = i * TEETH_GAP;
 		const { base0, base1, tops }  = triangleAt(path, l);
@@ -123,7 +158,6 @@ const dashedBoundaries = ({context, path})=>{
 export const addBoundary = ({pattern, ...options}) => {
 	switch (pattern.boundaries) {
 		case BOUNDARIES.TEETH:
-			// fullBoundaries({pattern, ...options});
 			teethBoundaries({pattern, ...options});
 			break;
 		case BOUNDARIES.FULL:
@@ -144,41 +178,21 @@ const initData = ({ boundaries, projection })=>{
 	// main issue to optimize: 
 	// we need to avoid calling svgPathProperties every time
 	// we draw. 
-	boundaries.forEach((boundary)=>{
+	boundaries.forEach((boundary, i)=>{
 		let extPath;
 		const path = fnPath(boundary);
-		if(boundary.properties.OBJECTID_1 == 525){
-
-			const subPathes = path.split('M').splice(1).map((p)=>{
-				const _p = `M${p}${p.indexOf('Z')>-1?'':'Z'}`;
-				const props = spp.svgPathProperties(_p);
-				return {
-					boundary,
-					properties: props,
-					length: props.getTotalLength(),
-					path: _p,
-				}
-			});
-
-			if(subPathes.length > 0){
-				extPath = subPathes[0];
-			} else {
-				extPath = subPathes.reduce((a,b)=>a.length > b.length ? a : b);
-			}
-			extPath.isExterior = true;
-			_boundaries = _boundaries.concat(subPathes);
-		} else {
-			const properties = spp.svgPathProperties(path);
-			_boundaries.push({
-				isExterior: true,
-				boundary,
-				properties,
-				length: properties.getTotalLength(),
-				path
-			});
-		}	
+		let id = `${boundary.properties.OBJECTID_1}-${i}`;
+		// console.log('boundary id:', id);
+		const properties = new pathProperties(path, id);
+		_boundaries.push({
+			isExterior: true,
+			boundary,
+			properties,
+			length: properties.totalLength(),
+			path
+		});	
 	});
-	return _boundaries;
+return _boundaries;
 };
 
 export const addBoundaries = ({boundaries, projection, ...options})=>{
