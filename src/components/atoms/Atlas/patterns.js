@@ -31,8 +31,7 @@ const addStripes = (canvas, {
     mode='normal',
     color='black',
     rotate=45,
-    opacity=0.5,
-    offset=0,
+		offset=0,
     plaid=false,
     gap,
     thickness

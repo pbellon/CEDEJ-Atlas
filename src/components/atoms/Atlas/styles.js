@@ -31,6 +31,8 @@ const circleStyle = (circle)=>{
   const color = circleColor(circle);
   return {
     stroke: false,
+		fillOpacity: 1,
+		opacity:1,
     color: color,
     fillColor: color,
   };

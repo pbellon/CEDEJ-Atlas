@@ -9,6 +9,8 @@ import * as topojson from 'topojson';
 import canvasLayer from './layer';
 import L from 'leaflet';
 
+const { pointsToPath } = L.SVG; 
+
 const drawArea = ({context, area, drawPath})=>{
 	const color = areaColor(area);
 	context.fillStyle = color;
@@ -16,7 +18,7 @@ const drawArea = ({context, area, drawPath})=>{
 	context.beginPath();
 	drawPath(area);
 	context.fill();
-}
+};
 
 const	drawPattern = ({context, aridity, drawPath}) => {
 	const pattern = patternsUtil.findPattern(aridity);
@@ -26,25 +28,34 @@ const	drawPattern = ({context, aridity, drawPath}) => {
 	context.beginPath();
 	drawPath(aridity);
 	context.fill();
-}
+};
 
 export class CanvasDelegate {
 	constructor(data){ this.data = data; }
+
+	processData(){
+		const { temperatures, aridity } = this.data;
+
+		this.temperatures = this.temperatures || temperatures.features.filter((f)=>(+f.properties.Temperatur) > 0);
+		this.aridity = this.aridity || aridity.features.filter((f)=>f.properties.d_TYPE != null);
+	}
+
+
 	onDrawLayer({canvas, bounds, center, zoom:zoomLevel, layer}){
+		this.layer = layer;
+		this.canvas =  canvas;
+		this.bounds = bounds; 
+		this.processData();
 		const projection = d3.geoTransform({
-		    point:function(x,y){
-					const pointLatLng = new L.LatLng(y,x);
-					const point = layer._map.latLngToLayerPoint(pointLatLng);
-					this.stream.point(point.x-bounds.left, point.y-bounds.top)
-				}
-		});	
+			point:function(x,y){
+				const pointLatLng = new L.LatLng(y,x);
+			 	const point = layer._map.latLngToLayerPoint(pointLatLng);
+			 	this.stream.point(point.x-bounds.left, point.y-bounds.top)
+			}
+		});
 		
-		const zoom = Math.pow(2, 8 + zoomLevel) / 2 / Math.PI; 
+		// const zoom = Math.pow(2, 8 + zoomLevel) / 2 / Math.PI; 
 		const context = canvas.getContext("2d");
-		const {
-			temperatures:{ features:temperatures },
-			aridity:{ features:aridity }
-		} = this.data;
 		const drawPath = d3.geoPath().projection(projection).context(context);
 		const patterns = this.patterns = this.patterns || patternsUtil.initPatterns(context);
 
@@ -52,18 +63,19 @@ export class CanvasDelegate {
 		// context.translate(origin.x, origin.y);
 		context.globalCompositeOperation = 'source-over';
 		// draw zones with different colors to do
-		temperatures.forEach((temp)=>drawArea({area:temp, context, drawPath}));
+		this.temperatures.forEach((temp)=>drawArea({area:temp, context, drawPath}));
 
 		context.globalCompositeOperation = 'destination-out';
 		// create aridity textures and substract them from areas paths (if needed)
 		// draw aridity boundaries (for certains kinds of aridity)
-		aridity.forEach((aridity)=>drawPattern({aridity, context, drawPath}));
+		this.aridity.forEach((aridity)=>drawPattern({aridity, context, drawPath}));
 
 		context.globalCompositeOperation = 'source-over';
 		boundaries.addBoundaries({
 			projection,
 			context,
-			boundaries: aridity
+			boundaries: this.aridity,
+			layer,
 		});
 		// console.log('onDrawLayer drawn !');
 	}

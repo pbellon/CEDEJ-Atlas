@@ -12,7 +12,7 @@ L.CanvasLayer = (L.Layer ? L.Layer : L.Class).extend({
 	includes: [L.Mixin.Events, TileLoader],
 
 	// -- initialized is called on prototype 
-	initialize: function (delegate, pane, options) {
+	initialize: function(delegate, pane, options){
 		this._map    = null;
     this._canvas = this._createCanvas();
     // backCanvas for zoom animation
@@ -29,23 +29,23 @@ L.CanvasLayer = (L.Layer ? L.Layer : L.Class).extend({
 			window.webkitCancelAnimationFrame || window.msCancelAnimationFrame || function(id) { clearTimeout(id); };
 	},
 
-	delegate :function(del){
+	delegate: function(del){
 		this._delegate = del;
 		return this;
 	},
 	
-	_onLayerDidResize: function (resizeEvent) {
+	_onLayerDidResize: function(resizeEvent){
 		this._canvas.width = resizeEvent.newSize.x;
 		this._canvas.height = resizeEvent.newSize.y;
 	},
 
-	_onLayerDidMove: function () {
+	_onLayerDidMove: function(){
 		var topLeft = this._map.containerPointToLayerPoint([0, 0]);
 		L.DomUtil.setPosition(this._canvas, topLeft);
 		this.draw();
 	},
 
-	getEvents: function () {
+	getEvents: function(){
 		return {
 			viewreset: this._reset,
 			resize: this._reset,
@@ -64,11 +64,21 @@ L.CanvasLayer = (L.Layer ? L.Layer : L.Class).extend({
 		// canvas.style.zIndex = this.options.zIndex || 0;
 		var className = 'leaflet-tile-container leaflet-zoom-animated';
 		canvas.setAttribute('class', className);
-		canvas.setAttribute('moz-opaque', true);
+		// canvas.setAttribute('moz-opaque', true);
 		return canvas;
 	},
 
+	_prerenderAtZoom: function(zoomLevel){
+		const canvas = this._createCanvas();
+	},
 
+	_prerender: function(){
+		this._renderedCanvas = {};
+		const { minZoom, maxZoom } = this._map;
+		for(let i = minZoom; i <= maxZoom; i++){
+			this._renderedCanvas[i] = this._prerenderAtZoom(i);
+		}
+	},
 
 	_reset: function(){
 		var size = this._map.getSize();
@@ -77,7 +87,6 @@ L.CanvasLayer = (L.Layer ? L.Layer : L.Class).extend({
 
 		// fix position
 		var pos = L.DomUtil.getPosition(this._map.getPanes().mapPane);
-		console.log('pos', pos);
 		if (pos) {
 			L.DomUtil.setPosition(this._canvas, { x: -pos.x, y: -pos.y });
 		}
@@ -91,7 +100,7 @@ L.CanvasLayer = (L.Layer ? L.Layer : L.Class).extend({
 		this.currentAnimationFrame = this.requestAnimationFrame.call(window, this.render);
 	},
 
-	onAdd: function (map) {
+	onAdd: function(map) {
 		this._map = map;
 
 		// add container with the canvas to the tile pane
@@ -117,9 +126,7 @@ L.CanvasLayer = (L.Layer ? L.Layer : L.Class).extend({
 			}, this);
 		}
 		map.on(this.getEvents(), this);
-		if(this.options.tileLoader) {
-			this._initTileLoader();
-		}	
+		// this._prerender();
 		this._reset();
 	},
 
@@ -157,7 +164,6 @@ L.CanvasLayer = (L.Layer ? L.Layer : L.Class).extend({
 
 	redraw: function(direct) {
 		var domPosition = L.DomUtil.getPosition(this._map.getPanes().mapPane);
-		console.log('redraw - domPos', domPosition);
 		if (domPosition) {
 			L.DomUtil.setPosition(this._canvas, { x: -domPosition.x, y: -domPosition.y });
 		}
@@ -168,11 +174,11 @@ L.CanvasLayer = (L.Layer ? L.Layer : L.Class).extend({
 		}
 	},
 
-	draw: function () {
+	draw: function() {
 		return this._reset();
 	},
 
-	_animateZoom: function (e) {
+	_animateZoom: function(e) {
 		if (!this._animating) {
 			this._animating = true;
 		}
@@ -198,7 +204,6 @@ L.CanvasLayer = (L.Layer ? L.Layer : L.Class).extend({
 		};
 
 		L.DomUtil.setTransform(back, diff, scale);
-		console.log('animation done !');
 	},
 
 	_endZoomAnim: function(){
@@ -208,7 +213,6 @@ L.CanvasLayer = (L.Layer ? L.Layer : L.Class).extend({
 	},
 
 	render: function(){
-		console.log('render!');
 		const size   = this._map.getSize();
 		const bounds = this._getMapBounds();
 		const zoom   = this._map.getZoom();

@@ -1,6 +1,5 @@
 import * as d3 from 'd3';
 import * as patterns from './patterns';
-import * as spp from 'svg-path-properties';
 
 const TEETH_GAP = 20;
 const BOUNDARY_WIDTH = 1.33;
@@ -58,13 +57,6 @@ export const BOUNDARIES = {
 	FULL: 'full',
 	DASHED: 'dashed',
 	NONE: null,
-};
-
-const attrs = (sel, _attrs)=>{
-	for (const i in _attrs) {
-		sel.attr(i, _attrs[i]); 
-	}
-	return sel;
 };
 
 const deg2rad = (deg)=>deg*(Math.PI/180);
@@ -192,7 +184,7 @@ const initData = ({ boundaries, projection })=>{
 			path
 		});	
 	});
-return _boundaries;
+	return _boundaries;
 };
 
 export const addBoundaries = ({boundaries, projection, ...options})=>{
