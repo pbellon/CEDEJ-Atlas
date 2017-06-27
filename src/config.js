@@ -1,54 +1,20 @@
-const merge = require('lodash/merge')
-
-const browser = typeof window !== 'undefined'
-const ip = process.env.IP || 'localhost'
-const port = process.env.PORT || 3000
-const basename = `/${process.env.PUBLIC_PATH || ''}`.replace('//', '/')
+const merge = require('lodash/merge');
 
 const config = {
   all: {
     env: process.env.NODE_ENV || 'development',
-    baseUrl: `http://${ip}:${port}${basename}`,
-    apiUrl: `http://${ip}:${port}/api`,
-    fbAppId: '991453140998882',
-    googleClientId: '464712936089-q953apdu1bjiqtcjndktnnk1ts4f2cgv.apps.googleusercontent.com',
-    mongo: {
-      options: {
-        db: {
-          safe: true,
-        },
-      },
-    },
-    basename,
-    browser,
-    ip,
-    port,
+    isDev: process.env.NODE_ENV !== 'production',
+    basename: process.env.PUBLIC_PATH,
+    isBrowser: typeof window !== 'undefined',
+    apiUrl: 'https://jsonplaceholder.typicode.com',
   },
-  test: {
-    mongo: {
-      uri: `mongodb://${ip}/arc-test`,
-      options: {
-        debug: false,
-      },
-    },
-  },
+  test: {},
   development: {
-    mongo: {
-      uri: `mongodb://${ip}/arc-dev`,
-      options: {
-        debug: true,
-      },
-    },
+    apiUrl: 'http://localhost:3000'
   },
   production: {
-    ip: process.env.IP || 'localhost',
-    port: process.env.PORT || 8080,
-    baseUrl: 'https://arc.diegohaz.com',
-    apiUrl: 'https://arc.diegohaz.com/api',
-    mongo: {
-      uri: process.env.MONGODB_URI || 'mongodb://localhost/arc',
-    },
+    apiUrl: 'https://jsonplaceholder.typicode.com',
   },
-}
+};
 
-module.exports = merge(config.all, config[config.all.env])
+module.exports = merge(config.all, config[config.all.env]);

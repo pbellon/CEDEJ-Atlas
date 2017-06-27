@@ -1,14 +1,11 @@
-import React from 'react'
-
-import { PageTemplate, Header, Hero, Footer, FeatureList } from 'components'
-import { Prototype } from 'containers';
+import React from 'react';
+import { ExportForm, Atlas } from 'containers';
 
 const HomePage = () => {
-  return (
-    <PageTemplate header={<Header />} footer={<Footer />}>
-      <Prototype />
-    </PageTemplate>
-  )
-}
+  return (<div>
+    <ExportForm />
+    <Atlas />
+  </div>);
+};
 
-export default HomePage
+export default HomePage;

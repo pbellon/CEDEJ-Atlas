@@ -5,101 +5,94 @@
 * Licensed under the MIT License.
 * http://opensource.org/licenses/mit-license
 */
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
-function html2pdf (html,pdf,callback) {
-  var canvas = pdf.canvas;
-  if (!canvas) {
-    throw new Error('jsPDF canvas plugin not installed');
-  }
-  canvas.pdf = pdf;
-  pdf.annotations = {
+const html2pdf = (html, options) => {
+  const pdf = jsPDF(options);
 
-    _nameMap : [],
-
-    createAnnotation : function(href,bounds) {
-      var x = pdf.context2d._wrapX(bounds.left);
-      var y = pdf.context2d._wrapY(bounds.top);
-      var page = pdf.context2d._page(bounds.top);
-      var options;
-      var index = href.indexOf('#');
-      if (index >= 0) {
-        options = {
-          name : href.substring(index + 1)
-        };
-      } else {
-        options = {
-          url : href
-        };
+  return new Promise((resolve, reject) => {
+    try {
+      let body;
+      let doc;
+      const iframe = document.createElement('iframe');
+      const canvas = pdf.canvas;
+      if (!canvas) {
+        throw new Error('jsPDF canvas plugin not installed');
       }
-      pdf.link(x, y, bounds.right - bounds.left, bounds.bottom - bounds.top, options);
-    },
 
-    setName : function(name,bounds) {
-      var x = pdf.context2d._wrapX(bounds.left);
-      var y = pdf.context2d._wrapY(bounds.top);
-      var page = pdf.context2d._page(bounds.top);
-      this._nameMap[name] = {
-        page : page,
-        x : x,
-        y : y
+      document.body.appendChild(iframe);
+      doc = iframe.contentDocument;
+      if (doc === undefined || doc === null) {
+        doc = iframe.contentWindow.document;
+      }
+
+      canvas.pdf = pdf;
+      pdf.annotations = {
+        _nameMap: [],
+        createAnnotation: (href, bounds) => {
+          const x = pdf.context2d._wrapX(bounds.left);
+          const y = pdf.context2d._wrapY(bounds.top);
+          // const page = pdf.context2d._page(bounds.top);
+          const index = href.indexOf('#');
+          let options;
+          if (index >= 0) {
+            options = {
+              name: href.substring(index + 1),
+            };
+          } else {
+            options = {
+              url: href,
+            };
+          }
+          pdf.link(x, y, bounds.right - bounds.left, bounds.bottom - bounds.top, options);
+        },
+
+        setName: (name, bounds) => {
+          const x = pdf.context2d._wrapX(bounds.left);
+          const y = pdf.context2d._wrapY(bounds.top);
+          const page = pdf.context2d._page(bounds.top);
+          this._nameMap[name] = { page, x, y };
+        },
       };
-    }
 
-  };
-  canvas.annotations = pdf.annotations;
+      canvas.annotations = pdf.annotations;
 
-  pdf.context2d._pageBreakAt = function(y) {
-    this.pageBreaks.push(y);
-  };
+      pdf.context2d._pageBreakAt = (y) => {
+        this.pageBreaks.push(y);
+      };
 
-  pdf.context2d._gotoPage = function(pageOneBased) {
-    while (pdf.internal.getNumberOfPages() < pageOneBased) {
-      pdf.addPage();
-    }
-    pdf.setPage(pageOneBased);
-  }
+      pdf.context2d._gotoPage = (pageOneBased) => {
+        while (pdf.internal.getNumberOfPages() < pageOneBased) {
+          pdf.addPage();
+        }
+        pdf.setPage(pageOneBased);
+      };
 
-  if (typeof html === 'string') {
-    // remove all scripts
-    html = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+      if (typeof html === 'string') {
+        // remove all scripts
+        const p = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
+        doc.open();
+        doc.write(html.replace(p, ''));
+        doc.close();
+        body = doc.body;
+      } else {
+        body = html;
+      }
 
-    var iframe = document.createElement('iframe');
-    document.body.appendChild(iframe);
-    var doc;
-    doc = iframe.contentDocument;
-    if (doc == undefined || doc == null) {
-      doc = iframe.contentWindow.document;
-    }
-
-    doc.open();
-    doc.write(html);
-    doc.close();
-
-    var promise = html2canvas(doc.body, {
-      canvas : canvas,
-      onrendered : function(canvas) {
-        if (callback) {
+      html2canvas(body, {
+        canvas,
+        onrendered: () => {
           if (iframe) {
             iframe.parentElement.removeChild(iframe);
           }
-          callback(pdf);
-        }
-      }
-    });
+          resolve(pdf);
+        },
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 
-  } else {
-    var body = html;
-    var promise = html2canvas(body, {
-      canvas : canvas,
-      onrendered : function(canvas) {
-        if (callback) {
-          if (iframe) {
-            iframe.parentElement.removeChild(iframe);
-          }
-          callback(pdf);
-        }
-      }
-    });
-  }
-
-}
+export default html2pdf;

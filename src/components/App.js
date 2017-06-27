@@ -1,40 +1,26 @@
-import React, { PropTypes } from 'react'
-import { injectGlobal, ThemeProvider } from 'styled-components'
-import Helmet from 'react-helmet'
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
+import { injectGlobal, ThemeProvider } from 'styled-components';
 
-import theme from './themes/default'
+import { HomePage } from 'components';
+
+// https://github.com/diegohaz/arc/wiki/Styling
+import theme from './themes/default';
 
 injectGlobal`
   body {
     margin: 0;
   }
-`
+`;
 
-const App = ({ children }) => {
+const App = () => {
   return (
-    <div>
-      <Helmet
-        title="Atomic React"
-        titleTemplate="ARc - %s"
-        meta={[
-          { name: 'description', content: 'React starter kit based on Atomic Design with React Router v4, Webpack, Redux, Server Side Rendering and more.' },
-          { property: 'og:site_name', content: 'ARc' },
-          { property: 'og:image', content: 'https://diegohaz.github.io/arc/thumbnail.png' },
-          { property: 'og:image:type', content: 'image/png' },
-          { property: 'og:image:width', content: '1200' },
-          { property: 'og:image:height', content: '630' },
-        ]}
-        link={[
-          { rel: 'icon', href: 'https://diegohaz.github.io/arc/icon.png' },
-        ]}
-      />
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
-    </div>
-  )
-}
+    <ThemeProvider theme={theme}>
+      <Switch>
+        <Route path="/" component={HomePage} exact />
+      </Switch>
+    </ThemeProvider>
+  );
+};
 
-App.propTypes = {
-  children: PropTypes.any,
-}
-
-export default App
+export default App;

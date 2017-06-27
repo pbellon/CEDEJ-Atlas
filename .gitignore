@@ -1,6 +1,10 @@
 .DS_Store
+.happypack
 dist
 *.log
+*.swp
+*.swo
 node_modules
 coverage
 webpack/webpack-assets.json
+*.pyc
