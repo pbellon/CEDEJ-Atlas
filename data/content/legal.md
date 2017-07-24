@@ -17,12 +17,12 @@ San Francisco - California - USA</br>
 www.github.com</br>
 
 ## Développement
-[**Skoli**](www.skoli.fr) </br>
-Siège : 11 rue Duphot – 69003 Lyon</br>
-Adresse professionnelle
+[**Skoli**](www.skoli.fr) </br></br>
+**Siège** : 11 rue Duphot – 69003 Lyon</br>
+**Adresse professionnelle** :
 9, rue de la Martinière 69001 - Lyon</br>
-Téléphone : + 33 (0)4 72 45 79 37</br>
-Email : contact@skoli.fr</br>
+**Téléphone : + 33 (0)4 72 45 79 37</br>**
+**Email** : contact@skoli.fr</br>
 www.skoli.fr
 
 ## Technologies utilisées
