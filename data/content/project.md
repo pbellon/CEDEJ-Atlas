@@ -10,21 +10,23 @@ Cette carte interactive a été conçue à partir de la carte mondiale des zones
 
 - Entre 2011 et 2014, le CEDEJ et le LaISC se sont employés à constituer une base de données sur l’aridité à partir d’une lecture minutieuse et approfondie de la carte mondiale éditée par l’UNESCO. Cette carte (fig.1) combine plusieurs types de projections astronomiques et différents systèmes géodésiques : les régions du monde n’y sont pas représentées selon le même référentiel géographique. Une projection conforme bipolaire oblique est utilisée pour les Amériques tandis que le système Miller stéréographique aplati est employé pour le reste du monde.
 
-**Insérer Fig. 1**
+
+
+![Carte originale de l'Unesco](/src/img/fig_1.jpg)
 
 - La première étape du travail accompli par le CEDEJ et le LaISC a consisté à établir un géoréférencement uniforme de l’image de la carte publiée par l’UNESCO selon le système géodésique mondial WGS84 (World Geodesic System 1984). Ce référentiel géographique WGS84 est associé au GPS et au type de projection UTM (Universal Transverse Mercator).
 La carte initiale a ainsi été découpée en carrés, tous géoréférencés selon un unique référentiel géographique. Des algorithmes ont permis d’ajuster cette mosaïque  (fig.2) qui constitue une nouvelle image (*raster*).
 
-**Insérer Fig. 2**
+![Carte découpée en raster](/src/img/fig_2.jpg)
 
 Dans un second temps, cette nouvelle image a fait l’objet d’une digitalisation (vectorisation) de façon à mettre au point une carte digitalisée muette du monde (fig.3).
 
-**Insérer Fig. 3**
+![Carte digitalisée](/src/img/fig_3.jpg)
 
 - A défaut de disposer d’une base de données numérique sur l’aridité, les équipes du CEDEJ et du LaISC ont entrepris la création de cette base à partir des informations fournies dans la carte éditée par l’UNESCO et sa légende, lesquelles croisent quatre variables : le type d’aridité, la température, le nombre de mois secs par an et le régime des précipitations.
 Les zones subhumides, arides et hyperarides de la carte de l’aridité (1977) ont chacune été identifiées et tracées selon un codage inédit pour construire une base de données à référence spatiale (SIRS). Cette base consigne, au moyen de calques (fig.4), toutes les caractéristiques propres aux critères de l’aridité définis dans le « Programme mondial  de recherches sur la zone aride » de l’UNESCO (1951-1964).
 
-**Insérer Fig. 4**
+![Calques d'aridité](/src/img/fig_4.jpg)
 
 - En 2017, le pôle « Humanités numériques et SIG » du CEDEJ lance le portail *http://aridityworldmap.com*, en libre accès, sous la conduite de Hala Bayoumi, ingénieure de recherches au CNRS. Cette interface propose une carte mondiale de l’aridité à référence spatiale (SIRS) associée à la base de données établie avec les quatre variables initiales (type d’aridité, température, durée de la sécheresse, régime pluviométrique). Cette carte mondiale SIRS est une carte interactive : elle permet la sélection ou/et la combinaison des variables de l’aridité à différentes échelles spatiales.
 
