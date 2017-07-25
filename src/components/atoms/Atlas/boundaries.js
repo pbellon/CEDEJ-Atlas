@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+import { geoPath } from 'd3';
 import * as patterns from './patterns';
 
 const TEETH_GAP = 20;
@@ -166,7 +166,7 @@ export const addBoundary = ({pattern, ...options}) => {
 const initData = ({ boundaries, projection })=>{
 	let pathes = [];
 	let _boundaries = [];
-	const fnPath = d3.geoPath().projection(projection);
+	const fnPath = geoPath().projection(projection);
 	// main issue to optimize: 
 	// we need to avoid calling svgPathProperties every time
 	// we draw. 

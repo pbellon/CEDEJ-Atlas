@@ -3,9 +3,7 @@ import leafletImage from 'leaflet-image';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Map, TileLayer, GeoJSON, LayerGroup, Pane, Circle } from 'react-leaflet';
-import L from 'leaflet';
-
-import * as d3 from 'd3';
+import { canvas  } from 'leaflet';
 
 import 'leaflet/dist/leaflet.css';
 import './Atlas.css';
@@ -18,8 +16,6 @@ const BASE_LAYER_URL = 'http://server.arcgisonline.com/ArcGIS/rest/services/Worl
 const NATURAL_FEATURES_URL = 'http://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer/tile/{z}/{y}/{x}.png';
 
 const NATURAL_FEATURES_ATTRIBUTION = '&copy; Powerded by <a href="http://www.esri.com/">ESRI</a> world reference overlay';
-
-const canvas = L.canvas();
 
 const renderCircles = (data)=>{
   return data.features.map((circle,key)=>{
@@ -83,7 +79,7 @@ export default class Atlas extends Component {
         <Map
         minZoom={3}
         maxZoom={8}
-        renderer={canvas}
+        renderer={canvas()}
         animate={true}
         center={position} zoom={4}
         ref={(ref) => this.bindContainer(ref)}

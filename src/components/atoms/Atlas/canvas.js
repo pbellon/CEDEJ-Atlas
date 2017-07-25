@@ -2,14 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MapLayer } from 'react-leaflet';
 import { areaColor } from './styles';
-import * as d3 from 'd3';
+import { geoTransform, geoPath} from 'd3';
 import * as patternsUtil from './patterns';
 import * as boundaries from './boundaries'; 
-import * as topojson from 'topojson';
 import canvasLayer from './layer';
-import L from 'leaflet';
-
-const { pointsToPath } = L.SVG; 
+import { LatLng } from 'leaflet';
 
 const drawArea = ({context, area, drawPath})=>{
   const color = areaColor(area);
@@ -46,9 +43,9 @@ export class CanvasDelegate {
     this.canvas =  canvas;
     this.bounds = bounds; 
     this.processData();
-    const projection = d3.geoTransform({
+    const projection = geoTransform({
       point:function(x,y){
-        const pointLatLng = new L.LatLng(y,x);
+        const pointLatLng = new LatLng(y,x);
         const point = layer._map.project(pointLatLng, zoomLevel);
         this.stream.point(point.x, point.y)
         // this.stream.point(point.x-bounds.left, point.y-bounds.top);
@@ -57,7 +54,7 @@ export class CanvasDelegate {
 
     // const zoom = Math.pow(2, 8 + zoomLevel) / 2 / Math.PI; 
     const context = canvas.getContext("2d");
-    const drawPath = d3.geoPath().projection(projection).context(context);
+    const drawPath = geoPath().projection(projection).context(context);
     const patterns = this.patterns = this.patterns || patternsUtil.initPatterns(context);
 
     context.clearRect(0, 0, canvas.width, canvas.height);
