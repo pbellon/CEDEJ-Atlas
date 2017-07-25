@@ -46,8 +46,9 @@ L.CanvasLayer = (L.Layer ? L.Layer : L.Class).extend({
     const latLngCenter = this._map.getCenter();
     const center = this._map.project(latLngCenter, zoom);
     const bounds = this._map.getPixelBounds(latLngCenter,zoomLevel); 
-    
+    const pixelOrigin = this._map._getNewPixelOrigin(latLngCenter, zoom);    
     return {
+      origin: pixelOrigin,
       center,
       width: _max.x - _min.x,
       height: _max.y - _min.y,
@@ -115,7 +116,8 @@ L.CanvasLayer = (L.Layer ? L.Layer : L.Class).extend({
 
   _prerenderAtZoom: function(zoomLevel){
     const mapPos = this._map._getMapPanePos();
-    const {min, max, width, height, bounds, center} = this._getBBoxAt(zoomLevel);
+    const {min, max, width, height, bounds, center, origin} = this._getBBoxAt(zoomLevel);
+    console.log('pixel origin:', origin);
     const canvas = this._createCanvas({
       id: `canvas-zoom-${zoomLevel}`,
       width, height, bounds
@@ -133,7 +135,8 @@ L.CanvasLayer = (L.Layer ? L.Layer : L.Class).extend({
       width,
       height,
       bounds,
-      center
+      center,
+      origin,
     };
   },
 
@@ -213,32 +216,14 @@ L.CanvasLayer = (L.Layer ? L.Layer : L.Class).extend({
     }
    // const { min } = this._getBBoxAt(e.zoom);
     const prerendered = this._getActiveCanvas(e.zoom);
-    const { canvas, center } = prerendered;
+    const { canvas, center, origin } = prerendered;
     this._setActiveCanvas(prerendered);
     // hide original
-    const oldPos = L.DomUtil.getPosition(canvas);
-    const { min, max } = this._bbox;
-    const newTopLeft = this._map.latLngToLayerPoint({lat:min.y, lng:max.x}, e.zoom, e.center);
-    const oldPixelOrigin = this._map.getPixelOrigin();
+//    const oldPixelOrigin = this._map.getPixelOrigin();
     const pixelOrigin = this._map._getNewPixelOrigin(e.center, e.zoom);
-    const newCenter = this._map.latLngToLayerPoint(e.center,  e.zoom, e.center);
-    const { min:bounds } = this._map.getPixelBounds(e.center, e.zoom);
     // const {x,y} = this._map._latLngToNewLayerPoint(this._map.getCenter(), e.zoom);
-    const mapPos = L.DomUtil.getPosition(this._map.getPanes().mapPane);
-    const diff = { x: center.x-newCenter.x, y: center.y-newCenter.y };
-    const diffOrigin = {
-      x: pixelOrigin.x - oldPixelOrigin.x,
-      y: pixelOrigin.y - oldPixelOrigin.y,
-    };  
-    const pos = {
-      x:-(newTopLeft.x+diffOrigin.x),
-      y:-(newTopLeft.y+diffOrigin.y),
-    };
-    console.log('pos', pos);
-    console.log('newTopLeft', newTopLeft);
-    console.log('zoomanim - pixelOrigin', oldPixelOrigin, pixelOrigin);
-//    console.log('position to set for active canvas', newCenter, mapPos, pos);
-    L.DomUtil.setPosition(this._canvas, pos);
+    // we just need to adjust to the new map's origin (in pixels)
+    L.DomUtil.setPosition(this._canvas, {x:-pixelOrigin.x, y:-pixelOrigin.y});
 
    // const newCenter = this._map._latLngToNewLayerPoint(this._map.getCenter(), e.zoom, e.center);
   },
