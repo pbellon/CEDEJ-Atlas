@@ -2,6 +2,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const WriteFilePlugin = require('write-file-webpack-plugin');
 const devServer = require('@webpack-blocks/dev-server2');
 const splitVendor = require('webpack-blocks-split-vendor');
@@ -22,13 +23,19 @@ const dataPath = path.join(process.cwd(), dataDir);
 const sourcePath = path.join(process.cwd(), sourceDir);
 const outputPath = path.join(process.cwd(), 'dist');
 
+const resolveModules = modules => () => ({
+  resolve: {
+    modules: [].concat(modules, ['node_modules']),
+  },
+});
+
 const styles = () => () => ({
   module: {
     rules: [
-      {
-        test: /\.css$/,
-        loader: 'style-loader!css-loader',
-      },
+    {
+      test: /\.css$/,
+      loader: 'style-loader!css-loader',
+    },
     ],
   },
 });
@@ -36,76 +43,110 @@ const styles = () => () => ({
 const babel = () => () => ({
   module: {
     rules: [
-      { test: /\.jsx?$/, exclude: [/node_modules/, /\.swp$/, /\.swo$/], loader: 'babel-loader' },
+    { test: /\.jsx?$/, exclude: [/node_modules/, /\.swp$/, /\.swo$/], loader: 'babel-loader' },
     ],
   },
 });
 
+const commonsChunkPlugin = ()=>{
+  return new webpack.optimize.CommonsChunkPlugin({
+    name: 'vendor',
+    minChunks: Infinity,
+    filename: '[name].[hash].js',
+  });
+};
+
 const config = createConfig([
-  entryPoint({
-    app: sourcePath,
-  }),
-  setOutput({
-    filename: '[name].js',
-    path: outputPath,
-    publicPath,
-  }),
-  defineConstants({
-    'process.env.NODE_ENV': process.env.NODE_ENV,
-    'process.env.PUBLIC_PATH': publicPath.replace(/\/$/, ''),
-  }),
-  addPlugins([
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: path.join(process.cwd(), 'public/index.html'),
+    entryPoint({
+      app: ['./src/index.js'],
+      vendor: [
+        'babel-polyfill',
+        'd3',
+        'jspdf',
+        'html2canvas',
+        'leaflet',
+        'leaflet-image',
+        'lodash',
+        'prop-types',
+        'react',
+        'react-dom',
+        'react-leaflet',
+        'react-modal',
+        'react-redux',
+        'react-router-dom',
+        'redux',
+        'redux-form',
+        'redux-form-submit',
+        'redux-saga',
+        'styled-components',
+        'styled-tools',
+        'styled-theme',
+        'whatwg-fetch'
+          ]
     }),
-    new CopyWebpackPlugin([
-      { from: dataPath, to: 'data' },
+    setOutput({
+      filename: '[name].[hash].js',
+      chunkFilename:'[name].[hash].js',
+      path: outputPath,
+      publicPath,
+    }),
+    defineConstants({
+      'process.env.NODE_ENV': process.env.NODE_ENV,
+      'process.env.PUBLIC_PATH': publicPath.replace(/\/$/, ''),
+    }),
+    addPlugins([
+        new HtmlWebpackPlugin({
+          filename: 'index.html',
+          template: path.join(process.cwd(), 'public/index.html'),
+        }),
+        new CopyWebpackPlugin([
+          { from: dataPath, to: 'data' },
+        ]),
     ]),
-  ]),
-  happypack([
-    babel(),
-    styles(),
-  ], {
-    cacheContext: { sourceDir },
-  }),
-  addPlugins([
-    new webpack.ProgressPlugin(),
-  ]),
-  () => ({
-    resolve: {
-      modules: [sourceDir, 'node_modules'],
-    },
-    module: {
-      rules: [
+    happypack([
+        babel(),
+        styles(),
+    ], {
+      cacheContext: { sourceDir },
+    }),
+    resolveModules(sourceDir),
+    addPlugins([
+        new webpack.ProgressPlugin(),
+    ]),
+    () => ({
+      module: {
+        rules: [
         { test: /\.(png|jpe?g|svg)$/, loader: 'url-loader?&limit=8000' },
         { test: /\.(woff2?|ttf|eot)$/, loader: 'url-loader?&limit=8000' },
-      ],
-    },
-  }),
-
-  env('development', [
-    devServer({
-      contentBase: 'public',
-      stats: 'errors-only',
-      historyApiFallback: { index: publicPath },
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      host,
-      port,
+        ],
+      },
     }),
-    sourceMaps(),
-    addPlugins([
-      new WriteFilePlugin(),
-      new webpack.NamedModulesPlugin(),
-    ]),
-  ]),
 
-  env('production', [
-    splitVendor(),
-    addPlugins([
-      new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
+    env('development', [
+        devServer({
+          contentBase: 'public',
+          stats: 'errors-only',
+          historyApiFallback: { index: publicPath },
+          hot: false,
+          headers: { 'Access-Control-Allow-Origin': '*' },
+          host,
+          port,
+        }),
+        sourceMaps(),
+        addPlugins([
+          commonsChunkPlugin(),
+          new BundleAnalyzerPlugin(),
+          new WriteFilePlugin(),
+          new webpack.NamedModulesPlugin(),
+        ]),
     ]),
-  ]),
-]);
+
+    env('production', [
+        addPlugins([
+          commonsChunkPlugin(),
+          new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
+        ]),
+    ]),
+    ]);
 
 module.exports = config;
