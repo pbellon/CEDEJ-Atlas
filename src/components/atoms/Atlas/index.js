@@ -72,7 +72,13 @@ export default class Atlas extends Component {
 
   render() {
     const { data } = this.props;
-    const { bbox } = data.topoTemperatures;
+    // const { bbox } = data.topoTemperatures;
+    const bbox = [
+       -179.2165527343741
+      , -56.157571400448376
+      ,  181.00012207031295
+      ,  84.62359619140625
+    ];
     // const { mapRef } = this.state;
     const position = [10, 35];
     return (
