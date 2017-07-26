@@ -39,7 +39,15 @@ const styles = () => () => ({
     ],
   },
 });
-
+const markdown = () => () => ({
+  module: {
+    rules: [{
+      test: /\.md$/,
+      exclude: [/node_modules/],
+      loader: 'raw-loader'
+    }]
+  }
+});
 const babel = () => () => ({
   module: {
     rules: [
@@ -71,6 +79,7 @@ const config = createConfig([
         'react',
         'react-dom',
         'react-leaflet',
+        'react-markdown',
         'react-modal',
         'react-redux',
         'react-router-dom',
@@ -82,7 +91,7 @@ const config = createConfig([
         'styled-tools',
         'styled-theme',
         'whatwg-fetch'
-          ]
+      ]
     }),
     setOutput({
       filename: '[name].[hash].js',
@@ -104,6 +113,7 @@ const config = createConfig([
         ]),
     ]),
     happypack([
+        markdown(),
         babel(),
         styles(),
     ], {
