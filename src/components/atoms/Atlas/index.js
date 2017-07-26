@@ -20,7 +20,7 @@ const NATURAL_FEATURES_URL = 'http://server.arcgisonline.com/ArcGIS/rest/service
 
 const NATURAL_FEATURES_ATTRIBUTION = '&copy; Powerded by <a href="http://www.esri.com/">ESRI</a> world reference overlay';
 
-const MAPBOX_URL = 'https://api.mapbox.com/styles/v1/69sodaa69/cj5l8utwy29sl2slw1suw93hp/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiNjlzb2RhYTY5IiwiYSI6IkxGcGU0UVUifQ.hUuuHsf8Vzwllw-ZIqIU2g';
+const MAPBOX_URL = 'https://api.mapbox.com/styles/v1/69sodaa69/cj5l8utwy29sl2slw1suw93hp/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiNjlzb2RhYTY5IiwiYSI6IkxGcGU0UVUifQ.hUuuHsf8Vzwllw-ZIqIU2g';
 
 const VECTOR_TILE_URL = 'https://basemaps.arcgis.com/v1/arcgis/rest/services/World_Basemap/VectorTileServer/tile/{z}/{y}/{x}.pbf';
 
