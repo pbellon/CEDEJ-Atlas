@@ -40,12 +40,12 @@ const api = {};
 
 api.request = (endpoint, { params, ...settings } = {}) =>
   fetch(parseEndpoint(endpoint, params), parseSettings(settings))
-    .then(checkStatus)
-    .then(parseJSON);
+.then(checkStatus)
+  .then(parseJSON);
 
-['delete', 'get'].forEach((method) => {
-  api[method] = (endpoint, settings) => api.request(endpoint, { method, ...settings });
-});
+  ['delete', 'get'].forEach((method) => {
+    api[method] = (endpoint, settings) => api.request(endpoint, { method, ...settings });
+  });
 
 ['post', 'put', 'patch'].forEach((method) => {
   api[method] = (endpoint, data, settings) => api.request(endpoint, { method, data, ...settings });
@@ -54,8 +54,6 @@ api.request = (endpoint, { params, ...settings } = {}) =>
 api.getMapData = ()=>{
   const dataFiles = {
     aridity: '/data/aridity.json',
-		topoAridity: '/data/topo-aridity.json',
-		topoTemperatures: '/data/topo-temperatures.json',
     temperatures: '/data/temperatures.json',
     circles: '/data/circles.json'
   };
@@ -63,8 +61,8 @@ api.getMapData = ()=>{
   const get = key => api.get(dataFiles[key]).then(data => ({ [key]:data }));
 
   return Promise.all(
-    Object.keys(dataFiles).map(get)
-  ).then((data) => data.reduce((a,b) => Object.assign({}, a, b)));
+      Object.keys(dataFiles).map(get)
+      ).then((data) => data.reduce((a,b) => Object.assign({}, a, b)));
 }
 
 api.create = (settings = {}) => ({
