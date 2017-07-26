@@ -81,7 +81,7 @@ L.CanvasLayer = (L.Layer ? L.Layer : L.Class).extend({
   },
 
   _createCanvas: function({id,width, height, bounds:{min:{x,y}}}){
-    console.log(`createCanvas zoom ${id} - x,y`,x,y);
+    // console.log(`createCanvas zoom ${id} - x,y`,x,y);
     const px = (s)=>`${s}px`;
     const canvas = document.createElement('canvas');
     canvas.width = width;
@@ -117,7 +117,7 @@ L.CanvasLayer = (L.Layer ? L.Layer : L.Class).extend({
   _prerenderAtZoom: function(zoomLevel){
     const mapPos = this._map._getMapPanePos();
     const {min, max, width, height, bounds, center, origin} = this._getBBoxAt(zoomLevel);
-    console.log('pixel origin:', origin);
+    // console.log('pixel origin:', origin);
     const canvas = this._createCanvas({
       id: `canvas-zoom-${zoomLevel}`,
       width, height, bounds
@@ -230,7 +230,7 @@ L.CanvasLayer = (L.Layer ? L.Layer : L.Class).extend({
 
   _endZoomAnim: function(e){
     this._animate = false;
-    console.log('zoomend - pixelOrigin', this._map.getPixelOrigin());
+    // console.log('zoomend - pixelOrigin', this._map.getPixelOrigin());
     // const mapPos = L.DomUtil.getPosition(this._map.getPanes().mapPane);
     // L.DomUtil.setPosition(this._canvas, { x:-mapPos.x, y:-mapPos.y});
     // this._canvas.style.display = 'block';

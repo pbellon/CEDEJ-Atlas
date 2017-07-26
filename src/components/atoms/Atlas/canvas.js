@@ -87,7 +87,6 @@ export default class CanvasLayer extends MapLayer {
 
   createLeafletElement(props){
     const { delegate, ...options }= this.getOptions(props);
-    console.log(options, props);
     const { pane } = this.context;
     return canvasLayer(delegate, pane, options);
   }
