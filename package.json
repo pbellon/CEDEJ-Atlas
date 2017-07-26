@@ -20,6 +20,8 @@
     "build:data": "./manage.sh buildData",
     "prebuild": "npm run build:clean && npm run build:copy",
     "build": "npm run env:prod -- webpack",
+    "deploy": "surge dist", 
+
     "build:example": "npm run env:example -- npm run build"
   },
   "jest": {

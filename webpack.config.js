@@ -108,8 +108,18 @@ const config = createConfig([
           filename: 'index.html',
           template: path.join(process.cwd(), 'public/index.html'),
         }),
+        // copie des fichiers de données qui nous intéresse.
         new CopyWebpackPlugin([
-          { from: dataPath, to: 'data' },
+          {
+            from: dataPath,
+            to: 'data', 
+            ignore: [
+              '*.(swo|swp|md)',
+              'raw/*',
+              'content/*',
+              'topo-*.json'
+            ]
+          },
         ]),
     ]),
     happypack([

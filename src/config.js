@@ -13,7 +13,7 @@ const config = {
     apiUrl: 'http://localhost:3000'
   },
   production: {
-    apiUrl: 'https://jsonplaceholder.typicode.com',
+    apiUrl: 'http://cedej-atlas.surge.sh',
   },
 };
 
