@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { injectGlobal, ThemeProvider } from 'styled-components';
 
-import { HomePage } from 'components';
+import { HomePage, ContentPage, Navbar, Sidebar } from 'components';
 
 // https://github.com/diegohaz/arc/wiki/Styling
 import theme from './themes/default';
@@ -16,9 +16,12 @@ injectGlobal`
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <Switch>
+      <div>  
+        <Navbar/>
         <Route path="/" component={HomePage} exact />
-      </Switch>
+        <Route path="/page" component={ContentPage}/>
+        <Sidebar/>
+      </div>
     </ThemeProvider>
   );
 };
