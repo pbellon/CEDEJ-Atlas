@@ -82,6 +82,7 @@ const config = createConfig([
         'react-markdown',
         'react-modal',
         'react-redux',
+        'react-router',
         'react-router-dom',
         'redux',
         'redux-form',
