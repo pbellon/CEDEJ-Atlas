@@ -3,7 +3,6 @@ import { ExportForm, Atlas } from 'containers';
 
 const HomePage = () => {
   return (<div>
-    <ExportForm />
     <Atlas />
   </div>);
 };
