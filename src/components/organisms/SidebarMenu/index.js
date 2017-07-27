@@ -2,33 +2,40 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import { palette } from 'styled-theme';
-import { NavLink } from 'components'; 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+import { NavLink } from 'components';
 
 const ItemColor = ({active})=>{
-  return active ? palette('primary', 1) : palette('grayscale', 0);
+  return active ? palette('primary', 1) : palette('grayscale', 1);
+};
+const activeLinkStyle = {
+  color: palette('white', 1)
 };
 
-const Li = styled.li`
-  background:${(props)=>ItemColor(props)};
+const LiStyle = css`
+  background:${palette('grayscale', 3)};
   margin:0;
+  display:block;
   padding:15px;
-  list-style:none;
+  color: ${palette('grayscale', 0)};
+  &.active {
+    background: ${palette('grayscale',1)};
+    color: ${palette('white', 0)};
+  }
+  &:hover {
+    text-decoration: none;
+  }
+  &:hover:not(.active) {
+    background: ${palette('grayscale', 2)};
+  }
 `;
 
-const MenuItem = ({children, to})=>(
-  <Route path={ to } children={ ({match})=>(
-    <Li active={ match != null }>
-      <NavLink to={ to }>{ children }</NavLink>
-    </Li>
-  )}/>
-);
+const MenuItem = styled((props) => 
+  <NavLink { ...props }/>
+)`${LiStyle}`;
 
-const Menu = styled.ul`
-  margin: 0;
-  padding:0;
-  list-style:none;
-`;
+const Menu = styled.div``;
 
 
 const SidebarMenu = ()=>(
