@@ -17,7 +17,6 @@ const Container = styled.div`
   position:relative;
   z-index: ${({zIndex=0})=>zIndex};
   top: ${({top=50})=>top}px;
-  overflow: auto;
 `;
 
 

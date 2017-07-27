@@ -30,6 +30,8 @@ const OverlayHolder = styled.div`
   position: absolute;
   width: 100%;
   z-index: 20;
+  overflow: auto;
+  padding-bottom: 50px;
 `;
 
 const App = () => {
