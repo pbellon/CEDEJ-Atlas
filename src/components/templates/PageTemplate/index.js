@@ -3,15 +3,26 @@ import { Route } from 'react-router-dom';
 import styled from 'styled-components';
 import { Navbar, Sidebar, SidebarToggleButton, SidebarMenu } from 'components'
 
+const Holder = styled.div`
+  max-height:100%;
+  position: absolute;
+  top: 0;
+  bottom:0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+`;
+
 const Container = styled.div`
   position:relative;
   z-index: ${({zIndex=0})=>zIndex};
   top: ${({top=50})=>top}px;
+  overflow: auto;
 `;
 
 
 const AppTemplate = ({children})=>(
-  <div>
+  <Holder>
     <Navbar/>
     <Container>
       { children }
@@ -21,7 +32,7 @@ const AppTemplate = ({children})=>(
       <div><Route path={ '/map' } component={SidebarToggleButton}/></div>
       <SidebarMenu/>
     </Sidebar>
-    </div>
+  </Holder>
 );
 
 
