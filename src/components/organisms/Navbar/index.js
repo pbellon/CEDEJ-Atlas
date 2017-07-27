@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Link } from 'react-router-dom';
-import { Button } from 'components';
+import { Route } from 'react-router-dom';
+import { Button, Link } from 'components';
 import styled from 'styled-components';
 
 const Nav = styled.div`
@@ -24,14 +24,11 @@ const NavRight = styled.div`
 const Navbar =(props) => (
   <Nav {...props}>
     <Link to="/">Atlas des zones arides</Link>
-    <Route path={ '/map' } render={({match})=>{
-      console.log('navbar match /map', match);
-      return match != null && (
+    <Route path={ '/map' } render={()=>(
       <NavRight>
         <Button disabled={true}>EXPORTER</Button>
       </NavRight>
-      );
-    }}/>
+    )}/>
   </Nav>      
 );
 

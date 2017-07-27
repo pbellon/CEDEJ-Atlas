@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+
+import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fromSidebar } from 'store/selectors';
 import { toggleSidebar } from 'store/actions';
-import { Button } from 'components';
+import { Link, Button } from 'components';
 const Side = styled.div`
   position: fixed;
   top: ${({top})=>top}px;
@@ -19,24 +20,24 @@ const Side = styled.div`
   width: ${({width})=>width}px;
 `;
 
-const Sidebar = ({ children, onPress, ...props})=>(
+const Sidebar = ({ children , ...props})=>(
   <Side {...props}>
-    <Button onClick={ onPress }>
-      { props.opened ? '>' : '<' }
-    </Button>
-    <Link to={ '/page/about' }>À propos</Link>
-  </Side>
+    { children }
+   </Side>
 );
 
 Sidebar.propTypes = {
   opened: PropTypes.bool,
   width: PropTypes.number.isRequired
-}
-const mapDispatchToProps = (dispatch)=>({
-  onPress: ()=>dispatch(toggleSidebar())
-})
+};
+
+Sidebar.defaultProps = {
+  zIndex: 5,
+  width: 300
+};
+
 const mapStateToProps = (state)=>({
   opened: fromSidebar.isOpened(state)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default connect(mapStateToProps)(Sidebar);
