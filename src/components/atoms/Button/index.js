@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import styled, { css } from 'styled-components';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { font, palette } from 'styled-theme';
 import { ifProp } from 'styled-tools';
 

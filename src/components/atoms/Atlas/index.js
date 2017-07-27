@@ -20,7 +20,7 @@ const NATURAL_FEATURES_URL = 'http://server.arcgisonline.com/ArcGIS/rest/service
 
 const NATURAL_FEATURES_ATTRIBUTION = '&copy; Powerded by <a href="http://www.esri.com/">ESRI</a> world reference overlay';
 
-const MAPBOX_URL = 'https://api.mapbox.com/styles/v1/69sodaa69/cj5l8utwy29sl2slw1suw93hp/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiNjlzb2RhYTY5IiwiYSI6IkxGcGU0UVUifQ.hUuuHsf8Vzwllw-ZIqIU2g';
+const MAPBOX_URL = 'https://api.mapbox.com/styles/v1/skoli/cj5m6lw8p35a82rmtf5ur046w/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2tvbGkiLCJhIjoiY2o1bTZpeHBvMGl4djMyb2RmZ3h5OGI0diJ9.OECj4b33D6Pnq7Zlp04wtA';
 
 const VECTOR_TILE_URL = 'https://basemaps.arcgis.com/v1/arcgis/rest/services/World_Basemap/VectorTileServer/tile/{z}/{y}/{x}.pbf';
 
@@ -90,21 +90,22 @@ export default class Atlas extends Component {
     const position = [10, 35];
     return (
       <Map
-      minZoom={3}
-      maxZoom={8}
-      renderer={canvas()}
-      animate={true}
-      center={position} zoom={4}
-      ref={(ref) => this.bindContainer(ref)}
-      >
-      <TileLayer url={ BASE_LAYER_URL } />
-      <VectorGridLayer zIndex={ 300 } url={ VECTOR_TILE_URL } vectorTileLayerStyles={ vectorLayerStyles.names }/> 
-      <TileLayer zIndex={ 500 }
-           url={ MAPBOX_URL }
-      />
-      <CanvasLayer bbox={ bbox } zIndex={ 400 } delegate={ new CanvasDelegate(data) } />
-      { //<LayerGroup>{ renderCircles(data.circles) }</LayerGroup>
-      }
+        minZoom={3}
+        maxZoom={8}
+        renderer={canvas()}
+        animate={true}
+        center={position} zoom={4}
+        ref={(ref) => this.bindContainer(ref)}>
+        <TileLayer url={ BASE_LAYER_URL } />
+        {
+         // <VectorGridLayer zIndex={ 450 } url={ VECTOR_TILE_URL } vectorTileLayerStyles={ vectorLayerStyles.names }/> 
+        }
+        <TileLayer zIndex={ 500 }
+             url={ MAPBOX_URL }
+        />
+        <CanvasLayer bbox={ bbox } zIndex={ 400 } delegate={ new CanvasDelegate(data) } />
+        { //<LayerGroup>{ renderCircles(data.circles) }</LayerGroup>
+        }
 
       </Map>
     );

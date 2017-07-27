@@ -1,10 +1,15 @@
 import React from 'react';
-import { ExportForm, Atlas } from 'containers';
+import ReactMarkdown from 'react-markdown';
+import { Content, Button } from 'components';
+import { ContentContainer } from 'containers';
 
 const HomePage = () => {
-  return (<div>
-    <Atlas />
-  </div>);
+  return (
+    <ContentContainer>
+      <ReactMarkdown source={ Content.Home }/>
+      <Button to='/map'>GO</Button>
+    </ContentContainer>
+  );
 };
 
 export default HomePage;

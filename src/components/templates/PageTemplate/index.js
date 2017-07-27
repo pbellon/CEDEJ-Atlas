@@ -4,19 +4,19 @@ import styled from 'styled-components';
 import { Navbar, Sidebar } from 'components'; 
 const Container = styled.div`
   position:relative;
-  z-index: ${({zIndex})=>zIndex};
-  top: ${({top})=>(top)}px;
+  z-index: ${({zIndex=0})=>zIndex};
+  top: ${({top=50})=>top}px;
 `;
 
 
 const AppTemplate = ({children})=>(
   <div>
-    <Navbar zIndex={ 20 } height={ 50 }/>
-    <Container top={ 50 } zIndex={ 0 }>
+    <Navbar/>
+    <Container>
       { children }
     </Container>
 
-    <Sidebar opened={ true } width={ 300 } zIndex={ 10 } top={ 50 }/>
+    <Sidebar width={ 300 } zIndex={ 10 } top={ 50 }/>
   </div>
 );
 

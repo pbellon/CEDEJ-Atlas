@@ -18,23 +18,23 @@ class AtlasContainer extends Component {
   render(){
     const { canvasURL, data, error } = this.props;
     return (
+      <div>
+      { error &&
+        <Error>{error.message}</Error>
+      }
+      { canvasURL &&
+        <img src={canvasURL} alt={'Render map'} width="100%" height="auto" />
+      }
+      { (canvasURL == null) && data &&
         <div>
-        { error &&
-          <Error>{error.message}</Error>
-        }
-        { canvasURL &&
-          <img src={canvasURL} alt={'Render map'} width="100%" height="auto" />
-        }
-        { (canvasURL == null) && data &&
-          <div>
-          {
-            // <CanvasTest width={1280*4} height={900*3} scale={1800} center={[-100,50]} data={data} />
-          }
-          <Atlas width={900} height={500} data={data} />
-            </div>
-        }
-        </div>
-        );
+      {
+        // <CanvasTest width={1280*4} height={900*3} scale={1800} center={[-100,50]} data={data} />
+      }
+      <Atlas width={900} height={500} data={data} />
+      </div>
+      }
+      </div>
+    );
   }
 }
 

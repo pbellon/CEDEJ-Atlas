@@ -1,21 +1,13 @@
-var text = {
-  textColor: '#333',
-  textSize: 13,
-  textFont: 'Arial'
-};
 
 var vectorTileStyling = {
 
   water: {
-    textColor: '#333',
-    textSize: 14,
-    textFont: 'Arial',
     fill: true,
     weight: 1,
     fillColor: '#06cccc',
     color: '#06cccc',
-    fillOpacity: 0.2,
-    opacity: 0.4,
+    fillOpacity: 0.8,
+    opacity: 0.5,
   },
   admin: {
     weight: 1,
@@ -192,62 +184,78 @@ vectorTileStyling.pois       = vectorTileStyling.poi;
 vectorTileStyling.roads      = vectorTileStyling.road;
 
 var esriStyle = {};
-esriStyle.Continent  = vectorTileStyling.earth;
+esriStyle.Continent  = []; // vectorTileStyling.earth;
 esriStyle.Bathymetry = []; // vectorTileStyling.water;
-esriStyle["Vegetation small scale"] = []; // vectorTileStyling.landuse;
-esriStyle["Marine area"] = []; // vectorTileStyling.water;
+
 esriStyle.Land = [];// vectorTileStyling.earth;
+esriStyle.Zoo = [];
+esriStyle.Military = [];
+esriStyle.Port = [];
+esriStyle.Indigenous = [];
 
 esriStyle["City small scale"             ] = [];
+esriStyle["City large scale"             ] = []; // vectorTileStyling.building;
+
 esriStyle["Admin0 point"                 ] = [];
+esriStyle["Boundary line"                ] = []; // vectorTileStyling.boundary;
+esriStyle["Openspace or forest"          ] = []; // vectorTileStyling.landuse;
+esriStyle["Coastline"                    ] = [];
+
+esriStyle["Admin0 forest or park"        ] = []; // vectorTileStyling.landuse;
+esriStyle["Admin0 forest or park/label"  ] = [];
+
+esriStyle["Admin1 forest or park"        ] = []; // vectorTileStyling.landuse;
+esriStyle["Admin1 forest or park/label"  ] = [];
+esriStyle["Admin1 area/label"            ] = [];
+esriStyle["Admin1 area"            ] = [];
+
+
+esriStyle["Admin2 area"            ] = [];
+esriStyle["Admin2 area/label"            ] = [];
+
+esriStyle["Marine area"] = vectorTileStyling.water;
+esriStyle["Marine area/label"            ] = []; // vectorTileStyling.water; // text;
+esriStyle["Marine waterbody/label"       ] = []; // vectorTileStyling.water;
+esriStyle["Water area"                   ] = vectorTileStyling.water;
 esriStyle["Water area small scale"       ] = vectorTileStyling.water;
+esriStyle["Water area medium scale"      ] = vectorTileStyling.water;
+esriStyle["Water area large scale"       ] = vectorTileStyling.water;
+
+esriStyle["Water and wastewater"         ] = vectorTileStyling.water;
+esriStyle["Water point"                  ] = vectorTileStyling.water;
+esriStyle["Water area small scale/label" ] = vectorTileStyling.water;
+esriStyle["Water area/label"             ] = vectorTileStyling.water;
+esriStyle["Water area large scale/label" ] = vectorTileStyling.water;
+esriStyle["Water area medium scale/label"] = vectorTileStyling.water;
+
 esriStyle["Water line small scale/label" ] = vectorTileStyling.water;
 esriStyle["Water line small scale"       ] = vectorTileStyling.water;
-esriStyle["Water area small scale/label" ] = vectorTileStyling.water;
-
-esriStyle["Marine waterbody/label"       ] = vectorTileStyling.water;
-esriStyle["Boundary line"                ] = []; // vectorTileStyling.boundary;
-esriStyle["Admin0 forest or park"        ] = []; // vectorTileStyling.landuse;
-esriStyle["Openspace or forest"          ] = []; // vectorTileStyling.landuse;
-esriStyle["Admin1 area/label"            ] = [];
-esriStyle["Admin2 area/label"            ] = [];
-esriStyle["Coastline"                    ] = [];
-esriStyle["Admin0 forest or park/label"  ] = [];
-esriStyle["Road tunnel"                  ] = []; // vectorTileStyling.road;
-esriStyle["Road"                         ] = []; // vectorTileStyling.road;
 esriStyle["Water line medium scale/label"] = vectorTileStyling.water; // text;
 esriStyle["Water line medium scale"      ] = vectorTileStyling.water;
-esriStyle["Urban area"                   ] = []; // vectorTileStyling.landuse;
-esriStyle["Admin1 forest or park"        ] = []; // vectorTileStyling.landuse;
-esriStyle["Water area medium scale/label"] = vectorTileStyling.water;
-esriStyle["Water area medium scale"      ] = vectorTileStyling.water;
-esriStyle["Spot elevation"               ] = [];
-esriStyle["City large scale"             ] = []; // vectorTileStyling.building;
-esriStyle["Admin2 area/label"            ] = [];
-esriStyle["Water area large scale"       ] = vectorTileStyling.water;
+esriStyle["Water line"                   ] = vectorTileStyling.water;
 esriStyle["Water line large scale/label" ] = vectorTileStyling.water;
+esriStyle["Water point/Lake or reservoir"] = vectorTileStyling.water;
 esriStyle["Water line large scale"       ] = vectorTileStyling.water;
-esriStyle["Point of interest"            ] = vectorTileStyling.building;
+
+esriStyle["Spot elevation"               ] = [];
+esriStyle["Point of interest"            ] = []; // vectorTileStyling.building;
 esriStyle["Road/label"                   ] = [];
 esriStyle["Ferry/label"                  ] = [];
 esriStyle["Ferry"                        ] = []; //vectorTileStyling.water;
 esriStyle["Building"                     ] = []; //vectorTileStyling.building;
-esriStyle["Water area"                   ] = []; // vectorTileStyling.water;
-esriStyle["Water line"                   ] = []; // vectorTileStyling.water;
-esriStyle["Cemetery/label"               ] = [];
+esriStyle["Building/label"               ] = [];
+
 esriStyle["Cemetery"                     ] = []; //vectorTileStyling.landuse;
+esriStyle["Cemetery/label"               ] = [];
 esriStyle["Retail"                       ] = []; // vectorTileStyling.landuse;
-esriStyle["Airport/label"                ] = [];
+
 esriStyle["Airport"                      ] = []; // vectorTileStyling.landuse;
+esriStyle["Airport/label"                ] = [];
 esriStyle["Industry"                     ] = []; // vectorTileStyling.landuse;
-esriStyle["Water area/label" ] = vectorTileStyling.water;
-esriStyle["Water area large scale/label" ] = vectorTileStyling.water;
-esriStyle["Water point/Lake or reservoir"] = vectorTileStyling.water;
 esriStyle["Road tunnel/label"            ] = [];
 esriStyle["Golf course/label"            ] = [];
 esriStyle["Golf course"                  ] = [];// vectorTileStyling.landuse;
 esriStyle["Industry/label"               ] = [];
-esriStyle["Marine area/label"            ] = vectorTileStyling.water; // text;
 esriStyle["Railroad"                     ] = []; // vectorTileStyling.road;
 esriStyle["Medical"                      ] = [];// vectorTileStyling.landuse;
 esriStyle["Education"                    ] = [];// vectorTileStyling.landuse;
@@ -257,15 +265,20 @@ esriStyle["Retail/label"                 ] = [];
 esriStyle["Beach/label"                  ] = [];
 esriStyle["Beach"                        ] = [];// vectorTileStyling.landuse;
 esriStyle["Special area of interest"     ] = []; // vectorTileStyling.housenumber;
-esriStyle["Point of interest"            ] = vectorTileStyling.poi;
+esriStyle["Point of interest"            ] = []; // vectorTileStyling.poi;
 esriStyle["Education/label"              ] = [];
 esriStyle["Landmark"                     ] = []; // vectorTileStyling.landuse;
-esriStyle["Transportation"               ] = []; //vectorTileStyling.road;
 esriStyle["Landmark/label"               ] = [];
+
+esriStyle["Transportation"               ] = []; //vectorTileStyling.road;
 esriStyle["Medical/label"                ] = [];
 esriStyle["Park or farming/label"        ] = [];
-esriStyle["Building/label"               ] = [];
+esriStyle["Road tunnel"                  ] = []; // vectorTileStyling.road;
+esriStyle["Road"                         ] = []; // vectorTileStyling.road;
+esriStyle["Urban area"                   ] = []; // vectorTileStyling.landuse;
 
+
+esriStyle["Vegetation small scale"] = []; // vectorTileStyling.landuse;
 export default {
   names: esriStyle
 };

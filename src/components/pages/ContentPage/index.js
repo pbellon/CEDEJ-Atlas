@@ -10,7 +10,7 @@ const ContentPage = ({match}) => {
   return (
     <ContentContainer>
       <h1>Content</h1>
-      <Route match={`${match.url}/about`} render={()=>(
+      <Route match={'/page/about'} render={()=>(
         <ReactMarkdown source={Content.About}/>
         )}/>
     </ContentContainer>

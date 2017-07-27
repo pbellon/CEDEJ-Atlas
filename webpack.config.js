@@ -70,8 +70,8 @@ const config = createConfig([
       vendor: [
         'babel-polyfill',
         'd3',
-        'jspdf',
-        'html2canvas',
+        // 'jspdf',
+        // 'html2canvas',
         'leaflet',
         'leaflet-image',
         'lodash',
