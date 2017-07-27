@@ -1,7 +1,7 @@
 // https://github.com/diegohaz/arc/wiki/API-service
 import 'whatwg-fetch';
 import { stringify } from 'query-string';
-import merge from 'lodash/merge';
+import merge from 'lodash.merge';
 import { apiUrl } from 'config';
 
 export const checkStatus = (response) => {

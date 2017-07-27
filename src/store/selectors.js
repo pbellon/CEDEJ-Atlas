@@ -1,5 +1,5 @@
 // https://github.com/diegohaz/arc/wiki/Selectors
-const upperFirst = require('lodash/upperFirst');
+const upperFirst = require('lodash.upperfirst');
 
 const req = require.context('.', true, /\.\/.+\/selectors\.js$/);
 
