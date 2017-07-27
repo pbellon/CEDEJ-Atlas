@@ -18,7 +18,7 @@ const AppTemplate = ({children})=>(
     </Container>
 
     <Sidebar width={ 300 } zIndex={ 10 } top={ 50 }>
-      <Route path={ '/map' } component={SidebarToggleButton}/>
+      <div><Route path={ '/map' } component={SidebarToggleButton}/></div>
       <SidebarMenu/>
     </Sidebar>
     </div>
