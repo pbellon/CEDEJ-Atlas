@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 import { font, palette } from 'styled-theme'
 import { Link as RouterLink } from 'react-router-dom'
 
-const styles = css`
+export const styles = css`
   font-family: ${font('primary')};
   text-decoration: none;
   font-weight: 500;
@@ -11,6 +11,10 @@ const styles = css`
 
   &:hover {
     text-decoration: underline;
+  }
+
+  &.active {
+    color: ${palette({primary: 0}, 1)};
   }
 `
 

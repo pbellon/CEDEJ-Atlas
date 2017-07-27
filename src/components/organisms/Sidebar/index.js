@@ -7,11 +7,14 @@ import { connect } from 'react-redux';
 import { fromSidebar } from 'store/selectors';
 import { toggleSidebar } from 'store/actions';
 import { Link, Button } from 'components';
+
 const Side = styled.div`
   position: fixed;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
   top: ${({top})=>top}px;
   z-index: ${(props)=>(props.zIndex || 0)};
-  padding: 15px;
   bottom: 0px;
   right: 0px;
   transform: translate(${({opened, width})=>(opened ? 0 : width-50)}px, 0);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import styled from 'styled-components';
-import { Navbar, Sidebar, SidebarToggleButton, Link } from 'components'
+import { Navbar, Sidebar, SidebarToggleButton, SidebarMenu } from 'components'
 
 const Container = styled.div`
   position:relative;
@@ -10,7 +10,7 @@ const Container = styled.div`
 `;
 
 
-const AppTemplate = ({sidebarOpened, children, toggleSidebar})=>(
+const AppTemplate = ({children})=>(
   <div>
     <Navbar/>
     <Container>
@@ -19,7 +19,7 @@ const AppTemplate = ({sidebarOpened, children, toggleSidebar})=>(
 
     <Sidebar width={ 300 } zIndex={ 10 } top={ 50 }>
       <Route path={ '/map' } component={SidebarToggleButton}/>
-      <Link to={ '/page/about' }>À propos</Link>
+      <SidebarMenu/>
     </Sidebar>
     </div>
 );
