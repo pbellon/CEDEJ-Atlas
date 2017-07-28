@@ -1,3 +1,5 @@
+import { arrToObj } from 'utils';
+
 const TEMPERATURES = [
   {
     value: 0,
@@ -70,6 +72,21 @@ const TEMPERATURES = [
     color: '#c4cd8d',
   }
 ];
+const TEMPS_OBJ = arrToObj(TEMPERATURES);
+
+export const temperaturesTypesInRange = (rangeType, range)=>(
+  TEMPERATURES
+    .filter((temp)=>{
+      const tempRange = temp[rangeType];
+      return (
+        tempRange[0] >= range[0] 
+      ) && (
+        tempRange[tempRange.length - 1] <= range[range.length-1]
+      );
+    }).map((t)=>t.value)
+);
+
+export const findTemperature = (feature)=>TEMPS_OBJ[feature.properties.Temperatur];
 
 export default TEMPERATURES;
 

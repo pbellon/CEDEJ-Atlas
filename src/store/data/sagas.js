@@ -5,7 +5,12 @@ import * as actions from './actions';
 
 export function* loadData(){
   try {
-    const data = yield call(api.getMapData);
+    const { aridity, temperatures, circles } = yield call(api.getMapData);
+    const data = {
+      aridity: aridity.features,
+      temperatures: temperatures.features,
+      circles: circles.features
+    };
     yield put(actions.loadSuccess(data));
   } catch (e) {
     yield put(actions.loadFailure(e));

@@ -83,6 +83,7 @@ const config = createConfig([
         'react-dom',
         'react-leaflet',
         'react-markdown',
+        'react-materialize',
         'react-modal',
         'react-redux',
         'react-router-dom',

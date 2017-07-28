@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loadData } from 'store/actions';
-import { fromData } from 'store/selectors';
+import { fromFilters } from 'store/selectors';
 import styled from 'styled-components';
 
 import { Atlas, AtlasLegend } from 'components';
@@ -18,6 +18,7 @@ class AtlasContainer extends Component {
 
   render(){
     const { canvasURL, data, error } = this.props;
+    console.log('atlas data', data);
     return (
       <div>
       { error &&
@@ -44,7 +45,7 @@ AtlasContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  data: fromData.filteredData(state),
+  data: fromFilters.data(state),
   error: state.atlas.error,
 });
 

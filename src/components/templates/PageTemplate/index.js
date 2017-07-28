@@ -1,7 +1,14 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import styled from 'styled-components';
-import { Navbar, Sidebar, SidebarToggleButton, SidebarMenu } from 'components'
+
+import {
+  Navbar,
+  Sidebar,
+  SidebarToggleButton,
+  AtlasFilters,
+  SidebarMenu 
+} from 'components';
 
 const Holder = styled.div`
   max-height:100%;
@@ -31,7 +38,14 @@ const AppTemplate = ({children})=>(
     </Container>
 
     <Sidebar width={ 300 } zIndex={ 10 } top={ 50 }>
-      <div><Route path={ '/map' } component={SidebarToggleButton}/></div>
+      <div>
+        <Route path={ '/map' } render={()=>(
+          <div>
+            <SidebarToggleButton/>
+            <AtlasFilters/>
+          </div>
+        )}/>
+      </div>
       <SidebarMenu/>
     </Sidebar>
   </Holder>
