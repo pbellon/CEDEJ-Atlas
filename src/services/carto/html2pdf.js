@@ -94,5 +94,5 @@ const html2pdf = (html, options) => {
     }
   });
 };
-
+export { html2pdf, html2canvas };
 export default html2pdf;

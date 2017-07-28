@@ -1,6 +1,4 @@
-import html2canvas from 'html2canvas';
-
-import html2pdf from './html2pdf';
+import { html2pdf, html2canvas } from './html2pdf';
 
 const formats = {
   PDF: 'pdf',
