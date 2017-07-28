@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react'
-import styled, { css } from 'styled-components'
-import { font, palette } from 'styled-theme'
+import React from 'react'
+import PropTypes from 'prop-types'  
+import styled from 'styled-components'
 import { NavLink as RouterNavLink } from 'react-router-dom'
 import { styles } from '../Link';
 
