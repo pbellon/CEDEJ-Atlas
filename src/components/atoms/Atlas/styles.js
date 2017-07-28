@@ -1,3 +1,5 @@
+import { findTemperature, findCircle } from '../../../store/data/types';
+
 const COLORS = {
   circles: {
     A: '#468fba',
@@ -24,15 +26,15 @@ const COLORS = {
   }
 }
 
-const areaColor = ({properties}) => COLORS.areas[properties.Temperatur];
-const circleColor = ({properties}) => COLORS.circles[properties.colours];
+const areaColor = (feature) => findTemperature(feature).color;
+const circleColor = (feature) => findCircle(feature).color;
 
 const circleStyle = (circle)=>{
   const color = circleColor(circle);
   return {
     stroke: false,
-		fillOpacity: 1,
-		opacity:1,
+    fillOpacity: 1,
+    opacity:1,
     color: color,
     fillColor: color,
   };

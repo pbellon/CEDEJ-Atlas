@@ -9,7 +9,8 @@ import 'leaflet/dist/leaflet.css';
 import './Atlas.css';
 
 import VectorGridLayer from './vectorGridLayer.js';
-import CanvasLayer, { CanvasDelegate } from './canvas';
+import { CanvasDelegate } from './canvas';
+import CanvasLayer from './layer';
 import { circleStyle } from './styles';
 
 import vectorLayerStyles from './vectorLayerStyles';
@@ -24,8 +25,8 @@ const MAPBOX_URL = 'https://api.mapbox.com/styles/v1/skoli/cj5m6lw8p35a82rmtf5ur
 
 const VECTOR_TILE_URL = 'https://basemaps.arcgis.com/v1/arcgis/rest/services/World_Basemap/VectorTileServer/tile/{z}/{y}/{x}.pbf';
 
-const renderCircles = (data)=>{
-  return data.features.map((circle,key)=>{
+const renderCircles = (circles)=>{
+  return circles.map((circle,key)=>{
     const coords = circle.geometry.coordinates;
     const center = [ coords[1], coords[0]];
     const radius = 10000 + 5000 * parseInt(circle.properties.size_);
@@ -79,7 +80,6 @@ export default class Atlas extends Component {
 
   render() {
     const { data } = this.props;
-    // const { bbox } = data.topoTemperatures;
     const bbox = [
       -179.2165527343741
       , -56.157571400448376
@@ -103,7 +103,7 @@ export default class Atlas extends Component {
         <TileLayer zIndex={ 500 }
              url={ MAPBOX_URL }
         />
-        <CanvasLayer bbox={ bbox } zIndex={ 400 } delegate={ new CanvasDelegate(data) } />
+        <CanvasLayer bbox={ bbox } zIndex={ 400 } data={data} delegate={ CanvasDelegate } />
         { //<LayerGroup>{ renderCircles(data.circles) }</LayerGroup>
         }
 

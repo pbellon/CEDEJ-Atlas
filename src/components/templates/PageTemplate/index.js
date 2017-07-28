@@ -14,9 +14,12 @@ const Holder = styled.div`
 `;
 
 const Container = styled.div`
-  position:relative;
+  position:absolute;
   z-index: ${({zIndex=0})=>zIndex};
   top: ${({top=50})=>top}px;
+  bottom: 0;
+  left: 0;
+  right: 0;
 `;
 
 

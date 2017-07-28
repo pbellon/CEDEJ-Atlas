@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { downloadMapData } from 'store/actions';
+import { loadData } from 'store/actions';
+import { fromData } from 'store/selectors';
 import styled from 'styled-components';
 
 import { Atlas, AtlasLegend } from 'components';
@@ -12,7 +13,7 @@ const Error = styled.span`
 
 class AtlasContainer extends Component {
   componentDidMount(){
-    this.props.dispatch(downloadMapData());
+    this.props.dispatch(loadData());
   }
 
   render(){
@@ -25,14 +26,9 @@ class AtlasContainer extends Component {
       { canvasURL &&
         <img src={canvasURL} alt={'Render map'} width="100%" height="auto" />
       }
-      { (canvasURL == null) && data &&
-        <div>
-      {
-        // <CanvasTest width={1280*4} height={900*3} scale={1800} center={[-100,50]} data={data} />
-      }
-      <Atlas width={900} height={500} data={data} />
-      </div>
-      }
+      { data && (
+        <Atlas width={900} height={500} data={data} />
+      )}
       </div>
     );
   }
@@ -41,14 +37,14 @@ class AtlasContainer extends Component {
 AtlasContainer.propTypes = {
   canvasURL: PropTypes.string,
   data: PropTypes.shape({
-    aridity:PropTypes.object,
-    circles:PropTypes.object,
-    temperatures: PropTypes.object,
+    aridity:PropTypes.array,
+    circles:PropTypes.array,
+    temperatures: PropTypes.array,
   }),
 };
 
 const mapStateToProps = state => ({
-  data: state.atlas.mapData,
+  data: fromData.filteredData(state),
   error: state.atlas.error,
 });
 

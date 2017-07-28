@@ -1,11 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { MapLayer } from 'react-leaflet';
 import { areaColor } from './styles';
-import { geoTransform, geoPath} from 'd3';
+import { geoTransform, geoPath} from 'd3-geo';
 import * as patternsUtil from './patterns';
 import * as boundaries from './boundaries'; 
-import canvasLayer from './layer';
 import { LatLng } from 'leaflet';
 
 const drawArea = ({context, area, drawPath})=>{
@@ -17,7 +13,7 @@ const drawArea = ({context, area, drawPath})=>{
   context.fill();
 };
 
-const	drawPattern = ({context, aridity, drawPath}) => {
+const drawPattern = ({context, aridity, drawPath}) => {
   const pattern = patternsUtil.findPattern(aridity);
   if(!pattern){ return; }
   if(!pattern.stripes){ return; }
@@ -28,21 +24,25 @@ const	drawPattern = ({context, aridity, drawPath}) => {
 };
 
 export class CanvasDelegate {
-  constructor(data){ this.data = data; }
-
-  processData(){
-    const { temperatures, aridity } = this.data;
-
-    this.temperatures = this.temperatures || temperatures.features.filter((f)=>(+f.properties.Temperatur) > 0);
-    this.aridity = this.aridity || aridity.features.filter((f)=>f.properties.d_TYPE != null);
+  constructor(data){
+    this.processData(data);
   }
 
+  processData(data){
+    const { temperatures, aridity } = data;
 
-  onDrawLayer({canvas, bounds, center, zoom:zoomLevel, layer}){
-    this.layer = layer;
-    this.canvas =  canvas;
-    this.bounds = bounds; 
-    this.processData();
+    this.temperatures = temperatures
+      .filter((f)=>(+f.properties.Temperatur) > 0);
+
+    this.aridity = aridity
+      .filter((f)=>f.properties.d_TYPE != null);
+  }
+  
+  updateData(data){
+    this.processData(data);
+  }
+
+  draw({canvas, zoom:zoomLevel, layer}){
     const projection = geoTransform({
       point:function(x,y){
         const pointLatLng = new LatLng(y,x);
@@ -75,20 +75,19 @@ export class CanvasDelegate {
       boundaries: this.aridity,
       layer,
     });
-    // console.log('onDrawLayer drawn !');
+    return canvas;
+
+  }
+  render(args){
+    return new Promise((resolve, reject)=>{
+      try {
+        const canvas = this.draw(args);
+        resolve(canvas);
+      } catch(e){
+        reject(e);
+      }
+    });
+        // console.log('onDrawLayer drawn !');
   }
 }
-export default class CanvasLayer extends MapLayer {
-  static propTypes = {
-    delegate: PropTypes.object,
-    zIndex: PropTypes.number,
-    bbox: PropTypes.array,
-  }
 
-  createLeafletElement(props){
-    const { delegate, ...options }= this.getOptions(props);
-    const { pane } = this.context;
-    return canvasLayer(delegate, pane, options);
-  }
-
-}
