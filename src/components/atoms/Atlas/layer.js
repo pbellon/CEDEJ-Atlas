@@ -307,7 +307,6 @@ export default class CanvasLayer extends MapLayer {
     const diffAridity = fromAridity.length != toAridity.length;
     const diffTemps = fromTemps.length != toTemps.length;
     if(diffTemps || diffAridity){
-      console.log('should update data !')
       this.leafletElement.updateData({
         aridity:toAridity,
         temperatures: toTemps

@@ -6,7 +6,12 @@ import styled, { injectGlobal } from 'styled-components';
 import { font, palette } from 'styled-theme'; 
 
 import Slider from 'rc-slider';
-import Tooltip from 'rc-tooltip';
+
+injectGlobal`
+.rc-slider-tooltip {
+  z-index: 800;
+}
+`;
 
 const Range = Slider.createSliderWithTooltip(Slider.Range);
 

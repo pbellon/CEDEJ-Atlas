@@ -21,7 +21,6 @@ export const layerByName = (state = initialState, name)=>(
 );
 
 export const temperatures = (state = initialState)=>{
-  console.log('layers.temperatures()', state, initialState);
   return state.temperatures;
 };
 

@@ -25,7 +25,6 @@ carto.download = ({ format, url }) => {
       a.target = '_blank';
       a.download = `export-${ts}.${format}`;
       document.body.appendChild(a);
-      // console.log('a', a);
       a.click();
       a.parentElement.removeChild(a);
       resolve(true);

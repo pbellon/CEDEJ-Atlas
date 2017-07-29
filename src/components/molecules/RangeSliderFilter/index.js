@@ -5,24 +5,26 @@ import { connect } from 'react-redux';
 import { RangeSlider, Heading } from 'components';
 import { fromLayers } from 'store/selectors';
 
+const noop = (v)=>`${v}`;
 
 const RangeSliderFilter = ({
   range,
   onChange,
   updateFilter,
   heading,
-  disabled, 
+  disabled,
+  tipFormatter=noop,
   ...other
 })=>{
-  console.log('range', range);
   return (
     <div>
     { heading && (<Heading level={ 3 }>{ heading }</Heading>)}
     <RangeSlider
-    disabled={ disabled }
-    value={ range } 
-    onChange={ onChange }
-    {...other}
+      tipFormatter={tipFormatter}
+      disabled={ disabled }
+      defaultValue={ range } 
+      onChange={ onChange }
+      {...other}
     />
     </div>
   );
@@ -31,6 +33,7 @@ const RangeSliderFilter = ({
 const mapStateToProps = (state, ownProps)=>({
   disabled: !fromLayers.isLayerVisible(state, ownProps.layer),
   range: ownProps.range || ownProps.filter.range,
+  tipFormatter: ownProps.tipFormatter,
   heading: ownProps.heading,
   onChange: ownProps.onChange
 });

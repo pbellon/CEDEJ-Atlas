@@ -6,7 +6,6 @@ import { fromFilters } from 'store/selectors';
 import { ToggleFilter } from 'components';
 
 const ToggleAridityFilter = ({onToggle, toggled, aridity, label}, { layer })=>{
-  console.log('ToggleAridityFilter', layer);
   return (
     <ToggleFilter
       layer={ layer }

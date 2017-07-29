@@ -31,7 +31,6 @@ export function mapRenderFailure(error) {
 }
 
 export function downloadMap(data, resolve, reject) {
-  console.log('actions.downloadMap', data);
   return {
     type: DOWNLOAD_MAP,
     ...data,

@@ -5,7 +5,6 @@ import {Atlas as AtlasContainer} from 'containers';
 
 const renderAtlas = (data)=>{
   const { canvas } = data;
-  console.log('renderAtlas canvas', canvas, data);
   return new Promise((resolve, reject)=>{
     try {
       resolve(renderToStaticMarkup(<AtlasContainer print={ true } canvasURL={ canvas }/>));
@@ -16,7 +15,6 @@ const renderAtlas = (data)=>{
 }
 
 const htmlToPdf = (html, format='pdf')=>{
-  console.log('htmlToPdf', html);
   return new Promise((resolve, reject)=>{
     const opts = {
       format: 'Letter',
