@@ -43,6 +43,8 @@ export class CanvasDelegate {
   }
 
   draw({canvas, zoom:zoomLevel, layer}){
+    let i, n;
+
     const projection = geoTransform({
       point:function(x,y){
         const pointLatLng = new LatLng(y,x);
@@ -60,14 +62,24 @@ export class CanvasDelegate {
     context.clearRect(0, 0, canvas.width, canvas.height);
     // context.translate(origin.x, origin.y);
     context.globalCompositeOperation = 'source-over';
-    // draw zones with different colors to do
-    this.temperatures.forEach((temp)=>drawArea({area:temp, context, drawPath}));
-
+    
+    n = this.temperatures.length;
+    for(i = 0; i < n; i++){
+      // draw zones with different colors to do
+      drawArea({area:this.temperatures[i], context, drawPath});
+    }
     context.globalCompositeOperation = 'destination-out';
-    // create aridity textures and substract them from areas paths (if needed)
-    // draw aridity boundaries (for certains kinds of aridity)
-    this.aridity.forEach((aridity)=>drawPattern({aridity, context, drawPath}));
-
+    
+    n = this.aridity.length;
+    for(i = 0; i < n; i++){
+      // create aridity textures and substract them from areas paths (if needed)
+      // draw aridity boundaries (for certains kinds of aridity)
+      drawPattern({
+        aridity: this.aridity[i],
+        context,
+        drawPath
+      });
+    }
     context.globalCompositeOperation = 'source-over';
     boundaries.addBoundaries({
       projection,

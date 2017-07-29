@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { palette } from 'styled-theme';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { toggleLayerVisibility } from 'store/actions';
 import { Icon } from 'react-materialize';
@@ -18,17 +19,23 @@ const Heading = GenericHeading.extend`
   }
 `;
 
+const LayerContainer = styled.div`
+  padding: 15px;
+`;
+
 class LayerFilterGroup extends Component {
   static propTypes = {
+    hidden: PropTypes.bool,
     layer:PropTypes.object.isRequired,
     heading: PropTypes.string,
   };
   static childContextTypes = {
-    isLayerVisible: PropTypes.bool,
+    layer: PropTypes.object
   };
+
   getChildContext(){
     return {
-      isLayerVisible: this.props.layer.visible
+      layer: this.props.layer
     };
   };
   render(){
@@ -36,21 +43,22 @@ class LayerFilterGroup extends Component {
     const icon = layer.visible ? 'visibility' : 'visibility_off';
     const klass = layer.visible ? '' : 'hidden';
     return (
-      <div>
-      <Heading level={2} onClick={ toggleVisibility(layer) } className={ klass }>
-        <Icon>{ icon }</Icon>
-        { heading }
-      </Heading>
-      { children }
-      </div>
+      <LayerContainer>
+        <Heading level={2} onClick={ toggleVisibility(layer) } className={ klass }>
+          <Icon>{ icon }</Icon>
+          { heading }
+        </Heading>
+        { children }
+      </LayerContainer>
     );
   };
 };
 const mapStateToProps = (state, props)=>{
-  console.log('LayerFilterGroup.mapStateToProps', state, props);
+  const layer = fromLayers.layerByName(state, props.layer);
   return {
-    layer: fromLayers.layerByName(state, props.layer),
-    heading: props.heading
+    hidden: !layer.visible,
+    heading: props.heading,
+    layer,
   };
 };
 

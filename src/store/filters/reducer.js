@@ -32,7 +32,6 @@ const filterData = (filters)=>{
 
 
 const reducer = (state = initialState, action)=>{
-  console.log('state.original', state.original);
   switch(action.type){
     case DATA_LOAD_SUCCESS:
       state = {
@@ -55,7 +54,6 @@ const reducer = (state = initialState, action)=>{
       state.filtered = filterData(state);
       break;
     case actions.TOGGLE_ARIDITY_VISIBILITY:
-      console.log('toggle aridity visibility');
       state = {
         ...state,
         aridity: {

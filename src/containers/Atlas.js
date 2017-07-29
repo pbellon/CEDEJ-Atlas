@@ -18,7 +18,6 @@ class AtlasContainer extends Component {
 
   render(){
     const { canvasURL, data, error } = this.props;
-    console.log('atlas data', data);
     return (
       <div>
       { error &&

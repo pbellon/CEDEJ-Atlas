@@ -11,11 +11,14 @@ const FilterDiv = styled.div`
   }
 `;
 
-const Filter = ({children, ...props}, context)=>{
+const Filter = ({children, onClick, ...props}, context)=>{
   const disabled = !context.isLayerVisible;
+  const _onClick = ()=>{
+    if(!disabled){ onClick(); }
+  };
   const className = disabled ? 'disabled' : '';
   return (
-    <FilterDiv {...props} className={ className }>
+    <FilterDiv onClick={ _onClick } {...props} className={ className }>
       { children }
     </FilterDiv>
   );
