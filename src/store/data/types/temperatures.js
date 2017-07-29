@@ -2,6 +2,8 @@ import { arrToObj } from 'utils';
 
 const TEMPERATURES = [
   {
+    winter:[-1],
+    summer:[-1],
     value: 0,
     color: 'rgba(0,0,0,0)',
   }, 
@@ -74,16 +76,11 @@ const TEMPERATURES = [
 ];
 const TEMPS_OBJ = arrToObj(TEMPERATURES);
 
-export const temperaturesTypesInRange = (rangeType, range)=>(
+const inRange = (a,b) => (a[0] >= b[0] ) && (a[a.length - 1] <= b[b.length-1]);
+
+export const filter = ({ winter:{range:winter}, summer:{range:summer}})=>(
   TEMPERATURES
-    .filter((temp)=>{
-      const tempRange = temp[rangeType];
-      return (
-        tempRange[0] >= range[0] 
-      ) && (
-        tempRange[tempRange.length - 1] <= range[range.length-1]
-      );
-    }).map((t)=>t.value)
+    .filter((temp)=>inRange(temp.summer, summer) && inRange(temp.winter, winter))
 );
 
 export const findTemperature = (feature)=>TEMPS_OBJ[feature.properties.Temperatur];

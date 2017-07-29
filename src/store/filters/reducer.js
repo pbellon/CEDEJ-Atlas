@@ -1,4 +1,5 @@
 import * as actions from './actions';
+import * as temperaturesTypes from '../data/types/temperatures';
 import { DATA_LOAD_SUCCESS } from '../data/actions';
 import { initialState } from './selectors';
 
@@ -10,7 +11,8 @@ const filterCircles = (filters)=>{
 
 
 const filterTemperatures = ({temperatures})=>{
-  return (t)=>true
+  var types = temperaturesTypes.filter(temperatures).map(t=>`${t.value}`);
+  return (t)=>types.indexOf(t.properties.Temperatur) > -1;
 };
 
 const filterAridity = ({aridity})=>{
