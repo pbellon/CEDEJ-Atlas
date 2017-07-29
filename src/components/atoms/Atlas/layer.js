@@ -24,12 +24,16 @@ const __CanvasLayer = Layer.extend({
   },
   updateOpacity: function(opacity){
     if(!this._container){ return; }
+    Object.keys(this._renderedCanvas).forEach((zoom)=>{
+      this._renderedCanvas[zoom].shouldRender = true;
+    });
     this._container.style.opacity = opacity;
   },
 
   // -- initialized is called on prototype 
   initialize: function(delegate, options){
     this._map    = null;
+    this._renderedCanvas = {};
     // backCanvas for zoom animation
     this._delegate = delegate;
     this.render = this.render.bind(this);
@@ -53,6 +57,9 @@ const __CanvasLayer = Layer.extend({
       min: {x:bbox[0], y:bbox[1]},
       max: {x:bbox[2], y:bbox[3]}
     };
+  },
+  _getCenter: function(){
+    return this._map.getCenter();
   },
   _getZoom: function(){
     return this._map.getZoom();
@@ -122,6 +129,7 @@ const __CanvasLayer = Layer.extend({
   },
   
   _getCanvasAt(zoom){
+    console.log(this._renderedCanvas);
     return this._renderedCanvas[zoom || this._map.getZoom()];
   },
 
@@ -129,7 +137,7 @@ const __CanvasLayer = Layer.extend({
     if(this._canvas){
       this._canvas.style.display = 'none';
     }
-    this._canvas = rendered.canvas ? rendered.canvas : rendered;
+    this._canvas = rendered.canvas;
     this._canvas.style.display = 'block';
   },
   
@@ -138,10 +146,11 @@ const __CanvasLayer = Layer.extend({
       const mapPos = this._map._getMapPanePos();
       const {min, max, width, height, bounds, center, origin} = this._getBBoxAt(zoomLevel);
       // console.log('pixel origin:', origin);
-      const canvas = this._getCanvasAt(zoomLevel) || this._createCanvas({
+      const canvas = (this._getCanvasAt(zoomLevel)||{}).canvas || this._createCanvas({
         id: `canvas-zoom-${zoomLevel}`,
         width, height, bounds
       });
+      const shouldRender = false;
       const del = this._delegate;
       del.render && del.render({
         canvas, layer:this,
@@ -158,35 +167,61 @@ const __CanvasLayer = Layer.extend({
           bounds,
           center,
           origin,
+          shouldRender
         });
       });
     });
   },
 
   _prerender: function(zoomLevels){
-    this._renderedCanvas = {};
 
     const rendering = zoomLevels.map((zoom)=>this._prerenderAtZoom(zoom));
     
     return Promise.all(rendering).then(
       (renderedCanvas)=>{
-        renderedCanvas.forEach(({canvas,zoomLevel})=>{
-          if(!canvas.parentElement){
-            this._container.append(canvas);
+        console.log('rendered:', renderedCanvas);
+        renderedCanvas.forEach((canvas)=>{
+          if(!canvas.canvas.parentElement){
+            this._container.append(canvas.canvas);
           };
-          this._renderedCanvas[zoomLevel] = canvas;
+          this._renderedCanvas[canvas.zoomLevel] = canvas;
         });
       }
     );
   },
   _rerender: function(){
     return new Promise((resolve, reject)=>{
+      const zoom = this._getZoom();
+      const minZoom = this._map.getMinZoom();
+      const maxZoom = this._map.getMaxZoom();
       this._prerenderAtZoom(this._getZoom())
         .then((canvas)=>{
           this._setActiveCanvas(canvas);
-        });
+          this._updateCanvasPosition();
+        })
+        .then(()=>this._prerender([
+            zoom - 1 < minZoom ? minZoom : zoom-1,
+            zoom + 1 > maxZoom ? maxZoom : zoom+1
+          ]));
     });
-  }, 
+  },
+  // check if previous or next zoom level should be rendered
+  _checkSiblingsRendering: function(){
+      const zoom = this._getZoom();
+      const minZoom = this._map.getMinZoom();
+      const maxZoom = this._map.getMaxZoom();
+
+      const next = this._getCanvasAt(zoom+1>maxZoom?maxZoom:zoom+1);
+      const prev = this._getCanvasAt(zoom-1<minZoom?minZoom:zoom-1);
+      const renderLevels = [];
+      if(next.shouldRender){
+        renderLevels.push(next.zoomLevel);
+      }
+      if(prev.shouldRender){
+        renderLevels.push(prev.zoomLevel);
+      }
+      renderLevels.length > 0 && this._prerender(renderLevels);
+  },
   _reset: function(){
     // var size = this._map.getSize();
     // this._canvas.width = size.x;
@@ -222,12 +257,16 @@ const __CanvasLayer = Layer.extend({
     this._container = _container;
     
     const minZoom = this._map.getMinZoom();
-    const maxZoom = this._map.getMaxZoom();   
-    
+    const maxZoom = this._map.getMaxZoom();
+    const zoom = this._getZoom();
+    const zoomLevels = range(minZoom, maxZoom).filter(z=>z!=zoom);
+
     this._prerender(
-      range(minZoom, maxZoom)
+      [zoom]
     ).then(()=>{
       this._setActiveCanvas(this._getCanvasAt());
+    }).then(()=>{
+      this._prerender(zoomLevels)  
     });
     // hack: listen to predrag event launched by dragging to
     // set container in position (0, 0) in screen coordinates
@@ -252,22 +291,27 @@ const __CanvasLayer = Layer.extend({
   draw: function() {
     // return this._reset();
   },
+  _updateCanvasPosition: function(canvas, center, zoom){
+    center = center || this._getCenter();
+    zoom = zoom || this._getZoom();
+    canvas = canvas || this._canvas;
+    
+    const pixelOrigin = this._map._getNewPixelOrigin(center, zoom);
+    // const {x,y} = this._map._latLngToNewLayerPoint(this._map.getCenter(), e.zoom);
+    // we just need to adjust to the new map's origin (in pixels)
+    DomUtil.setPosition(canvas, {x:-pixelOrigin.x, y:-pixelOrigin.y});
 
+  },
   _animateZoom: function(e) {
     if (!this._animating) {
       this._animating = true;
     }
     // const { min } = this._getBBoxAt(e.zoom);
     const prerendered = this._getCanvasAt(e.zoom);
+    console.log('canvas for', e.zoom, prerendered);
     const { canvas, center, origin } = prerendered;
     this._setActiveCanvas(prerendered);
-    // hide original
-    //    const oldPixelOrigin = this._map.getPixelOrigin();
-    const pixelOrigin = this._map._getNewPixelOrigin(e.center, e.zoom);
-    // const {x,y} = this._map._latLngToNewLayerPoint(this._map.getCenter(), e.zoom);
-    // we just need to adjust to the new map's origin (in pixels)
-    DomUtil.setPosition(this._canvas, {x:-pixelOrigin.x, y:-pixelOrigin.y});
-
+    this._updateCanvasPosition(prerendered.canvas, e.center, e.zoom);
     // const newCenter = this._map._latLngToNewLayerPoint(this._map.getCenter(), e.zoom, e.center);
   },
 
@@ -277,6 +321,7 @@ const __CanvasLayer = Layer.extend({
     // const mapPos = DomUtil.getPosition(this._map.getPanes().mapPane);
     // DomUtil.setPosition(this._canvas, { x:-mapPos.x, y:-mapPos.y});
     // this._canvas.style.display = 'block';
+    this._checkSiblingsRendering();
   },
 
   render: function(){}
