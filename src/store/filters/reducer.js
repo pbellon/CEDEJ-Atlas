@@ -13,7 +13,7 @@ const filterTemperatures = (original, temperatures)=>{
   return filtered;
 };
 
-const filterAridity = ({aridity, original})=>{
+const filterAridity = (original, aridity)=>{
   const types = Object.keys(aridity)
     .filter(function(type){ return aridity[type].visible; });
   const f = (aridity)=>types.indexOf(aridity.properties.d_TYPE) > -1;
