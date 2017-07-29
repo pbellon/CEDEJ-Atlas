@@ -5,10 +5,6 @@ export const DOWNLOAD_MAP = 'map/download';
 export const DOWNLOAD_MAP_SUCCESS = 'map/download/success';
 export const DOWNLOAD_MAP_FAIL = 'map/download/fail';
 
-export const DOWNLOAD_DATA = 'map/data/download';
-export const DOWNLOAD_DATA_SUCCESS = 'map/data/download/success';
-export const DOWNLOAD_DATA_FAIL = 'map/data/download/fail';
-
 export const CANVAS_RENDERED = 'canvas/rendered';
 
 export const canvasRendered = (url) => {
@@ -33,26 +29,6 @@ export function mapRenderFailure(error) {
     error,
   };
 }
-
-export function downloadMapData(){
-  return { type: DOWNLOAD_DATA  };
-}
-
-
-export function dataDownloadSuccess(data){
-  return {
-    type: DOWNLOAD_DATA_SUCCESS,
-    data,
-  }
-}
-
-export function dataDownloadFailure(error){
-  return {
-    type: DOWNLOAD_DATA_FAIL,
-    error,
-  }
-}
-
 
 export function downloadMap(data, resolve, reject) {
   console.log('actions.downloadMap', data);

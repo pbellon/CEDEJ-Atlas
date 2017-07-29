@@ -24,23 +24,6 @@ export default (state = initialState, action) => {
         isRendering: false,
         renderingError: action.error,
       };
-    case actions.DOWNLOAD_DATA:
-      return {
-        ...state,
-        isDownloadingData: true
-      };
-    case actions.DOWNLOAD_DATA_SUCCESS:
-      return {
-        ...state,
-        mapData: action.data,
-        isDownloadingData: false,
-      };
-    case actions.DOWNLOAD_DATA_FAILURE:
-      return {
-        ...state,
-        error: actions.error,
-        isDownloadingData: false
-      };
     case actions.DOWNLOAD_MAP:
       return {
         ...state,
@@ -56,7 +39,7 @@ export default (state = initialState, action) => {
         isDownloading: false,
         data: action.data,
       };
-    case actions.DOWNLOAD_DATA_FAIL:
+    case actions.DOWNLOAD_MAP_FAIL:
       return {
         ...state,
         isRendering: false,

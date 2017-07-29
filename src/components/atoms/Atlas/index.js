@@ -25,7 +25,8 @@ const MAPBOX_URL = 'https://api.mapbox.com/styles/v1/skoli/cj5m6lw8p35a82rmtf5ur
 
 const VECTOR_TILE_URL = 'https://basemaps.arcgis.com/v1/arcgis/rest/services/World_Basemap/VectorTileServer/tile/{z}/{y}/{x}.pbf';
 
-const renderCircles = (circles)=>{
+const renderCircles = (show, circles)=>{
+  if(!show){ return []; }
   return circles.map((circle,key)=>{
     const coords = circle.geometry.coordinates;
     const center = [ coords[1], coords[0]];
@@ -46,6 +47,8 @@ const renderCircles = (circles)=>{
 export default class Atlas extends Component {
   static propTypes = {
     data: PropTypes.object,
+    showAreas: PropTypes.bool,
+    showCircles: PropTypes.bool,
     print: PropTypes.bool,
     onRender: PropTypes.func,
     width: PropTypes.number,
@@ -79,7 +82,7 @@ export default class Atlas extends Component {
   }
 
   render() {
-    const { data } = this.props;
+    const { data, showCircles, showAreas } = this.props;
     const bbox = [
       -179.2165527343741
       , -56.157571400448376
@@ -103,9 +106,13 @@ export default class Atlas extends Component {
         <TileLayer zIndex={ 500 }
              url={ MAPBOX_URL }
         />
-        <CanvasLayer bbox={ bbox } zIndex={ 400 } data={data} delegate={ CanvasDelegate } />
-        { //<LayerGroup>{ renderCircles(data.circles) }</LayerGroup>
-        }
+        <CanvasLayer
+          opacity={ showAreas ? 1 : 0 }
+          bbox={ bbox } 
+          zIndex={ 400 } 
+          data={data} delegate={ CanvasDelegate } />
+        
+        <LayerGroup>{ renderCircles(showCircles, data.circles) }</LayerGroup>
 
       </Map>
     );

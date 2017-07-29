@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 
 import { RangeSlider, Heading } from 'components';
 import { fromLayers } from 'store/selectors';
-import { updateFilterRange } from 'store/actions';
+
 
 const RangeSliderFilter = ({
   range,
+  onChange,
   updateFilter,
   heading,
   disabled, 
@@ -16,24 +17,23 @@ const RangeSliderFilter = ({
   console.log('range', range);
   return (
     <div>
-      { heading && (<Heading level={ 3 }>{ heading }</Heading>)}
-      <RangeSlider disabled={ disabled }
-        value={ range } 
-        onChange={ (range)=>updateFilter(range) }
-        {...other}
-        />
+    { heading && (<Heading level={ 3 }>{ heading }</Heading>)}
+    <RangeSlider
+    disabled={ disabled }
+    value={ range } 
+    onChange={ onChange }
+    {...other}
+    />
     </div>
   );
 };
 
 const mapStateToProps = (state, ownProps)=>({
   disabled: !fromLayers.isLayerVisible(state, ownProps.layer),
-  range: ownProps.filter.range,
-  heading: ownProps.heading
+  range: ownProps.range || ownProps.filter.range,
+  heading: ownProps.heading,
+  onChange: ownProps.onChange
 });
 
-const mapDispatchToProps = (dispatch)=>({
-  updateFilter: (filter)=>(range)=>dispatch(updateFilterRange(filter, range))
-})
 
-export default connect(mapStateToProps, mapDispatchToProps)(RangeSliderFilter);
+export default connect(mapStateToProps)(RangeSliderFilter);

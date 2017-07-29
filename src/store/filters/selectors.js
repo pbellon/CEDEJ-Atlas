@@ -1,7 +1,13 @@
 export const initialState = {
   temperatures: {
-    winter: [0, 30],
-    summer: [10, 30],
+    winter: {
+      name: 'winter',
+      range: [0, 30]
+    },
+    summer: {
+      name: 'summer',
+      range: [10, 30],
+    }
   },
   aridity: {
     Hyper: {
@@ -29,10 +35,8 @@ export const initialState = {
 };
 
 
-export const temperatures = {
-  winter: (state)=>(state.temperatures.winter),
-  summer: (state)=>(state.temperatures.summer),
-};
+export const winterTemperatures = (state)=>(state.temperatures.winter);
+export const summerTemperatures = (state)=>(state.temperatures.summer);
 
 export const aridity = (state, name)=>{
   switch (name){
@@ -41,6 +45,10 @@ export const aridity = (state, name)=>{
     case 'semi': return state.aridity.Semi;
     case 'subHumide': return state.aridity.Sub_humide;
   }
+}
+
+export const dryMonths = (state)=>{
+  return state.circles.month_range;
 }
 
 export const data = (state)=>state.filtered

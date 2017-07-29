@@ -5,7 +5,7 @@ import {
   LayerFilterGroup,
   AridityFilters,
   TemperaturesFilters,
-  MonthsDryFilter,
+  DryFilters,
 } from 'components';
 
 // import { fromLayers } from 'store/selectors';
@@ -19,11 +19,9 @@ const AtlasFilters = ()=>(
       <AridityFilters/>
       <TemperaturesFilters/>
     </LayerFilterGroup>
-   { /*
-    <LayerFilterGroup layer={fromLayers.circles()} heading={'Sécheresse'}>
-      <MonthsDryFilter/>
+    <LayerFilterGroup layer={ 'circles' } heading={'Sécheresse'}>
+      <DryFilters/>
     </LayerFilterGroup>
-    */ }
   </Container>
 );
 

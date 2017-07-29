@@ -1,17 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import styled from 'styled-components'; 
+import { palette } from 'styled-theme';
 
-import { Filter, Label as GenericLabel } from 'components';
+import { Checkbox, Filter, Label as GenericLabel } from 'components';
 import { fromLayers } from 'store/selectors';
-const Checkbox = styled.input.attrs({
-  type: 'checkbox',
-})`
-`;
 
 const Label = GenericLabel.extend`
-  &.disabled { }
+  &.disabled {
+    color: ${palette('grayscale', 4)};
+  }
 `;
 
 const noop = ()=>null;

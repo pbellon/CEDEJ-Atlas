@@ -22,6 +22,11 @@ const __CanvasLayer = Layer.extend({
     this._delegate.updateData(data);
     this._rerender();
   },
+  updateOpacity: function(opacity){
+    if(!this._container){ return; }
+    this._container.style.opacity = opacity;
+  },
+
   // -- initialized is called on prototype 
   initialize: function(delegate, options){
     this._map    = null;
@@ -211,6 +216,7 @@ const __CanvasLayer = Layer.extend({
     var tilePane = this._map._panes.tilePane;
     var _container = DomUtil.create('div', 'leaflet-layer');
     _container.style.zIndex = this.options.zIndex || 0;
+    _container.style.opacity = this.options.opacity || 1;
     _container.append(this._canvas);
     tilePane.appendChild(_container);
     this._container = _container;
@@ -295,8 +301,8 @@ export default class CanvasLayer extends MapLayer {
   }
 
   updateLeafletElement(
-    {data:{temperatures:fromTemps, aridity:fromAridity}},
-    {data:{temperatures:toTemps,   aridity:toAridity}}
+    {opacitiy:fromOpacity, data:{temperatures:fromTemps, aridity:fromAridity}},
+    {opacity: toOpacity,   data:{temperatures:toTemps,   aridity:toAridity}}
   ){
     const diffAridity = fromAridity.length != toAridity.length;
     const diffTemps = fromTemps.length != toTemps.length;
@@ -306,6 +312,9 @@ export default class CanvasLayer extends MapLayer {
         aridity:toAridity,
         temperatures: toTemps
       });
+    }
+    if(fromOpacity != toOpacity){
+      this.leafletElement.updateOpacity(toOpacity);
     }
   }
 }

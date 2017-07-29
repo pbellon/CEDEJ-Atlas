@@ -13,7 +13,9 @@ export const initialState = {
     visible: true
   }
 }
-
+export const isLayerVisible = (state = initialState, layer)=>(
+  layerByName(state, layer.name).visible
+);
 export const layerByName = (state = initialState, name)=>(
   state[name]
 );

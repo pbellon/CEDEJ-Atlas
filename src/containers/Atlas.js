@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loadData } from 'store/actions';
-import { fromFilters } from 'store/selectors';
+import { fromFilters, fromLayers } from 'store/selectors';
 import styled from 'styled-components';
 
 import { Atlas, AtlasLegend } from 'components';
@@ -17,7 +17,7 @@ class AtlasContainer extends Component {
   }
 
   render(){
-    const { canvasURL, data, error } = this.props;
+    const { canvasURL, data, error, showAreas, showCircles } = this.props;
     return (
       <div>
       { error &&
@@ -27,7 +27,9 @@ class AtlasContainer extends Component {
         <img src={canvasURL} alt={'Render map'} width="100%" height="auto" />
       }
       { data && (
-        <Atlas width={900} height={500} data={data} />
+        <Atlas width={900} height={500} data={data}
+          showAreas={ showAreas }
+          showCircles={ showCircles }/>
       )}
       </div>
     );
@@ -44,6 +46,8 @@ AtlasContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  showAreas: fromLayers.isLayerVisible(state, fromLayers.temperatures(state)),
+  showCircles: fromLayers.isLayerVisible(state, fromLayers.circles(state)),
   data: fromFilters.data(state),
   error: state.atlas.error,
 });

@@ -40,7 +40,7 @@ const reducer = (state = initialState, action)=>{
         filtered: action.data
       }
       break;
-    case actions.FILTER_TEMPERATURES:
+    case actions.UPDATE_TEMPERATURE_RANGE:
       state = {
         ...state,
         temperatures: {
@@ -65,6 +65,15 @@ const reducer = (state = initialState, action)=>{
         }
       };
       state.filtered = filterData(state);
+      break;
+    case actions.UPDATE_DRY_MONTHS_RANGE:
+      state = {
+        ...state,
+        circles: {
+          ...state.circles,
+          month_range: action.range
+        }
+      };
       break;
   }
   return state;

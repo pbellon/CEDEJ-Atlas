@@ -1,15 +1,11 @@
-export const FILTERS_TEMPS_WINTER = 'FILTERS/TEMPERATURES/WINTER';
-export const FILTERS_TEMPS_SUMMER = 'FILTERS/TEMPERATURES/SUMMER';
-
+export const UPDATE_TEMPERATURE_RANGE = 'FILTERS/TEMPERATURES/UPDATE';
 export const TOGGLE_ARIDITY_VISIBILITY = 'FILTERS/ARIDITY/TOGGLE';
+export const UPDATE_DRY_MONTHS_RANGE = 'FILTERS/CIRCLES/MONTHS';
 
-export const filterWinterTemperatures = (range)=>({
-  type: FILTERS_TEMPS_WINTER,
-  range
-});
 
-export const filterSummerTemperatures = (range)=>({
-  type: FILTERS_TEMPS_SUMMER,
+export const updateTemperatureRange = (temperature, range)=>({
+  type: UPDATE_TEMPERATURE_RANGE,
+  temperature,
   range
 });
 
@@ -18,3 +14,8 @@ export const toggleAridityVisibility = (aridity)=>({
   aridity
 });
 
+
+export const updateDryMonthsRange = (range)=>({
+  type: UPDATE_DRY_MONTHS_RANGE,
+  range
+});

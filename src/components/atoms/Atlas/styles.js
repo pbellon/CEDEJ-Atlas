@@ -1,7 +1,7 @@
 import { temperatures, circles } from '../../../store/data/types';
 
 const areaColor = (feature) => temperatures.findTemperature(feature).color;
-const circleColor = (feature) => circles.findCircle(feature).color;
+const circleColor = (feature) => circles.circleColor(feature);
 
 const circleStyle = (circle)=>{
   const color = circleColor(circle);
