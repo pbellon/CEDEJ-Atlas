@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { RangeSliderFilter } from 'components';
+import { RangeSliderFilter, CircleTypesFilters } from 'components';
 import { fromFilters } from 'store/selectors';
 import { updateDryMonthsRange } from 'store/actions';
+
 const Holder = styled.div``;
 const DryFilters = ({ updateMonths, monthRange, toggleCircleTypeVisibility }, { layer })=>(
   <Holder>
@@ -18,7 +19,7 @@ const DryFilters = ({ updateMonths, monthRange, toggleCircleTypeVisibility }, { 
       range={ monthRange }
       heading={ 'Nombre de mois secs' }
       onChange={ updateMonths }/>
-
+    <CircleTypesFilters layer={ layer} />
   </Holder>
 );
 
@@ -28,7 +29,6 @@ DryFilters.contextTypes = {
 
 const mapDispatchToProps = dispatch => ({
   updateMonths: (range)=>dispatch(updateDryMonthsRange(range)),
-  toggleCircleTypeVisibility: (type)=>dispatch(toggleCircleTypeVisibility(type))
 });
 
 const mapStateToProps = state => ({

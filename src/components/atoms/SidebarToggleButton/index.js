@@ -1,11 +1,16 @@
 import React from 'react';
-
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
-import { Button } from 'components';
+import { Button as _B } from 'components';
 
 import { toggleSidebar } from 'store/actions'; 
 import { fromSidebar } from 'store/selectors';
+
+const Button = styled(_B)`
+  height: 30px;
+  line-height: 30px;
+`;
 
 const ToggleButton = ({ toggled, toggle})=>(
   <div>

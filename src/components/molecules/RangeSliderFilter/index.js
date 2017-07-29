@@ -18,12 +18,12 @@ const RangeSliderFilter = ({
 })=>{
   return (
     <div>
-    { heading && (<Heading level={ 3 }>{ heading }</Heading>)}
+    { heading && (<Heading level={ 5 }>{ heading }</Heading>)}
     <RangeSlider
       tipFormatter={tipFormatter}
       disabled={ disabled }
       defaultValue={ range } 
-      onChange={ onChange }
+      onAfterChange={ onChange }
       {...other}
     />
     </div>

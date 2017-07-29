@@ -94,7 +94,7 @@ export default class Atlas extends Component {
     return (
       <Map
         minZoom={3}
-        maxZoom={8}
+        maxZoom={6}
         renderer={canvas()}
         animate={true}
         center={position} zoom={4}

@@ -1,4 +1,5 @@
-import { arrToObj } from 'utils';
+import { arrToObj, inRange } from 'utils';
+
 const COLORS = [
   {
     value:'A',
@@ -58,6 +59,11 @@ const NUMBER_OF_MONTHS = [
     months: [12],
   }
 ];
+
+export const sizesForRange = (range)=>{
+  const f = ({ months })=>inRange(months, range);
+  return NUMBER_OF_MONTHS.filter(f);
+}
 
 const NB_MONTHS_OBJ = arrToObj(NUMBER_OF_MONTHS);
 export const circleMonths = (circle)=>NB_MONTHS_OBJ[circle.properties.size_].months;

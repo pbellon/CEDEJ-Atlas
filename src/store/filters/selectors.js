@@ -28,7 +28,33 @@ export const initialState = {
     }
   },
   circles: {
-    month_range: [1, 12]
+    month_range: [1, 12],
+    types: {
+      A: {
+        visible: true,
+        name: 'A'
+      },
+      B: {
+        visible: true,
+        name: 'B',
+      },
+      C: {
+        visible: true,
+        name: 'C',
+      },
+      D: {
+        visible: true,
+        name: 'D'
+      },
+      E: {
+        visible: true,
+        name: 'E',
+      },
+      F: {
+        visible: true,
+        name: 'F',
+      }
+    }
   },
   original: null,
   filtered: null
@@ -46,6 +72,10 @@ export const aridity = (state, name)=>{
     case 'subHumide': return state.aridity.Sub_humide;
   }
 }
+
+export const circlesTypes = (state)=>{
+  return state.circles.types;
+};
 
 export const dryMonths = (state)=>{
   return state.circles.month_range;

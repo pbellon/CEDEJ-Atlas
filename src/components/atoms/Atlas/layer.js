@@ -129,7 +129,6 @@ const __CanvasLayer = Layer.extend({
   },
   
   _getCanvasAt(zoom){
-    console.log(this._renderedCanvas);
     return this._renderedCanvas[zoom || this._map.getZoom()];
   },
 
@@ -179,7 +178,6 @@ const __CanvasLayer = Layer.extend({
     
     return Promise.all(rendering).then(
       (renderedCanvas)=>{
-        console.log('rendered:', renderedCanvas);
         renderedCanvas.forEach((canvas)=>{
           if(!canvas.canvas.parentElement){
             this._container.append(canvas.canvas);
@@ -308,7 +306,6 @@ const __CanvasLayer = Layer.extend({
     }
     // const { min } = this._getBBoxAt(e.zoom);
     const prerendered = this._getCanvasAt(e.zoom);
-    console.log('canvas for', e.zoom, prerendered);
     const { canvas, center, origin } = prerendered;
     this._setActiveCanvas(prerendered);
     this._updateCanvasPosition(prerendered.canvas, e.center, e.zoom);

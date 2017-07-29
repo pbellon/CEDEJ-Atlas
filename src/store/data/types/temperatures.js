@@ -1,4 +1,4 @@
-import { arrToObj } from 'utils';
+import { arrToObj, inRange } from 'utils';
 
 const TEMPERATURES = [
   {
@@ -75,8 +75,6 @@ const TEMPERATURES = [
   }
 ];
 const TEMPS_OBJ = arrToObj(TEMPERATURES);
-
-const inRange = (a,b) => (a[0] >= b[0] ) && (a[a.length - 1] <= b[b.length-1]);
 
 export const filter = ({ winter:{range:winter}, summer:{range:summer}})=>(
   TEMPERATURES
