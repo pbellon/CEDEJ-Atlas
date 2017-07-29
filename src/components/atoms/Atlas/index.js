@@ -26,12 +26,12 @@ const MAPBOX_URL = 'https://api.mapbox.com/styles/v1/skoli/cj5m6lw8p35a82rmtf5ur
 const VECTOR_TILE_URL = 'https://basemaps.arcgis.com/v1/arcgis/rest/services/World_Basemap/VectorTileServer/tile/{z}/{y}/{x}.pbf';
 
 const renderCircles = (show, circles)=>{
-  if(!show){ return []; }
   return circles.map((circle,key)=>{
     const coords = circle.geometry.coordinates;
     const center = [ coords[1], coords[0]];
     const radius = 10000 + 5000 * parseInt(circle.properties.size_);
     const style = circleStyle(circle);
+    style.fillOpacity= show?1:0;
     const circleElem = (
       <Circle
       key={key}
