@@ -36,22 +36,6 @@ class pathProperties {
   }
 }
 
-const hash = (str)=>{
-  // took from https://stackoverflow.com/a/7616484/885541
-  let hash = 0;
-  let i;
-  let chr;
-
-  if (str.length === 0){ return hash; }
-  for (i = 0; i < str.length; i++) {
-    chr = str.charCodeAt(i);
-    hash  = ((hash << 5) - hash) + chr;
-    hash |= 0; // Convert to 32bit integer
-  }
-  return hash;
-};
-
-
 export const BOUNDARIES = {
   TEETH: 'teeth',
   FULL: 'full',
@@ -164,13 +148,14 @@ export const addBoundary = ({pattern, ...options}) => {
 };
 
 const initData = ({ boundaries, projection })=>{
-  let pathes = [];
+  let pathes = [], i=0, len = boundaries.length, boundary;
   let _boundaries = [];
   const fnPath = geoPath().projection(projection);
   // main issue to optimize: 
   // we need to avoid calling svgPathProperties every time
   // we draw. 
-  boundaries.forEach((boundary, i)=>{
+  for(i; i<len; i++){
+    boundary = boundaries[i];
     let extPath;
     const path = fnPath(boundary);
     let id = `${boundary.properties.OBJECTID_1}-${i}`;
@@ -183,16 +168,18 @@ const initData = ({ boundaries, projection })=>{
       length: properties.totalLength(),
       path
     });	
-  });
+  }
   return _boundaries;
 };
 
 export const addBoundaries = ({boundaries, projection, ...options})=>{
   const pathes = initData({ boundaries, projection });
-  pathes.forEach((path)=>{
+  let i = 0, len = pathes.length, path;
+  for(i; i<len; i++){
+    path = pathes[i];
     const pattern = patterns.findPattern(path.boundary);
     if(pattern && pattern.boundaries){
       addBoundary({ pattern, path, ...options }); 
     }
-  });
+  }
 };
