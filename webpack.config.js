@@ -113,6 +113,11 @@ const config = createConfig([
           filename: 'index.html',
           template: path.join(process.cwd(), 'public/index.html'),
         }),
+        new HtmlWebpackPlugin({
+          filename: '200.html',
+          template: path.join(process.cwd(), 'public/index.html'),
+        }),
+
         // copie des fichiers de données qui nous intéresse.
         new CopyWebpackPlugin([
           {
