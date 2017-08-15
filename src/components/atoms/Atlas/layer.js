@@ -1,7 +1,7 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-import { LatLng, Layer, Mixin, DomUtil, setOptions } from 'leaflet';
+import { LatLng, Layer, Mixin, DomUtil, setOptions, Point } from 'leaflet';
 import { MapLayer } from 'react-leaflet';
 
 import TileLoader from './mixin'; 
@@ -305,19 +305,19 @@ const __CanvasLayer = Layer.extend({
       this._animating = true;
     }
     // const { min } = this._getBBoxAt(e.zoom);
-    const prerendered = this._getCanvasAt(e.zoom);
-    const { canvas, center, origin } = prerendered;
-    this._setActiveCanvas(prerendered);
-    this._updateCanvasPosition(prerendered.canvas, e.center, e.zoom);
-    // const newCenter = this._map._latLngToNewLayerPoint(this._map.getCenter(), e.zoom, e.center);
+    const zoomOrigin = this._getZoom();
+    const newOrigin = this._map._getNewPixelOrigin(e.center, e.zoom);
+    const scale = this._map.getZoomScale(e.zoom, zoomOrigin);
+    DomUtil.setTransform(this._canvas, newOrigin._multiplyBy(-1), scale);
   },
 
   _endZoomAnim: function(e){
     this._animate = false;
-    // console.log('zoomend - pixelOrigin', this._map.getPixelOrigin());
-    // const mapPos = DomUtil.getPosition(this._map.getPanes().mapPane);
-    // DomUtil.setPosition(this._canvas, { x:-mapPos.x, y:-mapPos.y});
-    // this._canvas.style.display = 'block';
+    const prerendered = this._getCanvasAt();
+    const center = this._getCenter();
+    const zoom = this._getZoom();
+    this._setActiveCanvas(prerendered);
+    this._updateCanvasPosition(prerendered.canvas, center, zoom);
     this._checkSiblingsRendering();
   },
 
