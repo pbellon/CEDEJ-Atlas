@@ -7,13 +7,26 @@ from shapely.geometry import Polygon
 
 def cleanProps(el, keys):
     el['properties'] = { key: el['properties'][key] for key in keys }
+    for k in keys: 
+        val = el['properties'][k]
+        if k == 'Temperatur' and (val == 0 or val == '0'):
+            el['properties'] = None
+            return el
+        if not val or (type(val) == type('') and val.strip() == '' or val == 'null'):
+            el['properties'] = None
+            return el
+
     return el
 
 def cleanJSON(fn, keys_to_keep, ftype='geo', topo_key=None):
     fp = open("data/raw/%s" % fn, 'r')
     data = json.load(fp)
     if ftype == 'geo':
-        data['features'] = map(lambda el: cleanProps(el, keys_to_keep), data['features'])
+        data['features'] = filter(
+            lambda f: f['properties'] != None,
+            map(lambda el: cleanProps(el, keys_to_keep), data['features'])
+        )
+
     if ftype == 'topo':
         for o in data['objects'][topo_key]['geometries']:
             o = cleanProps(o, keys_to_keep)
