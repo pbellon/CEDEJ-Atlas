@@ -103,9 +103,6 @@ export default class Atlas extends Component {
         {
          // <VectorGridLayer zIndex={ 450 } url={ VECTOR_TILE_URL } vectorTileLayerStyles={ vectorLayerStyles.names }/> 
         }
-        <TileLayer zIndex={ 500 }
-             url={ MAPBOX_URL }
-        />
         <CanvasLayer
           opacity={ showAreas ? 1 : 0 }
           bbox={ bbox } 
