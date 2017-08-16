@@ -115,8 +115,8 @@ const __CanvasLayer = Layer.extend({
     canvas.style.left =  0;
     canvas.style.top = 0;
     canvas.style.position = 'absolute';
-    canvas.style.width = px(width);
-    canvas.style.height = px(height);
+    // canvas.style.width = px(width);
+    // canvas.style.height = px(height);
     // canvas.style.pointerEvents = "none";
     // canvas.style.zIndex = this.options.zIndex || 0;
     var className = 'leaflet-tile-container leaflet-zoom-animated';
@@ -247,10 +247,9 @@ const __CanvasLayer = Layer.extend({
     // the container is moved in the oposite direction of the 
     // map pane to keep the canvas always in (0, 0)
     var tilePane = this._map._panes.tilePane;
-    var _container = DomUtil.create('div', 'leaflet-layer');
+    var _container = DomUtil.create('div', 'leaflet-layer leaflet-canvas-layer');
     _container.style.zIndex = this.options.zIndex || 0;
     _container.style.opacity = this.options.opacity || 1;
-    _container.append(this._canvas);
     tilePane.appendChild(_container);
     this._container = _container;
     
