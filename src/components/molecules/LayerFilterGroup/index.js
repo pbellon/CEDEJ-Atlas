@@ -54,7 +54,7 @@ class LayerFilterGroup extends Component {
     const klass = layer.visible ? '' : 'hidden';
     return (
       <LayerContainer>
-        <Heading level={3}
+        <Heading level={4}
           onClick={ toggleVisibility(layer) } className={ klass }>
           <span><Icon/> { heading }</span>
         </Heading>

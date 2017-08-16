@@ -11,6 +11,7 @@ import { Link, Button } from 'components';
 const Side = styled.div`
   position: fixed;
   display: flex;
+  overflow: auto;
   justify-content: space-between;
   flex-direction: column;
   top: ${({top})=>top}px;
