@@ -12,6 +12,12 @@ const circleStyle = (circle)=>{
     color: color,
     fillColor: color,
   };
-}
+};
 
-export { circleColor, areaColor, circleStyle };
+const mapStyle = {
+  position: 'absolute',
+  top: 0, bottom: 0, left: 0, right: 0,
+};
+
+
+export { circleColor, areaColor, circleStyle, mapStyle };

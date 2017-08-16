@@ -11,7 +11,7 @@ import './Atlas.css';
 import VectorGridLayer from './vectorGridLayer.js';
 import { CanvasDelegate } from './canvas';
 import CanvasLayer from './layer';
-import { circleStyle } from './styles';
+import { circleStyle, mapStyle } from './styles';
 
 import vectorLayerStyles from './vectorLayerStyles';
 
@@ -93,6 +93,7 @@ export default class Atlas extends Component {
     const position = [10, 35];
     return (
       <Map
+        style={mapStyle}
         minZoom={3}
         maxZoom={6}
         renderer={canvas()}
