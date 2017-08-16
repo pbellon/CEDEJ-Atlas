@@ -15,6 +15,13 @@ injectGlobal`
 
 const Range = Slider.createSliderWithTooltip(Slider.Range);
 
-const RangeSlider = styled(Range)``;
+const Holder = styled.div`
+  padding-left: 5px;
+  padding-right: 5px;
+`; 
+
+const RangeSlider = (props)=>{
+  return <Holder><Range { ...props }/></Holder>;
+}
 
 export default RangeSlider;

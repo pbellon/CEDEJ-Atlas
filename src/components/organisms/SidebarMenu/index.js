@@ -16,8 +16,9 @@ const activeLinkStyle = {
 const LiStyle = css`
   background:${palette('grayscale', 3)};
   margin:0;
+  font-size: 0.9rem; 
   display:block;
-  padding:15px;
+  padding:12px;
   color: ${palette('grayscale', 0)};
   &.active {
     background: ${palette('grayscale',1)};
