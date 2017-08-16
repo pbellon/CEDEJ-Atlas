@@ -1,15 +1,13 @@
 :global .leaflet-container {
   min-height: 800px;
   width: 100%;
-  height: 100%;
   color: blue;
 }
 :global .leaflet-container .leaflet-canvas-layer {
   transition: transform .5s ease-in;
   transform-origin: 0 0;
-  will-change: unset;
 }
 :global .leaflet-container .leaflet-canvas-layer canvas {
-  will-change: unset;
+    will-change: transform;
 }
 

@@ -7,6 +7,14 @@ import styled from 'styled-components';
 
 import { Atlas, AtlasLegend } from 'components';
 
+const Holder = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+`;
+
 const Error = styled.span`
   color: red;
 `;
@@ -19,7 +27,7 @@ class AtlasContainer extends Component {
   render(){
     const { canvasURL, data, error, showAreas, showCircles } = this.props;
     return (
-      <div>
+      <Holder>
       { error &&
         <Error>{error.message}</Error>
       }
@@ -31,7 +39,7 @@ class AtlasContainer extends Component {
           showAreas={ showAreas }
           showCircles={ showCircles }/>
       )}
-      </div>
+      </Holder>
     );
   }
 }

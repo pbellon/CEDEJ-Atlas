@@ -18,7 +18,11 @@ injectGlobal`
 
 const AtlasHolder = styled.div`
   z-index: 10;
-  position: relative;
+  position: absolute;
+  top: 0px;
+  bottom: 0;
+  left: 0;
+  right: 0;
 `;
 
 const OverlayHolder = styled.div`
