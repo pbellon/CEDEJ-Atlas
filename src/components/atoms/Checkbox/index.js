@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components'; 
+import styled, { css }  from 'styled-components'; 
 import { font } from 'styled-theme'; 
 
 import { Label } from 'components';
@@ -11,9 +11,13 @@ const Check = styled.input.attrs({
 `;
 
 const Wrapper = styled.span`
-  font-familiy: ${font('primary')};
+  font-family: ${font('primary')};
   font-size: 0.7rem;
+  & * {
+    cursor: ${({ disabled })=>disabled?'not-allowed':'pointer'};
+  }
 `;
+
 class Checkbox extends Component {
   onChange(event){
     
@@ -26,9 +30,11 @@ class Checkbox extends Component {
     if(!this.label){
       this.label = label;
       this.label.onclick = ()=>{
-        this.input.value = this.input.value === 'on' ? 'off' : 'on'; 
-        this.input.checked = !this.input.checked;
-        this.onChange(); 
+        if(!this.props.disabled){
+          this.input.value = this.input.value === 'on' ? 'off' : 'on'; 
+          this.input.checked = !this.input.checked;
+          this.onChange();
+        }
       };
     }
   }
@@ -47,7 +53,7 @@ class Checkbox extends Component {
 
   render(){
     return (
-      <Wrapper>
+      <Wrapper disabled={ this.props.disabled }>
         <input type='checkbox'
           ref={ (ref)=>this.bindInput(ref) }
           disabled={ this.props.disabled }/>

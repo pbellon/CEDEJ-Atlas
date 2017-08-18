@@ -10,6 +10,24 @@ import Slider from 'rc-slider';
 injectGlobal`
 .rc-slider-tooltip {
   z-index: 800;
+  font-familiy: 'Helvetica';
+}
+
+.rc-slider-tooltip-inner {
+  font-size: 0.7rem;
+  box-shadow: 0 0 3px #bbb; 
+  border-radius: 0;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.rc-slider-disabled {
+  background-color: transparent;
+}
+
+.rc-slider-handle {
+  border: transparent;
+  background-color: white;
 }
 `;
 
