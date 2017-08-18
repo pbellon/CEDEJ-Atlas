@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component }  from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { palette } from 'styled-theme';
@@ -14,15 +14,14 @@ const Label = GenericLabel.extend`
 
 const noop = ()=>null;
 
-const ToggleFilter = ({ toggled, onToggle, label, disabled})=>{
-  return (
-    <Filter disabled={ disabled } active={ toggled }>
-      <Checkbox disabled={ disabled } onChange={ disabled ? noop : onToggle } checked={ toggled }/>
-      <Label onClick={ disabled ? noop : onToggle } className={ disabled ? 'disabled':'' }>{ label }</Label>
-    </Filter>
-  );
-};
-
+const ToggleFilter = ({ toggled, onToggle, label, disabled })=>(
+  <Filter disabled={ disabled } active={ toggled }> 
+    <Checkbox disabled={ disabled }
+      label={ label }
+      onChange={ disabled ? noop : onToggle }
+      checked={ toggled }/>
+  </Filter>
+);
 
 const mapStateToProps = (state, ownProps)=>({
   disabled: !fromLayers.layerByName(state, ownProps.layer.name).visible
