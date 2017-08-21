@@ -11,8 +11,8 @@ const styles = css`
   font-weight: 500;
   font-size: ${fontSize};
   margin: 0;
-  margin-top: 0.85714em;
-  margin-bottom: 0.57142em;
+  margin-top: 0.55714em;
+  margin-bottom: 0.27142em;
   color: ${palette({ grayscale: 0 }, 1)};
 `;
 
