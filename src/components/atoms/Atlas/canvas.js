@@ -10,6 +10,7 @@ const drawArea = ({context, area, drawPath})=>{
   context.strokeStyle = color;
   context.beginPath();
   drawPath(area);
+  context.stroke();
   context.fill();
 };
 
