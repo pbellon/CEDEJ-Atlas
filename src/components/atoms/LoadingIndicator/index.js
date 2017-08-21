@@ -12,6 +12,7 @@ const bounce = keyframes`
 }
 `;
 const Holder = styled.div`
+  transition: opacity .33 ease-in-out;
   position: absolute;
   display: flex;
   align-items: center;

@@ -123,7 +123,7 @@ const __CanvasLayer = Layer.extend({
     // canvas.style.pointerEvents = "none";
     // canvas.style.zIndex = this.options.zIndex || 0;
     var className = 'leaflet-tile-container leaflet-zoom-animated';
-    canvas.style.display = 'none';
+    canvas.style.opacity = '0';
     canvas.setAttribute('class', className);
     canvas.setAttribute('id', id);
     DomUtil.setPosition(canvas, { x:-x, y:-y });
@@ -137,10 +137,10 @@ const __CanvasLayer = Layer.extend({
 
   _setActiveCanvas: function(rendered){
     if(this._canvas){
-      this._canvas.style.display = 'none';
+      this._canvas.style.opacity = 0;
     }
     this._canvas = rendered.canvas;
-    this._canvas.style.display = 'block';
+    this._canvas.style.opacity = 1;
   },
   
   _prerenderAtZoom: function(zoomLevel){
@@ -198,6 +198,7 @@ const __CanvasLayer = Layer.extend({
         .then((canvas)=>{
           this._setActiveCanvas(canvas);
           this._updateCanvasPosition();
+          resolve();
         })
         .then(()=>this._prerender([
             zoom - 1 < minZoom ? minZoom : zoom-1,
