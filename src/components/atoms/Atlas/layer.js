@@ -31,11 +31,12 @@ const __CanvasLayer = Layer.extend({
   },
 
   // -- initialized is called on prototype 
-  initialize: function(delegate, options){
+  initialize: function(delegate, onRendered, options){
     this._map    = null;
     this._renderedCanvas = {};
     // backCanvas for zoom animation
     this._delegate = delegate;
+    this._onRendered = onRendered;
     this.render = this.render.bind(this);
     this._setBBox(options.bbox);
     setOptions(this, options);
@@ -171,7 +172,6 @@ const __CanvasLayer = Layer.extend({
       });
     });
   },
-
   _prerender: function(zoomLevels){
 
     const rendering = zoomLevels.map((zoom)=>this._prerenderAtZoom(zoom));
@@ -185,7 +185,9 @@ const __CanvasLayer = Layer.extend({
           this._renderedCanvas[canvas.zoomLevel] = canvas;
         });
       }
-    );
+    ).then(()=>{
+      this._onRendered();
+    });
   },
   _rerender: function(){
     return new Promise((resolve, reject)=>{
@@ -196,6 +198,7 @@ const __CanvasLayer = Layer.extend({
         .then((canvas)=>{
           this._setActiveCanvas(canvas);
           this._updateCanvasPosition();
+          this._onRendered();
         })
         .then(()=>this._prerender([
             zoom - 1 < minZoom ? minZoom : zoom-1,
@@ -323,9 +326,7 @@ const __CanvasLayer = Layer.extend({
   render: function(){}
 });
 
-const canvasLayer = (delegate, options)=>{
-  return new __CanvasLayer(delegate, options);
-}
+const noop = ()=>null;
 
 export default class CanvasLayer extends MapLayer {
   static propTypes = {
@@ -333,12 +334,12 @@ export default class CanvasLayer extends MapLayer {
     zIndex: PropTypes.number,
     bbox: PropTypes.array,
   }
-
+  static defaultProps = {
+    onRendered: noop
+  };
   createLeafletElement(props){
-    const { delegate, data, ...options }= this.getOptions(props);
-
-    var _del = new delegate(data);
-    return canvasLayer(_del, options);
+    const { delegate, onRendered, data, ...options }= this.getOptions(props);
+    return new __CanvasLayer(new delegate(data), onRendered, options);
   }
 
   updateLeafletElement(

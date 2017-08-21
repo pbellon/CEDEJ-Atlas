@@ -82,7 +82,7 @@ export default class Atlas extends Component {
   }
 
   render() {
-    const { data, showCircles, showAreas } = this.props;
+    const { data, showCircles, showAreas, onRender } = this.props;
     const bbox = [
       -179.2165527343741
       , -56.157571400448376
@@ -101,10 +101,8 @@ export default class Atlas extends Component {
         center={position} zoom={4}
         ref={(ref) => this.bindContainer(ref)}>
         <TileLayer url={ BASE_LAYER_URL } />
-        {
-         // <VectorGridLayer zIndex={ 450 } url={ VECTOR_TILE_URL } vectorTileLayerStyles={ vectorLayerStyles.names }/> 
-        }
         <CanvasLayer
+          onRendered={ onRender }
           opacity={ showAreas ? 1 : 0 }
           bbox={ bbox } 
           zIndex={ 400 } 

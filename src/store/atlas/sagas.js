@@ -21,9 +21,9 @@ export function* downloadMap(renderedMap) {
   }
 }
 
-export function* watchRenderMap() {
+export function* watchRenderDownloadableMap() {
   while (true) {
-    const { format } = yield take(actions.RENDER);
+    const { format } = yield take(actions.RENDER_DOWNLOADABLE);
     yield call(renderMap, { format });
   }
 }
@@ -37,6 +37,6 @@ export function* watchDownloadMap() {
 }
 
 export default function* () {
-  yield fork(watchRenderMap);
+  yield fork(watchRenderDownloadableMap);
   yield fork(watchDownloadMap);
 }

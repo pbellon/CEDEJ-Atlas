@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loadData } from 'store/actions';
-import { fromFilters, fromLayers } from 'store/selectors';
 import styled from 'styled-components';
 
-import { Atlas, AtlasLegend } from 'components';
+import { loadData, renderSuccess } from 'store/actions';
+import { fromAtlas, fromFilters, fromLayers } from 'store/selectors';
+import { Atlas, AtlasLegend, LoadingIndicator } from 'components';
 
 const Holder = styled.div`
   position: absolute;
@@ -13,6 +13,7 @@ const Holder = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+
 `;
 
 const Error = styled.span`
@@ -21,13 +22,23 @@ const Error = styled.span`
 
 class AtlasContainer extends Component {
   componentDidMount(){
-    this.props.dispatch(loadData());
+    this.props.loadData();
   }
 
   render(){
-    const { canvasURL, data, error, showAreas, showCircles } = this.props;
+    const {
+      canvasURL,
+      data,
+      error,
+      showAreas,
+      showCircles,
+      isRendering,
+      onRender
+    } = this.props;
+
     return (
       <Holder>
+        <LoadingIndicator isLoading={ isRendering }/>
       { error &&
         <Error>{error.message}</Error>
       }
@@ -36,6 +47,7 @@ class AtlasContainer extends Component {
       }
       { data && (
         <Atlas width={900} height={500} data={data}
+          onRender={ onRender } 
           showAreas={ showAreas }
           showCircles={ showCircles }/>
       )}
@@ -45,6 +57,7 @@ class AtlasContainer extends Component {
 }
 
 AtlasContainer.propTypes = {
+  loadData: PropTypes.func.isRequired,
   canvasURL: PropTypes.string,
   data: PropTypes.shape({
     aridity:PropTypes.array,
@@ -54,10 +67,16 @@ AtlasContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  isRendering: fromAtlas.isRendering(state),
   showAreas: fromLayers.isLayerVisible(state, fromLayers.temperatures(state)),
   showCircles: fromLayers.isLayerVisible(state, fromLayers.circles(state)),
   data: fromFilters.data(state),
   error: state.atlas.error,
 });
 
-export default connect(mapStateToProps)(AtlasContainer);
+const mapDispatchToProps = dispatch => ({ 
+  loadData: ()=> dispatch(loadData()),
+  onRender: ()=> dispatch(renderSuccess())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AtlasContainer);

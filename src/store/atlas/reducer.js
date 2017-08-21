@@ -12,11 +12,21 @@ export default (state = initialState, action) => {
         ...state,
         canvasURL: action.url,
       };
+    case actions.RENDER_DOWNLOADABLE:
+      return {
+        ...state,
+        isRenderingDownloading: true,
+        renderData: action.renderData,
+      };
     case actions.RENDER:
       return {
         ...state,
-        isRendering: true,
-        renderData: action.renderData,
+        isRendering: true
+      };
+    case actions.RENDER_SUCCESS:
+      return {
+        ...state,
+        isRendering: false
       };
     case actions.RENDER_FAIL:
       return {

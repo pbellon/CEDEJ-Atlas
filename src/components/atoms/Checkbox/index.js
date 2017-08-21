@@ -19,11 +19,18 @@ const Wrapper = styled.span`
 `;
 
 class Checkbox extends Component {
+  static propTypes = {
+    onChange: PropTypes.func,
+    onBeforeChange: PropTypes.func,
+    disabled: PropTypes.bool,
+    checked: PropTypes.bool
+  };
   onChange(event){
-    
+    this.props.onBeforeChange && this.props.onBeforeChange();
+    console.log('onBeforeChange', this.props.onBeforeChange);
     setTimeout(()=>{
       this.props.onChange && this.props.onChange();
-    }, 10);
+    }, 100);
 
   }
   bindLabel(label){
@@ -40,7 +47,6 @@ class Checkbox extends Component {
   }
   bindInput(input){
     if(this.props && !this.input){
-      console.log('bindInput');
       this.input = input;
       this.input.checked = this.props.checked;
       this.input.value = this.props.checked ? 'on' : 'off';

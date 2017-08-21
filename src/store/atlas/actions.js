@@ -1,22 +1,24 @@
-export const RENDER = 'map/render';
-export const RENDER_SUCCESS = 'map/render/success';
-export const RENDER_FAIL = 'map/render/fail';
+export const RENDER = 'map/render/start';
+export const RENDER_SUCCESS = 'map/render/success'; 
+export const RENDER_FAIL = 'map/render/fail'; 
+
+export const RENDER_DOWNLOADABLE = 'map/render/downloadable';
+export const RENDER_DOWNLOADABLE_SUCCESS = 'map/render/downloadable/success';
+export const RENDER_DOWNLOADABLE_FAIL = 'map/render/downloadable/fail';
 export const DOWNLOAD_MAP = 'map/download';
 export const DOWNLOAD_MAP_SUCCESS = 'map/download/success';
 export const DOWNLOAD_MAP_FAIL = 'map/download/fail';
 
-export const CANVAS_RENDERED = 'canvas/rendered';
-
 export const canvasRendered = (url) => {
   return {
-    type: CANVAS_RENDERED,
+    type: RENDER_DOWNLOADABLE_SUCCESS,
     url,
   };
 };
 
 export const createRenderMapRequest = (data, resolve, reject) => {
   return {
-    type: RENDER,
+    type: RENDER_DOWNLOADABLE,
     ...data,
     resolve,
     reject,
@@ -29,6 +31,13 @@ export function mapRenderFailure(error) {
     error,
   };
 }
+export const startRender = ()=>{
+  console.log('render !');
+  return {  type: RENDER }
+};
+export const renderSuccess = ()=>({
+  type: RENDER_SUCCESS
+});
 
 export function downloadMap(data, resolve, reject) {
   return {
