@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 
 import { RangeSlider, Heading } from 'components';
 import { fromLayers } from 'store/selectors';
-
+import { startRender } from 'store/actions';
 const noop = (v)=>`${v}`;
 
 const RangeSliderFilter = ({
   range,
+  render,
   onChange,
   updateFilter,
   heading,
@@ -22,7 +23,8 @@ const RangeSliderFilter = ({
     <RangeSlider
       tipFormatter={tipFormatter}
       disabled={ disabled }
-      defaultValue={ range } 
+      defaultValue={ range }
+      onChange={ render }
       onAfterChange={ onChange }
       {...other}
     />
@@ -38,5 +40,8 @@ const mapStateToProps = (state, ownProps)=>({
   onChange: ownProps.onChange
 });
 
+const mapDispatchToProps = dispatch => ({
+  render: ()=>dispatch(startRender())
+});
 
-export default connect(mapStateToProps)(RangeSliderFilter);
+export default connect(mapStateToProps, mapDispatchToProps)(RangeSliderFilter);

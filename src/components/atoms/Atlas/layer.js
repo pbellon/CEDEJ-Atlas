@@ -20,7 +20,9 @@ const __CanvasLayer = Layer.extend({
   includes: [Mixin.Events, TileLoader],
   updateData: function(data){
     this._delegate.updateData(data);
-    this._rerender();
+    this._rerender().then(()=>{
+      this._onRendered();
+    });
   },
   updateOpacity: function(opacity){
     if(!this._container){ return; }
@@ -185,9 +187,7 @@ const __CanvasLayer = Layer.extend({
           this._renderedCanvas[canvas.zoomLevel] = canvas;
         });
       }
-    ).then(()=>{
-      this._onRendered();
-    });
+    )
   },
   _rerender: function(){
     return new Promise((resolve, reject)=>{
@@ -198,7 +198,6 @@ const __CanvasLayer = Layer.extend({
         .then((canvas)=>{
           this._setActiveCanvas(canvas);
           this._updateCanvasPosition();
-          this._onRendered();
         })
         .then(()=>this._prerender([
             zoom - 1 < minZoom ? minZoom : zoom-1,
@@ -265,6 +264,7 @@ const __CanvasLayer = Layer.extend({
       [zoom]
     ).then(()=>{
       this._setActiveCanvas(this._getCanvasAt());
+      this._onRendered();
     }).then(()=>{
       this._prerender(zoomLevels)  
     });
