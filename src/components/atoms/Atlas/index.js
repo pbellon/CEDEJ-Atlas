@@ -2,7 +2,15 @@ export CanvasTest from './canvas';
 import leafletImage from 'leaflet-image';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Map, TileLayer, GeoJSON, LayerGroup, Pane, Circle } from 'react-leaflet';
+import {
+  Map,
+  TileLayer,
+  GeoJSON,
+  LayerGroup,
+  Pane,
+  Circle,
+  ScaleControl
+} from 'react-leaflet';
 import { canvas  } from 'leaflet';
 
 import 'leaflet/dist/leaflet.css';
@@ -21,7 +29,8 @@ const NATURAL_FEATURES_URL = 'http://server.arcgisonline.com/ArcGIS/rest/service
 
 const NATURAL_FEATURES_ATTRIBUTION = '&copy; Powerded by <a href="http://www.esri.com/">ESRI</a> world reference overlay';
 
-const MAPBOX_URL = 'https://api.mapbox.com/styles/v1/skoli/cj5m6lw8p35a82rmtf5ur046w/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2tvbGkiLCJhIjoiY2o1bTZpeHBvMGl4djMyb2RmZ3h5OGI0diJ9.OECj4b33D6Pnq7Zlp04wtA';
+const MAPBOX_WATER_LABEL_URL = 'https://api.mapbox.com/styles/v1/skoli/cj5qqakjk22gj2srv856orjjk/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2tvbGkiLCJhIjoiY2o1bTZpeHBvMGl4djMyb2RmZ3h5OGI0diJ9.OECj4b33D6Pnq7Zlp04wtA';
+const MAPBOX_WATER_URL = 'https://api.mapbox.com/styles/v1/skoli/cj5qqg6dn23hg2srzoedq0tcy/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2tvbGkiLCJhIjoiY2o1bTZpeHBvMGl4djMyb2RmZ3h5OGI0diJ9.OECj4b33D6Pnq7Zlp04wtA';
 
 const VECTOR_TILE_URL = 'https://basemaps.arcgis.com/v1/arcgis/rest/services/World_Basemap/VectorTileServer/tile/{z}/{y}/{x}.pbf';
 
@@ -29,7 +38,7 @@ const renderCircles = (show, circles)=>{
   return circles.map((circle,key)=>{
     const coords = circle.geometry.coordinates;
     const center = [ coords[1], coords[0]];
-    const radius = 10000 + 5000 * parseInt(circle.properties.size_);
+    const  radius = 10000 + 5000 * parseInt(circle.properties.size_);
     const style = circleStyle(circle);
     style.fillOpacity= show?1:0;
     const circleElem = (
@@ -100,6 +109,7 @@ export default class Atlas extends Component {
         animate={true}
         center={position} zoom={4}
         ref={(ref) => this.bindContainer(ref)}>
+        <ScaleControl position={ 'bottomleft' }/>
         <TileLayer url={ BASE_LAYER_URL } />
         <CanvasLayer
           onRendered={ onRender }
@@ -110,6 +120,8 @@ export default class Atlas extends Component {
         
         <LayerGroup>{ renderCircles(showCircles, data.circles) }</LayerGroup>
 
+        <TileLayer zIndex={ 500 } url={ MAPBOX_WATER_URL } />
+        <TileLayer zIndex={ 600 } url={ MAPBOX_WATER_LABEL_URL } />
       </Map>
     );
   }

@@ -4,6 +4,10 @@
   height: 100%;
   color: blue;
 }
+:global .leaflet-bottom {
+  margin-bottom: 75px;
+  bottom: 200px;
+}
 :global .leaflet-container .leaflet-canvas-layer {
   transition: transform .5s ease-in;
   transform-origin: 0 0;
