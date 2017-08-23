@@ -1,7 +1,7 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-import { LatLng, Layer, Mixin, DomUtil, setOptions, Point } from 'leaflet';
+import { LatLng, Evented, Mixin, DomUtil, setOptions, Point } from 'leaflet';
 import { MapLayer } from 'react-leaflet';
 
 import TileLoader from './mixin'; 
@@ -16,8 +16,8 @@ const range = (start, end)=>{
 }
 
 // -- support for both  0.0.7 and 1.0.0 rc2 leaflet
-const __CanvasLayer = Layer.extend({ 
-  includes: [Mixin.Events, TileLoader],
+const __CanvasLayer = Evented.extend({ 
+  includes: [TileLoader],
   updateData: function(data){
     this._delegate.updateData(data);
     this._rerender().then(()=>{
@@ -91,13 +91,7 @@ const __CanvasLayer = Layer.extend({
     this._canvas.height = resizeEvent.newSize.y;
   },
 
-  _onLayerDidMove: function(){
-    var domPosition = DomUtil.getPosition(this._map.getPanes().mapPane);
-    if (domPosition) {
-     // L.DomUtil.setPosition(this._canvas, { x: -domPosition.x, y: -domPosition.y });
-    }
-
-  },
+  _onLayerDidMove: function(){},
 
   getEvents: function(){
     return {
@@ -243,14 +237,17 @@ const __CanvasLayer = Layer.extend({
     this.currentAnimationFrame = this.requestAnimationFrame.call(window, this.render);
   },
 
-  onAdd: function(map) {
-    this._map = map;
-
+  _layerAdd: function(map) {
+    this._map = map.target;
     // add container with the canvas to the tile pane
     // the container is moved in the oposite direction of the 
     // map pane to keep the canvas always in (0, 0)
-    var tilePane = this._map._panes.tilePane;
-    var _container = DomUtil.create('div', 'leaflet-layer leaflet-canvas-layer');
+    var tilePane = this._map.getPanes().tilePane;
+    var _container = DomUtil.create('div', [
+      'leaflet-layer',
+      'leaflet-canvas-layer',
+      'evented'
+    ].join(' '));
     _container.style.zIndex = this.options.zIndex || 0;
     _container.style.opacity = this.options.opacity || 1;
     tilePane.appendChild(_container);
@@ -272,7 +269,7 @@ const __CanvasLayer = Layer.extend({
     // hack: listen to predrag event launched by dragging to
     // set container in position (0, 0) in screen coordinates
 
-    map.on(this.getEvents(), this);
+    map.target.on(this.getEvents(), this);
   },
 
   onRemove: function (map) {

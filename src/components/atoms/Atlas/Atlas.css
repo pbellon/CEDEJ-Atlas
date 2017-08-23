@@ -8,13 +8,14 @@
   margin-bottom: 75px;
   bottom: 200px;
 }
+
+:global .leaflet-layer {
+  pointer-events: none;
+}
+:global .leaflet-layer.evented {
+  pointer-events: auto;
+}
 :global .leaflet-container .leaflet-canvas-layer {
   transition: transform .5s ease-in;
   transform-origin: 0 0;
-  will-change: unset;
 }
-:global .leaflet-container .leaflet-canvas-layer canvas {
-  will-change: unset;
-  transition: opacity .33s ease;
-}
-

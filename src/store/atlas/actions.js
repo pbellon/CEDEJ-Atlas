@@ -5,6 +5,10 @@ export const RENDER_FAIL = 'map/render/fail';
 export const RENDER_DOWNLOADABLE = 'map/render/downloadable';
 export const RENDER_DOWNLOADABLE_SUCCESS = 'map/render/downloadable/success';
 export const RENDER_DOWNLOADABLE_FAIL = 'map/render/downloadable/fail';
+
+export const SHOW_CONTEXTUAL_INFO = 'map/legend/show_info';
+export const HIDE_CONTEXTUAL_INFO = 'map/legend/hide_info';
+
 export const DOWNLOAD_MAP = 'map/download';
 export const DOWNLOAD_MAP_SUCCESS = 'map/download/success';
 export const DOWNLOAD_MAP_FAIL = 'map/download/fail';
@@ -60,3 +64,12 @@ export function mapDownloadFailure(error) {
     error,
   };
 }
+
+export const showContextualInfo = (data)=>({
+  type: SHOW_CONTEXTUAL_INFO,
+  data
+});
+
+export const hideContextualInfo = ()=>({
+  type: HIDE_CONTEXTUAL_INFO
+});

@@ -1,7 +1,10 @@
 import React from 'react';
+
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 // import { font, palette } from 'styled-theme'
-
+import { ContextualInfo } from 'components'; 
+import { fromAtlas } from 'store/selectors';
 const Section = styled.div`
   width: 300px;
 `;
@@ -14,17 +17,24 @@ const SectionContent = styled.div`
   padding-left: 30px;
 `;
 
-const AtlasLegend = () => {
+const Legend = styled.div`
+  position: absolute;
+  z-index: 1000;
+  bottom: 20px;
+  left: 15px;
+`;
+const AtlasLegend = ({ showContextualInfo, contextualData }) => {
+  console.log('AtlasLegend', showContextualInfo, contextualData);
   return (
-    <div>
-      <Section>
-        <SectionTitle>Température / Aridité</SectionTitle>
-        <SectionContent>
-          Test
-        </SectionContent>
-      </Section>
-    </div>
+    <Legend>
+      <ContextualInfo visible={ showContextualInfo } data={ contextualData }/>
+    </Legend>
   );
 };
 
-export default AtlasLegend;
+const mapStateToProps = (state)=>({
+  showContextualInfo: fromAtlas.isContextualInfoVisible(state),
+  contextualData: fromAtlas.contextualInfo(state)
+})
+
+export default connect(mapStateToProps)(AtlasLegend);

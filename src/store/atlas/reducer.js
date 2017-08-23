@@ -56,6 +56,18 @@ export default (state = initialState, action) => {
         isDownloading: false,
         error: action.error
       };
+
+    case actions.SHOW_CONTEXTUAL_INFO:
+      return {
+        ...state,
+        isContextualInfoVisible: true,
+        contextualInfo: action.data
+      };
+    case actions.HIDE_CONTEXTUAL_INFO:
+      return {
+        ...state,
+        isContextualInfoVisible: false
+      };
     default:
       return state;
   }

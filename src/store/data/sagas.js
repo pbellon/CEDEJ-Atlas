@@ -1,4 +1,5 @@
 import { put, fork, call, take } from 'redux-saga/effects';
+import { turfizeGeoJSON } from 'utils';
 import api from 'services/api';
 
 import * as actions from './actions';
@@ -15,14 +16,13 @@ export function* loadData(){
       .filter((t)=>parseInt(t.properties.Temperatur) > 0);
 
     const data = {
-      aridity: aridityFeatures,
-      temperatures: temperaturesFeatures,
+      aridity: turfizeGeoJSON(aridityFeatures),
+      temperatures: turfizeGeoJSON(temperaturesFeatures),
       circles: circlesFeatures
     };
-    console.log('data', data);
     yield put(actions.loadSuccess(data));
   } catch (e) {
-    console.error("FAAIL", e);
+    console.error("Data loading failed", e);
     yield put(actions.loadFailure(e));
   }
 }

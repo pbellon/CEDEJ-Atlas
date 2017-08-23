@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { loadData, renderSuccess } from 'store/actions';
+import {
+  loadData,
+  renderSuccess,
+  showContextualInfo,
+  hideContextualInfo 
+} from 'store/actions';
+
 import { fromAtlas, fromFilters, fromLayers } from 'store/selectors';
 import { Atlas, AtlasLegend, LoadingIndicator } from 'components';
 
@@ -30,6 +36,8 @@ class AtlasContainer extends Component {
       canvasURL,
       data,
       error,
+      showContextualInfo,
+      hideContextualInfo,
       showAreas,
       showCircles,
       isRendering,
@@ -39,18 +47,23 @@ class AtlasContainer extends Component {
     return (
       <Holder>
         <LoadingIndicator isLoading={ isRendering }/>
-      { error &&
-        <Error>{error.message}</Error>
-      }
-      { canvasURL &&
-        <img src={canvasURL} alt={'Render map'} width="100%" height="auto" />
-      }
-      { data && (
-        <Atlas width={900} height={500} data={data}
-          onRender={ onRender } 
-          showAreas={ showAreas }
-          showCircles={ showCircles }/>
-      )}
+        { error &&
+          <Error>{error.message}</Error>
+        }
+        { canvasURL &&
+          <img src={canvasURL} alt={'Render map'} width="100%" height="auto" />
+        }
+        { data && (
+          <Atlas width={900} height={500} data={data}
+            showContextualInfo={ showContextualInfo }
+            hideContextualInfo={ hideContextualInfo }
+            onRender={ onRender } 
+            showAreas={ showAreas }
+            showCircles={ showCircles }/>
+        )}
+        
+        <AtlasLegend/>
+
       </Holder>
     );
   }
@@ -67,6 +80,7 @@ AtlasContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  isContextualInfoVisible: fromAtlas.isContextualInfoVisible(state),
   isRendering: fromAtlas.isRendering(state),
   showAreas: fromLayers.isLayerVisible(state, fromLayers.temperatures(state)),
   showCircles: fromLayers.isLayerVisible(state, fromLayers.circles(state)),
@@ -75,6 +89,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({ 
+  showContextualInfo: (data)=> dispatch(showContextualInfo(data)),
+  hideContextualInfo: ()=>dispatch(hideContextualInfo()),
   loadData: ()=> dispatch(loadData()),
   onRender: ()=> dispatch(renderSuccess())
 });

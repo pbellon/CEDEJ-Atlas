@@ -1,8 +1,13 @@
 export const initialState = {
-  isRendering: true
+  isRendering: true,
+  isContextualInfoVisible: false,
+  contextualInfo: null
 };
 
-export const isRendering = (state=initalState)=>state.isRendering;
+export const contextualInfo = (state)=>state.contextualInfo
+export const isContextualInfoVisible = (state)=>state.isContextualInfoVisible
+
+export const isRendering = (state=initialState)=>state.isRendering;
 
 export const format = (state) => {
   return state.renderData.format;
