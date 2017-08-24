@@ -21,8 +21,6 @@ const CirclesLayer = ({
           style.fillOpacity= show?1:0;
           return (
             <Circle
-              onmouseover={ ()=>showContextualInfo({ circles: circle })}
-              onmouseout={ ()=>hideContextualInfo() }
               key={key}
               radius={radius}
               center={center}

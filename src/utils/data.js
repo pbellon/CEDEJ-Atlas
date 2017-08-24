@@ -1,4 +1,5 @@
-import { multiPolygon, polygon, point } from '@turf/helpers'; 
+import { multiPolygon, polygon, point } from '@turf/helpers';
+import circle from '@turf/circle';
 import inside from '@turf/inside';
 
 export const filterFeatures = (data, latLng)=>{
@@ -28,6 +29,13 @@ export const turfizeGeoJSON = (data)=>{
         case 'MultiPolygon':
           feature._turfObj = multiPolygon(coords);
           break;
+
+        case 'Point':
+          const size = parseInt(feature.properties.size_);
+          const radius = size * 20;
+          const center = point(coords);
+          const steps = 15;
+          feature._turfObj = circle(center, radius, steps);
       }
     }
   );

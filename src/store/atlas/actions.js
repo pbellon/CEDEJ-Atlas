@@ -67,9 +67,9 @@ export function mapDownloadFailure(error) {
 
 export const showContextualInfo = (data)=>({
   type: SHOW_CONTEXTUAL_INFO,
-  data
+  data,
 });
 
 export const hideContextualInfo = ()=>({
-  type: HIDE_CONTEXTUAL_INFO
+  type: HIDE_CONTEXTUAL_INFO,
 });

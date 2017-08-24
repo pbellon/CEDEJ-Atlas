@@ -16,10 +16,15 @@ export function* loadData(){
       .filter((t)=>parseInt(t.properties.Temperatur) > 0);
 
     const data = {
-      aridity: turfizeGeoJSON(aridityFeatures),
-      temperatures: turfizeGeoJSON(temperaturesFeatures),
+      aridity: aridityFeatures,
+      temperatures: temperaturesFeatures,
       circles: circlesFeatures
     };
+    
+    for(let i in data){
+      turfizeGeoJSON(data[i]);
+    }
+
     yield put(actions.loadSuccess(data));
   } catch (e) {
     console.error("Data loading failed", e);

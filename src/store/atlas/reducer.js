@@ -63,6 +63,7 @@ export default (state = initialState, action) => {
         isContextualInfoVisible: true,
         contextualInfo: action.data
       };
+
     case actions.HIDE_CONTEXTUAL_INFO:
       return {
         ...state,

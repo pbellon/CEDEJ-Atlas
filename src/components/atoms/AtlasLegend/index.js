@@ -24,10 +24,11 @@ const Legend = styled.div`
   left: 15px;
 `;
 const AtlasLegend = ({ showContextualInfo, contextualData }) => {
-  console.log('AtlasLegend', showContextualInfo, contextualData);
   return (
     <Legend>
-      <ContextualInfo visible={ showContextualInfo } data={ contextualData }/>
+      { contextualData && (
+        <ContextualInfo visible={ showContextualInfo } data={ contextualData }/>
+      )}
     </Legend>
   );
 };
