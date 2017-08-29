@@ -81,5 +81,7 @@ export const dryMonths = (state)=>{
   return state.circles.month_range;
 }
 
+export const filters = (state)=>state;
+
 export const data = (state)=>state.filtered
 

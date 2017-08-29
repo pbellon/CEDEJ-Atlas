@@ -38,6 +38,7 @@ export default class Atlas extends Component {
     showCircles: PropTypes.bool,
     print: PropTypes.bool,
     onRender: PropTypes.func,
+    onCirclesCreated: PropTypes.func.isRequired,
     showContextualInfo: PropTypes.func.isRequired,
     hideContextualInfo: PropTypes.func.isRequired,
     width: PropTypes.number,
@@ -64,6 +65,7 @@ export default class Atlas extends Component {
 
   bindContainer(mapRef) {
     // if(mapRef){ this.setState({mapRef: mapRef.leafletElement}); }
+    /* 
     if (this.props.onRender) {
       this.map = this.map || mapRef.leafletElement;
       // TODO: replace by dispatch or props callback
@@ -73,9 +75,10 @@ export default class Atlas extends Component {
           return;
         }
         const url = canvas.toDataURL();
-        this.props.onRender(url);
+        // this.props.onRender(url);
       });
     }
+    */
   }
 
   hidePopup(){
@@ -103,7 +106,8 @@ export default class Atlas extends Component {
       showAreas,
       onRender,
       showContextualInfo,
-      hideContextualInfo
+      hideContextualInfo,
+      onCirclesCreated,
     } = this.props;
     const bbox = [
       -179.2165527343741
@@ -116,8 +120,8 @@ export default class Atlas extends Component {
     return (
       <Map
         onmousemove={ this.onHover.bind(this) }
-        minZoom={3}
-        maxZoom={6}
+        minZoom={2}
+        maxZoom={10}
         renderer={canvas()}
         animate={true}
         center={position} zoom={4}
@@ -126,12 +130,13 @@ export default class Atlas extends Component {
       <ScaleControl position={ 'bottomleft' }/>
       <TileLayer url={ BASE_LAYER_URL } />
       <CanvasLayer
-      onRendered={ onRender }
-      opacity={ showAreas ? 1 : 0 }
-      bbox={ bbox } 
-      zIndex={ 400 } 
-      data={data} delegate={ CanvasDelegate }/>
+        onRendered={ onRender }
+        opacity={ showAreas ? 1 : 0 }
+        bbox={ bbox } 
+        zIndex={ 400 } 
+        data={data} delegate={ CanvasDelegate }/>
       <CirclesLayer
+        onCirclesCreated={ onCirclesCreated }
         showContextualInfo={ showContextualInfo }
         hideContextualInfo={ hideContextualInfo }
         show={ showCircles } circles={ data.circles }/>

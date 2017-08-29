@@ -13,6 +13,12 @@ export const DOWNLOAD_MAP = 'map/download';
 export const DOWNLOAD_MAP_SUCCESS = 'map/download/success';
 export const DOWNLOAD_MAP_FAIL = 'map/download/fail';
 
+export const ZOOM = 'map/zoom/end'; 
+
+export const zoom = ()=>({
+  type: ZOOM
+});
+
 export const canvasRendered = (url) => {
   return {
     type: RENDER_DOWNLOADABLE_SUCCESS,

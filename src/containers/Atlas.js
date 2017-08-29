@@ -7,7 +7,9 @@ import {
   loadData,
   renderSuccess,
   showContextualInfo,
-  hideContextualInfo 
+  hideContextualInfo,
+  setCircleSizesRefs,
+  zoom,
 } from 'store/actions';
 
 import { fromAtlas, fromFilters, fromLayers } from 'store/selectors';
@@ -41,9 +43,10 @@ class AtlasContainer extends Component {
       showAreas,
       showCircles,
       isRendering,
+      onZoom,
+      onCirclesCreated, 
       onRender
     } = this.props;
-
     return (
       <Holder>
         <LoadingIndicator isLoading={ isRendering }/>
@@ -57,7 +60,9 @@ class AtlasContainer extends Component {
           <Atlas width={900} height={500} data={data}
             showContextualInfo={ showContextualInfo }
             hideContextualInfo={ hideContextualInfo }
-            onRender={ onRender } 
+            onZoomEnd={ onZoom } 
+            onRender={ onRender }
+            onCirclesCreated={ onCirclesCreated }
             showAreas={ showAreas }
             showCircles={ showCircles }/>
         )}
@@ -88,7 +93,9 @@ const mapStateToProps = state => ({
   error: state.atlas.error,
 });
 
-const mapDispatchToProps = dispatch => ({ 
+const mapDispatchToProps = dispatch => ({
+  onZoom: ()=>dispatch(zoom()),
+  onCirclesCreated: (circleSizes)=>dispatch(setCircleSizesRefs(circleSizes)),
   showContextualInfo: (data)=> dispatch(showContextualInfo(data)),
   hideContextualInfo: ()=>dispatch(hideContextualInfo()),
   loadData: ()=> dispatch(loadData()),

@@ -5,8 +5,8 @@
   color: blue;
 }
 :global .leaflet-bottom {
-  margin-bottom: 75px;
-  bottom: 200px;
+  margin-bottom: 25px;
+  /* bottom: 200px; */ 
 }
 
 :global .leaflet-layer {
