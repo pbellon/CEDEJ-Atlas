@@ -1,6 +1,11 @@
-import About from './content/about.md';
-import Home from './content/home.md';
-import Project from './content/project.md';
-import Contribute from './content/participate.md';
+import styled from 'styled-components';
+import { font } from 'styled-theme';
 
-export default { About, Home, Contribute, Project };
+const Content = styled.div`
+  padding-left: 15px;
+  padding-right: 15px;
+  border: green 1px dash;
+  font-family: ${ font('primary') };
+`;
+
+export default Content;

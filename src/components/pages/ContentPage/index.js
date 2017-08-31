@@ -1,19 +1,19 @@
 import React from 'react';
 
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { ContentContainer } from 'containers';
-import { Content } from 'components';
+import { MarkdownContentContainer } from 'containers';
+import { MarkdownContent } from 'components';
 import ReactMarkdown from 'react-markdown';
 
 const content = {
-  'about': Content.About,
-  'project': Content.Project,
-  'contribute': Content.Contribute
+  'about': MarkdownContent.About,
+  'project': MarkdownContent.Project,
+  'contribute': MarkdownContent.Contribute
 }
 
-const ContentPage = ({match}) => {
+const MarkdownContentPage = ({match}) => {
   return (
-    <ContentContainer>
+    <MarkdownContentContainer>
       <Route path={'/page/:pageName'} render={({match})=>{
         const md = content[match.params.pageName];
         if(!md){
@@ -22,9 +22,9 @@ const ContentPage = ({match}) => {
           return (<ReactMarkdown source={content[match.params.pageName]}/>);
         }
       }}/>
-    </ContentContainer>
+    </MarkdownContentContainer>
   ); 
 
 };
 
-export default ContentPage;
+export default MarkdownContentPage;
