@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import styled from 'styled-components';
+import { size } from 'styled-theme';
 
 import {
   Navbar,
@@ -54,7 +55,7 @@ const AppTemplate = ({ children }) => (
       </Container>
     </ContainerHolder>
 
-    <Sidebar width={300} zIndex={10} top={50}>
+    <Sidebar zIndex={10}>
       <div>
         <Route path={'/map'} render={()=>(
           <div>

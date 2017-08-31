@@ -13,30 +13,32 @@ import * as patternUtils from 'utils/patterns';
 import * as boundaries from 'utils/boundaries';
 import * as aridityUtils from 'utils/aridity';
 
-const Section = styled.div`
-  width: 300px;
-`;
-
-const SectionTitle = styled.h3`
-  color: blue;
-`;
-
 const SectionContent = styled.div`
   padding-left: 30px;
 `;
 
 const Legend = styled.div`
+  font-family: ${font('primary')};
   background: white;
   position: absolute;
   z-index: 1000;
-  top: 85px;
+  top: 15px;
   left: 14px;
   padding: 5px;
+  max-width: 450px;
 `;
 
 const TrName = styled.th`
-  background: #bbb;
   text-transform: uppercase;
+  width: 200px;
+  padding-right: 6px;
+`;
+
+const TrNameContent = styled.span`
+  background: #bbb;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  display: block;
 `;
 
 const Th = styled.th`
@@ -48,32 +50,38 @@ const Td = styled.td`
   padding: 2px;
 `;
 
+const Reduced = styled.span`
+  font-size: 0.75rem;
+  line-height: 0.8rem;
+`;
+
 const visibleAridity = ({ aridity }) => {
   return Object.keys(aridity)
     .map((name)=>aridity[name])
     .filter((aridity_f)=>aridity_f.visible);
 };
 
-const aridityPrecipitations = (aridity) => {
-  
-
-}
-
 
 const AridityNames = ({ filters })=>(
   <thead>
     <tr>
-      <TrName>Aridité</TrName>
+      <TrName><TrNameContent>Aridité</TrNameContent></TrName>
       { visibleAridity(filters).map((aridity, key) => (
-        <Th key={ key }>{ aridityUtils.getName(aridity) }</Th>
+        <Th key={ key }>
+          <Reduced>  
+            { aridityUtils.getName(aridity) }
+          </Reduced>
+        </Th>
       ))}
     </tr>
     <tr>
       <td></td>
       { visibleAridity(filters).map((aridity, key) => (
         <Td key={ key }>
-          P/Etp<br/>
-          { aridityUtils.getPrecipitations(aridity) }
+          <Reduced>
+            P/Etp<br/>
+            { aridityUtils.getPrecipitations(aridity) }
+          </Reduced>
         </Td>
       ))}
  
@@ -153,12 +161,26 @@ const TemperatureRow = ({ name, temperature, patterns, aridity })=>{
   );
 };
 
-const SummerName = styled.span`
+const SummerName = styled(Reduced)`
   padding-left: 7px;
 `;
 const VeryHotSummer = () => (<SummerName>été très chaud (plus de 30°)</SummerName>)
 const HotSummer = () => (<SummerName>été chaud (20 à 30°)</SummerName>)
 const TemperedSummer = () => (<SummerName>été très chaud (10 à 20°)</SummerName>)
+
+const WinterNameContent = styled.span`
+  font-size: 0.85rem;
+  padding-top: 0.2rem;
+  display: block;
+`;
+
+const WinterName = ({ children }) => (
+  <tr>
+    <Th>
+      <WinterNameContent>{ children }</WinterNameContent>
+    </Th>
+  </tr>
+);
 
 const Temperatures = ({
   patterns, 
@@ -172,10 +194,10 @@ const Temperatures = ({
   return (
     <tbody>
       <tr>
-        <TrName>Températures</TrName>
+        <TrName><TrNameContent>Températures</TrNameContent></TrName>
       </tr>
       { inRange([20,30], wrange) && ([
-        (<tr key={'h-0'}><Th>Hiver chaud (20 à 30°)</Th></tr>),
+        (<WinterName key={'h-0'}>Hiver chaud (20 à 30°)</WinterName>),
         inRange([30], srange) ? (
           <TemperatureRow
             name={(<VeryHotSummer />)}
@@ -195,7 +217,7 @@ const Temperatures = ({
       ])}
       {
         inRange([10, 20], wrange) && ([
-          (<tr key={'h-1'}><Th>Hiver tempéré (10 à 20°)</Th></tr>),
+          (<WinterName key={'h-1'}>Hiver tempéré (10 à 20°)</WinterName>),
           inRange([30], srange) ? (
             <TemperatureRow
               key={2}
@@ -224,7 +246,7 @@ const Temperatures = ({
       }
       {
         inRange([0, 10], wrange) && ([
-          (<tr key={'h-2'}><Th>Hiver frais (0 à 10°)</Th></tr>),
+          (<WinterName key={'h-2'}>Hiver frais (0 à 10°)</WinterName>),
           inRange([30], srange) ? (
             <TemperatureRow
               key={5}
@@ -253,7 +275,7 @@ const Temperatures = ({
       }
       {
         inRange([0], wrange) && ([
-          (<tr key={'h-3'}><Th>Hiver froid (moins de 0°)</Th></tr>),
+          (<WinterName key={'h-3'}>Hiver froid (moins de 0°)</WinterName>),
           inRange([30], srange) ? (
             <TemperatureRow
               key={8}
@@ -303,7 +325,6 @@ const LegendContent = ({ filters })=>{
   );
 }
 const AtlasLegend = ({ showContextualInfo, contextualData, filters }) => {
-  console.log('filters', filters);
   return (
     <Legend>
       <LegendContent filters={ filters }/>
@@ -321,5 +342,3 @@ const mapStateToProps = (state)=>({
 });
 
 export default connect(mapStateToProps)(AtlasLegend);
-
-console.log('why so mad?');

@@ -27,7 +27,6 @@ class Checkbox extends Component {
   };
   onChange(event){
     this.props.onBeforeChange && this.props.onBeforeChange();
-    console.log('onBeforeChange', this.props.onBeforeChange);
     setTimeout(()=>{
       this.props.onChange && this.props.onChange();
     }, 100);

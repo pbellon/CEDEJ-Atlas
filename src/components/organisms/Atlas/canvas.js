@@ -102,7 +102,6 @@ export class CanvasDelegate {
         reject(e);
       }
     });
-        // console.log('onDrawLayer drawn !');
   }
 }
 

@@ -119,7 +119,6 @@ const __CanvasLayer = Evented.extend({
   },
 
   _createCanvas: function({id,width, height, bounds:{min:{x,y}}}){
-    // console.log(`createCanvas zoom ${id} - x,y`,x,y);
     const px = (s)=>`${s}px`;
     const canvas = document.createElement('canvas');
     canvas.width = width;

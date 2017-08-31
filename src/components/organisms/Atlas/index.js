@@ -1,4 +1,5 @@
 import leafletImage from 'leaflet-image';
+import styled from 'styled-components';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -9,7 +10,8 @@ import {
   LayerGroup,
   Pane,
   Circle,
-  ScaleControl
+  ScaleControl,
+  ZoomControl,
 } from 'react-leaflet';
 import { canvas  } from 'leaflet';
 
@@ -30,6 +32,7 @@ import { CanvasDelegate } from './canvas';
 import CanvasLayer from './layer';
 
 import { filterFeatures } from 'utils/data';
+import { sidebar, navbar } from 'utils/styles';
 
 export default class Atlas extends Component {
   static propTypes = {
@@ -38,6 +41,7 @@ export default class Atlas extends Component {
     showCircles: PropTypes.bool,
     print: PropTypes.bool,
     onRender: PropTypes.func,
+    isSidebarOpened: PropTypes.bool,
     onCirclesCreated: PropTypes.func.isRequired,
     showContextualInfo: PropTypes.func.isRequired,
     hideContextualInfo: PropTypes.func.isRequired,
@@ -47,6 +51,7 @@ export default class Atlas extends Component {
 
   static defaultProps = {
     print: false,
+    isSidebarOpened: true,
   }
   
   static childContextTypes = {
@@ -108,6 +113,7 @@ export default class Atlas extends Component {
       showContextualInfo,
       hideContextualInfo,
       onCirclesCreated,
+      isSidebarOpened,
     } = this.props;
     const bbox = [
       -179.2165527343741
@@ -115,19 +121,23 @@ export default class Atlas extends Component {
       ,  181.00012207031295
       ,  84.62359619140625
     ];
+    const klass = `sidebar-${isSidebarOpened ? 'opened' : 'closed'}`;
     // const { mapRef } = this.state;
     const position = [10, 35];
+
     return (
       <Map
-        onmousemove={ this.onHover.bind(this) }
+        className={klass}
+        onmousemove={this.onHover.bind(this)}
         minZoom={2}
         maxZoom={10}
         renderer={canvas()}
         animate={true}
+        zoomControl={false}
         center={position} zoom={4}
-        ref={(ref) => this.bindContainer(ref)}>
-
-      <ScaleControl position={ 'bottomleft' }/>
+        innerRef={(ref) => this.bindContainer(ref)}>
+      <ZoomControl position={'topright'} />
+      <ScaleControl position={ 'bottomright' }/>
       <TileLayer url={ BASE_LAYER_URL } />
       <CanvasLayer
         onRendered={ onRender }
