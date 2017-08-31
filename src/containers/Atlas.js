@@ -21,7 +21,6 @@ const Holder = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-
 `;
 
 const Error = styled.span`
@@ -29,11 +28,11 @@ const Error = styled.span`
 `;
 
 class AtlasContainer extends Component {
-  componentDidMount(){
+  componentDidMount() {
     this.props.loadData();
   }
 
-  render(){
+  render() {
     const {
       canvasURL,
       data,
@@ -44,44 +43,57 @@ class AtlasContainer extends Component {
       showCircles,
       isRendering,
       onZoom,
-      onCirclesCreated, 
-      onRender
+      onCirclesCreated,
+      onRender,
     } = this.props;
+
     return (
       <Holder>
-        <LoadingIndicator isLoading={ isRendering }/>
+        <LoadingIndicator isLoading={isRendering} />
         { error &&
-          <Error>{error.message}</Error>
+          <Error>{ error.message }</Error>
         }
         { canvasURL &&
           <img src={canvasURL} alt={'Render map'} width="100%" height="auto" />
         }
         { data && (
-          <Atlas width={900} height={500} data={data}
-            showContextualInfo={ showContextualInfo }
-            hideContextualInfo={ hideContextualInfo }
-            onZoomEnd={ onZoom } 
-            onRender={ onRender }
-            onCirclesCreated={ onCirclesCreated }
-            showAreas={ showAreas }
-            showCircles={ showCircles }/>
-        )}
-        
-        <AtlasLegend/>
-
+          <Atlas
+            width={900}
+            height={500}
+            data={data}
+            showContextualInfo={showContextualInfo}
+            hideContextualInfo={hideContextualInfo}
+            onZoomEnd={onZoom}
+            onRender={onRender}
+            onCirclesCreated={onCirclesCreated}
+            showAreas={showAreas}
+            showCircles={showCircles}
+          />)
+        }
+        { data && (<AtlasLegend />) }
       </Holder>
     );
   }
 }
 
 AtlasContainer.propTypes = {
-  loadData: PropTypes.func.isRequired,
-  canvasURL: PropTypes.string,
   data: PropTypes.shape({
-    aridity:PropTypes.array,
-    circles:PropTypes.array,
+    aridity: PropTypes.array,
+    circles: PropTypes.array,
     temperatures: PropTypes.array,
   }),
+  canvasURL: PropTypes.string,
+  error: PropTypes.object,
+  isContextualInfoVisible: PropTypes.bool,
+  isRendering: PropTypes.bool,
+  showAreas: PropTypes.bool,
+  showCircles: PropTypes.bool,
+  onZoom: PropTypes.func,
+  onCirclesCreated: PropTypes.func,
+  onRender: PropTypes.func,
+  loadData: PropTypes.func.isRequired,
+  showContextualInfo: PropTypes.func.isRequired,
+  hideContextualInfo: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -94,12 +106,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onZoom: ()=>dispatch(zoom()),
-  onCirclesCreated: (circleSizes)=>dispatch(setCircleSizesRefs(circleSizes)),
-  showContextualInfo: (data)=> dispatch(showContextualInfo(data)),
-  hideContextualInfo: ()=>dispatch(hideContextualInfo()),
-  loadData: ()=> dispatch(loadData()),
-  onRender: ()=> dispatch(renderSuccess())
+  onZoom: () => dispatch(zoom()),
+  onCirclesCreated: (circleSizes) => dispatch(setCircleSizesRefs(circleSizes)),
+  showContextualInfo: (data) => dispatch(showContextualInfo(data)),
+  hideContextualInfo: () => dispatch(hideContextualInfo()),
+  loadData: () => dispatch(loadData()),
+  onRender: () => dispatch(renderSuccess()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AtlasContainer);

@@ -1,33 +1,34 @@
 import { put, fork, call, take } from 'redux-saga/effects';
-import { turfizeGeoJSON } from 'utils';
+import { turfizeGeoJSON } from 'utils/data';
 import api from 'services/api';
 
 import * as actions from './actions';
 
-export function* loadData(){
+export function* loadData() {
   try {
     const { aridity, temperatures, circles } = yield call(api.getMapData);
     const aridityFeatures = aridity.features
-      .filter((a)=>a.properties.d_TYPE != null);
+      .filter(a => a.properties.d_TYPE != null);
 
     const circlesFeatures = circles.features
-      .filter((c)=>c.properties.size_ != null && c.properties.colours != null);
+      .filter(c => c.properties.size_ != null && c.properties.colours != null);
+
     const temperaturesFeatures = temperatures.features
-      .filter((t)=>parseInt(t.properties.Temperatur) > 0);
+      .filter(t => parseInt(t.properties.Temperatur, 10) > 0);
 
     const data = {
       aridity: aridityFeatures,
       temperatures: temperaturesFeatures,
-      circles: circlesFeatures
+      circles: circlesFeatures,
     };
     
-    for(let i in data){
+    Object.keys(data).forEach(i => {
       turfizeGeoJSON(data[i]);
-    }
+    });
 
     yield put(actions.loadSuccess(data));
   } catch (e) {
-    console.error("Data loading failed", e);
+    console.error('Data loading failed', e);
     yield put(actions.loadFailure(e));
   }
 }
@@ -40,6 +41,6 @@ export function* watchLoadData() {
 }
 
 
-export default function* (){
+export default function* () {
   yield fork(watchLoadData);
 }

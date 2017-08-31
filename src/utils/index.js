@@ -1,12 +1,20 @@
-const arrToObj = (arr, key=(v)=>v.value)=>{
+// import * as data from './data';
+// import * as patterns from './patterns';
+// import * as boundaries from './boundaries';
+
+export const arrToObj = (arr, key = (v) => v.value) => {
   const obj = {};
-  for(let i in arr){
-    const v = arr[i];
+  arr.forEach(v => {
     obj[key(v)] = v;
-  };
+  });
   return obj;
-}
+};
  
-const inRange = (a,b) => (a[0] >= b[0] ) && (a[a.length - 1] <= b[b.length-1]);
-export * from './data';
-export { arrToObj, inRange };
+export const inRange = (a, b) => (
+  (a[0] >= b[0]) && (a[a.length - 1] <= b[b.length - 1])
+);
+
+export const fakeContext = () => document.createElement('canvas')
+  .getContext('2d');
+
+// export { data, patterns, boundaries };

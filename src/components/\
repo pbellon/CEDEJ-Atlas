@@ -1,0 +1,163 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+import styled from 'styled-components';
+import { font, palette } from 'styled-theme'
+import { ContextualInfo, Heading } from 'components'; 
+import { fromAtlas, fromFilters } from 'store/selectors';
+import { patterns, boundaries } from 'utils';
+
+const Section = styled.div`
+  width: 300px;
+`;
+
+const SectionTitle = styled.h3`
+  color: blue;
+`;
+
+const SectionContent = styled.div`
+  padding-left: 30px;
+`;
+
+const Legend = styled.div`
+  background: white;
+  position: absolute;
+  z-index: 1000;
+  top: 85px;
+  left: 14px;
+  padding: 5px;
+`;
+
+const TrName = styled.th`
+  background: #bbb;
+  text-transform: uppercase;
+`;
+
+const visibleAridity = ({ aridity })=>{
+  return Object.keys(aridity)
+    .map((name)=>aridity[name])
+    .filter((aridity_f)=>aridity_f.visible);
+}
+
+const AridityNames = ({ filters })=>(
+  <thead>
+    <tr>
+      <TrName>Aridité</TrName>
+      { visibleAridity(filters).map((aridity, key) => (
+        <th key={ key }>{ aridity.name }</th>
+      ))}
+    </tr>
+  </thead>
+);
+
+class AreaPattern extends Component {
+  drawCanvas(canvas){
+    const { patterns, aridity, temperature } = this.props;
+    const context = canvas.getContext('2d');
+    const pattern = patterns.findByKey(aridity.name);
+    const width = w = canvas.width;
+    const height = h = canvas.height;
+    const path = `M0,0L${w},0L${w},${h}L0,${h}`;
+    
+  }
+  render(){
+    return (
+      <td>
+        <canvas
+          width={ 30 }
+          height={ 30 }
+          ref={(canvas)=>this.drawCanvas(canvas)}/>
+      </td>
+    );
+  }
+}
+
+AridityNames.propTypes = { filters: PropTypes.object }; 
+const Table = styled.table``;
+
+const TemperatureRow = (temperatureValue, patterns, aridity)=>{
+  const temp = utils.data.findTemperature(temperatureValue);
+  return (
+    <tr>
+      <td>{ temp.key }</td>
+      {
+        visibleAridity({ aridity }).map(ar => (
+          <AreaPattern
+            patterns={ patterns } aridity={ ar }
+            temperature={ temp }/>
+            
+        ))
+      }
+    </tr>
+  );
+};
+
+const Temperatures = ({
+  patterns, 
+  filters: {
+    temperatures:{ summer, winter },
+    aridity
+  }})=>{
+  const srange = summer.range;
+  const wrange = winter.range;
+  return (
+    <tbody>
+      <tr>
+        <TrName>Températures</TrName>
+      </tr>
+      { utils.inRange([20,30], wrange) && ([ 
+          utils.inRange([30], srange) ? TemperatureRow(1, patterns, aridity) : '',
+          utils.inRange([20, 30], srange) ? TemperatureRow(2, patterns) : ''
+        ])
+      }
+      {
+        utils.inRange([10, 20], winter.range) && ([
+          utils.inRange([30], srange) ? TemperatureRow(3, patterns):'',
+          utils.inRange([20, 30], srange) ? TemperatureRow(4, patterns):'',
+          utils.inRange([10, 20], srange) ? TemperatureRow(5, patterns):'',
+        ])
+      }
+      {
+        utils.inRange([0, 10], wrange) && ([
+          utils.inRange([30], srange) ? TemperatureRow(6, patterns) : '',
+          utils.inRange([20, 30], srange) ? TemperatureRow(7, patterns) : '',
+          utils.inRange([10, 20], srange) ? TemperatureRow(8, patterns) : '',
+        ])
+      }
+    </tbody>
+);
+
+
+const LegendContent = ({ filters })=>(
+  <div>
+    <Heading level={ 5 } uppercase={ true }>
+      Conditions climatiques des régions arides
+    </Heading>
+
+    <Table>
+      <AridityNames filters={ filters }/>
+      <Temperatures filters={ filters }/>
+    </Table>
+  </div>
+);
+
+const AtlasLegend = ({ showContextualInfo, contextualData, filters }) => {
+  const patterns = patterns.initPatterns();
+  return (
+    <Legend>
+      <LegendContent patterns={ patterns } filters={ filters }/>
+      { contextualData && (
+        <ContextualInfo visible={ showContextualInfo } data={ contextualData }/>
+      )}
+    </Legend>
+  );
+};
+
+const mapStateToProps = (state)=>({
+  filters: fromFilters.filters(state),
+  showContextualInfo: fromAtlas.isContextualInfoVisible(state),
+  contextualData: fromAtlas.contextualInfo(state)
+});
+
+export default connect(mapStateToProps)(AtlasLegend);

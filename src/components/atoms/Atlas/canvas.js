@@ -1,7 +1,7 @@
 import { areaColor } from './styles';
 import { geoTransform, geoPath} from 'd3-geo';
-import * as patternsUtil from './patterns';
-import * as boundaries from './boundaries'; 
+import * as patternsUtil from 'utils/patterns';
+import * as boundaries from 'utils/boundaries';
 import { LatLng } from 'leaflet';
 
 const drawArea = ({context, area, drawPath})=>{
@@ -14,8 +14,8 @@ const drawArea = ({context, area, drawPath})=>{
   context.fill();
 };
 
-const drawPattern = ({context, aridity, drawPath}) => {
-  const pattern = patternsUtil.findPattern(aridity);
+const drawPattern = ({context, aridity, drawPath, patterns}) => {
+  const pattern = patterns.findByFeature(aridity);
   if(!pattern){ return; }
   if(!pattern.stripes){ return; }
   context.fillStyle = pattern.canvasPattern;
@@ -77,6 +77,7 @@ export class CanvasDelegate {
       // draw aridity boundaries (for certains kinds of aridity)
       drawPattern({
         aridity: this.aridity[i],
+        patterns,
         context,
         drawPath
       });
@@ -85,6 +86,7 @@ export class CanvasDelegate {
     boundaries.addBoundaries({
       projection,
       context,
+      patterns,
       boundaries: this.aridity,
       layer,
     });

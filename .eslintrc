@@ -33,6 +33,8 @@
     "arrow-body-style": 0,
     "arrow-parens": 0,
     "global-require": 0,
+    "indent": 1,
+    "no-param-reassign": 0,
     "no-underscore-dangle": 0,
     "no-unused-expressions": 0,
     "no-confusing-arrow": 0,

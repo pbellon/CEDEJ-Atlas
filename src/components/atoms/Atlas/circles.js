@@ -16,9 +16,7 @@ class CirclesLayer extends Component {
     const size = circle.properties.size_;
     if(!this.sizes[size]){
       this.sizes[size] = $ref;
-      console.log(this.sizes);
       if(this.hasAllSizes()){
-        console.log('hasAllSizes !');
         onCirclesCreated(this.sizes);
       }
     }
@@ -53,7 +51,6 @@ class CirclesLayer extends Component {
           style.fillOpacity= show?1:0;
           if(size == '01'){
             const points = TrianglePoints(center, radius);
-            console.log('points', points);
             elem = (
               <Polygon
                 { ...style  }

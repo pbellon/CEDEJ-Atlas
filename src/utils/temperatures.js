@@ -2,27 +2,21 @@ import { arrToObj, inRange } from 'utils';
 
 const TEMPERATURES = [
   {
-    winter:[-1],
-    summer:[-1],
-    value: 0,
-    color: 'rgba(0,0,0,0)',
-  }, 
-  {
     value: 1,
-    winter: [ 20, 30 ],
-    summer: [ 30 ], 
+    winter: [20, 30],
+    summer: [30],
     color: '#b76648',
   },
   {
     value: 2,
-    winter: [ 20, 30],
-    summer: [ 20, 30],
+    winter: [20, 30],
+    summer: [20, 30],
     color: '#e07a54',
   },
   {
     value: 3,
     winter: [10, 20],
-    summer: [ 30 ],
+    summer: [30],
     color: '#bf7534',
   },
   {
@@ -32,10 +26,10 @@ const TEMPERATURES = [
     color: '#e68839',
   },
   {
-    value:5, 
+    value: 5,
     winter: [10, 20],
     summer: [10, 20],
-    color: '#edad78'
+    color: '#edad78',
   },
   {
     value: 6,
@@ -44,27 +38,27 @@ const TEMPERATURES = [
     color: '#c19931',
   },
   {
-    value:7,
+    value: 7,
     winter: [0, 10],
     summer: [20, 30],
     color: '#e3b131',
   },
   {
-    value:8,
+    value: 8,
     winter: [0, 10],
     summer: [10, 20],
     color: '#e8c66b',
   },
   {
-    value:9,
+    value: 9,
     winter: [0],
     summer: [30],
-    color:'#95a053',
+    color: '#95a053',
   },
   {
     winter: [0],
-    summer: [20,30],
-    value:10, 
+    summer: [20, 30],
+    value: 10,
     color: '#abb85c',
   },
   {
@@ -72,16 +66,27 @@ const TEMPERATURES = [
     summer: [10, 20],
     value: 11,
     color: '#c4cd8d',
-  }
+  },
 ];
+
 const TEMPS_OBJ = arrToObj(TEMPERATURES);
 
-export const filter = ({ winter:{range:winter}, summer:{range:summer}})=>(
+export const filter = ({
+  winter: { range: winter },
+  summer: { range: summer },
+}) => (
   TEMPERATURES
-    .filter((temp)=>inRange(temp.summer, summer) && inRange(temp.winter, winter))
+    .filter(temp => (
+      inRange(temp.summer, summer) && inRange(temp.winter, winter)
+    ))
 );
 
-export const findTemperature = (feature)=>TEMPS_OBJ[feature.properties.Temperatur];
+export const findByValue = (value)=>TEMPS_OBJ[value]
+
+export const findTemperature = ({ properties: { Temperatur } }) => (
+  findByValue(Temperatur)
+);
+
 
 export default TEMPERATURES;
 

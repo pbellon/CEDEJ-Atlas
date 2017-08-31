@@ -1,7 +1,6 @@
 export const initialState = {
   sizeRefs: {},
-  sizes:{},
+  sizes: {},
 };
 
-
-export const sizes = (state)=>state.sizes
+export const sizes = state => state.sizes;

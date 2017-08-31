@@ -9,18 +9,19 @@ const getScaled = function (ex) {
 };
 
 const TrianglePoints = (center, radius)=>{
-  const width =  getScaled(radius)*7;
-  const height = getScaled(radius)*7;
+  const width =  getScaled(radius) * 6;
+  const height = getScaled(radius) * 5;
   center = latLng(center);
   const left = latLng([
-    center.lat + height/2, center.lng - width/2
+    center.lat + (height / 2), center.lng - (width / 2)
   ]);
   const right = latLng([
-    center.lat + height/2, center.lng + width/2
+    center.lat + (height /2), center.lng + (width / 2)
   ]);
   const bottom = latLng([
-    center.lat - height/2, center.lng
+    center.lat - (height / 2), center.lng
   ]);
+
   return [
     left, right, bottom
   ];

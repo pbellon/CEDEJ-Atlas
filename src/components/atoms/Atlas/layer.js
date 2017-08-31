@@ -1,39 +1,37 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
-import { LatLng, Evented, Mixin, DomUtil, setOptions, Point } from 'leaflet';
+import { LatLng, Evented, DomUtil, setOptions, Point } from 'leaflet';
 import { MapLayer } from 'react-leaflet';
 
-import TileLoader from './mixin'; 
+// import TileLoader from './mixin';
 
 /*
  * Generic  Canvas Layer for leaflet 0.7 and 1.0-rc, 
  * copyright Stanislav Sumbera,  2016 , sumbera.com , license MIT
  * originally created and motivated by L.CanvasOverlay  available here: https://gist.github.com/Sumbera/11114288
  */
-const range = (start, end)=>{
-  return [...Array(1+end-start).keys()].map(v => start+v)
-}
+const range = (start, end) => {
+  return [...Array((1 + end) - start).keys()].map(v => start + v);
+};
 
 // -- support for both  0.0.7 and 1.0.0 rc2 leaflet
-const __CanvasLayer = Evented.extend({ 
-  includes: [TileLoader],
-  updateData: function(data){
+const __CanvasLayer = Evented.extend({
+  updateData: function(data) {
     this._delegate.updateData(data);
     this._rerender().then(()=>{
       this._onRendered();
     });
   },
-  updateOpacity: function(opacity){
+  updateOpacity: function(opacity) {
     if(!this._container){ return; }
-    Object.keys(this._renderedCanvas).forEach((zoom)=>{
+    Object.keys(this._renderedCanvas).forEach(zoom => {
       this._renderedCanvas[zoom].shouldRender = true;
     });
     this._container.style.opacity = opacity;
   },
 
   // -- initialized is called on prototype 
-  initialize: function(delegate, onRendered, options){
+  initialize: function(delegate, onRendered, options) {
     this._map    = null;
     this._renderedCanvas = {};
     // backCanvas for zoom animation
@@ -43,12 +41,29 @@ const __CanvasLayer = Evented.extend({
     this._setBBox(options.bbox);
     setOptions(this, options);
     this.currentAnimationFrame = -1;
-    this.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
-      window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || function(callback) {
-        return window.setTimeout(callback, 1000 / 60);
-      };
-    this.cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame ||
-      window.webkitCancelAnimationFrame || window.msCancelAnimationFrame || function(id) { clearTimeout(id); };
+    this.requestAnimationFrame = (
+      window.requestAnimationFrame 
+    ) || (
+      window.mozRequestAnimationFrame 
+    ) || (
+      window.webkitRequestAnimationFrame 
+    ) || (
+      window.msRequestAnimationFrame 
+    ) || (
+      function(callback) { return window.setTimeout(callback, 1000 / 60); }
+    );
+    
+    this.cancelAnimationFrame = (
+      window.cancelAnimationFrame 
+    ) || (
+      window.mozCancelAnimationFrame 
+    ) || (
+      window.webkitCancelAnimationFrame 
+    ) || (
+      window.msCancelAnimationFrame 
+    ) || (
+      function(id) { clearTimeout(id); }
+    );
   },
   
   delegate: function(del){
@@ -140,12 +155,24 @@ const __CanvasLayer = Evented.extend({
   _prerenderAtZoom: function(zoomLevel){
     return new Promise((resolve, reject)=>{
       const mapPos = this._map._getMapPanePos();
-      const {min, max, width, height, bounds, center, origin} = this._getBBoxAt(zoomLevel);
-      // console.log('pixel origin:', origin);
-      const canvas = (this._getCanvasAt(zoomLevel)||{}).canvas || this._createCanvas({
+      const {
+        min,
+        max,
+        width,
+        height,
+        bounds,
+        center,
+        origin,
+      } = this._getBBoxAt(zoomLevel);
+      const canvas = (
+        (this._getCanvasAt(zoomLevel) || {}).canvas
+      ) || this._createCanvas({
         id: `canvas-zoom-${zoomLevel}`,
-        width, height, bounds
+        width,
+        height,
+        bounds
       });
+      
       const shouldRender = false;
       const del = this._delegate;
       del.render && del.render({
@@ -163,17 +190,16 @@ const __CanvasLayer = Evented.extend({
           bounds,
           center,
           origin,
-          shouldRender
+          shouldRender,
         });
       });
     });
   },
-  _prerender: function(zoomLevels){
-
-    const rendering = zoomLevels.map((zoom)=>this._prerenderAtZoom(zoom));
+  _prerender: function(zoomLevels) {
+    const rendering = zoomLevels.map(zoom => this._prerenderAtZoom(zoom));
     
     return Promise.all(rendering).then(
-      (renderedCanvas)=>{
+      renderedCanvas => {
         renderedCanvas.forEach((canvas)=>{
           if(!canvas.canvas.parentElement){
             this._container.append(canvas.canvas);
@@ -195,19 +221,19 @@ const __CanvasLayer = Evented.extend({
           resolve();
         })
         .then(()=>this._prerender([
-            zoom - 1 < minZoom ? minZoom : zoom-1,
-            zoom + 1 > maxZoom ? maxZoom : zoom+1
-          ]));
+            zoom - 1 < minZoom ? minZoom : zoom - 1,
+            zoom + 1 > maxZoom ? maxZoom : zoom + 1
+        ]));
     });
   },
   // check if previous or next zoom level should be rendered
-  _checkSiblingsRendering: function(){
+  _checkSiblingsRendering: function() {
       const zoom = this._getZoom();
       const minZoom = this._map.getMinZoom();
       const maxZoom = this._map.getMaxZoom();
 
-      const next = this._getCanvasAt(zoom+1>maxZoom?maxZoom:zoom+1);
-      const prev = this._getCanvasAt(zoom-1<minZoom?minZoom:zoom-1);
+      const next = this._getCanvasAt(zoom + 1 > maxZoom ? maxZoom : zoom + 1);
+      const prev = this._getCanvasAt(zoom - 1 < minZoom ? minZoom : zoom - 1);
       const renderLevels = [];
       if(next.shouldRender){
         renderLevels.push(next.zoomLevel);
@@ -217,7 +243,7 @@ const __CanvasLayer = Evented.extend({
       }
       renderLevels.length > 0 && this._prerender(renderLevels);
   },
-  _reset: function(){
+  _reset: function() {
     // var size = this._map.getSize();
     // this._canvas.width = size.x;
     // this._canvas.height = size.y;
@@ -230,7 +256,7 @@ const __CanvasLayer = Evented.extend({
     // this.onResize();
     this._render();
   },
-  _render: function(){
+  _render: function() {
     if (this.currentAnimationFrame >= 0) {
       this.cancelAnimationFrame.call(window, this.currentAnimationFrame);
     }
@@ -242,8 +268,8 @@ const __CanvasLayer = Evented.extend({
     // add container with the canvas to the tile pane
     // the container is moved in the oposite direction of the 
     // map pane to keep the canvas always in (0, 0)
-    var tilePane = this._map.getPanes().tilePane;
-    var _container = DomUtil.create('div', [
+    const tilePane = this._map.getPanes().tilePane;
+    const _container = DomUtil.create('div', [
       'leaflet-layer',
       'leaflet-canvas-layer',
       'evented'
@@ -320,8 +346,7 @@ const __CanvasLayer = Evented.extend({
     this._updateCanvasPosition(prerendered.canvas, center, zoom);
     this._checkSiblingsRendering();
   },
-
-  render: function(){}
+  render: function(){},
 });
 
 const noop = ()=>null;
@@ -331,19 +356,27 @@ export default class CanvasLayer extends MapLayer {
     delegate: PropTypes.func,
     zIndex: PropTypes.number,
     bbox: PropTypes.array,
-  }
+  };
+
   static defaultProps = {
     onRendered: noop
   };
-  createLeafletElement(props){
+
+  createLeafletElement(props) {
     const { delegate, onRendered, data, ...options }= this.getOptions(props);
     return new __CanvasLayer(new delegate(data), onRendered, options);
   }
 
   updateLeafletElement(
-    {opacitiy:fromOpacity, data:{temperatures:fromTemps, aridity:fromAridity}},
-    {opacity: toOpacity,   data:{temperatures:toTemps,   aridity:toAridity}}
-  ){
+    {
+      opacity: fromOpacity,
+      data:{ temperatures: fromTemps, aridity:fromAridity}
+    },
+    {
+      opacity: toOpacity,
+      data:{ temperatures:toTemps, aridity:toAridity}
+    }
+  ) {
     const diffAridity = fromAridity.length != toAridity.length;
     const diffTemps = fromTemps.length != toTemps.length;
     if(diffTemps || diffAridity){

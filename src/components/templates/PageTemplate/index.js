@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -7,7 +8,7 @@ import {
   Sidebar,
   SidebarToggleButton,
   AtlasFilters,
-  SidebarMenu 
+  SidebarMenu,
 } from 'components';
 
 const Holder = styled.div`
@@ -27,7 +28,7 @@ const ContainerHolder = styled.div`
   right:0px;
   left: 0px;
   bottom:0px;
-  z-index: ${({zIndex=0})=>zIndex};
+  z-index: ${({ zIndex = 0 }) => zIndex};
 `;
 
 const Container = styled.div`
@@ -44,28 +45,31 @@ const Container = styled.div`
 `;
 
 
-const AppTemplate = ({children})=>(
+const AppTemplate = ({ children }) => (
   <Holder>
     <Navbar/>
     <ContainerHolder>
-    <Container>
-      { children }
-    </Container>
+      <Container>
+        { children }
+      </Container>
     </ContainerHolder>
 
-    <Sidebar width={ 300 } zIndex={ 10 } top={ 50 }>
+    <Sidebar width={300} zIndex={10} top={50}>
       <div>
-        <Route path={ '/map' } render={()=>(
+        <Route path={'/map'} render={()=>(
           <div>
-            <SidebarToggleButton/>
-            <AtlasFilters/>
+            <SidebarToggleButton />
+            <AtlasFilters />
           </div>
         )}/>
       </div>
-      <SidebarMenu/>
+      <SidebarMenu />
     </Sidebar>
   </Holder>
 );
 
+AppTemplate.propTypes = {
+  children: PropTypes.node,
+};
 
 export default AppTemplate;

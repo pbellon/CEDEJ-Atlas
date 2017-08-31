@@ -29,7 +29,7 @@ import CirclesLayer from './circles';
 import { CanvasDelegate } from './canvas';
 import CanvasLayer from './layer';
 
-import { filterFeatures } from 'utils';
+import { filterFeatures } from 'utils/data';
 
 export default class Atlas extends Component {
   static propTypes = {

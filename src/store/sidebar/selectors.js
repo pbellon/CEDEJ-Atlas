@@ -1,4 +1,4 @@
 export const initialState = {
-  opened: true
+  opened: true,
 };
-export const isOpened = (state = initialState)=>state.opened
+export const isOpened = (state = initialState) => state.opened;

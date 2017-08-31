@@ -21,12 +21,12 @@ export default (state = initialState, action) => {
     case actions.RENDER:
       return {
         ...state,
-        isRendering: true
+        isRendering: true,
       };
     case actions.RENDER_SUCCESS:
       return {
         ...state,
-        isRendering: false
+        isRendering: false,
       };
     case actions.RENDER_FAIL:
       return {
@@ -54,20 +54,20 @@ export default (state = initialState, action) => {
         ...state,
         isRendering: false,
         isDownloading: false,
-        error: action.error
+        error: action.error,
       };
 
     case actions.SHOW_CONTEXTUAL_INFO:
       return {
         ...state,
         isContextualInfoVisible: true,
-        contextualInfo: action.data
+        contextualInfo: action.data,
       };
 
     case actions.HIDE_CONTEXTUAL_INFO:
       return {
         ...state,
-        isContextualInfoVisible: false
+        isContextualInfoVisible: false,
       };
     default:
       return state;

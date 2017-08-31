@@ -24,11 +24,11 @@ const NavRight = styled.div`
 const Navbar =(props) => (
   <Nav {...props}>
     <Link to="/">Atlas des zones arides</Link>
-    <Route path={ '/map' } render={()=>(
+    <Route path={ '/map' } render={ () => (
       <NavRight>
         <Button disabled={true}>EXPORTER</Button>
       </NavRight>
-    )}/>
+    ) }/>
   </Nav>      
 );
 

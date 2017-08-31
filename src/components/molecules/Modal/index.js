@@ -1,16 +1,16 @@
-import React from 'react'
-import PropTypes from 'prop-types' 
-import styled, { css, injectGlobal } from 'styled-components'
-import ReactModal from 'react-modal'
-import { font, palette } from 'styled-theme'
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled, { css, injectGlobal } from 'styled-components';
+import ReactModal from 'react-modal';
+import { font, palette } from 'styled-theme';
 
-import { Heading, IconButton } from 'components'
+import { Heading, IconButton } from 'components';
 
 injectGlobal`
   body.ReactModal__Body--open {
     overflow: hidden;
   }
-`
+`;
 
 const overlayStyles = css`
   position: fixed;
@@ -28,7 +28,7 @@ const overlayStyles = css`
   &[class*="before-close"] {
     opacity: 0;
   }
-`
+`;
 
 const ModalBox = styled(ReactModal)`
   position: absolute;
@@ -62,7 +62,7 @@ const ModalBox = styled(ReactModal)`
   &[class*="before-close"] {
     transform: translate(-50%, 100%);
   }
-`
+`;
 
 const Header = styled.header`
   display: flex;
@@ -71,27 +71,27 @@ const Header = styled.header`
   > *:first-child {
     flex: 1;
   }
-`
+`;
 
 const StyledHeading = styled(Heading)`
   margin: 0 1rem 0 0;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-`
+`;
 
 const Content = styled.div`
   overflow: auto;
   padding: 0 1rem;
   margin-bottom: 1rem;
-`
+`;
 
 const StyledReactModal = styled(({ className, ...props }) =>
   <ModalBox overlayClassName={className} closeTimeoutMS={250} {...props} />
-)`${overlayStyles}`
+)`${overlayStyles}`;
 
 const Modal = ({ children, title, closeable, onClose, ...props }) => {
-  const hasHeader = title || closeable
+  const hasHeader = title || closeable;
   return (
     <StyledReactModal
       contentLabel={title || 'Modal'}
@@ -109,8 +109,8 @@ const Modal = ({ children, title, closeable, onClose, ...props }) => {
         {children}
       </Content>
     </StyledReactModal>
-  )
-}
+  );
+};
 
 Modal.propTypes = {
   children: PropTypes.node,
@@ -118,6 +118,6 @@ Modal.propTypes = {
   closeable: PropTypes.bool,
   reverse: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
-}
+};
 
-export default Modal
+export default Modal;

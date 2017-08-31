@@ -1,3 +1,3 @@
-export const initialState = {}
+export const initialState = {};
 
-export const isOpen = (state = initialState, name) => !!state[name]
+export const isOpen = (state = initialState, name) => !!state[name];

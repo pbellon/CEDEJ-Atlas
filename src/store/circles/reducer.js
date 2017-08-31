@@ -1,38 +1,32 @@
 import { initialState } from './selectors';
-import * as actions from './actions'; 
+import * as actions from './actions';
 import * as atlasActions from '../atlas/actions';
 
-const getSizes = ({ sizeRefs })=>{
+const getSizes = ({ sizeRefs }) => {
   const sizes = {};
   Object.keys(sizeRefs).forEach(key => {
-    sizes[key] = sizeRefs[key].leafletElement._radius; 
+    sizes[key] = sizeRefs[key].leafletElement._radius;
   });
   return sizes;
-}
-
-const reducer = (state = initialState, action)=>{
-  switch(action.type){
-    case actions.SET_CIRCLE_SIZES_REFS:
-      console.log('reducer.SET_CIRCLES_SIZES_REFS', action);
-      state = {
-        ...state,
-        sizeRefs: action.circlesSizes
-      };
-      break;
-    case atlasActions.RENDER_SUCCESS:
-      state = {
-        ...state,
-        sizes: getSizes(state)
-      };
-      break;
-    case atlasActions.ZOOM:
-      state = {
-        ...state,
-        sizes: getSizes(state)
-      };
-      break;
-  }
-  return state;
 };
 
-export default reducer;
+export default (state = initialState, action) => {
+  switch (action.type) {
+    case actions.SET_CIRCLE_SIZES_REFS:
+      return {
+        ...state,
+        sizeRefs: action.circlesSizes,
+      };
+    case atlasActions.RENDER_SUCCESS:
+      return {
+        ...state,
+        sizes: getSizes(state),
+      };
+    case atlasActions.ZOOM:
+      return {
+        ...state,
+        sizes: getSizes(state),
+      };
+    default: return state;
+  }
+};

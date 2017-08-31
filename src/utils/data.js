@@ -1,45 +1,57 @@
 import { multiPolygon, polygon, point } from '@turf/helpers';
+
 import circle from '@turf/circle';
 import inside from '@turf/inside';
 
-export const filterFeatures = (data, latLng)=>{
-  const pt = point([ latLng.lng, latLng.lat ]);
+export const filterFeatures = (data, latLng) => {
+  const pt = point([latLng.lng, latLng.lat]);
   const result = {};
-  let i;
-  for(i in data){
+  Object.keys(data).forEach(i => {
     const set = data[i];
-    const matching = set.find((f)=>{
+    const matching = set.find(f => {
       return f._turfObj && inside(pt, f._turfObj);
     });
-    if(matching){
+
+    if (matching) {
       result[i] = matching;
     }
-  }
+  });
   return result;
-}
+};
 
-export const turfizeGeoJSON = (data)=>{
+const GeoJSON = {
+  Polygon: 'Polygon',
+  MultiPolygon: 'MultiPolygon',
+  Point: 'Point',
+};
+
+const featureToCircle = (feature) => {
+  const size = parseInt(feature.properties.size_, 10);
+  const coords = feature.geometry.coordinates;
+  const radius = size * 20;
+  const center = point(coords);
+  const steps = 15;
+  return circle(center, radius, steps);
+};
+
+export const turfizeGeoJSON = (data) => {
   data.forEach(
-    (feature)=>{
+    (feature) => {
       const coords = feature.geometry.coordinates;
-      switch(feature.geometry.type){
-        case 'Polygon':
+      switch (feature.geometry.type) {
+        case GeoJSON.Polygon:
           feature._turfObj = polygon(coords);
           break;
-        case 'MultiPolygon':
+        case GeoJSON.MultiPolygon:
           feature._turfObj = multiPolygon(coords);
           break;
-
-        case 'Point':
-          const size = parseInt(feature.properties.size_);
-          const radius = size * 20;
-          const center = point(coords);
-          const steps = 15;
-          feature._turfObj = circle(center, radius, steps);
+        case GeoJSON.Point:
+          feature._turfObj = featureToCircle(feature);
+          break;
+        default:
+          break;
       }
     }
   );
   return data;
 };
-
-

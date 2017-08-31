@@ -2,12 +2,12 @@ export const initialState = {
   temperatures: {
     winter: {
       name: 'winter',
-      range: [0, 30]
+      range: [0, 30],
     },
     summer: {
       name: 'summer',
       range: [10, 30],
-    }
+    },
   },
   aridity: {
     Hyper: {
@@ -24,15 +24,15 @@ export const initialState = {
     },
     Sub_humide: {
       name: 'Sub_humide',
-      visible: true
-    }
+      visible: true,
+    },
   },
   circles: {
     month_range: [1, 12],
     types: {
       A: {
         visible: true,
-        name: 'A'
+        name: 'A',
       },
       B: {
         visible: true,
@@ -44,7 +44,7 @@ export const initialState = {
       },
       D: {
         visible: true,
-        name: 'D'
+        name: 'D',
       },
       E: {
         visible: true,
@@ -53,35 +53,31 @@ export const initialState = {
       F: {
         visible: true,
         name: 'F',
-      }
-    }
+      },
+    },
   },
   original: null,
-  filtered: null
+  filtered: null,
 };
 
 
-export const winterTemperatures = (state)=>(state.temperatures.winter);
-export const summerTemperatures = (state)=>(state.temperatures.summer);
+export const winterTemperatures = state => state.temperatures.winter;
+export const summerTemperatures = state => state.temperatures.summer;
 
-export const aridity = (state, name)=>{
-  switch (name){
+export const aridity = (state, name) => {
+  switch (name) {
     case 'hyper': return state.aridity.Hyper;
     case 'arid': return state.aridity.Aride;
     case 'semi': return state.aridity.Semi;
     case 'subHumide': return state.aridity.Sub_humide;
+    default: return null;
   }
-}
-
-export const circlesTypes = (state)=>{
-  return state.circles.types;
 };
 
-export const dryMonths = (state)=>{
-  return state.circles.month_range;
-}
+export const circlesTypes = state => state.circles.types;
 
-export const filters = (state)=>state;
+export const dryMonths = state => state.circles.month_range;
 
-export const data = (state)=>state.filtered
+export const filters = state => state;
 
+export const data = state => state.filtered;

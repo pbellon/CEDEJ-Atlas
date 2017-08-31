@@ -1,5 +1,5 @@
-import { initialState } from './selectors'
-import { MODAL_SHOW, MODAL_HIDE } from './actions'
+import { initialState } from './selectors';
+import { MODAL_SHOW, MODAL_HIDE } from './actions';
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -7,16 +7,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         [action.name]: true,
-      }
+      };
     case MODAL_HIDE:
       if (action.name) {
         return {
           ...state,
           [action.name]: false,
-        }
+        };
       }
-      return initialState
+      return initialState;
     default:
-      return state
+      return state;
   }
-}
+};

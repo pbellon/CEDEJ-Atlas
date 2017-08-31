@@ -10,7 +10,7 @@ const config = {
   },
   test: {},
   development: {
-    apiUrl: 'http://localhost:3000'
+    apiUrl: 'http://localhost:3000',
   },
   production: {
     apiUrl: 'http://cedej-atlas.surge.sh',

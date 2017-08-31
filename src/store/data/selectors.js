@@ -1,6 +1,6 @@
 export const initialState = {
   data: null,
-  isLoading: false
+  isLoading: false,
 };
 
-export const data = (state)=>state.data
+export const data = (state) => state.data;

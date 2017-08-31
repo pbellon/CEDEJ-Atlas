@@ -1,20 +1,17 @@
 import * as actions from './actions';
-import { layerByName, initialState } from './selectors';
+import { initialState } from './selectors';
 
-const reducer = (state = initialState, action) => {
-  switch(action.type){
+export default (state = initialState, action) => {
+  switch (action.type) {
     case actions.TOGGLE_LAYER_VISIBILITY:
-      const layer = action.layer;
-      state = {
+      return {
         ...state,
-        [layer.name]: {
-          ...layer,
-          visible: !state[layer.name].visible
-        }
+        [action.layer.name]: {
+          ...action.layer,
+          visible: !state[action.layer.name].visible,
+        },
       };
-      break;
+    default:
+      return state;
   }
-  return state;
-}
-
-export default reducer;
+};
