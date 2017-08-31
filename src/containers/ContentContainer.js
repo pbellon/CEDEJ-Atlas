@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
+import { size } from 'styled-theme';
 const Holder = styled.div`
   display: flex;
 `;
 
 
 const Placeholder = styled.div`
-  width: 300px;
+  width: ${size('sidebar.width')}px;
   flex-grow: 0;
   flex-shrink: 0;
 `;

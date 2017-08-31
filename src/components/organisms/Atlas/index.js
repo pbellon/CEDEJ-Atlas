@@ -130,11 +130,11 @@ export default class Atlas extends Component {
         className={klass}
         onmousemove={this.onHover.bind(this)}
         minZoom={2}
-        maxZoom={10}
+        maxZoom={9}
         renderer={canvas()}
         animate={true}
         zoomControl={false}
-        center={position} zoom={4}
+        center={position} zoom={3}
         innerRef={(ref) => this.bindContainer(ref)}>
       <ZoomControl position={'topright'} />
       <ScaleControl position={ 'bottomright' }/>

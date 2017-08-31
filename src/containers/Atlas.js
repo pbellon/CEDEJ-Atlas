@@ -12,7 +12,7 @@ import {
   zoom,
 } from 'store/actions';
 
-import { fromAtlas, fromFilters, fromLayers } from 'store/selectors';
+import { fromSidebar, fromAtlas, fromFilters, fromLayers } from 'store/selectors';
 import { Atlas, AtlasLegend, LoadingIndicator } from 'components';
 
 const Holder = styled.div`
@@ -28,6 +28,27 @@ const Error = styled.span`
 `;
 
 class AtlasContainer extends Component {
+  static propTypes = {
+    data: PropTypes.shape({
+      aridity: PropTypes.array,
+      circles: PropTypes.array,
+      temperatures: PropTypes.array,
+    }),
+    canvasURL: PropTypes.string,
+    error: PropTypes.object,
+    isContextualInfoVisible: PropTypes.bool,
+    isRendering: PropTypes.bool,
+    isSidebarOpened: PropTypes.bool,
+    showAreas: PropTypes.bool,
+    showCircles: PropTypes.bool,
+    onZoom: PropTypes.func,
+    onCirclesCreated: PropTypes.func,
+    onRender: PropTypes.func,
+    loadData: PropTypes.func.isRequired,
+    showContextualInfo: PropTypes.func.isRequired,
+    hideContextualInfo: PropTypes.func.isRequired,
+  };
+
   componentDidMount() {
     this.props.loadData();
   }
@@ -42,11 +63,11 @@ class AtlasContainer extends Component {
       showAreas,
       showCircles,
       isRendering,
+      isSidebarOpened,
       onZoom,
       onCirclesCreated,
       onRender,
     } = this.props;
-
     return (
       <Holder>
         <LoadingIndicator isLoading={isRendering} />
@@ -61,6 +82,7 @@ class AtlasContainer extends Component {
             width={900}
             height={500}
             data={data}
+            isSidebarOpened={isSidebarOpened}
             showContextualInfo={showContextualInfo}
             hideContextualInfo={hideContextualInfo}
             onZoomEnd={onZoom}
@@ -76,27 +98,8 @@ class AtlasContainer extends Component {
   }
 }
 
-AtlasContainer.propTypes = {
-  data: PropTypes.shape({
-    aridity: PropTypes.array,
-    circles: PropTypes.array,
-    temperatures: PropTypes.array,
-  }),
-  canvasURL: PropTypes.string,
-  error: PropTypes.object,
-  isContextualInfoVisible: PropTypes.bool,
-  isRendering: PropTypes.bool,
-  showAreas: PropTypes.bool,
-  showCircles: PropTypes.bool,
-  onZoom: PropTypes.func,
-  onCirclesCreated: PropTypes.func,
-  onRender: PropTypes.func,
-  loadData: PropTypes.func.isRequired,
-  showContextualInfo: PropTypes.func.isRequired,
-  hideContextualInfo: PropTypes.func.isRequired,
-};
-
 const mapStateToProps = state => ({
+  isSidebarOpened: fromSidebar.isOpened(state),
   isContextualInfoVisible: fromAtlas.isContextualInfoVisible(state),
   isRendering: fromAtlas.isRendering(state),
   showAreas: fromLayers.isLayerVisible(state, fromLayers.temperatures(state)),
