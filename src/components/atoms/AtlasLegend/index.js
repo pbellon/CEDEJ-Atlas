@@ -41,6 +41,7 @@ const TrName = styled.th`
 
 const Th = styled.th`
   padding: 2px;
+  text-align: ${({ align='left' }) => align};
 `;
 
 const Td = styled.td`
@@ -123,8 +124,8 @@ class AreaPattern extends Component {
     return (
       <td>
         <canvas
-          width={ 50 }
-          height={ 30 }
+          width={ 40 }
+          height={ 20 }
           ref={(canvas)=>this.drawCanvas(canvas)}/>
       </td>
     );
@@ -134,12 +135,11 @@ class AreaPattern extends Component {
 AridityNames.propTypes = { filters: PropTypes.object }; 
 const Table = styled.table``;
 
-const TemperatureRow = ({ temperature, patterns, aridity })=>{
-  console.log(aridity);
+const TemperatureRow = ({ name, temperature, patterns, aridity })=>{
   const temp = findTemperature(temperature);
   return (
     <tr>
-      <td>{ temp.value }</td>
+      <td>{ name }</td>
       {
         visibleAridity({ aridity }).map((ar,key) => (
           <AreaPattern
@@ -152,6 +152,13 @@ const TemperatureRow = ({ temperature, patterns, aridity })=>{
     </tr>
   );
 };
+
+const SummerName = styled.span`
+  padding-left: 7px;
+`;
+const VeryHotSummer = () => (<SummerName>été très chaud (plus de 30°)</SummerName>)
+const HotSummer = () => (<SummerName>été chaud (20 à 30°)</SummerName>)
+const TemperedSummer = () => (<SummerName>été très chaud (10 à 20°)</SummerName>)
 
 const Temperatures = ({
   patterns, 
@@ -167,9 +174,11 @@ const Temperatures = ({
       <tr>
         <TrName>Températures</TrName>
       </tr>
-      { inRange([20,30], wrange) && ([ 
+      { inRange([20,30], wrange) && ([
+        (<tr key={'h-0'}><Th>Hiver chaud (20 à 30°)</Th></tr>),
         inRange([30], srange) ? (
           <TemperatureRow
+            name={(<VeryHotSummer />)}
             key={0}
             temperature={1}
             patterns={patterns}
@@ -178,6 +187,7 @@ const Temperatures = ({
         inRange([20, 30], srange) ? (
           <TemperatureRow 
             key={1}
+            name={(<HotSummer />)}
             aridity={aridity}
             temperature={2}
             patterns={patterns} />
@@ -185,9 +195,11 @@ const Temperatures = ({
       ])}
       {
         inRange([10, 20], wrange) && ([
+          (<tr key={'h-1'}><Th>Hiver tempéré (10 à 20°)</Th></tr>),
           inRange([30], srange) ? (
             <TemperatureRow
               key={2}
+              name={(<VeryHotSummer />)}
               temperature={3}
               patterns={patterns}
               aridity={aridity} />
@@ -195,6 +207,7 @@ const Temperatures = ({
           inRange([20, 30], srange) ? (
             <TemperatureRow
               key={3}
+              name={(<HotSummer />)}
               temperature={4}
               patterns={patterns}
               aridity={aridity} />
@@ -202,6 +215,7 @@ const Temperatures = ({
           inRange([10, 20], srange) ? (
             <TemperatureRow
               key={4}
+              name={(<TemperedSummer />)}
               temperature={5}
               patterns={patterns}
               aridity={aridity} />
@@ -210,9 +224,11 @@ const Temperatures = ({
       }
       {
         inRange([0, 10], wrange) && ([
+          (<tr key={'h-2'}><Th>Hiver frais (0 à 10°)</Th></tr>),
           inRange([30], srange) ? (
             <TemperatureRow
               key={5}
+              name={(<VeryHotSummer />)}
               temperature={6}
               patterns={patterns}
               aridity={aridity} />
@@ -220,6 +236,7 @@ const Temperatures = ({
           inRange([20, 30], srange) ? (
             <TemperatureRow
               key={6}  
+              name={(<HotSummer />)}
               temperature={7}
               patterns={patterns}
               aridity={aridity} />
@@ -227,10 +244,42 @@ const Temperatures = ({
           inRange([10, 20], srange) ? (
             <TemperatureRow
               key={7}
+              name={(<TemperedSummer />)}
               temperature={8}
               patterns={patterns}
               aridity={aridity} />
           ) : null,
+        ])
+      }
+      {
+        inRange([0], wrange) && ([
+          (<tr key={'h-3'}><Th>Hiver froid (moins de 0°)</Th></tr>),
+          inRange([30], srange) ? (
+            <TemperatureRow
+              key={8}
+              name={(<VeryHotSummer />)}
+              temperature={9}
+              patterns={patterns}
+              aridity={aridity} />
+          ) : null,
+          inRange([20, 30], srange) ? (
+            <TemperatureRow
+              key={9}
+              name={(<HotSummer />)}
+              temperature={10}
+              patterns={patterns}
+              aridity={aridity} />
+          ) : null,
+          inRange([10, 20], srange) ? (
+            <TemperatureRow
+              key={10}
+              name={(<TemperedSummer />)}
+              temperature={11}
+              patterns={patterns}
+              aridity={aridity} />
+          ) : null,
+
+          
         ])
       }
     </tbody>
