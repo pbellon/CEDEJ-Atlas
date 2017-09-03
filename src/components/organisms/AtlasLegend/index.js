@@ -25,7 +25,7 @@ const Legend = styled.div`
   top: 15px;
   left: 14px;
   padding: 5px;
-  max-width: 450px;
+  max-width: 400px;
 `;
 
 const TrName = styled.th`
@@ -43,11 +43,12 @@ const TrNameContent = styled.span`
 
 const Th = styled.th`
   padding: 2px;
-  text-align: ${({ align='left' }) => align};
+  text-align: ${({ align='center' }) => align};
 `;
 
 const Td = styled.td`
   padding: 2px;
+  text-align: ${({ align='center' }) => align};
 `;
 
 const Reduced = styled.span`
@@ -62,45 +63,50 @@ const visibleAridity = ({ aridity }) => {
 };
 
 
-const AridityNames = ({ filters })=>(
-  <thead>
-    <tr>
-      <TrName><TrNameContent>Aridité</TrNameContent></TrName>
-      { visibleAridity(filters).map((aridity, key) => (
-        <Th key={ key }>
-          <Reduced>  
-            { aridityUtils.getName(aridity) }
-          </Reduced>
-        </Th>
-      ))}
-    </tr>
-    <tr>
-      <td></td>
-      { visibleAridity(filters).map((aridity, key) => (
-        <Td key={ key }>
-          <Reduced>
-            P/Etp<br/>
-            { aridityUtils.getPrecipitations(aridity) }
-          </Reduced>
-        </Td>
-      ))}
- 
-    </tr>
-  </thead>
-);
+const AridityNames = ({ filters })=>{
+  const visibleAridities = visibleAridity(filters);
+  if(!visibleAridities.length){ return null; }
+  return (
+    <thead>
+      <tr>
+        <TrName><TrNameContent>Aridité</TrNameContent></TrName>
+        { visibleAridities.map((aridity, key) => (
+          <Th key={ key }>
+            <Reduced>  
+              { aridityUtils.getName(aridity) }
+            </Reduced>
+          </Th>
+        ))}
+      </tr>
+      <tr style={{display:'none'}}>
+        <td></td>
+        { visibleAridities.map((aridity, key) => (
+          <Td key={ key }>
+            <Reduced>
+              P/Etp<br/>
+              { aridityUtils.getPrecipitations(aridity) }
+            </Reduced>
+          </Td>
+        ))}
+   
+      </tr>
+    </thead>
+  );
+};
 
 class AreaPattern extends Component {
   drawCanvas(canvas) {
     if(!canvas){ return; } 
     const { patterns, aridity, temperature } = this.props;
-    const context = canvas.getContext('2d');
-    const pattern = patterns.findByKey(aridity.name);
     const { width, height } = canvas;
+    const context = canvas.getContext('2d');
+    let pattern; 
+    
+    if(aridity){ pattern = patterns.findByKey(aridity.name); }
     const w = width;
     const h = height;
     const p = `M2,2L${w - 2},2L${w - 2},${h - 2}L2,${h - 2}Z`;
-    const props = new boundaries.pathProperties(p)
-
+    const props = new boundaries.pathProperties(p);
     const path = {
       isExterior: true,
       path: p,
@@ -113,7 +119,7 @@ class AreaPattern extends Component {
     context.fillStyle = temperature.color;
     context.fill(p2d);
     
-    if(pattern.stripes){
+    if(pattern && pattern.stripes){
 
       context.globalCompositeOperation = 'destination-out';
       context.fillStyle = pattern.canvasPattern;
@@ -121,21 +127,21 @@ class AreaPattern extends Component {
       context.fill(p2d);
       context.closePath();
     }
-
-    context.globalCompositeOperation = 'source-over';
-    boundaries.addBoundary({ context, path, pattern, gap: 15 });
-   
+    if(aridity){
+      context.globalCompositeOperation = 'source-over';
+      boundaries.addBoundary({ context, path, pattern, gap: 15 });
+    } 
   
   }
 
   render() {
     return (
-      <td>
+      <Td>
         <canvas
           width={ 40 }
           height={ 20 }
           ref={(canvas)=>this.drawCanvas(canvas)}/>
-      </td>
+      </Td>
     );
   }
 }
@@ -145,17 +151,23 @@ const Table = styled.table``;
 
 const TemperatureRow = ({ name, temperature, patterns, aridity })=>{
   const temp = findTemperature(temperature);
+  const visibleAridities = visibleAridity({ aridity });
   return (
     <tr>
-      <td>{ name }</td>
+      <Td align={'left'}>{ name }</Td>
       {
-        visibleAridity({ aridity }).map((ar,key) => (
+        visibleAridities.map((ar,key) => (
           <AreaPattern
             key={key}
             patterns={ patterns } aridity={ ar }
             temperature={ temp }/>
             
         ))
+      }
+      {
+        (visibleAridities.length === 0) && (
+          <AreaPattern temperature={ temp }/>
+        )
       }
     </tr>
   );
@@ -170,13 +182,14 @@ const TemperedSummer = () => (<SummerName>été très chaud (10 à 20°)</Summer
 
 const WinterNameContent = styled.span`
   font-size: 0.85rem;
+  line-height: 0.9rem;
   padding-top: 0.2rem;
   display: block;
 `;
 
 const WinterName = ({ children }) => (
   <tr>
-    <Th>
+    <Th align={'left'}>
       <WinterNameContent>{ children }</WinterNameContent>
     </Th>
   </tr>
@@ -313,10 +326,6 @@ const LegendContent = ({ filters })=>{
   const patterns = patternUtils.initPatterns();
   return (
     <div>
-      <Heading level={ 5 } uppercase={ true }>
-        Conditions climatiques des régions arides
-      </Heading>
-
       <Table>
         <AridityNames filters={ filters }/>
         <Temperatures filters={ filters } patterns={ patterns }/>
