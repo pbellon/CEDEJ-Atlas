@@ -12,6 +12,7 @@ import { findByValue as findTemperature } from 'utils/temperatures';
 import * as patternUtils from 'utils/patterns';
 import * as boundaries from 'utils/boundaries';
 import * as aridityUtils from 'utils/aridity';
+import * as circlesUtils from 'utils/circles';
 
 const SectionContent = styled.div`
   padding-left: 30px;
@@ -22,8 +23,8 @@ const Legend = styled.div`
   background: white;
   position: absolute;
   z-index: 1000;
-  top: 15px;
-  left: 14px;
+  top: 0;
+  left: 0;
   padding: 5px;
   max-width: 400px;
 `;
@@ -88,7 +89,6 @@ const AridityNames = ({ filters })=>{
             </Reduced>
           </Td>
         ))}
-   
       </tr>
     </thead>
   );
@@ -173,6 +173,102 @@ const TemperatureRow = ({ name, temperature, patterns, aridity })=>{
   );
 };
 
+const visibleCircleTypes = ({ circles: { types: circles } })=>{
+  return Object.keys(circles)
+    .map(k => circles[k])
+    .filter(circle => circle.visible);
+};
+
+const CircleTypeSymbol = styled.span`
+  background-color: ${({ circle })=>circlesUtils.colorByValue(circle)};
+  width: 10px;
+  height: 10px;
+  border: 1px solid black;
+  border-radius: 100%;
+  display: inline-block;
+`;
+
+
+
+const CircleTypeRow = ({ circle })=> {
+  return (
+    <tr>
+      <td colSpan={2}>
+        <CircleTypeSymbol circle={ circle } />&nbsp;
+        <Reduced>
+          { circlesUtils.droughtRegime(circle) }
+        </Reduced>
+      </td>
+    </tr>
+  );
+};
+
+
+const CircleTypesGroup = ({ types}) => ( 
+  types.map((type) => (<CircleTypeRow circle={ type } />))
+);
+
+const CircleTypes = ({ filters })=>{
+  const types = filters.circles.types;
+  const hasTypes = (types, ctrl)=>{
+    for(let i = 0; i < types.length; i+=1){
+      if(Object.keys(ctrl).indexOf(types[i]) < 0){
+        return false;
+      }
+    }
+    return true;
+  };
+  if(!visibleCircleTypes(filters).length){ return null; }
+
+  return (
+    <tbody>
+      <tr>
+        <TrName><TrNameContent>Sécheresse</TrNameContent></TrName>
+      </tr>
+      { hasTypes(['A', 'B'], types) && (
+        <tr><Th colSpan={2} align={ 'left' }>Sécheresse d'été dominante</Th></tr>
+      )}
+      {
+        types['A'] && (
+          <CircleTypeRow circle={ 'A' } />
+        )
+      }
+      {
+        types['B'] && (
+          <CircleTypeRow circle={ 'B' } />
+        )
+      }
+
+      { hasTypes(['C', 'D'], types) && (
+        <tr><Th colSpan={2} align={'left'}>Sécheresse d'hiver dominante</Th></tr>
+      )}
+      {
+        types['C'] && (
+          <CircleTypeRow circle={ 'C' } />
+        )
+      }
+      {
+        types['D'] && (
+          <CircleTypeRow circle={ 'D' } />
+        )
+      }
+      { hasTypes(['E', 'F'], types) && (
+        <tr><Th colSpan={2} align={ 'left' }>Régimes de transition</Th></tr>
+      )}
+      {
+        types['E'] && (
+          <CircleTypeRow circle={ 'E' } />
+        )
+      }
+      {
+        types['F'] && (
+          <CircleTypeRow circle={ 'F' } />
+        )
+      }
+    </tbody>
+
+  );
+}
 const SummerName = styled(Reduced)`
   padding-left: 7px;
 `;
@@ -329,6 +425,7 @@ const LegendContent = ({ filters })=>{
       <Table>
         <AridityNames filters={ filters }/>
         <Temperatures filters={ filters } patterns={ patterns }/>
+        <CircleTypes filters={ filters}/>
       </Table>
     </div>
   );
