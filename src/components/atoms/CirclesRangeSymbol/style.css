@@ -1,0 +1,16 @@
+:global svg .cls-1,.cls-2 {
+  fill:rgba(0,0,0,0);
+}
+:global svg .cls-1,.cls-2,.cls-3,.cls-4,.cls-5,.cls-6,.cls-7{
+  stroke:#1d1d1b;
+  stroke-miterlimit:100;
+  stroke-width:20px;
+}
+:global svg .cls-3,.cls-4,.cls-5,.cls-6,.cls-7{
+  fill:none;
+}
+:global svg .cls-3{stroke-dasharray:170.94 170.94;}
+:global svg .cls-4{stroke-dasharray:120.01 120.01;}
+:global svg .cls-6{stroke-dasharray:50.98 50.98;}
+:global svg .cls-7{stroke-dasharray:50.88 50.88;}
+

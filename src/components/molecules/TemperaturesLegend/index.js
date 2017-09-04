@@ -82,7 +82,7 @@ const TemperedSummer = () => (<SummerName>été très chaud (10 à 20°)</Summer
 const WinterName = ({ children }) => (
   <tr>
     <Th align={'left'}>
-      <LegendCategoryName>{ children }</LegendCategoryName>
+      <LegendCategoryName><Reduced>{ children }</Reduced></LegendCategoryName>
     </Th>
   </tr>
 );

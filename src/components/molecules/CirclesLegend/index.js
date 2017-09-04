@@ -7,7 +7,8 @@ import {
   Td,
   Th,
   TrName,
-  TrNameContent
+  TrNameContent,
+  CirclesRangeSymbol,
 } from 'components';
 
 import { visibleTypes } from 'utils'; 
@@ -23,8 +24,6 @@ const CircleTypeSymbol = styled.span`
   display: inline-block;
 `;
 
-
-
 const CircleTypeRow = ({ circle })=> {
   return (
     <tr>
@@ -38,11 +37,7 @@ const CircleTypeRow = ({ circle })=> {
   );
 };
 
-
-const CircleTypesGroup = ({ types}) => ( 
-  types.map((type) => (<CircleTypeRow circle={ type } />))
-);
-
+const NormalWeight = styled.span`font-weight: normal`;
 
 const CirclesLegend = ({ filters })=>{
   const types = filters.circles.types;
@@ -63,9 +58,22 @@ const CirclesLegend = ({ filters })=>{
           <TrNameContent>Sécheresse</TrNameContent>
         </TrName>
       </tr>
+      <tr>
+        <Th colSpan={3} align={'left'}>
+          <LegendCategoryName>
+            Nombre de mois secs&nbsp; 
+            <NormalWeight>recevant moins de 30mm de précipitations</NormalWeight>
+          </LegendCategoryName>
+        </Th>
+        <Td>
+          <CirclesRangeSymbol width={ 30 } height={ 30 } /> 
+        </Td>
+      </tr>
       { hasTypes(['A', 'B'], types) && (
         <tr><Th colSpan={3} align={ 'left' }>
-          <LegendCategoryName>Sécheresse d'été dominante</LegendCategoryName>
+          <LegendCategoryName>
+            <Reduced>Sécheresse d'été dominante</Reduced>
+          </LegendCategoryName>
         </Th></tr>
       )}
       {
