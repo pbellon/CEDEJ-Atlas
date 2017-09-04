@@ -5,6 +5,7 @@ import 'rc-tooltip/assets/bootstrap.css';
 import styled, { injectGlobal } from 'styled-components';
 import { font, palette } from 'styled-theme'; 
 
+import theme from 'components/themes/default'; 
 import Slider from 'rc-slider';
 
 injectGlobal`
@@ -12,7 +13,9 @@ injectGlobal`
   z-index: 800;
   font-familiy: 'Helvetica';
 }
-
+.rc-slider-track {
+  background-color: ${theme.palette.primary[0]};
+}
 .rc-slider-tooltip-inner {
   font-size: 0.7rem;
   box-shadow: 0 0 3px #bbb; 

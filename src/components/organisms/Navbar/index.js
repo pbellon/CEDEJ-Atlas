@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import { Button, Link } from 'components';
 import styled from 'styled-components';
+import { palette } from 'styled-theme';
 
 const Nav = styled.div`
-  background:#bbb;
+  background:${palette('grayscale', 0)};
   padding-left: 15px;
   padding-right: 15px;
   height: ${(props)=>(props.height)}px;
@@ -23,10 +24,10 @@ const NavRight = styled.div`
 
 const Navbar =(props) => (
   <Nav {...props}>
-    <Link to="/">Atlas des zones arides</Link>
+    <Link style={{color: 'white'}} reverse={true} to="/">Atlas des zones arides</Link>
     <Route path={ '/map' } render={ () => (
       <NavRight>
-        <Button disabled={true}>EXPORTER</Button>
+        <Button reverse={true} disabled={true}>EXPORTER</Button>
       </NavRight>
     ) }/>
   </Nav>      

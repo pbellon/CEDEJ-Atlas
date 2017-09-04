@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { size } from 'styled-theme';
+import { size, palette } from 'styled-theme';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fromSidebar } from 'store/selectors';
 import { toggleSidebar } from 'store/actions';
 import { Link, Button } from 'components';
 import { sidebar, navbar } from 'utils/styles';
-
 
 const Side = styled.div`
   position: fixed;
@@ -21,7 +20,7 @@ const Side = styled.div`
   bottom: 0px;
   right: 0px;
   transform: translate(0, 0);
-  background: #aaa;
+  background: ${palette('grayscale', 4)};
   transition: transform .5s ease-out;
   width: ${sidebar.width}px;
 

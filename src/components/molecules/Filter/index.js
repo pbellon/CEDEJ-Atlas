@@ -4,12 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
 
-const FilterDiv = styled.div`
-  color: ${palette('grayscale', 1)};
-  &.disabled {
-    color: ${palette('grayscale', 4)};
-  }
-`;
+const FilterDiv = styled.div``;
 
 const Filter = ({children, onClick, ...props}, context)=>{
   const disabled = !context.isLayerVisible;

@@ -11,8 +11,9 @@ import {
   LegendToggleButton,
 } from 'components'; 
 
-import { fromAtlas, fromFilters, fromLegend } from 'store/selectors';
+import { fromAtlas, fromFilters, fromLegend, fromLayers } from 'store/selectors';
 import { toggleLegend } from 'store/actions';
+import { visibleTypes, objToArray } from 'utils'; 
 
 const Legend = styled.div`
   font-family: ${font('primary')};
@@ -34,12 +35,30 @@ const Holder = styled.div`
   padding-top: 30px;
 `;
 
-const LegendContent = ({ filters })=>{
+const LegendContent = ({ filters, layers })=>{
+  const {
+    temperatures: { visible: showTemperatures },
+    circles: { visible: showCircles },
+  } = layers;
+  const allTypes = {
+    ...filters.circles.types,
+    ...filters.temperatures,
+    ...filters.aridity
+  }; 
+  const noFilters = visibleTypes(allTypes).length === 0; 
+  const noData = ((!showTemperatures) && (!showCircles)) || (noFilters);
   return (
     <Holder>
       <Table>
-        <TemperaturesLegend filters={ filters } />
-        <CirclesLegend filters={ filters}/>
+        { showTemperatures && (
+          <TemperaturesLegend filters={ filters } />
+        )}
+        { showCircles && (
+          <CirclesLegend filters={ filters}/>
+        )}
+        { noData && (
+          <tbody><tr><th>Pas de données à visualiser</th></tr></tbody>
+        )}
       </Table>
     </Holder>
   );
@@ -55,6 +74,7 @@ const AtlasLegend = ({
   showContextualInfo,
   contextualData,
   filters,
+  layers,
   toggleLegend 
 }) => {
   return (
@@ -62,7 +82,7 @@ const AtlasLegend = ({
       <LegendToggleButton
         align={'right'}
         style={visibilityButtonStyle} />
-      <LegendContent filters={ filters }/>
+      <LegendContent layers={ layers } filters={ filters }/>
       { contextualData && (
         <ContextualInfo visible={ showContextualInfo } data={ contextualData }/>
       )}
@@ -73,6 +93,7 @@ const AtlasLegend = ({
 const mapStateToProps = (state)=>({
   isOpened: fromLegend.isOpened(state),
   filters: fromFilters.filters(state),
+  layers: fromLayers.layers(state), 
   showContextualInfo: fromAtlas.isContextualInfoVisible(state),
   contextualData: fromAtlas.contextualInfo(state)
 });

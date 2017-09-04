@@ -17,20 +17,23 @@ import { fromLayers } from 'store/selectors';
 
 
 const Heading = styled(GenericHeading)`
-  color: ${palette('grayscale', 1)};
   cursor: pointer;
   &:hover {
-    color: ${palette('grayscale', 2)};
-  },
-  &.hidden {
-    color: ${palette('grayscale', 4)};
+    color: ${palette('grayscale', 0)};
   }
-`;
+
+  `;
 
 const LayerContainer = styled.div`
   padding-left: 15px;
   padding-right: 15px;
   margin-bottom: 15px;
+  
+  color: ${palette('grayscale', 1)};
+  &.hidden {
+    color: ${palette('grayscale', 3)};
+  }
+
 `;
 
 class LayerFilterGroup extends Component {
@@ -53,9 +56,9 @@ class LayerFilterGroup extends Component {
     const Icon = layer.visible ? MdVisibility : MdVisibilityOff;
     const klass = layer.visible ? '' : 'hidden';
     return (
-      <LayerContainer>
+      <LayerContainer className={ klass }>
         <Heading level={4}
-          onClick={ toggleVisibility(layer) } className={ klass }>
+          onClick={ toggleVisibility(layer) } >
           <span><Icon/> { heading }</span>
         </Heading>
         { children }

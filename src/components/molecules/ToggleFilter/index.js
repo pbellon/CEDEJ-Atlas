@@ -10,7 +10,7 @@ import { startRender } from 'store/actions';
 
 const Label = GenericLabel.extend`
   &.disabled {
-    color: ${palette('grayscale', 4)};
+    color: ${palette('grayscale', 3)};
   }
 `;
 

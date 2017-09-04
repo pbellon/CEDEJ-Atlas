@@ -14,14 +14,14 @@ const activeLinkStyle = {
 };
 
 const LiStyle = css`
-  background:${palette('grayscale', 3)};
+  background:${palette('grayscale', 4)};
   margin:0;
   font-size: 0.9rem; 
   display:block;
   padding:12px;
   color: ${palette('grayscale', 0)};
   &.active {
-    background: ${palette('grayscale',1)};
+    background: ${palette('primary',2)};
     color: ${palette('white', 0)};
   }
   &:hover {

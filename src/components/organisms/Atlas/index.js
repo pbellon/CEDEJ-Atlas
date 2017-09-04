@@ -133,7 +133,7 @@ export default class Atlas extends Component {
         className={klass}
         onmousemove={this.onHover.bind(this)}
         minZoom={2}
-        maxZoom={9}
+        maxZoom={7}
         renderer={canvas()}
         animate={true}
         zoomControl={false}
