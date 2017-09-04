@@ -17,4 +17,9 @@ export const inRange = (a, b) => (
 export const fakeContext = () => document.createElement('canvas')
   .getContext('2d');
 
+export const visibleTypes = (types) => {
+  return Object.keys(types)
+    .map( name => types[name])
+    .filter(type => type.visible);
+};
 // export { data, patterns, boundaries };
