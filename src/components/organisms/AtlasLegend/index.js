@@ -26,6 +26,7 @@ const Legend = styled.div`
   top: 0;
   left: 0;
   padding: 5px;
+  padding-top: 0;
   max-width: 400px;
 `;
 
@@ -43,12 +44,14 @@ const TrNameContent = styled.span`
 `;
 
 const Th = styled.th`
-  padding: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
   text-align: ${({ align='center' }) => align};
 `;
 
 const Td = styled.td`
-  padding: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
   text-align: ${({ align='center' }) => align};
 `;
 
@@ -129,7 +132,7 @@ class AreaPattern extends Component {
     }
     if(aridity){
       context.globalCompositeOperation = 'source-over';
-      boundaries.addBoundary({ context, path, pattern, gap: 15 });
+      boundaries.addBoundary({ context, path, pattern, gap: 20 });
     } 
   
   }
@@ -138,8 +141,8 @@ class AreaPattern extends Component {
     return (
       <Td>
         <canvas
-          width={ 40 }
-          height={ 20 }
+          width={ 35 }
+          height={ 15 }
           ref={(canvas)=>this.drawCanvas(canvas)}/>
       </Td>
     );
@@ -193,7 +196,7 @@ const CircleTypeSymbol = styled.span`
 const CircleTypeRow = ({ circle })=> {
   return (
     <tr>
-      <td colSpan={2}>
+      <td colSpan={4}>
         <CircleTypeSymbol circle={ circle } />&nbsp;
         <Reduced>
           { circlesUtils.droughtRegime(circle) }
@@ -223,10 +226,12 @@ const CircleTypes = ({ filters })=>{
   return (
     <tbody>
       <tr>
-        <TrName><TrNameContent>Sécheresse</TrNameContent></TrName>
+        <TrName style={{paddingTop: '5px'}}><TrNameContent>Sécheresse</TrNameContent></TrName>
       </tr>
       { hasTypes(['A', 'B'], types) && (
-        <tr><Th colSpan={2} align={ 'left' }>Sécheresse d'été dominante</Th></tr>
+        <tr><Th colSpan={3} align={ 'left' }>
+          <CategoryName>Sécheresse d'été dominante</CategoryName>
+        </Th></tr>
       )}
       {
         types['A'] && (
@@ -240,7 +245,9 @@ const CircleTypes = ({ filters })=>{
       }
 
       { hasTypes(['C', 'D'], types) && (
-        <tr><Th colSpan={2} align={'left'}>Sécheresse d'hiver dominante</Th></tr>
+        <tr><Th colSpan={3} align={'left'}>
+          <CategoryName>Sécheresse d'hiver dominante</CategoryName>
+        </Th></tr>
       )}
       {
         types['C'] && (
@@ -253,7 +260,9 @@ const CircleTypes = ({ filters })=>{
         )
       }
       { hasTypes(['E', 'F'], types) && (
-        <tr><Th colSpan={2} align={ 'left' }>Régimes de transition</Th></tr>
+        <tr><Th colSpan={3} align={ 'left' }>
+          <CategoryName>Régimes de transition</CategoryName>
+        </Th></tr>
       )}
       {
         types['E'] && (
@@ -276,7 +285,7 @@ const VeryHotSummer = () => (<SummerName>été très chaud (plus de 30°)</Summe
 const HotSummer = () => (<SummerName>été chaud (20 à 30°)</SummerName>)
 const TemperedSummer = () => (<SummerName>été très chaud (10 à 20°)</SummerName>)
 
-const WinterNameContent = styled.span`
+const CategoryName = styled.span`
   font-size: 0.85rem;
   line-height: 0.9rem;
   padding-top: 0.2rem;
@@ -286,7 +295,7 @@ const WinterNameContent = styled.span`
 const WinterName = ({ children }) => (
   <tr>
     <Th align={'left'}>
-      <WinterNameContent>{ children }</WinterNameContent>
+      <CategoryName>{ children }</CategoryName>
     </Th>
   </tr>
 );
