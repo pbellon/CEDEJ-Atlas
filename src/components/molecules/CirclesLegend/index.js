@@ -59,14 +59,14 @@ const CirclesLegend = ({ filters })=>{
         </TrName>
       </tr>
       <tr>
-        <Th colSpan={3} align={'left'}>
+        <Th colSpan={3} align={'left'} style={{marginTop:'-5px'}}>
           <LegendCategoryName>
             Nombre de mois secs&nbsp; 
             <NormalWeight>recevant moins de 30mm de précipitations</NormalWeight>
           </LegendCategoryName>
         </Th>
         <Td>
-          <CirclesRangeSymbol width={ 30 } height={ 30 } /> 
+          <CirclesRangeSymbol width={40} height={40} /> 
         </Td>
       </tr>
       { hasTypes(['A', 'B'], types) && (

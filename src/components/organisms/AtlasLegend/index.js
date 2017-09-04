@@ -8,10 +8,11 @@ import {
   ContextualInfo,
   TemperaturesLegend,
   CirclesLegend,
+  LegendToggleButton,
 } from 'components'; 
 
-import { fromAtlas, fromFilters } from 'store/selectors';
-
+import { fromAtlas, fromFilters, fromLegend } from 'store/selectors';
+import { toggleLegend } from 'store/actions';
 
 const Legend = styled.div`
   font-family: ${font('primary')};
@@ -19,26 +20,47 @@ const Legend = styled.div`
   position: absolute;
   z-index: 1000;
   top: 0;
-  left: 0;
+  left: ${({isOpened})=>isOpened?0:-360}px;
   padding: 5px;
   padding-top: 0;
-  max-width: 400px;
+  width: 400px;
+  transition: left .5s ease-in-out;
 `;
 
 const Table = styled.table``;
+
+const Holder = styled.div`
+  padding-top: 30px;
+`;
+
 const LegendContent = ({ filters })=>{
   return (
-    <div>
+    <Holder>
       <Table>
         <TemperaturesLegend filters={ filters } />
         <CirclesLegend filters={ filters}/>
       </Table>
-    </div>
+    </Holder>
   );
-}
-const AtlasLegend = ({ showContextualInfo, contextualData, filters }) => {
+};
+
+const visibilityButtonStyle = {
+  position: 'absolute',
+  right: 0,
+  left: 0,
+};
+const AtlasLegend = ({
+  isOpened,
+  showContextualInfo,
+  contextualData,
+  filters,
+  toggleLegend 
+}) => {
   return (
-    <Legend>
+    <Legend isOpened={ isOpened }>
+      <LegendToggleButton
+        align={'right'}
+        style={visibilityButtonStyle} />
       <LegendContent filters={ filters }/>
       { contextualData && (
         <ContextualInfo visible={ showContextualInfo } data={ contextualData }/>
@@ -48,9 +70,13 @@ const AtlasLegend = ({ showContextualInfo, contextualData, filters }) => {
 };
 
 const mapStateToProps = (state)=>({
+  isOpened: fromLegend.isOpened(state),
   filters: fromFilters.filters(state),
   showContextualInfo: fromAtlas.isContextualInfoVisible(state),
   contextualData: fromAtlas.contextualInfo(state)
 });
 
+const mapDispatchToProps = (dispatch)=>({
+  toggleLegend: ()=>dispatch(toggleLegend()),
+})
 export default connect(mapStateToProps)(AtlasLegend);
