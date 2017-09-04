@@ -20,6 +20,7 @@ const Legend = styled.div`
   position: absolute;
   z-index: 1000;
   top: 0;
+  bottom: 0;
   left: ${({isOpened})=>isOpened?0:-360}px;
   padding: 5px;
   padding-top: 0;

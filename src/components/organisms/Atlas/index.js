@@ -124,7 +124,10 @@ export default class Atlas extends Component {
     const klass = `sidebar-${isSidebarOpened ? 'opened' : 'closed'}`;
     // const { mapRef } = this.state;
     const position = [10, 35];
-
+    const _onRender = ()=>{
+      console.log('circles added to the map');
+      onRender();
+    }
     return (
       <Map
         className={klass}
@@ -146,6 +149,7 @@ export default class Atlas extends Component {
         zIndex={ 400 } 
         data={data} delegate={ CanvasDelegate }/>
       <CirclesLayer
+        onRender={ _onRender }  
         onCirclesCreated={ onCirclesCreated }
         showContextualInfo={ showContextualInfo }
         hideContextualInfo={ hideContextualInfo }

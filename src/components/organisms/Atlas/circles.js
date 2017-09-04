@@ -12,7 +12,7 @@ class CirclesLayer extends Component {
   }
 
   addToSizes(circle, $ref){
-    const { onCirclesCreated } = this.props;
+    const { onCirclesCreated, onRender } = this.props;
     const size = circle.properties.size_;
     if(!this.sizes[size]){
       this.sizes[size] = $ref;
@@ -21,23 +21,40 @@ class CirclesLayer extends Component {
       }
     }
   }
-  
+  bindElement(ref, elem, type){
+    if(type === 'circle'){
+      this.addToSizes(elem, ref);
+    }
+    this.renderedElements += 1; 
+    if(this.renderedElements === this.props.circles.length){
+      this.props.onRender();
+    }
+  } 
   hasAllSizes(){
     return this.sizeKeys.every((key)=>this.sizes[key]!=null)
   }
-
+  
   updateSizeKeys(circles){
     this.sizeKeys = circles.map(({ properties }) => properties.size_)
       .filter((size)=>size !== '01');
+  }
+  shouldComponentUpdate(toProps){
+    if(this.props.show !== toProps.show){ return true; }
+    if(this.props.circles.length !== toProps.circles.length){ return true; }
+    return false;
   }
   render(){
     const {
       show=true,
       circles,
-      showContextualInfo,
-      hideContextualInfo,
     } = this.props;
+    console.log('CircleLayer.render()');
+    this.renderedElements = 0;
     this.updateSizeKeys(circles);
+    if(circles.length === 0){
+      this.props.onRender();
+      return null;
+    }
     return (
       <LayerGroup>
       {
@@ -49,10 +66,11 @@ class CirclesLayer extends Component {
           const radius = 10000 + 5000 * parseInt(size);
           const style = circleStyle(circle);
           style.fillOpacity= show?1:0;
-          if(size == '01'){
+          if(size === '01'){
             const points = TrianglePoints(center, radius);
             elem = (
               <Polygon
+                ref={ (ref) => this.bindElement(ref, circle, 'triangle') }
                 { ...style  }
                 positions={ points }
                 key={ key }/>
@@ -60,8 +78,9 @@ class CirclesLayer extends Component {
           } else {
             elem = (
               <Circle
-                ref={ (ref)=>this.addToSizes(circle, ref) }
+                ref={ (ref)=>this.bindElement(ref, circle, 'circle') }
                 key={key}
+                interactive={false}
                 radius={radius}
                 center={center}
                 {...style} />

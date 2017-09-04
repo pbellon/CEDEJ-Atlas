@@ -69,6 +69,14 @@ const CirclesLegend = ({ filters })=>{
           <CirclesRangeSymbol width={40} height={40} /> 
         </Td>
       </tr>
+      <tr>
+        <Th colSpan={5} align={'left'} style={{marginTop:'-5px'}}>
+          <LegendCategoryName>
+            Périodes des sécheresses&nbsp; 
+            <NormalWeight>et régime des précipitations</NormalWeight>
+          </LegendCategoryName>
+        </Th>
+      </tr>
       { hasTypes(['A', 'B'], types) && (
         <tr><Th colSpan={3} align={ 'left' }>
           <LegendCategoryName>
