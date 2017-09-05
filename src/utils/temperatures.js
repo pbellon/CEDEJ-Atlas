@@ -81,6 +81,9 @@ export const filter = ({
     ))
 );
 
+export const getSummerRange = (value)=>findByValue(value).summer;
+export const getWinterRange = (value)=>findByValue(value).winter;
+
 export const findByValue = (value)=>TEMPS_OBJ[value]
 
 export const findTemperature = ({ properties: { Temperatur } }) => (

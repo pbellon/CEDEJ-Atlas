@@ -3,12 +3,14 @@ import * as utils from 'utils';
 const DROUGHTS = [
   {
     value: 'A',
+    regime_single: 'régime à pluie d\'hiver (parfois décalées vers le printemps)',
     regime: 'régimes à pluie d\'hiver (parfois décalées vers le printemps)',
     help_regime: 'la sécheresse est maxiamle en été',
     color: '#468fba',
   },
   {
     value: 'B',
+    regime_single: 'régime à deux saisons de pluies',
     regime: 'régimes à deux saisons de pluies',
     help_regime: `l'une vers la fin de l'automne, l'autre au 
       début du printemps: la sécheresse d'hiver est moins 
@@ -17,12 +19,14 @@ const DROUGHTS = [
   },
   {
     value: 'C',
+    regime_single: 'régime à pluies d\'été (parfois décalées vers l\'automne)',
     regime: 'régimes à pluies d\'été (parfois décalées vers l\'automne)',
     help_regime: 'la sécheresse est maximale en hiver',
     color: '#e15e46',
   },
   {
     value: 'D',
+    regime_single: 'régime à deux saisons de pluies',
     regime: 'régimes à deux saisons de pluies',
     help_regime: `l'une vers la fin du printemps, l'autre au début de 
       l'automne: la sécheresse d'été est moins marquée et plus courte 
@@ -31,6 +35,7 @@ const DROUGHTS = [
   },
   {
     value: 'E',
+    regime_single: 'régime à deux saisons de pluies',
     regime: 'régimes à deux saisons de pluies',
     help_regime: `l'une en été, l'autre en hiver: les sécheresses,
       bien marquées, sont au printemps et en automne.`,
@@ -38,6 +43,7 @@ const DROUGHTS = [
   },
   {
     value: 'F',
+    regime_single: 'régime irrégulier',
     regime: 'régimes irréguliers',
     help_regime: `les pluies sont soit accidentelles et sans date
       prévisible, soit, dans les régions moins sèches, réparties
@@ -47,16 +53,6 @@ const DROUGHTS = [
   },
 ];
 
-const DROUGHTS_OBJ = utils.arrToObj(DROUGHTS);
-
-export const droughtRegime = (value)=>DROUGHTS_OBJ[value].regime;
-export const droughtRegimeHelp = (value)=>DROUGHTS_OBJ[value].regime_help;
-
-export const colorByValue = (value)=>DROUGHTS_OBJ[value].color;
-
-export const circleColor = ({ properties: { colours } }) => (
-  colorByValue(colours)
-);
 
 const NUMBER_OF_MONTHS = [
   {
@@ -88,6 +84,17 @@ const NUMBER_OF_MONTHS = [
     months: [12],
   },
 ];
+const DROUGHTS_OBJ = utils.arrToObj(DROUGHTS);
+
+export const droughtRegime = (value)=>DROUGHTS_OBJ[value].regime;
+export const droughtRegimeHelp = (value)=>DROUGHTS_OBJ[value].regime_help;
+export const droughtRegimeSingle = (value)=>DROUGHTS_OBJ[value].regime_single;
+
+export const colorByValue = (value)=>DROUGHTS_OBJ[value].color;
+
+export const circleColor = ({ properties: { colours } }) => (
+  colorByValue(colours)
+);
 
 export const sizesForRange = (range) => {
   const f = ({ months }) => utils.inRange(months, range);
@@ -96,6 +103,7 @@ export const sizesForRange = (range) => {
 
 const NB_MONTHS_OBJ = utils.arrToObj(NUMBER_OF_MONTHS);
 
+export const getDroughtMonths = (size) => NB_MONTHS_OBJ[size].months;
 export const circleMonths = ({ properties: { size_ } }) => (
   NB_MONTHS_OBJ[size_].months
 );

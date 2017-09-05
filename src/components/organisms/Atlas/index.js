@@ -6,11 +6,11 @@ import {
   Map,
   TileLayer,
   GeoJSON,
-  Popup,
   LayerGroup,
   Pane,
   Circle,
   ScaleControl,
+  Popup,
   ZoomControl,
 } from 'react-leaflet';
 import {
@@ -19,12 +19,10 @@ import {
   LatLng
 } from 'leaflet';
 
-import { CedejWatermark } from 'components';
+import { CedejWatermark, ContextualInfo } from 'components';
 
 import { filterFeatures } from 'utils/data';
 import { sidebar, navbar } from 'utils/styles';
-
-console.log
 
 import 'leaflet/dist/leaflet.css';
 import './Atlas.css';
@@ -40,6 +38,27 @@ import {
 import CirclesLayer from './circles'; 
 import { CanvasDelegate } from './canvas';
 import CanvasLayer from './layer';
+
+/*
+const Tooltip = styled.div`
+  position: absolute;
+  width: 300px;
+  background: rgba(255,255,255,0.8);
+  top: ${({top}) => top}px;
+  left: ${({ left })=> left}px;
+`;
+*/
+const ContextualInfoPopup = ({ show, map, data, position, onClose }) => {
+  if(!show){ return null }
+  const pxCoords = map.latLngToContainerPoint(position);
+  console.log('coords', pxCoords);
+  const props = { data };
+  return (
+    <Popup onClose={ onClose } position={ position } >
+      <ContextualInfo {...props}/> 
+    </Popup>
+  ); 
+};
 
 export default class Atlas extends Component {
   static propTypes = {
@@ -70,12 +89,16 @@ export default class Atlas extends Component {
     super(props);
     this.state = {
       mapRef:null,
-      showPopup: false,
-      features: null
+      showTooltip: false,
+      tooltipPosition: null,
+      tooltipData: null,
     };
   }
 
   bindContainer(mapRef) {
+    if(!mapRef){ return; }
+    this.mapRef = mapRef;
+    this.map = mapRef.leafletElement; 
     // if(mapRef){ this.setState({mapRef: mapRef.leafletElement}); }
     /* 
     if (this.props.onRender) {
@@ -93,25 +116,28 @@ export default class Atlas extends Component {
     */
   }
 
-  hidePopup(){
-    this.setState({ showPopup: false });
+  hideTooltip(){
+    this.setState({ showTooltip: false });
   }
 
-  showPopup(features){
-    this.setState({ showPopup: true, features }); 
+  showTooltip(tooltipPosition, tooltipData){
+    this.setState({ showTooltip: true, tooltipPosition, tooltipData }); 
   }
+  
+  
 
-  onHover(e){
+  onClick(e){
     const { data, showContextualInfo, hideContextualInfo } = this.props;
     const features = filterFeatures(data,  e.latlng);
     if(Object.keys(features).length){
-      showContextualInfo(features);
+      this.showTooltip(e.latlng, features);
     } else {
-      hideContextualInfo();
+      this.hideTooltip();
     }
   }
 
   render() {
+    const { showTooltip, tooltipPosition, tooltipData } = this.state;
     const {
       data,
       showCircles,
@@ -129,24 +155,30 @@ export default class Atlas extends Component {
       ,  84.62359619140625
     ];
     const klass = `sidebar-${isSidebarOpened ? 'opened' : 'closed'}`;
-    // const { mapRef } = this.state;
     const position = [10, 35];
     const bounds = new LatLngBounds(
       new LatLng(bbox[0] - 20, bbox[1] - 150), 
       new LatLng(bbox[2] + 20, bbox[3] + 150) 
     );
+    console.log('should show tooltip ?', showTooltip);
     return (
       <Map
+        ref={(ref) => this.bindContainer(ref)}
         className={klass}
-        onmousemove={this.onHover.bind(this)}
+        onclick={this.onClick.bind(this)}
         maxBounds={bounds}
         minZoom={2}
         maxZoom={7}
         renderer={canvas()}
         animate={true}
         zoomControl={false}
-        center={position} zoom={3}
-        innerRef={(ref) => this.bindContainer(ref)}>
+        center={position} zoom={3} >
+      <ContextualInfoPopup
+        onClose={ this.hideTooltip.bind(this) } 
+        show={ showTooltip }
+        data={ tooltipData }
+        map={ this.map }
+        position={tooltipPosition} />
       <ZoomControl position={'topright'} />
       <CedejWatermark position={ 'bottomright' } width={50} />
       <ScaleControl position={ 'bottomright' }/>
