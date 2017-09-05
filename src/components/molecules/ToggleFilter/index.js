@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { palette } from 'styled-theme';
 
-import { Checkbox, Filter, Label as GenericLabel } from 'components';
+import { Checkbox } from 'components';
 import { fromLayers } from 'store/selectors';
 import { startRender } from 'store/actions';
 
