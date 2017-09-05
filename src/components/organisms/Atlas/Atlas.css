@@ -32,3 +32,17 @@
 :global .sidebar-closed .leaflet-control-container {
   right: 50px;
 }
+:global .leaflet-right .leaflet-control-scale:after {
+  clear: both;
+  content: ' ';
+}
+:global .leaflet-right .leaflet-control-scale-line {
+  float: right;
+  clear: both;
+  text-align: right;
+}
+
+:global .leaflet-right .leaflet-control-scale-line:before {
+  clear: both;
+  content: ' ';
+}
