@@ -13,7 +13,11 @@ import {
   ScaleControl,
   ZoomControl,
 } from 'react-leaflet';
-import { canvas  } from 'leaflet';
+import {
+  canvas,
+  LatLngBounds,
+  LatLng
+} from 'leaflet';
 
 
 import 'leaflet/dist/leaflet.css';
@@ -128,10 +132,15 @@ export default class Atlas extends Component {
       console.log('circles added to the map');
       onRender();
     }
+    const bounds = new LatLngBounds(
+      new LatLng(bbox[0] - 20, bbox[1] - 150), 
+      new LatLng(bbox[2] + 20, bbox[3] + 150) 
+    );
     return (
       <Map
         className={klass}
         onmousemove={this.onHover.bind(this)}
+        maxBounds={bounds}
         minZoom={2}
         maxZoom={7}
         renderer={canvas()}
