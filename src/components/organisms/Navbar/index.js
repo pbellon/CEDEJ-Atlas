@@ -4,12 +4,12 @@ import { Route } from 'react-router-dom';
 import { Button, Link } from 'components';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
-
+import { navbar, sidebar } from 'utils/styles';
 const Nav = styled.div`
   background:${palette('grayscale', 0)};
   padding-left: 15px;
   padding-right: 15px;
-  height: ${(props)=>(props.height)}px;
+  height: ${navbar.height}px;
   z-index: ${(props)=>(props.zIndex)};
   position: fixed;
   line-height: ${({height})=>height}px;
@@ -22,12 +22,24 @@ const NavRight = styled.div`
   float: right;
 `;
 
+const ExportButton = styled(Button)`
+  height: ${navbar.height}px;
+  line-height: ${navbar.height}px;
+  text-transform: uppercase;
+  width: ${sidebar.width}px;
+  position: absolute;
+  right: 0;
+`;
+
 const Navbar =(props) => (
   <Nav {...props}>
     <Link style={{color: 'white'}} reverse={true} to="/">Atlas des zones arides</Link>
     <Route path={ '/map' } render={ () => (
       <NavRight>
-        <Button reverse={true} disabled={true}>EXPORTER</Button>
+        <ExportButton
+          reverse={true} disabled={true}>
+          Exporter
+        </ExportButton>
       </NavRight>
     ) }/>
   </Nav>      
@@ -39,7 +51,7 @@ Navbar.propTypes = {
 };
 
 Navbar.defaultProps = {
-  height: 50,
+  height: navbar.height,
   zIndex: 10 
 };
 

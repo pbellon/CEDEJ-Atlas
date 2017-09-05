@@ -5,8 +5,6 @@ import { size, palette } from 'styled-theme';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fromSidebar } from 'store/selectors';
-import { toggleSidebar } from 'store/actions';
-import { Link, Button } from 'components';
 import { sidebar, navbar } from 'utils/styles';
 
 const Side = styled.div`
@@ -21,11 +19,11 @@ const Side = styled.div`
   right: 0px;
   transform: translate(0, 0);
   background: ${palette('grayscale', 4)};
-  transition: transform .5s ease-out;
+  transition: transform .5s ease-in-out;
   width: ${sidebar.width}px;
 
   &.closed {
-    transform: translate(${sidebar.width - 50}px, 0);
+    transform: translate(${sidebar.width - 40}px, 0);
   }
 `;
 

@@ -7,23 +7,16 @@ import { Checkbox, Filter, Label as GenericLabel } from 'components';
 import { fromLayers } from 'store/selectors';
 import { startRender } from 'store/actions';
 
-
-const Label = GenericLabel.extend`
-  &.disabled {
-    color: ${palette('grayscale', 3)};
-  }
-`;
-
 const noop = ()=>null;
 
 const ToggleFilter = ({ toggled, onToggle, label, disabled, render})=>(
-  <Filter disabled={ disabled } active={ toggled }> 
+  <div>
     <Checkbox disabled={ disabled }
       label={ label }
       onBeforeChange={ render }
       onChange={ disabled ? noop : onToggle }
       checked={ toggled }/>
-  </Filter>
+  </div>
 );
 
 const mapStateToProps = (state, ownProps)=>({

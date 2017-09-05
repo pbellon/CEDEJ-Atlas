@@ -78,7 +78,7 @@ const VeryHotSummer = () => (
 );
 
 const HotSummer = () => (<SummerName>été chaud (20 à 30°)</SummerName>)
-const TemperedSummer = () => (<SummerName>été très chaud (10 à 20°)</SummerName>)
+const TemperedSummer = () => (<SummerName>été tempéré (10 à 20°)</SummerName>)
 const WinterName = ({ children }) => (
   <tr>
     <Th align={'left'}>
