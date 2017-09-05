@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { MarkdownContentContainer } from 'containers';
+import { ContentContainer } from 'containers';
 import { MarkdownContent } from 'components';
 import ReactMarkdown from 'react-markdown';
 
@@ -11,9 +11,9 @@ const content = {
   'contribute': MarkdownContent.Contribute
 }
 
-const MarkdownContentPage = ({match}) => {
+const ContentPage = ({match}) => {
   return (
-    <MarkdownContentContainer>
+    <ContentContainer>
       <Route path={'/page/:pageName'} render={({match})=>{
         const md = content[match.params.pageName];
         if(!md){
@@ -22,9 +22,9 @@ const MarkdownContentPage = ({match}) => {
           return (<ReactMarkdown source={content[match.params.pageName]}/>);
         }
       }}/>
-    </MarkdownContentContainer>
+    </ContentContainer>
   ); 
 
 };
 
-export default MarkdownContentPage;
+export default ContentPage;
