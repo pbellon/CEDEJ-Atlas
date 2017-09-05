@@ -38,7 +38,7 @@ const TemperaturesInfo = ({
             <span>Plus de { summerRange[0] } degrès</span>
           )}
           { (summerRange.length > 1) && (
-            <span>Entre { summerRange[0] } et { summerRange[0] } degrès</span>
+            <span>Entre { summerRange[0] } et { summerRange[1] } degrès</span>
           )}
         </span>
       } />
@@ -48,7 +48,7 @@ const TemperaturesInfo = ({
             <span>Moins de { winterRange[0] } degrès</span>
           )}
           { (winterRange.length > 1) && (
-            <span>Entre { winterRange[0] } et { winterRange[0] } degrès</span>
+            <span>Entre { winterRange[0] } et { winterRange[1] } degrès</span>
           )}
         </span>
       } />
@@ -78,7 +78,7 @@ const CirclesInfo = ({ circles: { properties: { size_, colours }}}) => {
         <span>
           { size_ === '01' && (<span>Moins de &nbsp;</span>)}
           { droughtMonths.length > 1 && (
-            <span>Entre { droughtMonths[0] } et { droughtMonths[0] }&nbsp</span>
+            <span>De { droughtMonths[0] } à { droughtMonths[1] }&nbsp;</span>
           )}
           { droughtMonths.length === 1 && (
             <span>{ droughtMonths[0] }&nbsp;</span>
