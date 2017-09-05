@@ -80,7 +80,6 @@ const AtlasLegend = ({
   return (
     <Legend isOpened={ isOpened }>
       <LegendToggleButton
-        align={'right'}
         style={visibilityButtonStyle} />
       <LegendContent layers={ layers } filters={ filters }/>
       { contextualData && (

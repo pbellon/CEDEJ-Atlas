@@ -8,17 +8,33 @@ const Button = styled(_B)`
   width: 100%;
   border-radius: 0;
   display: block;
-  text-align: ${({align})=>align};
+  position: relative;
 `;
 
-const ToggleButton = ({ toggled, toggle, align, ...props})=>{
+const Symbol = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  left: ${({ align }) => align === 'left' ? '17px' : 'auto'};
+  right: ${({ align }) => align === 'right' ? '17px' : 'auto'};
+`;
+
+const ToggleSymbol = ({ align, toggled }) => {
   const openedSign = align === 'left' ? '>' : '<';
-  const closedSign = align === 'left' ? '<' : '>'; 
-  return (
+  const closedSign = align === 'left' ? '<' : '>';
+  const symbolToUse = toggled ? openedSign : closedSign; 
+  return (<Symbol align={ align }><span>{ symbolToUse }</span></Symbol>);
+};
+
+const ToggleButton = ({ toggled, toggle, align, children, ...props})=>{
+    return (
     <div {...props}>
       <Button align={align}
         onClick={ toggle }>
-        { toggled ? openedSign : closedSign }
+        <ToggleSymbol align={ align } toggled={ toggled } />
+        { children }
       </Button>
     </div>
   );

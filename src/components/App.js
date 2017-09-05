@@ -26,7 +26,7 @@ const AtlasHolder = styled.div`
 `;
 
 const OverlayHolder = styled.div`
-  background: rgba(255,255,255, ${({opacity=1.0})=>opacity});
+  background: rgb(255,255,255);
   top: 0px;
   bottom: 0px;
   transition: transform .2s ease;
@@ -47,11 +47,11 @@ const App = () => {
         </AtlasHolder>
         <Route path="/" exact children={({match})=>{
           return (
-            <OverlayHolder visible={ match!=null } opacity={ 0.4 }>
+            <OverlayHolder visible={ match!=null }>
               <HomePage/>
-              </OverlayHolder>
-            );
-          }}/>
+            </OverlayHolder>
+          );
+        }}/>
         <Route path="/page" children={({match})=>(
           <OverlayHolder visible={ match!=null }>
             { match && (
