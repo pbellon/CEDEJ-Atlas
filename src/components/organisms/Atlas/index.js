@@ -19,9 +19,16 @@ import {
   LatLng
 } from 'leaflet';
 
+import { CedejWatermark } from 'components';
+
+import { filterFeatures } from 'utils/data';
+import { sidebar, navbar } from 'utils/styles';
+
+console.log
 
 import 'leaflet/dist/leaflet.css';
 import './Atlas.css';
+
 import {
   BASE_LAYER_URL,
   NATURAL_FEATURES_ATTRIBUTION,
@@ -30,13 +37,9 @@ import {
   MAPBOX_WATER_URL
 } from './constants'; 
 
-
 import CirclesLayer from './circles'; 
 import { CanvasDelegate } from './canvas';
 import CanvasLayer from './layer';
-
-import { filterFeatures } from 'utils/data';
-import { sidebar, navbar } from 'utils/styles';
 
 export default class Atlas extends Component {
   static propTypes = {
@@ -128,10 +131,6 @@ export default class Atlas extends Component {
     const klass = `sidebar-${isSidebarOpened ? 'opened' : 'closed'}`;
     // const { mapRef } = this.state;
     const position = [10, 35];
-    const _onRender = ()=>{
-      console.log('circles added to the map');
-      onRender();
-    }
     const bounds = new LatLngBounds(
       new LatLng(bbox[0] - 20, bbox[1] - 150), 
       new LatLng(bbox[2] + 20, bbox[3] + 150) 
@@ -149,6 +148,7 @@ export default class Atlas extends Component {
         center={position} zoom={3}
         innerRef={(ref) => this.bindContainer(ref)}>
       <ZoomControl position={'topright'} />
+      <CedejWatermark position={ 'bottomright' } width={50} />
       <ScaleControl position={ 'bottomright' }/>
       <TileLayer url={ BASE_LAYER_URL } />
       <CanvasLayer
@@ -158,12 +158,11 @@ export default class Atlas extends Component {
         zIndex={ 400 } 
         data={data} delegate={ CanvasDelegate }/>
       <CirclesLayer
-        onRender={ _onRender }  
+        onRender={ onRender }  
         onCirclesCreated={ onCirclesCreated }
         showContextualInfo={ showContextualInfo }
         hideContextualInfo={ hideContextualInfo }
         show={ showCircles } circles={ data.circles }/>
-      
       <TileLayer zIndex={ 500 } url={ MAPBOX_WATER_URL } />
       <TileLayer zIndex={ 600 } url={ MAPBOX_WATER_LABEL_URL } />
       </Map>
