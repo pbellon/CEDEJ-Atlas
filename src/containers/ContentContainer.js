@@ -15,8 +15,8 @@ const Placeholder = styled.div`
   flex-shrink: 0;
 `;
 
-const ContentContainer = ({ children }) => (
-  <Holder>
+const ContentContainer = ({ children, ...props }) => (
+  <Holder {...props }>
     <Content>
     { 
       children
