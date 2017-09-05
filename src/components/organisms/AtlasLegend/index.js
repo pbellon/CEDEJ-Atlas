@@ -11,7 +11,7 @@ import {
   LegendToggleButton,
 } from 'components'; 
 
-import { fromAtlas, fromFilters, fromLegend, fromLayers } from 'store/selectors';
+import { fromFilters, fromLegend, fromLayers } from 'store/selectors';
 import { toggleLegend } from 'store/actions';
 import { visibleTypes, objToArray } from 'utils'; 
 
@@ -71,8 +71,6 @@ const visibilityButtonStyle = {
 };
 const AtlasLegend = ({
   isOpened,
-  showContextualInfo,
-  contextualData,
   filters,
   layers,
   toggleLegend 
@@ -82,9 +80,6 @@ const AtlasLegend = ({
       <LegendToggleButton
         style={visibilityButtonStyle} />
       <LegendContent layers={ layers } filters={ filters }/>
-      { contextualData && (
-        <ContextualInfo visible={ showContextualInfo } data={ contextualData }/>
-      )}
     </Legend>
   );
 };
@@ -93,8 +88,6 @@ const mapStateToProps = (state)=>({
   isOpened: fromLegend.isOpened(state),
   filters: fromFilters.filters(state),
   layers: fromLayers.layers(state), 
-  showContextualInfo: fromAtlas.isContextualInfoVisible(state),
-  contextualData: fromAtlas.contextualInfo(state)
 });
 
 const mapDispatchToProps = (dispatch)=>({
