@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import styled from 'styled-components';
 import { size } from 'styled-theme';
-
+import { navbar } from 'utils/styles'; 
 import {
   Navbar,
   Sidebar,
@@ -25,7 +25,7 @@ const Holder = styled.div`
 
 const ContainerHolder = styled.div`
   position: absolute;
-  top: 50px;
+  top: ${navbar.height}px;
   right:0px;
   left: 0px;
   bottom:0px;

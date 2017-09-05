@@ -3,5 +3,5 @@ export const sidebar = {
 };
 
 export const navbar = {
-  height: 50
+  height: 30
 };
