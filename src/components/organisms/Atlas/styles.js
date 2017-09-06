@@ -4,16 +4,6 @@ import * as circles from 'utils/circles';
 const areaColor = (feature) => temperatures.findTemperature(feature).color;
 const circleColor = (feature) => circles.circleColor(feature);
 
-const circleStyle = (circle) => {
-  const color = circleColor(circle);
-  return {
-    stroke: false,
-    fillOpacity: 1,
-    opacity:1,
-    color: color,
-    fillColor: color,
-  };
-};
 
 const mapStyle = {
   position: 'absolute',
@@ -21,4 +11,4 @@ const mapStyle = {
 };
 
 
-export { circleColor, areaColor, circleStyle, mapStyle };
+export { circleColor, areaColor, mapStyle };

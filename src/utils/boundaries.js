@@ -1,6 +1,7 @@
 import { geoPath } from 'd3-geo';
-// import * as patterns from './patterns';
 
+// import * as patterns from './patterns';
+const BOUNDARY_COLOR = 'rgba(0,0,0,0.7)';
 const TEETH_GAP = 20;
 const BOUNDARY_WIDTH = 1.33;
 
@@ -89,14 +90,14 @@ const teethBoundaries = ({ context, path, gap=TEETH_GAP }) => {
   const path2d = new Path2D(path.path);
   const nbMarkers = Math.floor(path.length / gap) + 1;
 
-  context.strokeStyle = 'rgba(0,0,0,1)';
+  context.strokeStyle =  BOUNDARY_COLOR;
   context.lineWidth = BOUNDARY_WIDTH;
   context.lineJoin = 'round';
 
   context.beginPath();
   context.stroke(path2d);
   context.closePath();
-  context.fillStyle = 'rgba(0,0,0,1)';
+  context.fillStyle = BOUNDARY_COLOR;
   // optimisation possible: faire un prérendu des triangle et dessiner
   // ensuite les triangle
   context.beginPath();
@@ -119,7 +120,7 @@ const teethBoundaries = ({ context, path, gap=TEETH_GAP }) => {
 
 const fullBoundaries = ({ context, path }) => {
   const path2d = new Path2D(path.path);
-  context.strokeStyle = 'rgba(0, 0, 0, 1)';
+  context.strokeStyle = BOUNDARY_COLOR;
   context.lineWidth = BOUNDARY_WIDTH;
   context.beginPath();
   context.stroke(path2d);
@@ -128,7 +129,7 @@ const fullBoundaries = ({ context, path }) => {
 
 const dashedBoundaries = ({ context, path }) => {
   const path2d = new Path2D(path.path);
-  context.strokeStyle = 'rgba(0, 0, 0, 1)';
+  context.strokeStyle = BOUNDARY_COLOR;
   context.lineWidth = BOUNDARY_WIDTH;
   context.setLineDash([5, 5]);
   context.beginPath();
