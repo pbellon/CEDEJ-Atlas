@@ -46,3 +46,7 @@
   clear: both;
   content: ' ';
 }
+
+:global .leaflet-popup-pane {
+  z-index: 1400;
+}

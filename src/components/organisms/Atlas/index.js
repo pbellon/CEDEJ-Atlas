@@ -149,7 +149,7 @@ export default class Atlas extends Component {
         onclick={this.onClick.bind(this)}
         maxBounds={bounds}
         minZoom={2}
-        maxZoom={7}
+        maxZoom={6}
         renderer={canvas()}
         animate={true}
         zoomControl={false}
@@ -179,7 +179,8 @@ export default class Atlas extends Component {
         show={ showCircles } circles={ data.circles }/>
       <TileLayer zIndex={ 500 } url={ MAPBOX_WATER_URL } />
       <TileLayer zIndex={ 600 } url={ MAPBOX_WATER_LABEL_URL } />
-      <DesertsLayer data={ deserts }/>
+      <DesertsLayer
+        minZoom={4} data={ deserts }/>
       </Map>
     );
   }
