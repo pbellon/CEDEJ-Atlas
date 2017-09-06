@@ -16,7 +16,13 @@ import {
   LatLng
 } from 'leaflet';
 
-import { CedejWatermark, ContextualInfoPopup } from 'components';
+import {
+  CedejWatermark,
+  CirclesLayer,
+  ContextualInfoPopup,
+  DesertsLayer,
+  TemperaturesAndAridityLayer,
+} from 'components';
 
 import { filterFeatures } from 'utils/data';
 import { sidebar, navbar } from 'utils/styles';
@@ -32,10 +38,7 @@ import {
   MAPBOX_WATER_URL
 } from './constants'; 
 
-import CirclesLayer from './circles'; 
 import { CanvasDelegate } from './canvas';
-import CanvasLayer from './layer';
-import DesertLayer from './deserts'; 
 
 export default class Atlas extends Component {
   static propTypes = {
@@ -104,8 +107,9 @@ export default class Atlas extends Component {
   
 
   onClick(e){
-    const { data, showContextualInfo, hideContextualInfo } = this.props;
-    const features = filterFeatures(data,  e.latlng);
+    // useful to avoid looking up for deserts.
+    const { data:{ deserts, ...searchInFeatures}} = this.props;
+    const features = filterFeatures(searchInFeatures,  e.latlng);
     if(Object.keys(features).length){
       this.showTooltip(e.latlng, features);
     } else {
@@ -138,7 +142,6 @@ export default class Atlas extends Component {
       new LatLng(bbox[0] - 20, bbox[1] - 150), 
       new LatLng(bbox[2] + 20, bbox[3] + 150) 
     );
-    console.log('should show tooltip ?', showTooltip);
     return (
       <Map
         ref={(ref) => this.bindContainer(ref)}
@@ -161,7 +164,7 @@ export default class Atlas extends Component {
       <CedejWatermark position={ 'bottomright' } width={50} />
       <ScaleControl position={ 'bottomright' }/>
       <TileLayer url={ BASE_LAYER_URL } />
-      <CanvasLayer
+      <TemperaturesAndAridityLayer
         onRendered={ onRender }
         opacity={ showAreas ? 1 : 0 }
         bbox={ bbox } 
@@ -176,6 +179,7 @@ export default class Atlas extends Component {
         show={ showCircles } circles={ data.circles }/>
       <TileLayer zIndex={ 500 } url={ MAPBOX_WATER_URL } />
       <TileLayer zIndex={ 600 } url={ MAPBOX_WATER_LABEL_URL } />
+      <DesertsLayer data={ deserts }/>
       </Map>
     );
   }

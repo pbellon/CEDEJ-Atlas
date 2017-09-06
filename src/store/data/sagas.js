@@ -6,7 +6,13 @@ import * as actions from './actions';
 
 export function* loadData() {
   try {
-    const { aridity, temperatures, circles } = yield call(api.getMapData);
+    const {
+      aridity,
+      temperatures,
+      circles,
+      deserts,
+    } = yield call(api.getMapData);
+    
     const aridityFeatures = aridity.features
       .filter(a => a.properties.d_TYPE != null);
 
@@ -16,15 +22,20 @@ export function* loadData() {
     const temperaturesFeatures = temperatures.features
       .filter(t => parseInt(t.properties.Temperatur, 10) > 0);
 
-    const data = {
+    const dataToTurfize = {
       aridity: aridityFeatures,
       temperatures: temperaturesFeatures,
       circles: circlesFeatures,
     };
     
-    Object.keys(data).forEach(i => {
-      turfizeGeoJSON(data[i]);
+    Object.keys(dataToTurfize).forEach(i => {
+      turfizeGeoJSON(dataToTurfize[i]);
     });
+
+    const data = {
+      ...dataToTurfize,
+      deserts,
+    };
 
     yield put(actions.loadSuccess(data));
   } catch (e) {

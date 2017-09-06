@@ -2,8 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { LayerGroup, Circle, Polygon } from 'react-leaflet';
-import { circleStyle } from './styles';
+import { circleColor } from 'utils/circles';
 import TrianglePoints from './triangle'; 
+
+const circleStyle = (circle) => {
+  const color = circleColor(circle);
+  return {
+    stroke: false,
+    fillOpacity: 1,
+    opacity:1,
+    color: color,
+    fillColor: color,
+  };
+};
 
 class CirclesLayer extends Component {
   constructor(props){
