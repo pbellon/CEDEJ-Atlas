@@ -19,7 +19,7 @@ const Spinner = styled.div`
   width: 100%;
 `;
 
-const color = (reverse)=>reverse?palette('white', 0):palette('primary', 0)
+const color = (reverse)=>reverse?'white':palette('primary', 0)
 
 const Dot = styled.div`
   width: 1em;

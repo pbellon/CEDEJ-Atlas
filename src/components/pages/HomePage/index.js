@@ -1,11 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import styled from 'styled-components'; 
 
-import { MarkdownContent, Button } from 'components';
+import { MarkdownContent, Button as _Button, LoadingIcon } from 'components';
 import { ContentContainer } from 'containers';
-import Background from './background.png';
+import { fromAtlas } from 'store/selectors'; 
 
+import Background from './background.png';
+const Button = styled(_Button)`
+  height: auto; 
+  min-height: 2.5em; 
+`;
 const AtlasBackground = styled.div`
   position: absolute;
   top: 0;
@@ -29,16 +35,34 @@ const AtlasBackground = styled.div`
   }
 `;
 
-const HomePage = () => {
+const LoadingHolder = styled.span`
+  padding: 0.5rem 0;
+  display: block;
+`;
+
+const HomePage = ({isLoading}) => {
   return (
     <div>
       <AtlasBackground />
       <ContentContainer style={{position: 'relative', zIndex: 10}}>
         <ReactMarkdown source={ MarkdownContent.Home }/>
-        <Button to='/map'>GO</Button>
+        <Button to='/map'>
+          { isLoading && (
+            <LoadingHolder>
+              <LoadingIcon reverse={true}/>Chargement de la carte
+            </LoadingHolder>
+          )}
+          { !isLoading && (
+            <span>Démarrer</span>
+          )}
+        </Button>
       </ContentContainer>
     </div>
   );
 };
 
-export default HomePage;
+const mapStateToProps = state => ({
+  isLoading: fromAtlas.isRendering(state)
+});
+
+export default connect(mapStateToProps)(HomePage);
