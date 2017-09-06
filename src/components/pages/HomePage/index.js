@@ -36,7 +36,7 @@ const AtlasBackground = styled.div`
     right: 0;
     bottom: 0;
     z-index: 6;
-    background: rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.8);
   }
 `;
 
@@ -49,7 +49,7 @@ const HomePage = ({isLoading}) => {
   return (
     <div>
       <AtlasBackground />
-      <ContentContainer style={{position: 'relative', zIndex: 10}}>
+      <ContentContainer verticalAlign={true} style={{zIndex: 10}}>
         <ReactMarkdown source={ MarkdownContent.Home }/>
         <Centered>
           <Button to='/map'>

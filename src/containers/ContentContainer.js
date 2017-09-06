@@ -7,6 +7,12 @@ import { sidebar } from 'utils/styles';
 
 const Holder = styled.div`
   display: flex;
+  align-items: ${({verticalAlign})=>verticalAlign ? 'center' : 'flex-start'};
+  position: ${({verticalAlign})=>verticalAlign ? 'absolute' : 'static'};
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 `;
 
 const Placeholder = styled.div`
@@ -17,7 +23,7 @@ const Placeholder = styled.div`
 
 const ContentContainer = ({ children, ...props }) => (
   <Holder {...props }>
-    <Content>
+    <Content noTopPadding={ props.verticalAlign }>
     { 
       children
     }
@@ -29,5 +35,9 @@ const ContentContainer = ({ children, ...props }) => (
 ContentContainer.propTypes = {
   children: PropTypes.node,
 };
+
+ContentContainer.defaultProps = {
+  verticalAlign: false,
+}
 
 export default ContentContainer;
