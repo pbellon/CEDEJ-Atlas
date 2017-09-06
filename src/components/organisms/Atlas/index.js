@@ -5,12 +5,9 @@ import PropTypes from 'prop-types';
 import {
   Map,
   TileLayer,
-  GeoJSON,
   LayerGroup,
-  Pane,
   Circle,
   ScaleControl,
-  Popup,
   ZoomControl,
 } from 'react-leaflet';
 import {
@@ -19,7 +16,7 @@ import {
   LatLng
 } from 'leaflet';
 
-import { CedejWatermark, ContextualInfo } from 'components';
+import { CedejWatermark, ContextualInfoPopup } from 'components';
 
 import { filterFeatures } from 'utils/data';
 import { sidebar, navbar } from 'utils/styles';
@@ -38,27 +35,7 @@ import {
 import CirclesLayer from './circles'; 
 import { CanvasDelegate } from './canvas';
 import CanvasLayer from './layer';
-
-/*
-const Tooltip = styled.div`
-  position: absolute;
-  width: 300px;
-  background: rgba(255,255,255,0.8);
-  top: ${({top}) => top}px;
-  left: ${({ left })=> left}px;
-`;
-*/
-const ContextualInfoPopup = ({ show, map, data, position, onClose }) => {
-  if(!show){ return null }
-  const pxCoords = map.latLngToContainerPoint(position);
-  console.log('coords', pxCoords);
-  const props = { data };
-  return (
-    <Popup onClose={ onClose } position={ position } >
-      <ContextualInfo {...props}/> 
-    </Popup>
-  ); 
-};
+import DesertLayer from './deserts'; 
 
 export default class Atlas extends Component {
   static propTypes = {
@@ -148,6 +125,7 @@ export default class Atlas extends Component {
       onCirclesCreated,
       isSidebarOpened,
     } = this.props;
+    const { deserts, ...canvasData } = data;
     const bbox = [
       -179.2165527343741
       , -56.157571400448376
@@ -188,7 +166,8 @@ export default class Atlas extends Component {
         opacity={ showAreas ? 1 : 0 }
         bbox={ bbox } 
         zIndex={ 400 } 
-        data={data} delegate={ CanvasDelegate }/>
+        data={canvasData}
+        delegate={ CanvasDelegate }/>
       <CirclesLayer
         onRender={ onRender }  
         onCirclesCreated={ onCirclesCreated }
