@@ -11,15 +11,15 @@ Le laboratoire étudie également les usages et les nouvelles formes d'interacti
 ## Mentions légales
 
 ### Éditeur du Site
-**[Skoli](www.skoli.fr)** </br>
-SIRET : 40263675700039 </br>
-Responsables éditoriaux : Gauthier Bravais, Pierre Bellon, Lucas Piessat.</br>
-Siège : 11, rue Duphot – 69003 Lyon</br>
-Adresse professionnelle :
-9, rue de la Martinière 69001 - Lyon</br>
-Téléphone : + 33 (0)4 72 45 79 37</br>
-Email : contact@skoli.fr</br>
-www.skoli.fr</br>
+**[CEDEJ](http://cedej-eg.org/)** </br>
+Etablissement à Autonomie financière</br>
+Responsable éditoriale : Hala Bayoumi </br>
+**Adresse** : Ministère de l'Europe et  des Affaires Etrangères,
+Service de la Valise diplomatique - Ambassade de France en République Arabe d’Egypte
+CEDEJ – Le Caire | 13 rue Louveau 92438 Chatillon Cedex
+Téléphone : (00 202) 27 93 03 50</br>
+Email : cedej@cedej-eg.org</br>
+www.cedej-eg.org/</br>
 
 ### Hébergement
 Hébergeur : Github </br>
