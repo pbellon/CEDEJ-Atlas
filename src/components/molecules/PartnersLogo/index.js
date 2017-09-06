@@ -12,12 +12,15 @@ const Holder = styled.div`
   flex-direction: column;
   justify-content: space-around;
   max-height: 600px;
-  padding-top: 50px;
+  padding-top: 1.5em;
   align-self: center;
 `;
 const ImgHolder = styled.div`
   text-align: center;
-  margin-bottom: 2em;
+  margin-bottom: 1.2em;
+  &:last-of-type {
+    margin-bottom:0;
+  }
 `;
 const PartnersLogo = ()=>(
   <Holder>
