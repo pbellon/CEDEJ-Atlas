@@ -7,9 +7,9 @@ const Svg = styled.svg`
   & path {
     fill: ${palette('grayscale', 1)};
     transition: fill .2s ease;
-    &:hover {
-      fill: ${palette('primary', 0)};
-    }
+  }
+  &:hover path {
+    fill: ${palette('primary', 0)};
   }
 `;
 
