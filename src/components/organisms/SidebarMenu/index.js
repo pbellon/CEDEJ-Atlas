@@ -7,7 +7,7 @@ import ContributeIcon from 'react-icons/lib/md/comment';
 import { palette } from 'styled-theme';
 import styled, { css } from 'styled-components';
 
-import { NavLink as _NavLink } from 'components';
+import { NavLink as _NavLink, SocialSharing } from 'components';
 
 const ItemColor = ({active})=>{
   return active ? palette('primary', 1) : palette('grayscale', 1);
@@ -51,6 +51,7 @@ const MenuItem = ({ to, icon, title}) => {
   </Li>
 );
 }
+
 const Menu = styled.ul`
   list-style: none;
   margin: 0; 
@@ -59,27 +60,30 @@ const Menu = styled.ul`
 
 
 const SidebarMenu = ()=>(
-  <Menu>
-    <MenuItem
-      to={ '/map' }
-      icon={<AtlasIcon/>}
-      title={'Atlas'} />
-    
-    <MenuItem
-      icon={<ProjectIcon/>}
-      title={'Notre projet'}
-      to={ '/page/project' }/>
+  <div>
+    <SocialSharing />
+    <Menu>
+      <MenuItem
+        to={ '/map' }
+        icon={<AtlasIcon/>}
+        title={'Atlas'} />
+      
+      <MenuItem
+        icon={<ProjectIcon/>}
+        title={'Notre projet'}
+        to={ '/page/project' }/>
 
-    <MenuItem
-      icon={<AboutIcon/>}
-      to={'/page/about'}
-      title={'À propos'} />
+      <MenuItem
+        icon={<AboutIcon/>}
+        to={'/page/about'}
+        title={'À propos'} />
 
-    <MenuItem
-      icon={<ContributeIcon/>}
-      to={'/page/contribute'}
-      title={'Participer'} />
-  </Menu>
+      <MenuItem
+        icon={<ContributeIcon/>}
+        to={'/page/contribute'}
+        title={'Participer'} />
+    </Menu>
+  </div>
 );
 
 export default SidebarMenu;
