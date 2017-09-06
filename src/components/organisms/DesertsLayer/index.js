@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { LayerGroup, Pane, CircleMarker, Tooltip } from 'react-leaflet'; 
 import { Polygon } from 'leaflet';
@@ -7,58 +7,72 @@ import { DesertName } from 'components';
 
 import './DesertsLayer.css';
 
-const DesertsLayer = ({ data, minZoom }, {map})=>{
-  const Layers = [];
-  const addToLayers = (ref, scalerank)=>{
-    Layers.push({
-      layer: ref,
+class DesertsLayer extends Component {
+  constructor(props, context){
+    super(props, context);
+    this.tooltips = [];
+  }
+
+  addToTooltips(ref, scalerank){
+    this.tooltips.push({
+      tooltipRef: ref,
       scalerank: scalerank
     });
-  };
-  const showLayer = ({ layer: { leafletElement }})=>{
-    leafletElement.openTooltip();
-  };
-
-  const hideLayer = ({ layer: { leafletElement }})=>{
-    leafletElement.closeTooltip();
-  };
-  const checkZoom = ()=>{
+  }
+  
+  checkZoom(){
+    const { minZoom } = this.props;
+    const { map } = this.context;
     const zoom = map.getZoom();
+    console.log('checkZoom', zoom);
     if(zoom >= minZoom){
-      Layers.filter(({scalerank})=>scalerank>=zoom).forEach(hideLayer);
-      Layers.filter(({scalerank})=>scalerank<zoom).forEach(showLayer);
+      this.tooltips.filter(({scalerank})=>scalerank>=zoom).forEach(this.hideTooltip);
+      this.tooltips.filter(({scalerank})=>scalerank<zoom).forEach(this.showTooltip);
     } else {
-      Layers.forEach(hideLayer);
+      this.tooltips.forEach(this.hideTooltip);
     }
-  };
-  map.on('zoomend', checkZoom); 
-  const Tooltips = data.features.map((feature, key) => {
-    const polygon = new Polygon(feature.geometry.coordinates).addTo(map);
-    const center = polygon.getBounds().getCenter();
-    const label = feature.properties.name;
-    map.removeLayer(polygon);
+
+  }
+
+  showTooltip({ tooltipRef: { leafletElement }}){
+    leafletElement.openTooltip();
+  }
+
+  hideTooltip({ tooltipRef: { leafletElement }}){
+    leafletElement.closeTooltip();
+  }
+
+  render(){
+    const { data, minZoom } = this.props;
+    const { map } = this.context;
+    map.on('zoomend', this.checkZoom.bind(this)); 
+  
+    const Tooltips = data.features.map((feature, key) => {
+      const polygon = new Polygon(feature.geometry.coordinates).addTo(map);
+      const center = polygon.getBounds().getCenter();
+      const label = feature.properties.name;
+      map.removeLayer(polygon);
+      return (
+        <CircleMarker
+          ref={(ref)=>this.addToTooltips(ref, feature.properties.scalerank)}
+          fill={false}
+          stroke={false}
+          key={key}
+          center={ [center.lng, center.lat ] }>
+          <Tooltip pane={'desert-tooltip'} style={{opacity: 1}} permanent>
+            <DesertName desert={ feature }>{ label }</DesertName>
+          </Tooltip>
+        </CircleMarker>
+      );
+    });
     return (
-      <CircleMarker
-        ref={(ref)=>addToLayers(ref, feature.properties.scalerank)}
-        radius={1}
-        fill={false}
-        stroke={false}
-        key={key}
-        center={ [center.lng, center.lat ] }>
-        <Tooltip pane={'desert-tooltip'} style={{opacity: 1}}>
-          <DesertName desert={ feature }>{ label }</DesertName>
-        </Tooltip>
-      </CircleMarker>
+      <Pane name={'desert-tooltip'} style={{zIndex: 1200}}>
+        <LayerGroup onAdd={ this.checkZoom.bind(this)}>
+          { Tooltips }
+        </LayerGroup>
+      </Pane>
     );
-  });
-  checkZoom();
-  return (
-    <Pane name={'desert-tooltip'} style={{zIndex: 1200}}>
-      <LayerGroup>
-        { Tooltips }
-      </LayerGroup>
-    </Pane>
-  );
+  }
 };
 
 DesertsLayer.contextTypes = {
