@@ -14,6 +14,9 @@ injectGlobal`
   html, body, div, *{
     box-sizing: border-box;
   }
+  a {
+    cursor: pointer;
+  }
 `;
 
 const AtlasHolder = styled.div`

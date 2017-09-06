@@ -16,7 +16,11 @@ const Button = styled(_Button)`
   height: auto;
   min-height: 2.5em;
   color: white !important;
+  &:hover {
+    text-decoration: none !important;
+  }
 `;
+
 const AtlasBackground = styled.div`
   position: absolute;
   top: 0;
