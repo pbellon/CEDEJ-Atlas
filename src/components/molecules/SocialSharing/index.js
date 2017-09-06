@@ -5,7 +5,7 @@ import { FacebookIcon, TwitterIcon } from 'components';
 
 const Holder = styled.div`
   display: flex;
-  padding: 5px 50px;
+  padding: 15px 50px;
   justify-content: space-around;
 `;
 

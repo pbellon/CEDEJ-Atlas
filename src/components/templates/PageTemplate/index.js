@@ -10,6 +10,7 @@ import {
   SidebarToggleButton,
   AtlasFilters,
   SidebarMenu,
+  PartnersLogo,
 } from 'components';
 
 const Holder = styled.div`
@@ -45,6 +46,12 @@ const Container = styled.div`
   &:before {}
 `;
 
+const MapFilters = ()=>(
+  <div>
+    <SidebarToggleButton />
+    <AtlasFilters />
+  </div>
+);
 
 const AppTemplate = ({ children }) => (
   <Holder>
@@ -57,12 +64,8 @@ const AppTemplate = ({ children }) => (
 
     <Sidebar zIndex={10}>
       <div>
-        <Route path={'/map'} render={()=>(
-          <div>
-            <SidebarToggleButton />
-            <AtlasFilters />
-          </div>
-        )}/>
+        <Route path={'/map'}
+          children={({match})=> match ? <MapFilters/> : <PartnersLogo /> }/>
       </div>
       <SidebarMenu />
     </Sidebar>
