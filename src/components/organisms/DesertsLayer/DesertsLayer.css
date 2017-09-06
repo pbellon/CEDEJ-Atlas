@@ -9,7 +9,3 @@
   display: none;
 }
 
-:global .leaflet-desert-tooltip-pane .leaflet-tooltip {
-  text-transform: uppercase;
-  font-weight: bold;
-}
