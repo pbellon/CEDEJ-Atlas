@@ -24,7 +24,6 @@ class DesertsLayer extends Component {
     const { minZoom } = this.props;
     const { map } = this.context;
     const zoom = map.getZoom();
-    console.log('checkZoom', zoom);
     if(zoom >= minZoom){
       this.tooltips.filter(({scalerank})=>scalerank>=zoom).forEach(this.hideTooltip);
       this.tooltips.filter(({scalerank})=>scalerank<zoom).forEach(this.showTooltip);
@@ -33,20 +32,26 @@ class DesertsLayer extends Component {
     }
 
   }
-
-  showTooltip({ tooltipRef: { leafletElement }}){
-    leafletElement.openTooltip();
+  shouldComponentUpdate(){ return false; }
+  showTooltip(tooltip){
+    if(tooltip.tooltipRef){
+      const { tooltipRef: { leafletElement }} = tooltip;
+      leafletElement.openTooltip();
+    }
   }
 
-  hideTooltip({ tooltipRef: { leafletElement }}){
-    leafletElement.closeTooltip();
+  hideTooltip(tooltip){
+    if(tooltip.tooltipRef){
+      const { tooltipRef: { leafletElement }} = tooltip;
+      leafletElement.closeTooltip();
+    }
   }
 
   render(){
     const { data, minZoom } = this.props;
     const { map } = this.context;
     map.on('zoomend', this.checkZoom.bind(this)); 
-  
+    console.log('DesertsLayer.render!'); 
     const Tooltips = data.features.map((feature, key) => {
       const polygon = new Polygon(feature.geometry.coordinates).addTo(map);
       const center = polygon.getBounds().getCenter();
