@@ -1,5 +1,5 @@
 export const sidebar = {
-  width: 250,
+  width: 235,
 };
 
 export const navbar = {

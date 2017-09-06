@@ -8,9 +8,14 @@ import { ContentContainer } from 'containers';
 import { fromAtlas } from 'store/selectors'; 
 
 import Background from './background.png';
+const Centered = styled.div`
+  display: flex;
+  justify-content: center; 
+`;
 const Button = styled(_Button)`
-  height: auto; 
-  min-height: 2.5em; 
+  height: auto;
+  min-height: 2.5em;
+  color: white !important;
 `;
 const AtlasBackground = styled.div`
   position: absolute;
@@ -46,16 +51,18 @@ const HomePage = ({isLoading}) => {
       <AtlasBackground />
       <ContentContainer style={{position: 'relative', zIndex: 10}}>
         <ReactMarkdown source={ MarkdownContent.Home }/>
-        <Button to='/map'>
-          { isLoading && (
-            <LoadingHolder>
-              <LoadingIcon reverse={true}/>Chargement de la carte
-            </LoadingHolder>
-          )}
-          { !isLoading && (
-            <span>Démarrer</span>
-          )}
-        </Button>
+        <Centered>
+          <Button to='/map'>
+            { isLoading && (
+              <LoadingHolder>
+                <LoadingIcon reverse={true}/>Chargement de la carte
+              </LoadingHolder>
+            )}
+            { !isLoading && (
+              <span>Démarrer</span>
+            )}
+          </Button>
+        </Centered>
       </ContentContainer>
     </div>
   );
