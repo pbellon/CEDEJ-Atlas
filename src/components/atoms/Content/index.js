@@ -27,6 +27,11 @@ const Content = styled.div`
       text-decoration: underline;
     }
   }
+  
+  img {
+    max-width: 100%;
+  }
+  
 `;
 
 export default Content;
