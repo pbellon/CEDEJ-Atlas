@@ -9,7 +9,6 @@ import {
   Sidebar,
   SidebarToggleButton,
   AtlasFilters,
-  SidebarMenu,
   PartnersLogo,
 } from 'components';
 
@@ -46,12 +45,6 @@ const Container = styled.div`
   &:before {}
 `;
 
-const MapFilters = ()=>(
-  <div>
-    <SidebarToggleButton />
-    <AtlasFilters />
-  </div>
-);
 
 const AppTemplate = ({ children }) => (
   <Holder>
@@ -62,11 +55,6 @@ const AppTemplate = ({ children }) => (
       </Container>
     </ContainerHolder>
 
-    <Sidebar zIndex={10}>
-      <Route path={'/map'}
-          children={({match})=> match ? <MapFilters/> : <PartnersLogo /> }/>
-      <SidebarMenu />
-    </Sidebar>
   </Holder>
 );
 

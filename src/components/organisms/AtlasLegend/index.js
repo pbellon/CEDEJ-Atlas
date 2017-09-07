@@ -18,7 +18,7 @@ import { visibleTypes, objToArray } from 'utils';
 
 const Legend = styled.div`
   font-family: ${font('primary')};
-  background: white;
+  background: ${palette('white', 1)};
   position: absolute;
   z-index: 1000;
   top: 0;
@@ -27,7 +27,7 @@ const Legend = styled.div`
   padding: 5px;
   padding-top: 0;
   width: 400px;
-  overflow: auto;
+  overflow: ${({isOpened})=>isOpened?'auto':'hidden'};
   transition: left .5s ease-in-out;
 `;
 
@@ -66,7 +66,11 @@ const LegendContent = ({ filters, layers })=>{
     </Holder>
   );
 };
-
+const VisibleIfOpened = styled.div`
+  transition: opacity .5s ease;
+  opacity: ${({isOpened})=>isOpened?1:0};
+  pointer-events: ${({isOpened})=>isOpened?'auto':'none'};
+`;
 const visibilityButtonStyle = {
   position: 'absolute',
   right: 0,
@@ -82,8 +86,11 @@ const AtlasLegend = ({
     <div>
       <Legend isOpened={ isOpened }>
         <LegendToggleButton
-          style={visibilityButtonStyle} />
-        <LegendContent layers={ layers } filters={ filters }/>
+            style={visibilityButtonStyle} />
+        
+        <VisibleIfOpened isOpened={ isOpened }>
+          <LegendContent layers={ layers } filters={ filters }/>
+        </VisibleIfOpened>
       </Legend>
       <LegendTooltips/>
     </div>

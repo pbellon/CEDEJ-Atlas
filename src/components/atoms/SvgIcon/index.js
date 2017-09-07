@@ -5,7 +5,7 @@ import { palette } from 'styled-theme';
 const Svg = styled.svg`
   cursor: pointer;
   & path {
-    fill: ${palette('grayscale', 1)};
+    fill: ${palette('white', 0)};
     transition: fill .2s ease;
   }
   &:hover path {

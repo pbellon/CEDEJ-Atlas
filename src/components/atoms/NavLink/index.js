@@ -5,8 +5,8 @@ import { NavLink as RouterNavLink } from 'react-router-dom'
 import { styles } from '../Link';
 
 const StyledNavLink = styled(({ theme, reverse, palette, ...props }) =>
-  <RouterNavLink activeClassName={ 'active' } {...props} />
-)`${styles}`
+  <RouterNavLink exact activeClassName={ 'active' } {...props} />
+)`${styles}`;
 
 
 const NavLink = ({ ...props }) => {

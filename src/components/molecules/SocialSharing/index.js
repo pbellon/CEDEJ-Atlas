@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import { navbar } from 'utils/styles'; 
 
 import { FacebookIcon, TwitterIcon } from 'components';
 
 const Holder = styled.div`
   display: flex;
-  padding: 10px 50px;
+  height: ${navbar.height}px; 
   justify-content: space-around;
+  align-items: center;
 `;
 
 const SocialSharing = ()=>(

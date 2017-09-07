@@ -13,7 +13,14 @@ import {
 } from 'store/actions';
 
 import { fromSidebar, fromAtlas, fromFilters, fromLayers } from 'store/selectors';
-import { Atlas, AtlasLegend, LoadingIndicator } from 'components';
+import {
+  Atlas,
+  AtlasLegend,
+  LoadingIndicator,
+  Sidebar,
+  AtlasFilters,
+  SidebarToggleButton,
+} from 'components';
 
 const Holder = styled.div`
   position: absolute;
@@ -69,31 +76,38 @@ class AtlasContainer extends Component {
       onRender,
     } = this.props;
     return (
-      <Holder>
-        <LoadingIndicator isLoading={isRendering} />
-        { error &&
-          <Error>{ error.message }</Error>
-        }
-        { canvasURL &&
-          <img src={canvasURL} alt={'Render map'} width="100%" height="auto" />
-        }
-        { data && (
-          <Atlas
-            width={900}
-            height={500}
-            data={data}
-            isSidebarOpened={isSidebarOpened}
-            showContextualInfo={showContextualInfo}
-            hideContextualInfo={hideContextualInfo}
-            onZoomEnd={onZoom}
-            onRender={onRender}
-            onCirclesCreated={onCirclesCreated}
-            showAreas={showAreas}
-            showCircles={showCircles}
-          />)
-        }
-        { data && (<AtlasLegend />) }
-      </Holder>
+      <div>
+        <Holder>
+          <LoadingIndicator isLoading={isRendering} />
+          { error &&
+            <Error>{ error.message }</Error>
+          }
+          { canvasURL &&
+            <img src={canvasURL} alt={'Render map'} width="100%" height="auto" />
+          }
+          { data && (
+            <Atlas
+              width={900}
+              height={500}
+              data={data}
+              isSidebarOpened={isSidebarOpened}
+              showContextualInfo={showContextualInfo}
+              hideContextualInfo={hideContextualInfo}
+              onZoomEnd={onZoom}
+              onRender={onRender}
+              onCirclesCreated={onCirclesCreated}
+              showAreas={showAreas}
+              showCircles={showCircles}
+            />)
+          }
+          { data && (<AtlasLegend />) }
+
+        </Holder>
+        <Sidebar zIndex={1000}>
+          <SidebarToggleButton />
+          <AtlasFilters />
+        </Sidebar>
+      </div>
     );
   }
 }
