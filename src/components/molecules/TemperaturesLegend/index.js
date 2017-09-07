@@ -123,11 +123,11 @@ const AridityNames = ({ aridity })=>{
     <tr>
       <TrName><TrNameContent>Aridité</TrNameContent></TrName>
       { visibleAridities.map((aridity, key) => (
-        <Th key={ key }>
-          <Reduced data-tip data-for={`aridity-${key}`}>
+        <Th key={ key } data-tip data-for={`aridity-${key}` }>
+          <Reduced>
             { aridityUtils.getName(aridity) }
           </Reduced>
-          <Tooltip id={`aridity-${key}`} place="right" effect="solid">
+          <Tooltip id={`aridity-${key}`} place="right">
             <AridityTooltipContent>
               <Markdown source={ aridityUtils.getDescription(aridity) }/>
             </AridityTooltipContent>
