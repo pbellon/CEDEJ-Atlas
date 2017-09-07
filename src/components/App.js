@@ -20,6 +20,10 @@ injectGlobal`
   *[data-tip] {
     cursor: help;
   }
+
+  h6 {
+    font-size: 0.85rem !important;
+  }
 `;
 
 const AtlasHolder = styled.div`

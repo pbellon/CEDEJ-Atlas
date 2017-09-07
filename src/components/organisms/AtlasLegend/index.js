@@ -16,7 +16,7 @@ import { fromFilters, fromLegend, fromLayers } from 'store/selectors';
 import { toggleLegend } from 'store/actions';
 import { visibleTypes, objToArray } from 'utils'; 
 
-const LegendHolder = styled.div`
+const Legend = styled.div`
   font-family: ${font('primary')};
   background: white;
   position: absolute;
@@ -28,14 +28,7 @@ const LegendHolder = styled.div`
   padding-top: 0;
   width: 400px;
   overflow: auto;
-  overflow-x: visible;
   transition: left .5s ease-in-out;
-`;
-
-const Legend = styled.div`
-  overflow: visible;
-  position: relative;
-  z-index: 1100;
 `;
 
 const Table = styled.table``;
@@ -87,13 +80,11 @@ const AtlasLegend = ({
 }) => {
   return (
     <div>
-      <LegendHolder isOpened={ isOpened }>
-        <Legend>
-          <LegendToggleButton
-            style={visibilityButtonStyle} />
-          <LegendContent layers={ layers } filters={ filters }/>
-        </Legend>
-      </LegendHolder>
+      <Legend isOpened={ isOpened }>
+        <LegendToggleButton
+          style={visibilityButtonStyle} />
+        <LegendContent layers={ layers } filters={ filters }/>
+      </Legend>
       <LegendTooltips/>
     </div>
   );

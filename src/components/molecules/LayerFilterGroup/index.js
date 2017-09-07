@@ -18,6 +18,7 @@ import { fromLayers } from 'store/selectors';
 
 const Heading = styled(GenericHeading)`
   cursor: pointer;
+  margin-bottom:0;
   &:hover {
     color: ${palette('grayscale', 0)};
   }
@@ -27,8 +28,8 @@ const Heading = styled(GenericHeading)`
 const LayerContainer = styled.div`
   padding-left: 15px;
   padding-right: 15px;
-  margin-bottom: 15px;
-  
+  margin-top: 0.5em;
+   
   color: ${palette('grayscale', 1)};
   &.hidden {
     color: ${palette('grayscale', 3)};
@@ -38,6 +39,7 @@ const LayerContainer = styled.div`
 
 class LayerFilterGroup extends Component {
   static propTypes = {
+    headingStyle: PropTypes.object,
     hidden: PropTypes.bool,
     layer:PropTypes.object.isRequired,
     heading: PropTypes.string,
@@ -52,12 +54,16 @@ class LayerFilterGroup extends Component {
     };
   };
   render(){
-    const {toggleVisibility, layer, heading, children} = this.props;
+    const {toggleVisibility, layer, heading, headingStyle, children} = this.props;
     const Icon = layer.visible ? MdVisibility : MdVisibilityOff;
     const klass = layer.visible ? '' : 'hidden';
     return (
       <LayerContainer className={ klass }>
         <Heading level={4}
+          style={{
+            marginTop:0,
+            ...headingStyle
+          }}
           onClick={ toggleVisibility(layer) } >
           <span><Icon/> { heading }</span>
         </Heading>

@@ -2,9 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { Button as _B } from 'components';
 
+const BUTTON_HEIGHT = 25;
 const Button = styled(_B)`
-  height: 30px;
-  line-height: 30px;
+  height: ${BUTTON_HEIGHT}px;
+  line-height: ${BUTTON_HEIGHT}px;
+  font-weight: bold;
+  font-size: 0.8rem;
   width: 100%;
   border-radius: 0;
   display: block;

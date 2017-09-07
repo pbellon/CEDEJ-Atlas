@@ -17,6 +17,7 @@ const DryFilters = ({ updateMonths, monthRange, toggleCircleTypeVisibility }, { 
       max={12}
       step={1}
       range={ monthRange }
+      headingStyle={{marginTop:0}}
       heading={ 'Nombre de mois secs' }
       onChange={ updateMonths }/>
     <CircleTypesFilters layer={ layer} />

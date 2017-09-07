@@ -24,7 +24,10 @@ const AtlasFilters = ({visible})=>(
       <AridityFilters/>
       <TemperaturesFilters/>
     </LayerFilterGroup>
-    <LayerFilterGroup layer={ 'circles' } heading={'Sécheresse'}>
+    <LayerFilterGroup
+      layer={ 'circles' }
+      heading={'Sécheresse'}
+      headingStyle={{marginTop:0}}>
       <DryFilters/>
     </LayerFilterGroup>
   </Container>

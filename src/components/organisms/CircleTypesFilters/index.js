@@ -10,7 +10,9 @@ import { ToggleFilter, Heading } from 'components';
 const Holder = styled.div``;
 const CircleTypesFilters = ({ onToggle, types, disabled, layer})=>(
   <Holder>
-    <Heading level={6}>Sécheresse d’été dominante</Heading>
+    <Heading
+      style={{marginBottom:0}}
+      level={6}>Sécheresse d’été dominante</Heading>
     <ToggleFilter
       layer={ layer } 
       toggled={ types.A.visible }
@@ -22,7 +24,9 @@ const CircleTypesFilters = ({ onToggle, types, disabled, layer})=>(
       onToggle={ onToggle(types.B) }
       label={'Régimes à deux saisons de pluies'}/>
     
-    <Heading level={6}>Sécheresse d’hiver dominante</Heading>
+    <Heading
+      style={{marginBottom:0}}
+      level={6}>Sécheresse d’hiver dominante</Heading>
     <ToggleFilter
       layer={ layer } 
       toggled={ types.C.visible }
@@ -35,7 +39,9 @@ const CircleTypesFilters = ({ onToggle, types, disabled, layer})=>(
       label={'Régimes à deux saisons de pluies'}/>
 
 
-    <Heading level={6}>Régimes de transition</Heading>
+    <Heading
+      style={{marginBottom:0}} 
+      level={6}>Régimes de transition</Heading>
     <ToggleFilter
       layer={ layer } 
       toggled={ types.E.visible }

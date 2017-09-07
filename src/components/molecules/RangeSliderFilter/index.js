@@ -13,13 +13,18 @@ const RangeSliderFilter = ({
   onChange,
   updateFilter,
   heading,
+  headingStyle,
   disabled,
   tipFormatter=noop,
   ...other
 })=>{
+  const applyHeadingStyle = {
+    marginTop: '0.2em',
+    ...headingStyle
+  };
   return (
     <div>
-    { heading && (<Heading level={ 6 }>{ heading }</Heading>)}
+    { heading && (<Heading level={ 6 } style={applyHeadingStyle}>{ heading }</Heading>)}
     <RangeSlider
       tipFormatter={tipFormatter}
       disabled={ disabled }
