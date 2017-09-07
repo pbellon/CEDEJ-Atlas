@@ -33,7 +33,7 @@ const ExportButton = styled(Button)`
 
 const Navbar =(props) => (
   <Nav {...props}>
-    <Link style={{color: 'white'}} reverse={true} to="/">Atlas des zones arides</Link>
+    <Link style={{color: 'white'}} reverse={true} to="/">Atlas mondial des zones arides</Link>
     <Route path={ '/map' } render={ () => (
       <NavRight>
         <ExportButton
