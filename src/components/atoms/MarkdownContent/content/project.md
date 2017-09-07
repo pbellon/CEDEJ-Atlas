@@ -1,4 +1,4 @@
-# Notre projet
+# Le projet
 
 Aridity World Map permet de créer des cartes personnalisables à différentes échelles, avec un calcul en temps réel des données relatives à l’aridité. Cette interface offre un support exceptionnel pour modéliser et envisager différents scenarii d’évolution des zones arides.
 
