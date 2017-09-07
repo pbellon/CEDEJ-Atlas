@@ -1,13 +1,14 @@
 import React, { Component } from 'react'; 
 import styled from 'styled-components';
-
+import Tooltip from 'react-tooltip';
+import Markdown from 'react-markdown';
 import {
   LegendCategoryName, 
   Reduced,
   Td,
   Th,
   TrName,
-  TrNameContent
+  TrNameContent,
 } from 'components';
 import { inRange, visibleTypes } from 'utils'; 
 
@@ -110,10 +111,11 @@ const TemperatureRow = ({ name, temperature, patterns, aridity })=>{
     </tr>
   );
 };
-const AridityTooltip = (aridity)=>`
-  P/Etp\n
-  ${ aridityUtils.getPrecipitations(aridity) }
+const AridityTooltipContent = styled.div`
+  max-width: 400px;
+  font-weight: normal;
 `;
+
 const AridityNames = ({ aridity })=>{
   const visibleAridities = visibleTypes(aridity);
   if(!visibleAridities.length){ return null; }
@@ -122,9 +124,14 @@ const AridityNames = ({ aridity })=>{
       <TrName><TrNameContent>Aridité</TrNameContent></TrName>
       { visibleAridities.map((aridity, key) => (
         <Th key={ key }>
-          <Reduced>  
+          <Reduced data-tip data-for={`aridity-${key}`}>
             { aridityUtils.getName(aridity) }
           </Reduced>
+          <Tooltip id={`aridity-${key}`} place="right" effect="solid">
+            <AridityTooltipContent>
+              <Markdown source={ aridityUtils.getDescription(aridity) }/>
+            </AridityTooltipContent>
+          </Tooltip>
         </Th>
       ))}
     </tr>
