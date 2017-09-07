@@ -27,7 +27,7 @@ San Francisco - California - USA</br>
 www.github.com</br>
 
 ### Développement
-**[Skoli**](www.skoli.fr)** </br>
+**[Skoli](www.skoli.fr)** </br>
 **Siège** : 11 rue Duphot – 69003 Lyon</br>
 **Adresse professionnelle** :
 9, rue de la Martinière 69001 - Lyon</br>
