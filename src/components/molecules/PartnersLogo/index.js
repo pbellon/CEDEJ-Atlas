@@ -17,17 +17,20 @@ const Holder = styled.div`
   flex-grow: 1;
   height: ${({height})=>height?height:'auto'};
 `;
+
+
 const ImgHolder = styled.div`
   text-align: center;
   &:last-of-type {
     margin-bottom:0;
   }
 `;
+
 const PartnersLogo = (props)=>(
   <Holder {...props}>
     <ImgHolder><img src={CedejLogo} height={110}/></ImgHolder>
-    <ImgHolder><img src={CnrsLogo} height={80}/></ImgHolder>
-    <ImgHolder><img src={EpheLogo} height={50}/></ImgHolder>
+    <ImgHolder><img src={CnrsLogo} height={100}/></ImgHolder>
+    <ImgHolder><img src={EpheLogo} height={100}/></ImgHolder>
     <ImgHolder><img src={MaeLogo} height={110}/></ImgHolder>
   </Holder>
 );
