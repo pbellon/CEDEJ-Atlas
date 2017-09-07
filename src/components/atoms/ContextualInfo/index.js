@@ -35,20 +35,20 @@ const TemperaturesInfo = ({
       <InfoRow title={'Températures en été'} info={
         <span>
           {(summerRange.length === 1) && (
-            <span>Plus de { summerRange[0] } degrès</span>
+            <span>Plus de { summerRange[0] } degrés</span>
           )}
           { (summerRange.length > 1) && (
-            <span>Entre { summerRange[0] } et { summerRange[1] } degrès</span>
+            <span>Entre { summerRange[0] } et { summerRange[1] } degrés</span>
           )}
         </span>
       } />
       <InfoRow title={'Températures en hiver'} info={
         <span>
           {(winterRange.length === 1) && (
-            <span>Moins de { winterRange[0] } degrès</span>
+            <span>Moins de { winterRange[0] } degrés</span>
           )}
           { (winterRange.length > 1) && (
-            <span>Entre { winterRange[0] } et { winterRange[1] } degrès</span>
+            <span>Entre { winterRange[0] } et { winterRange[1] } degrés</span>
           )}
         </span>
       } />
