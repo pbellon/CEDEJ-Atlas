@@ -70,7 +70,7 @@ const SidebarMenu = ()=>(
       
       <MenuItem
         icon={<ProjectIcon/>}
-        title={'Notre projet'}
+        title={'Le projet'}
         to={ '/page/project' }/>
 
       <MenuItem
