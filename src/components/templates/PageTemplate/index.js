@@ -63,10 +63,8 @@ const AppTemplate = ({ children }) => (
     </ContainerHolder>
 
     <Sidebar zIndex={10}>
-      <div>
-        <Route path={'/map'}
+      <Route path={'/map'}
           children={({match})=> match ? <MapFilters/> : <PartnersLogo /> }/>
-      </div>
       <SidebarMenu />
     </Sidebar>
   </Holder>

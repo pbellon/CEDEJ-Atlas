@@ -10,24 +10,23 @@ console.log(MaeLogo, EpheLogo, CedejLogo, CnrsLogo);
 const Holder = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  max-height: 600px;
-  padding-top: 1.5em;
+  justify-content: space-between;
+  padding-top: 15px 0;
   align-self: center;
+  flex-grow: 1;
 `;
 const ImgHolder = styled.div`
   text-align: center;
-  margin-bottom: 1.2em;
   &:last-of-type {
     margin-bottom:0;
   }
 `;
 const PartnersLogo = ()=>(
   <Holder>
-    <ImgHolder><img src={CedejLogo} height={150}/></ImgHolder>
-    <ImgHolder><img src={CnrsLogo} height={100}/></ImgHolder>
+    <ImgHolder><img src={CedejLogo} height={110}/></ImgHolder>
+    <ImgHolder><img src={CnrsLogo} height={80}/></ImgHolder>
     <ImgHolder><img src={EpheLogo} height={50}/></ImgHolder>
-    <ImgHolder><img src={MaeLogo} height={150}/></ImgHolder>
+    <ImgHolder><img src={MaeLogo} height={110}/></ImgHolder>
   </Holder>
 );
 
