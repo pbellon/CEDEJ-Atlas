@@ -2,9 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import styled from 'styled-components'; 
-
-import { MarkdownContent, Button as _Button, LoadingIcon } from 'components';
-import { ContentContainer } from 'containers';
+import { font } from 'styled-theme';
+import {
+  Content,
+  MarkdownContent,
+  Button as _Button,
+  LoadingIcon,
+  PartnersLogo, 
+} from 'components';
 import { fromAtlas } from 'store/selectors'; 
 
 import Background from './background.png';
@@ -49,25 +54,41 @@ const LoadingHolder = styled.span`
   display: block;
 `;
 
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-family: ${font('primary')};
+`;
+
 const HomePage = ({isLoading}) => {
   return (
     <div>
       <AtlasBackground />
-      <ContentContainer verticalAlign={true} style={{zIndex: 10}}>
-        <ReactMarkdown source={ MarkdownContent.Home }/>
-        <Centered>
-          <Button to='/map'>
-            { isLoading && (
-              <LoadingHolder>
-                <LoadingIcon reverse={true}/>Chargement de la carte
-              </LoadingHolder>
-            )}
-            { !isLoading && (
-              <span>Démarrer</span>
-            )}
-          </Button>
-        </Centered>
-      </ContentContainer>
+      <Container style={{zIndex: 10}}>
+        <Content noTopPadding={true}>
+          <ReactMarkdown source={ MarkdownContent.Home }/>
+          <Centered>
+            <Button to='/map'>
+              { isLoading && (
+                <LoadingHolder>
+                  <LoadingIcon reverse={true}/>Chargement de la carte
+                </LoadingHolder>
+              )}
+              { !isLoading && (
+                <span>Démarrer</span>
+              )}
+            </Button>
+          </Centered>
+          <Centered>
+            <PartnersLogo height={'200px'} horizontal={true}/>
+          </Centered>
+        </Content>
+      </Container>
     </div>
   );
 };
