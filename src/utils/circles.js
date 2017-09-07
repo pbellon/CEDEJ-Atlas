@@ -4,56 +4,48 @@ const DROUGHTS = [
   {
     value: 'A',
     regime_single: 'régime à pluie d\'hiver (parfois décalées vers le printemps)',
-    regime: 'régimes à pluie d\'hiver (parfois décalées vers le printemps)',
-    help_regime: 'la sécheresse est maxiamle en été',
+    regime: 'régimes à pluie d\'hiver',
+    regime_full: `régimes à pluies d'hiver (parfois décalées vers le printemps) : la sécheresse est maximale en été.`,
     color: '#468fba',
   },
   {
     value: 'B',
     regime_single: 'régime à deux saisons de pluies',
     regime: 'régimes à deux saisons de pluies',
-    help_regime: `l'une vers la fin de l'automne, l'autre au 
-      début du printemps: la sécheresse d'hiver est moins 
-      marquée et plus courte que celle d'été.`,
+    regime_full: `régimes à deux saisons de pluies, l'une vers la fin de l'automne, l'autre au début du printemps : la sécheresse d'hiver est moins marquée et plus courte que celle d'été.`,
     color: '#498b45',
   },
   {
     value: 'C',
     regime_single: 'régime à pluies d\'été (parfois décalées vers l\'automne)',
-    regime: 'régimes à pluies d\'été (parfois décalées vers l\'automne)',
-    help_regime: 'la sécheresse est maximale en hiver',
+    regime: 'régimes à pluies d\'été',
+    regime_full: `régimes à pluies d'été (parfois décalées vers l'automne) : la sécheresse est maximale en hiver.`,
     color: '#e15e46',
   },
   {
     value: 'D',
     regime_single: 'régime à deux saisons de pluies',
     regime: 'régimes à deux saisons de pluies',
-    help_regime: `l'une vers la fin du printemps, l'autre au début de 
-      l'automne: la sécheresse d'été est moins marquée et plus courte 
-      que celle d'hiver.`,
+    regime_full: `régimes à deux saisons de pluies, l'une vers la fin du printemps, l'autre au début de l'automne: la sécheresse d'été est moins marquée et plus courte que celle d'hiver.`,
     color: '#fea959',
   },
   {
     value: 'E',
     regime_single: 'régime à deux saisons de pluies',
     regime: 'régimes à deux saisons de pluies',
-    help_regime: `l'une en été, l'autre en hiver: les sécheresses,
-      bien marquées, sont au printemps et en automne.`,
+    regime_full: `régimes à deux saisons de pluies, l'une en été, l'autre en hiver : les sécheresses, bien marquées, sont au printemps et en automne.`,
     color: '#7e6ba3',
   },
   {
     value: 'F',
     regime_single: 'régime irrégulier',
     regime: 'régimes irréguliers',
-    help_regime: `les pluies sont soit accidentelles et sans date
-      prévisible, soit, dans les régions moins sèches, réparties
-      au long de l'année sans maximum bien marqué, ou avec des 
-      maximums sans date prévisible`,
+    regime_full: `régimes irréguliers : les pluies sont soit accidentelles et sans date prévisible, soit, dans les régions moins sèches réparties au long de l'année sans maximum bien marqué, ou avec des maximums sans date prévisible.`,
     color: '#858288',
   },
 ];
 
-
+export const allDroughtRegimes = () => DROUGHTS; 
 const NUMBER_OF_MONTHS = [
   {
     value: '01',
@@ -87,6 +79,10 @@ const NUMBER_OF_MONTHS = [
 const DROUGHTS_OBJ = utils.arrToObj(DROUGHTS);
 
 export const droughtRegime = (value)=>DROUGHTS_OBJ[value].regime;
+
+export const droughtFullRegime = (value)=>(
+  DROUGHTS_OBJ[value].regime_full
+);
 export const droughtRegimeHelp = (value)=>DROUGHTS_OBJ[value].regime_help;
 export const droughtRegimeSingle = (value)=>DROUGHTS_OBJ[value].regime_single;
 

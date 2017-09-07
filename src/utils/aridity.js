@@ -22,6 +22,17 @@ const ARIDITY = {
   },
 };
 
+export const allAridity = ()=>(
+  Object.keys(ARIDITY)
+    .map(key => {
+      const aridity = ARIDITY[key];
+      return {
+        ...aridity,
+        value: key,
+      };
+    })
+);
+
 export const getInfos = (aridity)=>ARIDITY[aridity.name || aridity];
 
 export const getName = (aridity)=>getInfos(aridity).name;

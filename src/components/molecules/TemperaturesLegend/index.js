@@ -111,10 +111,6 @@ const TemperatureRow = ({ name, temperature, patterns, aridity })=>{
     </tr>
   );
 };
-const AridityTooltipContent = styled.div`
-  max-width: 400px;
-  font-weight: normal;
-`;
 
 const AridityNames = ({ aridity })=>{
   const visibleAridities = visibleTypes(aridity);
@@ -123,15 +119,10 @@ const AridityNames = ({ aridity })=>{
     <tr>
       <TrName><TrNameContent>Aridité</TrNameContent></TrName>
       { visibleAridities.map((aridity, key) => (
-        <Th key={ key } data-tip data-for={`aridity-${key}` }>
+        <Th key={ key } data-tip data-for={`tooltip-aridity-${aridity.name}` }>
           <Reduced>
             { aridityUtils.getName(aridity) }
           </Reduced>
-          <Tooltip id={`aridity-${key}`} place="right">
-            <AridityTooltipContent>
-              <Markdown source={ aridityUtils.getDescription(aridity) }/>
-            </AridityTooltipContent>
-          </Tooltip>
         </Th>
       ))}
     </tr>

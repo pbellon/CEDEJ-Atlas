@@ -1,6 +1,7 @@
 import React from 'react'; 
 import styled from 'styled-components';
-
+import Markdown from 'react-markdown';
+import Tooltip from 'react-tooltip';
 import {
   LegendCategoryName, 
   Reduced,
@@ -24,10 +25,16 @@ const CircleTypeSymbol = styled.span`
   display: inline-block;
 `;
 
+const CircleTooltipContent = styled.div`
+  font-weight: normal;
+  max-width: 400px;
+`;
+
+
 const CircleTypeRow = ({ circle })=> {
   return (
     <tr>
-      <td colSpan={4}>
+      <td colSpan={4} data-tip data-for={`tooltip-circle-${circle}`}>
         <CircleTypeSymbol circle={ circle } />&nbsp;
         <Reduced>
           { circlesUtils.droughtRegime(circle) }
