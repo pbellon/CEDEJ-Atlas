@@ -85,11 +85,11 @@ const NavbarTabs = ()=>(
       isHome={true}
       to={ '/' }
       icon={<HomeIcon/>}
-      title={'Atlas mondial des zones arides'}/>
+      title={'Accueil'}/>
     <NavItem
       to={ '/map' }
       icon={<AtlasIcon/>}
-      title={'Atlas'} />
+      title={'Atlas mondial des zones arides'} />
     
     <NavItem
       icon={<ProjectIcon/>}

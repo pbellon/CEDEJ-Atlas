@@ -9,10 +9,7 @@ import { sidebar, navbar } from 'utils/styles';
 
 const Side = styled.div`
   position: fixed;
-  display: flex;
   overflow: auto;
-  justify-content: space-between;
-  flex-direction: column;
   top: ${navbar.height}px;
   z-index: ${(props)=>(props.zIndex || 0)};
   bottom: 0px;

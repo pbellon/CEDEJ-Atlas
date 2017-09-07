@@ -18,7 +18,7 @@ import { visibleTypes, objToArray } from 'utils';
 
 const Legend = styled.div`
   font-family: ${font('primary')};
-  background: ${palette('white', 1)};
+  background: ${palette('white', 0)};
   position: absolute;
   z-index: 1000;
   top: 0;

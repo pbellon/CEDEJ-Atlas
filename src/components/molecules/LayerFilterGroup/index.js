@@ -22,13 +22,10 @@ const Heading = styled(GenericHeading)`
   &:hover {
     color: ${palette('grayscale', 0)};
   }
-
-  `;
+`;
 
 const LayerContainer = styled.div`
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-top: 0.5em;
+  margin-bottom: 0.5em;
    
   color: ${palette('grayscale', 1)};
   &.hidden {
