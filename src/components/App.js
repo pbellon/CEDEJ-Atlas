@@ -17,6 +17,9 @@ injectGlobal`
   a {
     cursor: pointer;
   }
+  *[data-tip] {
+    cursor: help;
+  }
 `;
 
 const AtlasHolder = styled.div`

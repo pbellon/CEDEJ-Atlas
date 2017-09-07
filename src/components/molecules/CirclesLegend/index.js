@@ -66,10 +66,9 @@ const CirclesLegend = ({ filters })=>{
         </TrName>
       </tr>
       <tr>
-        <Th colSpan={3} align={'left'} style={{marginTop:'-5px'}}>
-          <LegendCategoryName>
-            Nombre de mois secs&nbsp; 
-            <NormalWeight>recevant moins de 30mm de précipitations</NormalWeight>
+        <Th align={'left'} style={{marginTop:'-5px'}}>
+          <LegendCategoryName data-tip data-for="tooltip-nb-months">
+            Nombre de mois secs
           </LegendCategoryName>
         </Th>
         <Td>
@@ -78,9 +77,8 @@ const CirclesLegend = ({ filters })=>{
       </tr>
       <tr>
         <Th colSpan={5} align={'left'} style={{marginTop:'-5px'}}>
-          <LegendCategoryName>
-            Périodes des sécheresses&nbsp; 
-            <NormalWeight>et régime des précipitations</NormalWeight>
+          <LegendCategoryName data-tip data-for="tooltip-regime">
+            Périodes des sécheresses 
           </LegendCategoryName>
         </Th>
       </tr>
