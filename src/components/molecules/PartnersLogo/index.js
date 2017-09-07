@@ -22,7 +22,7 @@ const Holder = styled.div`
 const ImgHolder = styled.div`
   text-align: center;
   &:last-of-type {
-    margin-bottom:0;
+    margin-bottom: 0;
   }
 `;
 

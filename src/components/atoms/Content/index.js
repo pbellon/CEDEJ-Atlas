@@ -4,7 +4,7 @@ import { font, palette } from 'styled-theme';
 const Holder = styled.div``;
 
 const Content = styled.div`
-  max-width: 800px;
+  max-width: 80%;
   margin: auto;
   padding-top: ${({noTopPadding})=>noTopPadding?0:50}px;
   padding-left: 15px;
