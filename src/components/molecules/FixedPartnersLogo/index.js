@@ -15,14 +15,17 @@ const FixedBar = styled.div`
   transition-duration: ${({visible})=>visible?.33:0}s;
   transition-property: right;
   transition-timing-function: ease-in-out;
+  display: flex;
+  align-items:center;
+  flex-direction: column;
+  justify-content: space-around;
   & > div {
+    max-height: 900px;
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
     padding-top: 50px;
     padding-bottom: 50px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
   }
 `;
 
