@@ -12,7 +12,13 @@ import {
   zoom,
 } from 'store/actions';
 
-import { fromSidebar, fromAtlas, fromFilters, fromLayers } from 'store/selectors';
+import {
+  fromSidebar,
+  fromAtlas,
+  fromFilters,
+  fromLayers,
+} from 'store/selectors';
+
 import {
   Atlas,
   AtlasLegend,
@@ -45,6 +51,7 @@ class AtlasContainer extends Component {
       temperatures: PropTypes.array,
     }),
     canvasURL: PropTypes.string,
+    circleTypes: PropTypes.object,
     error: PropTypes.object,
     isContextualInfoVisible: PropTypes.bool,
     isRendering: PropTypes.bool,
@@ -66,6 +73,7 @@ class AtlasContainer extends Component {
   render() {
     const {
       canvasURL,
+      circleTypes,
       data,
       error,
       showContextualInfo,
@@ -93,6 +101,7 @@ class AtlasContainer extends Component {
               width={900}
               height={500}
               data={data}
+              circleTypes={circleTypes}
               isSidebarOpened={isSidebarOpened}
               showContextualInfo={showContextualInfo}
               hideContextualInfo={hideContextualInfo}
@@ -125,6 +134,7 @@ const mapStateToProps = state => ({
   showAreas: fromLayers.isLayerVisible(state, fromLayers.temperatures(state)),
   showCircles: fromLayers.isLayerVisible(state, fromLayers.circles(state)),
   data: fromFilters.data(state),
+  circleTypes: fromFilters.circlesTypes(state),
   error: state.atlas.error,
 });
 

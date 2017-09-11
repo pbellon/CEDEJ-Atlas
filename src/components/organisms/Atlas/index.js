@@ -45,6 +45,7 @@ export default class Atlas extends Component {
     data: PropTypes.object,
     showAreas: PropTypes.bool,
     showCircles: PropTypes.bool,
+    circleTypes: PropTypes.object,
     print: PropTypes.bool,
     onRender: PropTypes.func,
     isSidebarOpened: PropTypes.bool,
@@ -124,6 +125,7 @@ export default class Atlas extends Component {
       showCircles,
       showAreas,
       onRender,
+      circleTypes,
       showContextualInfo,
       hideContextualInfo,
       onCirclesCreated,
@@ -131,10 +133,8 @@ export default class Atlas extends Component {
     } = this.props;
     const { deserts, ...canvasData } = data;
     const bbox = [
-      -179.2165527343741
-      , -56.157571400448376
-      ,  181.00012207031295
-      ,  84.62359619140625
+      -179.2165527343741, -56.157571400448376,
+      181.00012207031295,  84.62359619140625
     ];
     const klass = `sidebar-${isSidebarOpened ? 'opened' : 'closed'}`;
     const position = [10, 35];
@@ -172,6 +172,7 @@ export default class Atlas extends Component {
         data={canvasData}
         delegate={ CanvasDelegate }/>
       <CirclesLayer
+        types={circleTypes}
         onRender={ onRender }  
         onCirclesCreated={ onCirclesCreated }
         showContextualInfo={ showContextualInfo }

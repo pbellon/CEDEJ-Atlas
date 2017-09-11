@@ -20,14 +20,7 @@ const filterAridity = (original, aridity) => {
 
 const filterCircles = (original, { month_range, types }) => {
   const sizes = circlesTypes.sizesForRange(month_range).map(s => s.value);
-  const cTypes = Object.keys(types).filter(k => types[k].visible);
-  const f = (circle) => {
-    return (
-      sizes.indexOf(circle.properties.size_) > -1
-    ) && (
-      cTypes.indexOf(circle.properties.colours) > -1
-    );
-  };
+  const f = (circle) => sizes.indexOf(circle.properties.size_) > -1;
   return original.circles.filter(f);
 };
 
