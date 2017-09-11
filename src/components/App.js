@@ -69,12 +69,12 @@ const App = () => {
         }}/>
         <Route path="/page" children={({match})=>(
           <div>
-          <OverlayHolder visible={ match!=null }>
-            { match && (
-              <ContentPage/>
-            )} 
-          </OverlayHolder>
-          { match && <FixedPartnersLogo/> }
+            <OverlayHolder visible={ match!=null }>
+              { match && (
+                <ContentPage/>
+              )} 
+            </OverlayHolder>
+            <FixedPartnersLogo visible={ match!=null}/>
           </div>
         )}/>
       </PageTemplate>
