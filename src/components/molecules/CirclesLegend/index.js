@@ -34,11 +34,13 @@ const CircleTooltipContent = styled.div`
 const CircleTypeRow = ({ circle })=> {
   return (
     <tr>
-      <td colSpan={4} data-tip data-for={`tooltip-circle-${circle}`}>
-        <CircleTypeSymbol circle={ circle } />&nbsp;
-        <Reduced>
-          { circlesUtils.droughtRegime(circle) }
-        </Reduced>
+      <td colSpan={2} >
+        <span data-tip data-for={`tooltip-circle-${circle}`}>
+          <CircleTypeSymbol circle={ circle } />&nbsp;
+          <Reduced>
+            { circlesUtils.droughtRegime(circle) }
+          </Reduced>
+        </span>
       </td>
     </tr>
   );
@@ -67,8 +69,8 @@ const CirclesLegend = ({ filters })=>{
       </tr>
       <tr>
         <Th align={'left'} style={{marginTop:'-5px'}}>
-          <LegendCategoryName data-tip data-for="tooltip-nb-months">
-            Nombre de mois secs
+          <LegendCategoryName>
+            <span data-tip data-for="tooltip-nb-months">Nombre de mois secs</span>
           </LegendCategoryName>
         </Th>
         <Td>
@@ -76,9 +78,11 @@ const CirclesLegend = ({ filters })=>{
         </Td>
       </tr>
       <tr>
-        <Th colSpan={5} align={'left'} style={{marginTop:'-5px'}}>
-          <LegendCategoryName data-tip data-for="tooltip-regime">
-            Périodes des sécheresses 
+        <Th colSpan={2} align={'left'} style={{marginTop:'-5px'}}>
+          <LegendCategoryName>
+            <span data-tip data-for="tooltip-regime">
+              Périodes des sécheresses
+            </span>
           </LegendCategoryName>
         </Th>
       </tr>
@@ -102,31 +106,35 @@ const CirclesLegend = ({ filters })=>{
 
       { hasTypes(['C', 'D'], types) && (
         <tr><Th colSpan={3} align={'left'}>
-          <LegendCategoryName>Sécheresse d'hiver dominante</LegendCategoryName>
+          <LegendCategoryName>
+            <Reduced>Sécheresse d'hiver dominante</Reduced>
+          </LegendCategoryName>
         </Th></tr>
       )}
       {
-        types['C'] && (
+        types['C'].visible && (
           <CircleTypeRow circle={ 'C' } />
         )
       }
       {
-        types['D'] && (
+        types['D'].visible && (
           <CircleTypeRow circle={ 'D' } />
         )
       }
       { hasTypes(['E', 'F'], types) && (
-        <tr><Th colSpan={3} align={ 'left' }>
-          <LegendCategoryName>Régimes de transition</LegendCategoryName>
+        <tr><Th align={ 'left' }>
+          <LegendCategoryName>
+            <Reduced>Régimes de transition</Reduced>
+          </LegendCategoryName>
         </Th></tr>
       )}
       {
-        types['E'] && (
+        types['E'].visible && (
           <CircleTypeRow circle={ 'E' } />
         )
       }
       {
-        types['F'] && (
+        types['F'].visible && (
           <CircleTypeRow circle={ 'F' } />
         )
       }

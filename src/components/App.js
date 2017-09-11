@@ -29,6 +29,20 @@ injectGlobal`
   }
   *[data-tip] {
     cursor: help;
+    position: relative;
+    &:after {
+      content: ' ';
+      position: absolute;
+      bottom: -2px;
+      left: 2px;
+      right: 2px;
+      border-bottom: 1px dashed #BBB;
+
+    }
+  }
+  span[data-tip]:after {
+    left: 0;
+    right:0;
   }
 
   h6 {
