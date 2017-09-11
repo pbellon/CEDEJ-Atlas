@@ -10,11 +10,12 @@ import { fromLegend } from 'store/selectors';
 const Holder = styled.div`
   margin-top: 1em;
 `;
+const MoreInfoTitle = ()=><span>À propos de la légende</span>
 
 const LegendMoreInfos = ({opened, show, hide}) => (
   <Holder>
     <Link onClick={ show }>Plus d'infos sur la légende</Link>
-    <Modal isOpen={ opened } onClose={hide} closeable={true}>
+    <Modal isOpen={ opened } title={<MoreInfoTitle/>} onClose={hide} closeable={true}>
       <Markdown source={ MarkdownContent.LegendInfos }/>
     </Modal>
 
