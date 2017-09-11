@@ -8,6 +8,7 @@ import {
   ContextualInfo,
   TemperaturesLegend,
   CirclesLegend,
+  LegendMoreInfos,
   LegendToggleButton,
   LegendTooltips,
 } from 'components'; 
@@ -68,6 +69,7 @@ const LegendContent = ({ filters, layers })=>{
           <tbody><tr><th>Pas de données à visualiser</th></tr></tbody>
         )}
       </Table>
+      <LegendMoreInfos/>
     </Holder>
   );
 };
