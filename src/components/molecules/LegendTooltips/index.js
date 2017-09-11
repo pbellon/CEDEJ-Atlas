@@ -21,14 +21,14 @@ const LegendTooltips = ()=>(
     <Tooltip id="tooltip-nb-months">
       <LegendTooltipContent>
         <span>
-          recevant moins de 30mm de précipitations
+          Recevant moins de 30mm de précipitations
         </span>
       </LegendTooltipContent>
     </Tooltip>
     <Tooltip id="tooltip-regime" place="right">
       <LegendTooltipContent>
         <span>
-          et régime des précipitations
+          Et régime des précipitations
         </span>
       </LegendTooltipContent>
     </Tooltip>
