@@ -6,7 +6,6 @@ import EpheLogo from 'img/logoephe.png'
 import CnrsLogo from 'img/logocnrs.png'
 import CedejLogo from 'img/logocedej.png'
 
-console.log(MaeLogo, EpheLogo, CedejLogo, CnrsLogo);
 const Holder = styled.div`
   display: flex;
   flex-direction: ${({horizontal})=>horizontal?'row':'column'};
