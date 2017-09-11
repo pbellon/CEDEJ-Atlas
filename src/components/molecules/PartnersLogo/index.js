@@ -6,6 +6,10 @@ import EpheLogo from 'img/logoephe.png'
 import CnrsLogo from 'img/logocnrs.png'
 import CedejLogo from 'img/logocedej.png'
 
+const Link = styled(({to, children, title})=>(
+  <a href={to} title={title} target="_blank">{ children }</a>
+))``;
+
 const Holder = styled.div`
   display: flex;
   flex-direction: ${({horizontal})=>horizontal?'row':'column'};
@@ -27,7 +31,11 @@ const ImgHolder = styled.div`
 
 const PartnersLogo = (props)=>(
   <Holder {...props}>
-    <ImgHolder><img src={CnrsLogo} height={100}/></ImgHolder>
+    <ImgHolder>
+      <Link to={'https://www.cnrs.fr'} title='Visiter le site du CNRS'>
+        <img src={CnrsLogo} height={100}/>
+      </Link>
+    </ImgHolder>
     <ImgHolder><img src={CedejLogo} height={110}/></ImgHolder>
     <ImgHolder><img src={MaeLogo} height={110}/></ImgHolder>
     <ImgHolder><img src={EpheLogo} height={110}/></ImgHolder>

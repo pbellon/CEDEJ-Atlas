@@ -9,11 +9,10 @@ import {
   DryFilters,
   Heading,
 } from 'components';
+
 import { fromSidebar } from 'store/selectors';
-// import { fromLayers } from 'store/selectors';
 
 const Container = styled.div`
-  padding: 0 15px;
   transition: opacity .5s ease;
   opacity: ${({visible})=>visible?1:0};
   pointer-events:${({visible})=>visible?'auto':'none'};

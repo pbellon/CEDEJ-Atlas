@@ -2,6 +2,8 @@
 // import * as patterns from './patterns';
 // import * as boundaries from './boundaries';
 
+export const noop = ()=>null;
+
 export const arrToObj = (arr, key = (v) => v.value) => {
   const obj = {};
   arr.forEach(v => {

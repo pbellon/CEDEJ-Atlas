@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled, { css, injectGlobal } from 'styled-components';
 import ReactModal from 'react-modal';
 import { font, palette } from 'styled-theme';
-
+import jsxToString from 'jsx-to-string';
 import { Heading, IconButton } from 'components';
 
 injectGlobal`
@@ -94,7 +94,7 @@ const Modal = ({ children, title, closeable, onClose, ...props }) => {
   const hasHeader = title || closeable;
   return (
     <StyledReactModal
-      contentLabel={title || 'Modal'}
+      contentLabel={jsxToString(title) || 'Modal'}
       onRequestClose={onClose}
       hasHeader={hasHeader}
       {...props}
@@ -102,7 +102,7 @@ const Modal = ({ children, title, closeable, onClose, ...props }) => {
       {hasHeader &&
         <Header>
           <StyledHeading level={2} reverse={props.reverse}>{title}</StyledHeading>
-          {closeable && <IconButton icon="close" onClick={onClose} palette="white" reverse />}
+          {closeable && <IconButton icon="close" onClick={onClose} plalette="white" />}
         </Header>
       }
       <Content>
@@ -114,7 +114,10 @@ const Modal = ({ children, title, closeable, onClose, ...props }) => {
 
 Modal.propTypes = {
   children: PropTypes.node,
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+  ]),
   closeable: PropTypes.bool,
   reverse: PropTypes.bool,
   onClose: PropTypes.func.isRequired,

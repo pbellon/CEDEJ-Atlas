@@ -20,7 +20,10 @@ import {
   Sidebar,
   AtlasFilters,
   SidebarToggleButton,
+  AtlasExportButton,
 } from 'components';
+
+import { Sidebar as SidebarContainer } from 'containers';
 
 const Holder = styled.div`
   position: absolute;
@@ -105,7 +108,10 @@ class AtlasContainer extends Component {
         </Holder>
         <Sidebar zIndex={1000}>
           <SidebarToggleButton />
-          <AtlasFilters />
+          <SidebarContainer>
+            <AtlasFilters />
+            <AtlasExportButton/>
+          </SidebarContainer>
         </Sidebar>
       </div>
     );

@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import { palette } from 'styled-theme'
 import { ifProp } from 'styled-tools'
 
+import * as icons from './icons'; 
+
 export const fontSize = ({ height }) => height ? `${height / 16}rem` : '1.25em'
 
 const Wrapper = styled.span`
@@ -24,9 +26,10 @@ const Wrapper = styled.span`
 `
 
 const Icon = ({ icon, ...props }) => {
-  const svg = require(`raw-loader!./icons/${icon}.svg`)
-  return <Wrapper {...props} dangerouslySetInnerHTML={{ __html: svg }} />
-}
+  const SvgIcon = icons[icon];
+
+  return <Wrapper {...props}><SvgIcon/></Wrapper>
+};
 
 Icon.propTypes = {
   icon: PropTypes.string.isRequired,

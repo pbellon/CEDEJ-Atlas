@@ -1,12 +1,17 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { injectGlobal, ThemeProvider } from 'styled-components';
+
+import {
+  injectGlobal,
+  ThemeProvider
+} from 'styled-components';
 import styled from 'styled-components'; 
 import {
   HomePage,
   ContentPage,
   PageTemplate,
   FixedPartnersLogo,
+  SmallScreensWarning,
 } from 'components';
 import { Atlas } from 'containers';
 // https://github.com/diegohaz/arc/wiki/Styling
@@ -57,6 +62,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <PageTemplate>
+        <SmallScreensWarning/>
         <AtlasHolder>
           <Atlas/>
         </AtlasHolder>
