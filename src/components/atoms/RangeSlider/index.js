@@ -9,6 +9,9 @@ import theme from 'components/themes/default';
 import Slider from 'rc-slider';
 
 injectGlobal`
+.rc-slider {
+  padding: 4px 0;
+}
 .rc-slider-tooltip {
   z-index: 800;
   font-familiy: 'Helvetica';
