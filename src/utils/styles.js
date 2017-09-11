@@ -3,5 +3,9 @@ export const sidebar = {
 };
 
 export const navbar = {
-  height: 50
+  height: 50,
+};
+
+export const legend = {
+  width: 370,
 };

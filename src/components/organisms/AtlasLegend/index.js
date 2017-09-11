@@ -14,7 +14,8 @@ import {
 
 import { fromFilters, fromLegend, fromLayers } from 'store/selectors';
 import { toggleLegend } from 'store/actions';
-import { visibleTypes, objToArray } from 'utils'; 
+import { visibleTypes, objToArray } from 'utils';
+import { legend } from 'utils/styles';
 
 const Legend = styled.div`
   font-family: ${font('primary')};
@@ -23,12 +24,16 @@ const Legend = styled.div`
   z-index: 1000;
   top: 0;
   bottom: 0;
-  left: ${({isOpened})=>isOpened?0:-360}px;
+  left: ${({isOpened})=>isOpened?0:-(legend.width - 40)}px;
   padding: 5px;
   padding-top: 0;
-  width: 400px;
-  overflow: ${({isOpened})=>isOpened?'auto':'hidden'};
+  width: ${legend.width}px;
+  overflow: hidden;
   transition: left .5s ease-in-out;
+  &:hover {
+    width: ${({isOpened})=>isOpened?(legend.width+14):legend.width}px;
+    overflow: ${({isOpened})=>isOpened?'auto':'hidden'};
+  }
 `;
 
 const Table = styled.table``;
