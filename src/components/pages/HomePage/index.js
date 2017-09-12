@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ReactMarkdown from 'react-markdown';
 import styled from 'styled-components'; 
 import { font } from 'styled-theme';
 import {
@@ -8,7 +7,8 @@ import {
   MarkdownContent,
   Button as _Button,
   LoadingIcon,
-  PartnersLogo, 
+  PartnersLogo,
+  Markdown,
 } from 'components';
 import { fromAtlas } from 'store/selectors'; 
 
@@ -71,7 +71,7 @@ const HomePage = ({isLoading}) => {
       <AtlasBackground />
       <Container style={{zIndex: 10}}>
         <Content noTopPadding={true}>
-          <ReactMarkdown source={ MarkdownContent.Home }/>
+          <Markdown source={ MarkdownContent.Home }/>
           <Centered>
             <Button to='/map'>
               { isLoading && (

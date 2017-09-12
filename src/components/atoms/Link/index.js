@@ -17,6 +17,7 @@ export const styles = css`
   &.active {
     color: ${palette({primary: 0}, 1)};
   }
+
 `
 
 const StyledLink = styled(({ theme, reverse, palette, ...props }) =>
@@ -24,11 +25,15 @@ const StyledLink = styled(({ theme, reverse, palette, ...props }) =>
 )`${styles}`
 const Anchor = styled.a`${styles}`
 
-const Link = ({ ...props }) => {
-  if (props.to) {
-    return <StyledLink {...props} />
+const Link = ({ to, nodeKey, href, literal, ...props }) => {
+  let _to = to;
+  if(href && href.startsWith('/')){
+    _to = href;
   }
-  return <Anchor {...props} />
+  if (_to) {
+    return <StyledLink to={ _to } {...props} />
+  }
+  return <Anchor href={href} {...props} />
 }
 
 Link.propTypes = {

@@ -2,8 +2,7 @@ import React from 'react';
 
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { ContentContainer } from 'containers';
-import { MarkdownContent } from 'components';
-import ReactMarkdown from 'react-markdown';
+import { MarkdownContent, Markdown } from 'components';
 
 const content = {
   'about': MarkdownContent.About,
@@ -19,7 +18,10 @@ const ContentPage = ({match}) => {
         if(!md){
           return <Redirect to={ '/map'}/>
         } else {
-          return (<ReactMarkdown source={content[match.params.pageName]}/>);
+          return (
+            <Markdown
+              source={content[match.params.pageName]}/>
+          );
         }
       }}/>
     </ContentContainer>
