@@ -13,7 +13,7 @@ const config = {
     apiUrl: 'http://localhost:3000',
   },
   production: {
-    apiUrl: 'http://cedej-atlas.surge.sh',
+    apiUrl: 'http://www.aridityworldmap.org',
   },
 };
 
