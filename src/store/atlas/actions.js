@@ -15,6 +15,8 @@ export const DOWNLOAD_MAP_FAIL = 'map/download/fail';
 
 export const ZOOM = 'map/zoom/end';
 
+export const HIDE_TUTORIAL = 'map/tutorial/hide';
+
 export const zoom = () => ({
   type: ZOOM,
 });
@@ -69,3 +71,5 @@ export const showContextualInfo = (data) => ({
 export const hideContextualInfo = () => ({
   type: HIDE_CONTEXTUAL_INFO,
 });
+
+export const hideTutorial = () => ({ type: HIDE_TUTORIAL });
