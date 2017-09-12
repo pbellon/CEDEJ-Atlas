@@ -112,6 +112,23 @@ const TemperatureRow = ({ name, temperature, patterns, aridity })=>{
   );
 };
 
+const AridityName = ({ aridity }) => {
+  const style = {
+    fontSize: '0.65rem',
+    lineHeight: '0.7rem',
+  };
+  return (
+    <Th
+      style={style}
+      width={40}
+      data-tip 
+      data-for={`tooltip-aridity-${aridity.name}` }>
+      { aridityUtils.getName(aridity) }
+    </Th>
+  )
+
+};
+
 const AridityNames = ({ aridity })=>{
   const visibleAridities = visibleTypes(aridity);
   if(!visibleAridities.length){ return null; }
@@ -119,11 +136,7 @@ const AridityNames = ({ aridity })=>{
     <tr>
       <TrName><TrNameContent>Aridité</TrNameContent></TrName>
       { visibleAridities.map((aridity, key) => (
-        <Th key={ key } data-tip data-for={`tooltip-aridity-${aridity.name}` }>
-          <Reduced>
-            { aridityUtils.getName(aridity) }
-          </Reduced>
-        </Th>
+        <AridityName aridity={ aridity } key={ key }/>
       ))}
     </tr>
   );

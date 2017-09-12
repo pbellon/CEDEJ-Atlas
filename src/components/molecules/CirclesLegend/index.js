@@ -50,15 +50,19 @@ const NormalWeight = styled.span`font-weight: normal`;
 
 const CirclesLegend = ({ filters })=>{
   const types = filters.circles.types;
+  const visibleTypes = Object.keys(types)
+    .map(k => types[k])
+    .filter(t => t.visible);
+  const isVisible = t =>types[t].visible;
   const hasTypes = (types, ctrl)=>{
-    for(let i = 0; i < types.length; i+=1){
-      if(Object.keys(ctrl).indexOf(types[i]) < 0){
-        return false;
+    let i = 0;
+    for(i; i < types.length; i+=1){
+      if(ctrl[types[i]].visible){
+        return true;
       }
     }
-    return true;
+    return false;
   };
-  if(!visibleTypes(types).length){ return null; }
 
   return (
     <tbody>
@@ -77,15 +81,17 @@ const CirclesLegend = ({ filters })=>{
           <CirclesRangeSymbol width={40} height={40} /> 
         </Td>
       </tr>
-      <tr>
-        <Th colSpan={2} align={'left'} style={{marginTop:'-5px'}}>
-          <LegendCategoryName>
-            <span data-tip data-for="tooltip-regime">
-              Périodes des sécheresses
-            </span>
-          </LegendCategoryName>
-        </Th>
-      </tr>
+      { visibleTypes.length > 0 && (
+        <tr>
+          <Th colSpan={2} align={'left'} style={{marginTop:'-5px'}}>
+            <LegendCategoryName>
+              <span data-tip data-for="tooltip-regime">
+                Périodes des sécheresses
+              </span>
+            </LegendCategoryName>
+          </Th>
+        </tr>
+      )}
       { hasTypes(['A', 'B'], types) && (
         <tr><Th colSpan={3} align={ 'left' }>
           <LegendCategoryName>
@@ -94,12 +100,12 @@ const CirclesLegend = ({ filters })=>{
         </Th></tr>
       )}
       {
-        types['A'] && (
+        isVisible('A') && (
           <CircleTypeRow circle={ 'A' } />
         )
       }
       {
-        types['B'] && (
+        isVisible('B') && (
           <CircleTypeRow circle={ 'B' } />
         )
       }
@@ -112,12 +118,12 @@ const CirclesLegend = ({ filters })=>{
         </Th></tr>
       )}
       {
-        types['C'].visible && (
+        isVisible('C') && (
           <CircleTypeRow circle={ 'C' } />
         )
       }
       {
-        types['D'].visible && (
+        isVisible('D') && (
           <CircleTypeRow circle={ 'D' } />
         )
       }
@@ -129,12 +135,12 @@ const CirclesLegend = ({ filters })=>{
         </Th></tr>
       )}
       {
-        types['E'].visible && (
+        isVisible('E') && (
           <CircleTypeRow circle={ 'E' } />
         )
       }
       {
-        types['F'].visible && (
+        isVisible('F') && (
           <CircleTypeRow circle={ 'F' } />
         )
       }
