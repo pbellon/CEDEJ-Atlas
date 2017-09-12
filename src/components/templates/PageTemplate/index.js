@@ -29,11 +29,6 @@ const Container = styled.div`
   overflow: hidden;
   bottom: 0;
   top: 0;
-  &:after {
-    content: '';
-    clear: both;
-    display: table;
-  }
 `;
 
 

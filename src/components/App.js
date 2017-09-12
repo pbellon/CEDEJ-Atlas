@@ -65,7 +65,7 @@ const AtlasHolder = styled.div`
 
 const OverlayHolder = styled.div`
   background: rgb(255,255,255);
-  top: ${({visible})=>visible?navbar.height:3000}px;
+  top: ${navbar.height}px;
   bottom: 0px;
 
   position: fixed;
@@ -73,7 +73,9 @@ const OverlayHolder = styled.div`
   overflow: auto;
   padding-bottom: 50px;
   z-index: 20;
-  transition: top .2s ease;
+  transition: transform .2s ease-in-out;
+  transform: translate(0, ${({visible})=>visible?0:'100vh'});
+
 `;
 
 const App = () => {
@@ -89,7 +91,6 @@ const App = () => {
         </AtlasHolder>
         <Route path="/" exact children={(homeProps)=>{
           const inHome = homeProps.match != null;
-          console.log('inHome', inHome);
           return (
             <OverlayHolder className='home-page-holder' visible={ inHome }>
               <HomePage/>
