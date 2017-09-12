@@ -32,7 +32,7 @@ def cleanJSON(fn, keys_to_keep, ftype='geo', topo_key=None):
         for o in data['objects'][topo_key]['geometries']:
             o = cleanProps(o, keys_to_keep)
     
-    with open("data/%s" % fn, 'w') as out:
+    with open("data/clean/%s" % fn, 'w') as out:
         json.dump(data, out)
 
     
@@ -46,7 +46,7 @@ def combineDataFiles(out='data/compiled.json'):
     files = ['circles','temperatures', 'deserts', 'aridity']
     result = {}
     for name in files:
-        fd = open("data/%s.json" % name, 'r')
+        fd = open("data/clean/%s.json" % name, 'r')
         fdata = json.load(fd)
         result[name] = fdata
         fd.close()

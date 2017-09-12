@@ -130,6 +130,7 @@ const config = createConfig([
         ignore: [
           '*.(swo|swp|md)',
           'raw/*',
+          'clean/*',
           'content/*',
           'topo-*.json',
         ],
