@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-
+import { Route } from 'react-router-dom';
 import {
   loadData,
   renderSuccess,
@@ -24,6 +24,7 @@ import {
   AtlasLegend,
   LoadingIndicator,
   Sidebar,
+  TutorialModal,
   AtlasFilters,
   SidebarToggleButton,
   AtlasExportButton,
@@ -37,6 +38,7 @@ const Holder = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+  overflow: hidden;
 `;
 
 const Error = styled.span`
@@ -64,7 +66,7 @@ class AtlasContainer extends Component {
     loadData: PropTypes.func.isRequired,
     showContextualInfo: PropTypes.func.isRequired,
     hideContextualInfo: PropTypes.func.isRequired,
-  };
+  }
 
   componentDidMount() {
     this.props.loadData();
@@ -85,36 +87,33 @@ class AtlasContainer extends Component {
       onZoom,
       onCirclesCreated,
       onRender,
+      onMapPage,
     } = this.props;
     return (
-      <div>
-        <Holder>
-          <LoadingIndicator isLoading={isRendering} />
-          { error &&
-            <Error>{ error.message }</Error>
-          }
-          { canvasURL &&
-            <img src={canvasURL} alt={'Render map'} width="100%" height="auto" />
-          }
-          { data && (
-            <Atlas
-              width={900}
-              height={500}
-              data={data}
-              circleTypes={circleTypes}
-              isSidebarOpened={isSidebarOpened}
-              showContextualInfo={showContextualInfo}
-              hideContextualInfo={hideContextualInfo}
-              onZoomEnd={onZoom}
-              onRender={onRender}
-              onCirclesCreated={onCirclesCreated}
-              showAreas={showAreas}
-              showCircles={showCircles}
-            />)
-          }
-          { data && (<AtlasLegend />) }
+      <Holder className='atlas-holder'>
+        <LoadingIndicator isLoading={isRendering} />
+        { error &&
+          <Error>{ error.message }</Error>
+        }
+        { canvasURL &&
+          <img src={canvasURL} alt={'Render map'} width="100%" height="auto" />
+        }
+        { data && (
+          <Atlas
+            data={data}
+            circleTypes={circleTypes}
+            isSidebarOpened={isSidebarOpened}
+            showContextualInfo={showContextualInfo}
+            hideContextualInfo={hideContextualInfo}
+            onZoomEnd={onZoom}
+            onRender={onRender}
+            onCirclesCreated={onCirclesCreated}
+            showAreas={showAreas}
+            showCircles={showCircles}
+          />)
+        }
+        { data && (<AtlasLegend />) }
 
-        </Holder>
         <Sidebar zIndex={1000}>
           <SidebarToggleButton />
           <SidebarContainer>
@@ -122,12 +121,12 @@ class AtlasContainer extends Component {
             <AtlasExportButton/>
           </SidebarContainer>
         </Sidebar>
-      </div>
+      </Holder>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
   isSidebarOpened: fromSidebar.isOpened(state),
   isContextualInfoVisible: fromAtlas.isContextualInfoVisible(state),
   isRendering: fromAtlas.isRendering(state),

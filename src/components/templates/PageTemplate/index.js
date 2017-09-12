@@ -12,50 +12,40 @@ import {
   PartnersLogo,
 } from 'components';
 
-const Holder = styled.div`
-  max-height:100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  bottom:0;
-  left: 0;
-  right: 0;
-  overflow: hidden;
-`;
-
 const ContainerHolder = styled.div`
-  position: absolute;
+  position: fixed;
   top: ${navbar.height}px;
   right:0px;
   left: 0px;
   bottom:0px;
   z-index: ${({ zIndex = 0 }) => zIndex};
+  overflow: visible;
 `;
 
 const Container = styled.div`
-  position:absolute;
-  top: 0;
-  bottom: 0;
+  position: fixed;
   left: 0;
   right: 0;
-  height: 100%;
-  min-height: 100%;
-  max-height: 100%;
   overflow: hidden;
-  &:before {}
+  bottom: 0;
+  top: 0;
+  &:after {
+    content: '';
+    clear: both;
+    display: table;
+  }
 `;
 
 
 const AppTemplate = ({ children }) => (
-  <Holder>
+  <div className="page-template">
     <Navbar/>
     <ContainerHolder>
       <Container>
         { children }
       </Container>
     </ContainerHolder>
-
-  </Holder>
+  </div>
 );
 
 AppTemplate.propTypes = {
