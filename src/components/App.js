@@ -12,6 +12,7 @@ import {
   PageTemplate,
   FixedPartnersLogo,
   SmallScreensWarning,
+  TutorialModal,
 } from 'components';
 import { Atlas } from 'containers';
 // https://github.com/diegohaz/arc/wiki/Styling
@@ -26,6 +27,9 @@ injectGlobal`
   }
   a {
     cursor: pointer;
+  }
+  strong a {
+    font-weight: bold !important;
   }
   *[data-tip] {
     cursor: help;
@@ -79,22 +83,25 @@ const App = () => {
         <SmallScreensWarning/>
         <AtlasHolder>
           <Atlas/>
+          <Route path="/map" exact children={({match:inMap})=>(
+            <TutorialModal inMap={inMap!==null}/>
+          )}/>
         </AtlasHolder>
-        <Route path="/" exact children={({match})=>{
+        <Route path="/" exact children={({match:inHome})=>{
           return (
-            <OverlayHolder visible={ match!=null }>
+            <OverlayHolder visible={ inHome!==null }>
               <HomePage/>
             </OverlayHolder>
           );
         }}/>
-        <Route path="/page" children={({match})=>(
+        <Route path="/page" children={({match:inPage})=>(
           <div>
-            <OverlayHolder visible={ match!=null }>
-              { match && (
+            <OverlayHolder visible={ inPage!==null }>
+              { inPage && (
                 <ContentPage/>
               )} 
             </OverlayHolder>
-            <FixedPartnersLogo visible={ match!=null}/>
+            <FixedPartnersLogo visible={ inPage!==null}/>
           </div>
         )}/>
       </PageTemplate>
