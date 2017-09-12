@@ -13,9 +13,9 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="globe.svg"
-   inkscape:export-filename="/home/toutenrab/Dev/_PRO/Skoli/CEDEJ/Atlas/public/images/globe-1024x1024.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   inkscape:export-filename="/home/toutenrab/Dev/_PRO/Skoli/CEDEJ/Atlas/public/images/globe-16x16.png"
+   inkscape:export-xdpi="1.40625"
+   inkscape:export-ydpi="1.40625">
   <metadata
      id="metadata4192">
     <rdf:RDF>
@@ -42,9 +42,9 @@
      inkscape:window-height="882"
      id="namedview4188"
      showgrid="false"
-     inkscape:zoom="2.8284271"
-     inkscape:cx="521.40875"
-     inkscape:cy="842.51403"
+     inkscape:zoom="1"
+     inkscape:cx="390.15737"
+     inkscape:cy="603.44115"
      inkscape:window-x="0"
      inkscape:window-y="18"
      inkscape:window-maximized="1"
