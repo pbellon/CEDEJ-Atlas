@@ -21,6 +21,7 @@ def cleanProps(el, keys):
 def cleanJSON(fn, keys_to_keep, ftype='geo', topo_key=None):
     fp = open("data/raw/%s" % fn, 'r')
     data = json.load(fp)
+    fp.close()
     if ftype == 'geo':
         data['features'] = filter(
             lambda f: f['properties'] != None,
@@ -40,6 +41,18 @@ def cleanData():
     cleanJSON('circles.json', ['size_', 'colours']);
     cleanJSON('temperatures.json', ['Temperatur']);
     cleanJSON('aridity.json', ['d_TYPE', 'OBJECTID_1']);
+
+def combineDataFiles(out='data/compiled.json'):
+    files = ['circles','temperatures', 'deserts', 'aridity']
+    result = {}
+    for name in files:
+        fd = open("data/%s.json" % name, 'r')
+        fdata = json.load(fd)
+        result[name] = fdata
+        fd.close()
+    
+    with open(out, 'w') as outd:
+        json.dump(result, outd)
 
 def cleanTopo():
     cleanJSON('topo-circles.json', ['size_', 'colours'], 'topo', 'circles');

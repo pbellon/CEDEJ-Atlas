@@ -52,17 +52,7 @@ api.request = (endpoint, { params, ...settings } = {}) =>
 });
 
 api.getMapData = () => {
-  const dataFiles = {
-    aridity: '/data/aridity.json',
-    deserts: '/data/deserts.json',
-    circles: '/data/circles.json',
-    temperatures: '/data/temperatures.json',
-  };
-  const get = key => api.get(dataFiles[key]).then(data => ({ [key]: data }));
-
-  return Promise.all(
-    Object.keys(dataFiles).map(get)
-  ).then((data) => data.reduce((a, b) => Object.assign({}, a, b)));
+  return api.get('/data/compiled.json');
 };
 
 api.create = (settings = {}) => ({
