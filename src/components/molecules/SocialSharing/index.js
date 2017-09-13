@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { navbar } from 'utils/styles';
-import { FACEBOOK_APP_ID } from 'utils/constants';
+import { FACEBOOK_APP_ID, FACEBOOK_SDK_VERSION } from 'utils/constants';
 import FacebookProvider, { Share } from 'react-facebook';
 import { FacebookIcon, TwitterIcon } from 'components';
 
@@ -15,7 +15,9 @@ const Holder = styled.div`
 
 const SocialSharing = ()=>(
   <Holder>
-    <FacebookProvider appId={FACEBOOK_APP_ID}>
+    <FacebookProvider
+      appId={FACEBOOK_APP_ID}
+      version={FACEBOOK_SDK_VERSION}>
       <Share>
         <FacebookIcon width={25} height={25}/>
       </Share>
