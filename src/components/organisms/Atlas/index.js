@@ -21,7 +21,7 @@ import {
   CirclesLayer,
   ContextualInfoPopup,
   DesertsLayer,
-  TemperaturesAndAridityLayer,
+  CanvasLayer,
 } from 'components';
 
 import { filterFeatures } from 'utils/data';
@@ -164,7 +164,7 @@ export default class Atlas extends Component {
       <CedejWatermark position={ 'bottomright' } width={50} />
       <ScaleControl position={ 'bottomright' }/>
       <TileLayer url={ BASE_LAYER_URL } />
-      <TemperaturesAndAridityLayer
+      <CanvasLayer
         onRendered={ onRender }
         opacity={ showAreas ? 1 : 0 }
         bbox={ bbox } 
