@@ -89,7 +89,7 @@ const NavbarTabs = ()=>(
     <NavItem
       to={ '/map' }
       icon={<AtlasIcon/>}
-      title={'Atlas mondial des zones arides'} />
+      title={'Carte numérique mondiale des zones arides'} />
     
     <NavItem
       icon={<ProjectIcon/>}
