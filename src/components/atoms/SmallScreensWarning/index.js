@@ -23,7 +23,7 @@ class SmallScreensWarning extends Component {
     return (
       <MediaQuery query="(max-width: 1200px)">
         <Modal title={<Title/>} isOpen={!closed} closeable={true} onClose={this.close.bind(this)}>
-          <p>Cette application est conçue pour les écrans larges et risque de mal fonctionner. </br> Optimisez la taille de la fenêtre de votre navigateur, ou privilégiez une expérience sur ordinateur.</p>
+          <p>Cette application est conçue pour les écrans larges et risque de mal fonctionner. <br/> Optimisez la taille de la fenêtre de votre navigateur, ou privilégiez une expérience sur ordinateur.</p>
         </Modal>
       </MediaQuery>
     );
