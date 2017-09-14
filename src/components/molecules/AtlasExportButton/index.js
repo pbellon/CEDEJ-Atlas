@@ -3,21 +3,25 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import { Button as GenericButton } from 'components';
-import { fromAtlas } from 'store/selectors';
+import { fromAtlas, fromSidebar } from 'store/selectors';
 import { openExportModal } from 'store/actions';
 
 const Button = styled(GenericButton)`
   width:100%;
-  margin-top: 1em; 
+  margin-top: 1em;
+  pointer-events: ${({visible})=>visible?'auto':'none'};
+  opacity: ${({visible})=>visible?1:0};
+  transition: opacity .5s ease-in-out;
 `;
 
-const AtlasExportButton = ({disabled, onClick})=>(
-  <Button disabled={disabled} onClick={onClick}>
+const AtlasExportButton = (props)=>(
+  <Button {...props }>
     Exporter
   </Button>
 );
 
 const mapStateToProps = state => ({
+  visible: fromSidebar.isOpened(state),
   disabled: fromAtlas.isRendering(state),
 });
 
