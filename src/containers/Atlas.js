@@ -8,6 +8,7 @@ import {
   renderSuccess,
   showContextualInfo,
   hideContextualInfo,
+  bindMapReference,
   setCircleSizesRefs,
   zoom,
 } from 'store/actions';
@@ -64,6 +65,7 @@ class AtlasContainer extends Component {
     onCirclesCreated: PropTypes.func,
     onRender: PropTypes.func,
     loadData: PropTypes.func.isRequired,
+    bindMapReference: PropTypes.func.isRequired,
     showContextualInfo: PropTypes.func.isRequired,
     hideContextualInfo: PropTypes.func.isRequired,
   }
@@ -76,6 +78,7 @@ class AtlasContainer extends Component {
     const {
       canvasURL,
       circleTypes,
+      bindMapReference,
       data,
       error,
       showContextualInfo,
@@ -100,6 +103,7 @@ class AtlasContainer extends Component {
         }
         { data && (
           <Atlas
+            bindMapReference={bindMapReference}
             data={data}
             circleTypes={circleTypes}
             isSidebarOpened={isSidebarOpened}
@@ -138,6 +142,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  bindMapReference: (ref)=>dispatch(bindMapReference(ref)),
   onZoom: () => dispatch(zoom()),
   onCirclesCreated: (circleSizes) => dispatch(setCircleSizesRefs(circleSizes)),
   showContextualInfo: (data) => dispatch(showContextualInfo(data)),

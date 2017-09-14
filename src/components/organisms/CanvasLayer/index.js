@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { LatLng, Evented, DomUtil, setOptions, Point } from 'leaflet';
+import { LatLng, Evented, DomUtil, setOptions, Point, point } from 'leaflet';
 import { MapLayer } from 'react-leaflet';
 
 // import TileLoader from './mixin';
@@ -130,11 +130,11 @@ const __CanvasLayer = Evented.extend({
     // canvas.style.height = px(height);
     // canvas.style.pointerEvents = "none";
     // canvas.style.zIndex = this.options.zIndex || 0;
-    var className = 'leaflet-tile-container leaflet-zoom-animated';
+    var className = 'leaflet-canvas leaflet-zoom-animated';
     canvas.style.opacity = '0';
     canvas.setAttribute('class', className);
     canvas.setAttribute('id', id);
-    DomUtil.setPosition(canvas, { x:-x, y:-y });
+    DomUtil.setPosition(canvas, point({ x:-x, y:-y }));
     // canvas.setAttribute('moz-opaque', true);
     return canvas;
   },
@@ -145,10 +145,12 @@ const __CanvasLayer = Evented.extend({
 
   _setActiveCanvas: function(rendered){
     if(this._canvas){
+      this._canvas.classList.remove('active');
       this._canvas.style.opacity = 0;
     }
     this._canvas = rendered.canvas;
     this._canvas.style.opacity = 1;
+    this._canvas.classList.add('active');
   },
   
   _prerenderAtZoom: function(zoomLevel){
@@ -322,7 +324,8 @@ const __CanvasLayer = Evented.extend({
     const pixelOrigin = this._map._getNewPixelOrigin(center, zoom);
     // const {x,y} = this._map._latLngToNewLayerPoint(this._map.getCenter(), e.zoom);
     // we just need to adjust to the new map's origin (in pixels)
-    DomUtil.setPosition(canvas, {x:-pixelOrigin.x, y:-pixelOrigin.y});
+    const pos = point({x:-pixelOrigin.x, y:-pixelOrigin.y}); 
+    DomUtil.setPosition(canvas, pos);
 
   },
   _animateZoom: function(e) {

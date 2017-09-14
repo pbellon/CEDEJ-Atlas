@@ -4422,9 +4422,9 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
-leaflet-image@^0.4.0:
+"leaflet-image@git+https://git@github.com/pbellon/leaflet-image#gh-pages":
   version "0.4.0"
-  resolved "https://registry.yarnpkg.com/leaflet-image/-/leaflet-image-0.4.0.tgz#e84f22ff6288f09b9b0e2f51a4850a9f07968cc1"
+  resolved "git+https://git@github.com/pbellon/leaflet-image#f167e4dfedbf9b6a94758435632bd373541fcb8d"
   dependencies:
     d3-queue "2.0.3"
 

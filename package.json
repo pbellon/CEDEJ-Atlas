@@ -91,7 +91,7 @@
     "jspdf": "^1.3.3",
     "jsx-to-string": "^1.1.0",
     "leaflet": "^1.2.0",
-    "leaflet-image": "^0.4.0",
+    "leaflet-image": "git+https://git@github.com/pbellon/leaflet-image#gh-pages",
     "leaflet.vectorgrid": "^1.2.0",
     "lodash.camelcase": "^4.3.0",
     "lodash.merge": "^4.6.0",

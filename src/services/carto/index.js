@@ -1,5 +1,6 @@
 import renderHtml from './renderHtml';
 import htmlTo from './htmlTo';
+import leafletImage from 'leaflet-image';
 
 const carto = {};
 
@@ -15,6 +16,18 @@ carto.render = (data) => {
     });
   });
 };
+
+carto.preview = (mapRef)=>{
+  return new Promise((resolve, reject) => {
+    leafletImage(mapRef, (err, canvas)=>{
+      if(err){
+        reject(err);
+      } else {
+        resolve(canvas.toDataURL());
+      }
+    });
+  });
+}
 
 carto.download = ({ format, url }) => {
   return new Promise((resolve, reject) => {

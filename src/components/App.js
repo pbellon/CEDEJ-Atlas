@@ -13,6 +13,7 @@ import {
   FixedPartnersLogo,
   SmallScreensWarning,
   TutorialModal,
+  ExportModal,
 } from 'components';
 import { Atlas } from 'containers';
 // https://github.com/diegohaz/arc/wiki/Styling
@@ -83,6 +84,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <PageTemplate>
         <SmallScreensWarning/>
+        <ExportModal/>
         <AtlasHolder className='atlas-holder'>
           <Atlas/>
           <Route path="/map" exact children={(mapProps)=>(

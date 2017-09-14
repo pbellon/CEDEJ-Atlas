@@ -52,6 +52,7 @@ export default class Atlas extends Component {
     onCirclesCreated: PropTypes.func.isRequired,
     showContextualInfo: PropTypes.func.isRequired,
     hideContextualInfo: PropTypes.func.isRequired,
+    bindMapReference: PropTypes.func.isRequired,
     width: PropTypes.number,
     height: PropTypes.number,
   }
@@ -79,7 +80,10 @@ export default class Atlas extends Component {
   bindContainer(mapRef) {
     if(!mapRef){ return; }
     this.mapRef = mapRef;
-    this.map = mapRef.leafletElement; 
+    this.map = mapRef.leafletElement;
+
+    this.props.bindMapReference(this.map);
+
     // if(mapRef){ this.setState({mapRef: mapRef.leafletElement}); }
     /* 
     if (this.props.onRender) {
