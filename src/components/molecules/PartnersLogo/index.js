@@ -13,7 +13,7 @@ const Link = styled(({to, children, title})=>(
 const Holder = styled.div`
   display: flex;
   flex-direction: ${({horizontal})=>horizontal?'row':'column'};
-  justify-content: space-between;
+  justify-content: ${({horizontal})=>horizontal?'space-around':'space-between'};
   align-items: center; 
   padding-top: 15px 0;
   align-self: center;
@@ -32,13 +32,25 @@ const ImgHolder = styled.div`
 const PartnersLogo = (props)=>(
   <Holder {...props}>
     <ImgHolder>
+      <Link to={'https://www.ephe.fr/'} title={'Visiter le site de l\'École Pratique des Hautes Études'}>
+        <img src={EpheLogo} height={110}/>
+      </Link>
+    </ImgHolder>
+    <ImgHolder>
       <Link to={'https://www.cnrs.fr'} title='Visiter le site du CNRS'>
         <img src={CnrsLogo} height={100}/>
       </Link>
     </ImgHolder>
-    <ImgHolder><img src={CedejLogo} height={110}/></ImgHolder>
-    <ImgHolder><img src={MaeLogo} height={110}/></ImgHolder>
-    <ImgHolder><img src={EpheLogo} height={110}/></ImgHolder>
+    <ImgHolder>
+      <Link to={'http://cedej-eg.org'} title={'Visiter le site du CEDEJ'}>
+        <img src={CedejLogo} height={110}/>
+      </Link>    
+    </ImgHolder>
+    <ImgHolder>
+      <Link to={'http://www.diplomatie.gouv.fr/fr/'} title={'Visiter le site du Ministère'}>
+        <img src={MaeLogo} height={110}/>
+      </Link>
+    </ImgHolder>
   </Holder>
 );
 

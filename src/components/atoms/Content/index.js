@@ -19,7 +19,9 @@ const Content = styled.div`
   & h2 {
     font-size: 2.2em;
   }
-
+  p {
+    text-align: justify;
+  }
   a {
     color: ${palette('primary', 0)};
     text-decoration: none;

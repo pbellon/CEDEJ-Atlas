@@ -1,21 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components'; 
-import { font } from 'styled-theme';
+import { font, palette } from 'styled-theme';
 import {
-  Content,
+  Content as GenericContent,
   MarkdownContent,
   Button as _Button,
   LoadingIcon,
   PartnersLogo,
   Markdown,
+  Heading,
 } from 'components';
 import { fromAtlas } from 'store/selectors'; 
 
 import Background from './background.png';
+
+const HomeTitleDescription = `Un portail élaboré par le [CEDEJ](http://cedej-eg.org/), une unité mixte française de recherche à l’étranger du [CNRS](http://www.cnrs.fr/) et du [Ministère de l'Europe et des Affaires étrangères](http://www.diplomatie.gouv.fr/fr/).`;
+
+
+const HomeActionText = `**Créer votre carte personnalisée des zones arides et [contribuer à l’actualisation de la base de données](/page/contribute) sur l’aridité.**`;
+
 const Centered = styled.div`
-  display: flex;
-  justify-content: center; 
+  text-align: center;
+  & p {
+    text-align: center !important;
+  }
 `;
 const Button = styled(_Button)`
   height: auto;
@@ -53,42 +62,141 @@ const LoadingHolder = styled.span`
   padding: 0.5rem 0;
   display: block;
 `;
+const Holder = styled.div`
+  padding: 4em 0;
+  font-family: ${font('primary')};
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 10;
 
+`;
 const Container = styled.div`
   display: flex;
+  max-width: 80%;
   align-items: center;
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  font-family: ${font('primary')};
+`;
+const Top = styled.div`
+  top: 0;
+  left: 0;
+  right:0;
+
+`;
+const Bottom = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right:0;
+`;
+const BottomBar = styled.div`
+  height: 200px;
+  bottom: 0;
+  position: absolute;
+  left:0;
+  right: 0;
+  max-with: 500px;
+  margin: auto;
+`;
+const Left = styled.div`
+  position: absolute;
+  left: 0;
+`;
+
+const Center = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+`;
+
+const TitleHolder = styled.div`
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+`;
+const MainTitle = styled(Heading)`
+  display: block;
+  padding-right: 1em;
+  width: 200px;
+  font-size: 4em;
+  line-height: 1em;
+  margin: 0 !important;
+  border-right: 2px solid ${palette('grayscale', 2)};
+`;
+
+const MainDescription = styled(Markdown)`
+  width: 300px;
+  font-size: 1.33em;
+  padding-left: 1em;
+`;
+const HomeTitle = styled(()=>(
+  <TitleHolder>
+    <MainTitle level={1}>Aridity World Map</MainTitle>
+    <MainDescription source={HomeTitleDescription}/>
+  </TitleHolder>
+))``;
+
+const Content = styled(GenericContent)`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 4em 0;
+`;
+
+const Middle = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 `;
 
 const HomePage = ({isLoading}) => {
   return (
     <div>
       <AtlasBackground />
-      <Container style={{zIndex: 10}}>
-        <Content noTopPadding={true}>
-          <Markdown source={ MarkdownContent.Home }/>
-          <Centered>
-            <Button to='/map'>
-              { isLoading && (
-                <LoadingHolder>
-                  <LoadingIcon reverse={true}/>Chargement de la carte
-                </LoadingHolder>
-              )}
-              { !isLoading && (
-                <span>Démarrer</span>
-              )}
-            </Button>
-          </Centered>
-          <Centered>
-            <PartnersLogo height={'200px'} horizontal={true}/>
-          </Centered>
+      <Holder>
+        <Content>
+          <Top>
+            <Left>
+              <HomeTitle/>
+            </Left>
+          </Top>
+          <Middle>
+            <Centered>
+              <Markdown source={HomeActionText}/>
+              <Button to='/map'>
+                { isLoading && (
+                  <LoadingHolder>
+                    <LoadingIcon reverse={true}/>Chargement de la carte
+                  </LoadingHolder>
+                )}
+                { !isLoading && (
+                  <span>Démarrer</span>
+                )}
+              </Button>
+            </Centered>
+            </Middle>
+
+            <Bottom style={{height:'6.66em'}}><Left>© CEDEJ - 2017</Left></Bottom>
+            <BottomBar>
+              <Center style={{maxWidth:'500px', margin:'auto'}}>
+                <PartnersLogo height={'200px'} horizontal={true}/>
+              </Center>
+            </BottomBar>
         </Content>
-      </Container>
+      </Holder>
     </div>
   );
 };
