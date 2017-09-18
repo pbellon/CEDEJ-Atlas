@@ -4,11 +4,6 @@ import { font, palette } from 'styled-theme';
 const Holder = styled.div``;
 
 const Content = styled.div`
-  max-width: 80%;
-  margin: auto;
-  padding-top: ${({noTopPadding})=>noTopPadding?0:50}px;
-  padding-left: 15px;
-  padding-right: 15px;
   font-family: ${ font('primary') };
   line-height: 1.5em;
   & h1 {

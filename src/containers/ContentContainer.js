@@ -14,14 +14,22 @@ const Placeholder = styled.div`
   flex-grow: 0;
   flex-shrink: 0;
 `;
-
+const Container = styled.div`
+  max-width: 80%;
+  margin-left: auto;
+  padding-top: ${({noTopPadding})=>noTopPadding?0:50}px;
+  padding-left: 30px;
+  padding-right: 15px;
+`;
 const ContentContainer = ({ children, ...props }) => (
   <Holder {...props }>
-    <Content>
-    { 
-      children
-    }
-    </Content>
+    <Container>
+      <Content>
+      { 
+        children
+      }
+      </Content>
+    </Container>
     <Placeholder/>
   </Holder>
 );
