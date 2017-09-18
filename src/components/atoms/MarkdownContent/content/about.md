@@ -32,7 +32,28 @@ Email : contact@skoli.fr</br>
 Site web : www.skoli.fr
 
 ### Technologies utilisées
-A compléter
+
+Application web :
+- [React](https://facebook.github.io/react/)
+- [React-Redux](http://redux.js.org/docs/basics/UsageWithReact.html)
+- [React-Router](https://github.com/ReactTraining/react-router)
+- [React-Markdown](https://github.com/rexxars/react-markdown)
+- [Whatwg-fetch](https://github.github.io/fetch/)
+- [Babel](https://babeljs.io/)
+- [Webpack](https://webpack.github.io/)
+- [jspdf](https://github.com/MrRio/jsPDF)
+- [html2canvas](https://github.com/niklasvh/html2canvas)
+- [styled-components](https://github.com/styled-components/styled-components)
+- [styled-theme](https://github.com/diegohaz/styled-theme)
+- [styled-tools](https://github.com/diegohaz/styled-tools)
+
+
+Cartographie:
+- [Leaflet](http://leafletjs.com/)
+- [Turf](http://turfjs.org/)
+- [React-Leaflet](https://github.com/PaulLeCam/react-leaflet)
+- [Leaflet-Image](https://github.com/mapbox/leaflet-image)
+- [d3-geo](https://github.com/d3/d3-geo)
 
 ### Conditions d’utilisation
 
