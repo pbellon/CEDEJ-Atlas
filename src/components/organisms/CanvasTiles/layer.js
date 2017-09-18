@@ -8,7 +8,8 @@ import {
 } from 'leaflet'; 
 
 export const CanvasTiles = GridLayer.extend({
-  updateData(data){
+  isCanvasLayer: function(){ return true },
+  updateData: function(data){
     if(this._drawDelegate){
       this._drawDelegate.updateData(data);
     }
