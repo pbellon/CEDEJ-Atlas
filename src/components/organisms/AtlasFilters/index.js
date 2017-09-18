@@ -21,9 +21,12 @@ const Container = styled.div`
 const AtlasFilters = ({visible})=>(
   <Container visible={visible}>
     <Heading level={3} style={{marginBottom: '0.1rem', fontWeight:'bold'}}>Personnaliser la carte</Heading>
-    <LayerFilterGroup layer={ 'temperatures' } 
-      heading={'Aridité et températures'}>
+    <LayerFilterGroup layer={ 'aridity' }
+      heading={'Aridité'}>
       <AridityFilters/>
+    </LayerFilterGroup>
+    <LayerFilterGroup layer={ 'temperatures' } 
+      heading={'Températures'}>
       <TemperaturesFilters/>
     </LayerFilterGroup>
     <LayerFilterGroup

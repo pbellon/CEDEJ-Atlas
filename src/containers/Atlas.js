@@ -59,7 +59,8 @@ class AtlasContainer extends Component {
     isContextualInfoVisible: PropTypes.bool,
     isRendering: PropTypes.bool,
     isSidebarOpened: PropTypes.bool,
-    showAreas: PropTypes.bool,
+    showTemperatures: PropTypes.bool,
+    showAridity: PropTypes.bool,
     showCircles: PropTypes.bool,
     onZoom: PropTypes.func,
     onCirclesCreated: PropTypes.func,
@@ -83,7 +84,8 @@ class AtlasContainer extends Component {
       error,
       showContextualInfo,
       hideContextualInfo,
-      showAreas,
+      showAridity,
+      showTemperatures,
       showCircles,
       isRendering,
       isSidebarOpened,
@@ -112,7 +114,8 @@ class AtlasContainer extends Component {
             onZoomEnd={onZoom}
             onRender={onRender}
             onCirclesCreated={onCirclesCreated}
-            showAreas={showAreas}
+            showAridity={showAridity}
+            showTemperatures={showTemperatures}
             showCircles={showCircles}
           />)
         }
@@ -134,7 +137,8 @@ const mapStateToProps = (state, ownProps) => ({
   isSidebarOpened: fromSidebar.isOpened(state),
   isContextualInfoVisible: fromAtlas.isContextualInfoVisible(state),
   isRendering: fromAtlas.isRendering(state),
-  showAreas: fromLayers.isLayerVisible(state, fromLayers.temperatures(state)),
+  showAridity: fromLayers.isLayerVisible(state, fromLayers.aridity(state)),
+  showTemperatures: fromLayers.isLayerVisible(state, fromLayers.temperatures(state)),
   showCircles: fromLayers.isLayerVisible(state, fromLayers.circles(state)),
   data: fromFilters.data(state),
   circleTypes: fromFilters.circlesTypes(state),

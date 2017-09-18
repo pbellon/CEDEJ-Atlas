@@ -41,7 +41,8 @@ import { CanvasDelegate } from './canvas';
 export default class Atlas extends Component {
   static propTypes = {
     data: PropTypes.object,
-    showAreas: PropTypes.bool,
+    showAridity: PropTypes.bool,
+    showTemperatures: PropTypes.bool,
     showCircles: PropTypes.bool,
     circleTypes: PropTypes.object,
     print: PropTypes.bool,
@@ -125,7 +126,8 @@ export default class Atlas extends Component {
     const {
       data,
       showCircles,
-      showAreas,
+      showAridity,
+      showTemperatures,
       onRender,
       circleTypes,
       showContextualInfo,
@@ -169,7 +171,7 @@ export default class Atlas extends Component {
       
       { /* <CanvasLayer
         onRendered={ onRender }
-        opacity={ showAreas ? 1 : 0 }
+        opacity={ showAridity ? 1 : 0 }
         bbox={ bbox } 
         zIndex={ 400 } 
         data={canvasData}
@@ -178,7 +180,8 @@ export default class Atlas extends Component {
 
       <CanvasTiles
         onRendered={ onRender }
-        opacity={ showAreas ? 1 : 0 }
+        showAridity={ showAridity }
+        showTemperatures={ showTemperatures }
         zIndex={ 400 } 
         data={ canvasData }
         delegate={ CanvasDelegate }/>

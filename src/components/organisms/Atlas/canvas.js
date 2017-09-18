@@ -54,7 +54,10 @@ const tau = 2 * Math.PI;
 export class CanvasDelegate {
   constructor(data){
     const self = this;
-
+    this.visibility = {
+      aridity: true,
+      temperatures: true,
+    };
     this.tileOptions = {
       maxZoom: 9,
       tolerance: 3,
@@ -67,7 +70,12 @@ export class CanvasDelegate {
     };
     this.processData(data);
   }
-
+  updateAridityVisibility(visibility){
+    this.visibility.aridity = visibility;
+  }
+  updateTemperaturesVisibility(visibility){
+    this.visibility.temperatures = visibility;
+  }
   processData(data){
     const { temperatures, aridity } = data;
 
@@ -100,44 +108,48 @@ export class CanvasDelegate {
     let i, n;
 
     const { aridity, temperatures } = this.getTileFeatures(coords);
+    const {
+      aridity:isAridityVisible,
+      temperatures:isTemperaturesVisible 
+    } = this.visibility;
 
     // const zoom = Math.pow(2, 8 + zoomLevel) / 2 / Math.PI; 
     const context = canvas.getContext("2d");
-
     const patterns = this.patterns = this.patterns || patternsUtil.initPatterns(context);
 
     context.clearRect(0, 0, canvas.width, canvas.height);
     // context.translate(origin.x, origin.y);
-    context.globalCompositeOperation = 'source-over';
-
-    n = temperatures.length;
-    for(i = 0; i < n; i++){
-      // draw zones with different colors to do
-      drawArea({area:temperatures[i], context, drawPath:drawFeaturePath});
+    if(isTemperaturesVisible){
+      n = temperatures.length;
+      context.globalCompositeOperation = 'source-over';
+      for(i = 0; i < n; i++){
+        // draw zones with different colors to do
+        drawArea({area:temperatures[i], context, drawPath:drawFeaturePath});
+      }
     }
-    context.globalCompositeOperation = 'destination-out';
+    if(isAridityVisible){
+      n = aridity.length;
+      context.globalCompositeOperation = 'destination-out';
+      for(i = 0; i < n; i++){
+        // create aridity textures and substract them from areas paths (if needed)
+        // draw aridity boundaries (for certains kinds of aridity)
+        drawPattern({
+          aridity: aridity[i],
+          patterns,
+          context,
+          drawPath:drawFeaturePath
+        });
+      }
 
-    n = aridity.length;
-    for(i = 0; i < n; i++){
-      // create aridity textures and substract them from areas paths (if needed)
-      // draw aridity boundaries (for certains kinds of aridity)
-      drawPattern({
-        aridity: aridity[i],
-        patterns,
+      context.globalCompositeOperation = 'source-over';
+      boundaries.addBoundaries({
         context,
-        drawPath:drawFeaturePath
+        patterns,
+        drawPath: drawFeaturePath,
+        boundaries: aridity,
+        layer:this.layer,
       });
     }
-
-    context.globalCompositeOperation = 'source-over';
-    boundaries.addBoundaries({
-      context,
-      patterns,
-      drawPath: drawFeaturePath,
-      boundaries: aridity,
-      layer:this.layer,
-    });
-    
     return canvas;
 
   }

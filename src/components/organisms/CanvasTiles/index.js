@@ -11,39 +11,68 @@ class CanvasTilesLayer extends MapLayer {
     zIndex: PropTypes.number,
     bbox: PropTypes.array,
     onRendered: PropTypes.func,
+    showAridity:PropTypes.bool, 
+    showTemperatures:PropTypes.bool, 
   };
 
   static defaultProps = {
     onRendered: noop
   };
 
+
   createLeafletElement(props) {
     const { delegate, onRendered, data, ...options }= this.getOptions(props);
-    return canvasTiles(new delegate(data), onRendered, options);
+
+    this.delegate = new delegate(data);
+    return canvasTiles(this.delegate, onRendered, options);
+  }
+  
+  updateAridityVisiblity(visibility){
+    this.delegate.updateAridityVisibility(visibility);
+    this.redraw();
   }
 
+  updateTemperaturesVisiblity(visibility){
+    this.delegate.updateTemperaturesVisibility(visibility);
+    this.redraw();
+  }
+
+  updateData(data){
+    this.delegate.updateData(data);
+    this.redraw();
+  }
+
+  redraw(){
+    this.leafletElement.redraw();
+    this.props.onRendered && this.props.onRendered();
+  }
   updateLeafletElement(
     {
-      opacity: fromOpacity,
+      showAridity: fromAridityVisibility,
+      showTemperatures: fromTemperaturesVisibility,
       data:{ temperatures: fromTemps, aridity:fromAridity}
     },
     {
-      opacity: toOpacity,
+      showAridity: toAridityVisibility,
+      showTemperatures: toTemperaturesVisibility,
       data:{ temperatures:toTemps, aridity:toAridity}
     }
   ) {
     const diffAridity = fromAridity.features.length != toAridity.features.length;
     const diffTemps = fromTemps.features.length != toTemps.features.length;
     if(diffTemps || diffAridity){
-      this.leafletElement.updateData({
+      this.updateData({
         aridity:toAridity,
         temperatures: toTemps
       });
-      this.leafletElement.redraw();
-      this.props.onRendered();
     }
-    if(fromOpacity != toOpacity){
-      this.leafletElement.updateOpacity(toOpacity);
+
+    if(fromAridityVisibility != toAridityVisibility){
+      this.updateAridityVisiblity(toAridityVisibility);
+    }
+
+    if(fromTemperaturesVisibility != toTemperaturesVisibility){
+      this.updateTemperaturesVisiblity(toTemperaturesVisibility);
     }
   }
 

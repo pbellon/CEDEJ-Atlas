@@ -9,14 +9,7 @@ import {
 
 export const CanvasTiles = GridLayer.extend({
   isCanvasLayer: function(){ return true },
-  updateData: function(data){
-    if(this._drawDelegate){
-      this._drawDelegate.updateData(data);
-    }
-  },
-  updateOpacity(opacity){
-    this._container.style.opacity = opacity;
-  },
+  
   initialize: function (drawDelegate, onRendered, options) {
     this._drawDelegate = drawDelegate;
 
