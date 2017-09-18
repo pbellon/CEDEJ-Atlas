@@ -14,7 +14,7 @@ const Holder = styled.div`
   display: flex;
   flex-direction: ${({horizontal})=>horizontal?'row':'column'};
   justify-content: ${({horizontal})=>horizontal?'space-around':'space-between'};
-  align-items: center; 
+  align-items: center;
   padding-top: 15px 0;
   align-self: center;
   flex-grow: 1;
@@ -37,14 +37,14 @@ const PartnersLogo = (props)=>(
       </Link>
     </ImgHolder>
     <ImgHolder>
-      <Link to={'https://www.cnrs.fr'} title='Visiter le site du CNRS'>
+      <Link to={'http://www.cnrs.fr'} title='Visiter le site du CNRS'>
         <img src={CnrsLogo} height={100}/>
       </Link>
     </ImgHolder>
     <ImgHolder>
       <Link to={'http://cedej-eg.org'} title={'Visiter le site du CEDEJ'}>
         <img src={CedejLogo} height={110}/>
-      </Link>    
+      </Link>
     </ImgHolder>
     <ImgHolder>
       <Link to={'http://www.diplomatie.gouv.fr/fr/'} title={'Visiter le site du Ministère'}>
