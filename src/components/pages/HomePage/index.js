@@ -62,27 +62,23 @@ const LoadingHolder = styled.span`
   padding: 0.5rem 0;
   display: block;
 `;
+
 const Holder = styled.div`
-  padding: 4em 0;
   font-family: ${font('primary')};
   position: absolute;
+  max-width: 60%;
+  margin: auto;
   left: 0;
   right: 0;
-  top: 0;
-  bottom: 0;
+  top: 4em;
+  bottom: 4em;
   z-index: 10;
+  @media (max-width: 1200px){
+    max-width: 80%;
+  }
 
 `;
-const Container = styled.div`
-  display: flex;
-  max-width: 80%;
-  align-items: center;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-`;
+
 const Top = styled.div`
   top: 0;
   left: 0;
@@ -135,12 +131,6 @@ const MainDescription = styled(Markdown)`
   font-size: 1.33em;
   padding-left: 1em;
 `;
-const HomeTitle = styled(()=>(
-  <TitleHolder>
-    <MainTitle level={1}>Aridity World Map</MainTitle>
-    <MainDescription source={HomeTitleDescription}/>
-  </TitleHolder>
-))``;
 
 const Content = styled(GenericContent)`
   position: absolute;
@@ -148,7 +138,6 @@ const Content = styled(GenericContent)`
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 4em 0;
 `;
 
 const Middle = styled.div`
@@ -161,6 +150,13 @@ const Middle = styled.div`
   flex-direction: column;
   justify-content: space-around;
 `;
+
+const HomeTitle = styled(()=>(
+  <TitleHolder>
+    <MainTitle level={1}>Aridity World Map</MainTitle>
+    <MainDescription source={HomeTitleDescription}/>
+  </TitleHolder>
+))``;
 
 const HomePage = ({isLoading}) => {
   return (

@@ -183,7 +183,6 @@ export const addBoundaries = ({
   boundaries,
   drawPath,
   context,
-  projection,
   ...options
 }) => {
   let path;

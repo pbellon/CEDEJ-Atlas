@@ -21,7 +21,7 @@ const filterAridity = (original, aridity) => {
 const filterCircles = (original, { month_range, types }) => {
   const sizes = circlesTypes.sizesForRange(month_range).map(s => s.value);
   const f = (circle) => sizes.indexOf(circle.properties.size_) > -1;
-  return original.circles.filter(f);
+  return original.circles.features.filter(f);
 };
 
 const updateTemperatures = (state, action) => {
@@ -79,7 +79,10 @@ const updateDryMonthsRange = (state, action) => {
     circles: _circles,
     filtered: {
       ...state.filtered,
-      circles: filterCircles(state.original, _circles),
+      circles: {
+        ...state.original.circles,
+        features: filterCircles(state.original, _circles),
+      }
     },
   };
 };
@@ -99,11 +102,7 @@ const toggleCircleTypeVisibility = (state, action) => {
 
   return {
     ...state,
-    circles,
-    filtered: {
-      ...state.filtered,
-      circles: filterCircles(state.original, circles),
-    },
+    circles
   };
 };
 

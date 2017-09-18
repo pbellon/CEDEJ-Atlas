@@ -1,5 +1,4 @@
 import { areaColor } from './styles';
-import { geoTransform, geoPath, geoMercator } from 'd3-geo';
 import { path as d3Path } from 'd3-path'; 
 import * as patternsUtil from 'utils/patterns';
 import * as boundaries from 'utils/boundaries';
@@ -51,131 +50,13 @@ const drawPattern = ({context, aridity, drawPath, patterns}) => {
   context.fill(path);
 };
 
-// took from https://jsfiddle.net/070m3jk7/
-function vectorTileToGeoJSON(tile, {x,y,z}) {
-  var result = [];
-  for (var i = 0; i < tile.features.length; i++) {
-    result.push(featureToGeoJSON(tile.features[i], z, x, y));
-  }
-  return result;
-}
-
-function featureToGeoJSON(feature, z, x, y) {
-  const extent = 4096;
-  const types = ['Unknown', 'Point', 'LineString', 'Polygon'];
-
-  var size = extent * z,
-    x0 = extent * x,
-    y0 = extent * y,
-    coords = feature.geometry,
-    type = types[feature.type],
-    i, j;
-
-
-  function project(line) {
-    for (var j = 0; j < line.length; j++) {
-      var p = line[j],
-        y2 = 180 - (p[1] + y0) * 360 / size;
-
-      line[j] = [
-        (p[0] + x0) * 360 / size - 180,
-        360 / Math.PI * Math.atan(Math.exp(y2 * Math.PI / 180)) - 90
-      ];
-    }
-  }
-
-  switch (feature.type) {
-    case 1:
-      var points = [];
-    for (i = 0; i < coords.length; i++) {
-      points[i] = coords[i][0];
-    }
-    coords = points;
-    project(coords);
-    break;
-
-    case 2:
-      for (i = 0; i < coords.length; i++) {
-      project(coords[i]);
-    }
-    break;
-
-    case 3:
-      coords = classifyRings(coords);
-    for (i = 0; i < coords.length; i++) {
-      for (j = 0; j < coords[i].length; j++) {
-        project(coords[i][j]);
-      }
-    }
-    break;
-  }
-
-  if (coords.length === 1) {
-    coords = coords[0];
-  } else {
-    type = 'Multi' + type;
-  }
-
-  var result = {
-    type: "Feature",
-    geometry: {
-      type: type,
-      coordinates: coords
-    },
-    properties: feature.tags
-  };
-
-  if (this && this.id) {
-    result.id = this.id;
-  }
-
-  return result;
-}
-
-function classifyRings(rings) {
-  var len = rings.length;
-
-  if (len <= 1) return [rings];
-
-  var polygons = [],
-    polygon,
-  ccw;
-
-  for (var i = 0; i < len; i++) {
-    var area = signedArea(rings[i]);
-    if (area === 0) continue;
-
-    if (ccw === undefined) ccw = area < 0;
-
-    if (ccw === area < 0) {
-      if (polygon) polygons.push(polygon);
-      polygon = [rings[i]];
-
-    } else {
-      polygon.push(rings[i]);
-    }
-  }
-  if (polygon) polygons.push(polygon);
-
-  return polygons;
-}
-
-function signedArea(ring) {
-  var sum = 0;
-  for (var i = 0, len = ring.length, j = len - 1, p1, p2; i < len; j = i++) {
-    p1 = ring[i];
-    p2 = ring[j];
-    sum += (p2.x - p1.x) * (p1.y + p2.y);
-  }
-  return sum;
-}
 const tau = 2 * Math.PI;
 export class CanvasDelegate {
   constructor(data){
     const self = this;
 
     this.tileOptions = {
-      maxZoom: 14,
+      maxZoom: 9,
       tolerance: 3,
       extent: 4096,
       buffer: 64,
@@ -222,20 +103,6 @@ export class CanvasDelegate {
 
     // const zoom = Math.pow(2, 8 + zoomLevel) / 2 / Math.PI; 
     const context = canvas.getContext("2d");
-    const tx = coords.x * size.x;
-    const ty = coords.y * size.y;
-    const scale = coords.z / tau;
-
-    const projection = geoTransform({
-      point:function(x,y){
-        const pointLatLng = new LatLng(y,x);
-        const tileOrigin = new Point(tx, ty);
-        const point = layer._map.latLngToLayerPoint(pointLatLng)
-        .subtract(tileOrigin);
-        this.stream.point(point.x, point.y)
-      }
-    });
-    // const drawPath = geoPath().projection(projection).context(context);
 
     const patterns = this.patterns = this.patterns || patternsUtil.initPatterns(context);
 
@@ -264,7 +131,6 @@ export class CanvasDelegate {
 
     context.globalCompositeOperation = 'source-over';
     boundaries.addBoundaries({
-      projection,
       context,
       patterns,
       drawPath: drawFeaturePath,
