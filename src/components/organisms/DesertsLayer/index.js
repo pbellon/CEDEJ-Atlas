@@ -51,7 +51,6 @@ class DesertsLayer extends Component {
     const { data, minZoom } = this.props;
     const { map } = this.context;
     map.on('zoomend', this.checkZoom.bind(this)); 
-    console.log('DesertsLayer.render!'); 
     const Tooltips = data.features.map((feature, key) => {
       const polygon = new Polygon(feature.geometry.coordinates).addTo(map);
       const center = polygon.getBounds().getCenter();

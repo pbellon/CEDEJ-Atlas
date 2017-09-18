@@ -248,7 +248,6 @@ export class CanvasDelegate {
       // draw zones with different colors to do
       drawArea({area:temperatures[i], context, drawPath:drawFeaturePath});
     }
-    console.log('drawn',n,'temps');
     context.globalCompositeOperation = 'destination-out';
 
     n = aridity.length;
@@ -263,7 +262,6 @@ export class CanvasDelegate {
       });
     }
 
-    console.log('drawn',n,'aridity');
     context.globalCompositeOperation = 'source-over';
     boundaries.addBoundaries({
       projection,
