@@ -3,29 +3,67 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { fromFilters } from 'store/selectors';
-import { updateTemperatureRange } from 'store/actions';
-import { RangeSliderFilter } from 'components';
+import { toggleTemperatureVisibility } from 'store/actions';
+import { Heading, ToggleFilter } from 'components';
 
-const CelciusFormatter = value =>`${value}℃`;
-const TemperaturesFilters = ({winterFilter, summerFilter, updateFilter}, {layer})  => (
+const TemperaturesFilters = ({
+  winterTypes:wTypes,
+  summerTypes:sTypes,
+  toggleWinterType,
+  toggleSummerType,
+}, { layer }) => (
   <div>
-    <RangeSliderFilter
-      layer={layer}
-      onChange={ updateFilter(winterFilter) } 
-      tipFormatter={CelciusFormatter}  
-      heading={ 'Températures d\'hiver' }
-      min={0} max={30} step={10}
-      filter={winterFilter}/>
+    <Heading
+      style={{marginBottom:0}}
+      level={6}>Températures d'hiver</Heading>
+     
+    <ToggleFilter
+      layer={ layer } 
+      toggled={ wTypes.A.visible }
+      onToggle={ toggleWinterType(wTypes.A) }
+      label={'Hiver chaud (20 à 30°C)'}/>
+
+    <ToggleFilter
+      layer={ layer } 
+      toggled={ wTypes.B.visible }
+      onToggle={ toggleWinterType(wTypes.B) }
+      label={'Hiver tempéré (10 à 20°C)'}/>
     
-    <RangeSliderFilter
-      layer={layer}
-      tipFormatter={CelciusFormatter}  
-      min={10}
-      max={30}
-      step={10}
-      onChange={ updateFilter(summerFilter) } 
-      heading={ 'Températures d\'été '}
-      filter={ summerFilter }/>
+    <ToggleFilter
+      layer={ layer } 
+      toggled={ wTypes.C.visible }
+      onToggle={ toggleWinterType(wTypes.C) }
+      label={'Hiver frais (0 à 10°C)'}/>
+
+    <ToggleFilter
+      layer={ layer } 
+      toggled={ wTypes.D.visible }
+      onToggle={ toggleWinterType(wTypes.D) }
+      label={'Hiver froid (moins de 0°C)'}/>
+ 
+    <Heading
+      style={{marginBottom:0}}
+      level={6}>Températures d'été</Heading>
+     
+    <ToggleFilter
+      layer={ layer } 
+      toggled={ sTypes.A.visible }
+      onToggle={ toggleSummerType(sTypes.A) }
+      label={'Été chaud (plus de 30°C)'}/>
+
+    <ToggleFilter
+      layer={ layer } 
+      toggled={ sTypes.B.visible }
+      onToggle={ toggleSummerType(sTypes.B) }
+      label={'Été tempéré (20 à 30°C)'}/>
+    
+    <ToggleFilter
+      layer={ layer } 
+      toggled={ sTypes.C.visible }
+      onToggle={ toggleSummerType(sTypes.C) }
+      label={'Été frais (10 à 20°C)'}/>
+
+   
   </div>
 );
 
@@ -34,16 +72,17 @@ TemperaturesFilters.contextTypes = {
 };
 
 const mapStateToProps = (state, ownProps)=>({
-  winterFilter: fromFilters.winterTemperatures(state),
-  summerFilter: fromFilters.summerTemperatures(state),
+  winterTypes: fromFilters.winterTemperatures(state),
+  summerTypes: fromFilters.summerTemperatures(state),
 });
 
 const mapDispatchToProps = (dispatch)=>({
-  updateFilter: (filter)=>{
-    return (range)=>{
-      dispatch(updateTemperatureRange(filter, range))
-    }
-  }
+  toggleWinterType: (type)=>()=>(
+    dispatch(toggleTemperatureVisibility('winter', type))
+  ),
+  toggleSummerType: (type)=>()=>(
+    dispatch(toggleTemperatureVisibility('summer', type))
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TemperaturesFilters);

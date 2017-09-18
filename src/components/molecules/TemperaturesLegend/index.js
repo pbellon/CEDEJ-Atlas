@@ -152,16 +152,15 @@ const Temperatures = ({
 
   const patterns = patternUtils.initPatterns();
   const srange = summer.range;
-  const wrange = winter.range;
   return (
     <tbody>
       <AridityNames aridity={ aridity }/>
       <tr>
         <TrName><TrNameContent>Températures</TrNameContent></TrName>
       </tr>
-      { inRange([20,30], wrange) && ([
-        (<WinterName key={'h-0'}>Hiver chaud (20 à 30°)</WinterName>),
-        inRange([30], srange) ? (
+      { winter.A.visible && ([
+        (<WinterName key={'h-0'}>Hiver chaud (20 à 30°C)</WinterName>),
+        summer.A.visible ? (
           <TemperatureRow
             name={(<VeryHotSummer />)}
             key={0}
@@ -169,7 +168,7 @@ const Temperatures = ({
             patterns={patterns}
             aridity={aridity} />
         ) : null,
-        inRange([20, 30], srange) ? (
+        summer.B.visible ? (
           <TemperatureRow 
             key={1}
             name={(<HotSummer />)}
@@ -179,9 +178,9 @@ const Temperatures = ({
         ) : null,
       ])}
       {
-        inRange([10, 20], wrange) && ([
+        winter.B.visible && ([
           (<WinterName key={'h-1'}>Hiver tempéré (10 à 20°)</WinterName>),
-          inRange([30], srange) ? (
+          summer.A.visible ? (
             <TemperatureRow
               key={2}
               name={(<VeryHotSummer />)}
@@ -189,7 +188,7 @@ const Temperatures = ({
               patterns={patterns}
               aridity={aridity} />
           ) : null,                                 
-          inRange([20, 30], srange) ? (
+          summer.B.visible ? (
             <TemperatureRow
               key={3}
               name={(<HotSummer />)}
@@ -197,7 +196,7 @@ const Temperatures = ({
               patterns={patterns}
               aridity={aridity} />
           ) : null,
-          inRange([10, 20], srange) ? (
+          summer.C.visible ? (
             <TemperatureRow
               key={4}
               name={(<TemperedSummer />)}
@@ -208,9 +207,9 @@ const Temperatures = ({
         ])
       }
       {
-        inRange([0, 10], wrange) && ([
+        winter.C.visible && ([
           (<WinterName key={'h-2'}>Hiver frais (0 à 10°)</WinterName>),
-          inRange([30], srange) ? (
+          summer.A.visible ? (
             <TemperatureRow
               key={5}
               name={(<VeryHotSummer />)}
@@ -218,7 +217,7 @@ const Temperatures = ({
               patterns={patterns}
               aridity={aridity} />
           ) : null,
-          inRange([20, 30], srange) ? (
+          summer.B.visible ? (
             <TemperatureRow
               key={6}  
               name={(<HotSummer />)}
@@ -226,7 +225,7 @@ const Temperatures = ({
               patterns={patterns}
               aridity={aridity} />
           ) : null,
-          inRange([10, 20], srange) ? (
+          summer.C.visible ? (
             <TemperatureRow
               key={7}
               name={(<TemperedSummer />)}
@@ -237,9 +236,9 @@ const Temperatures = ({
         ])
       }
       {
-        inRange([0], wrange) && ([
+        winter.D.visible && ([
           (<WinterName key={'h-3'}>Hiver froid (moins de 0°)</WinterName>),
-          inRange([30], srange) ? (
+          summer.A.visible ? (
             <TemperatureRow
               key={8}
               name={(<VeryHotSummer />)}
@@ -247,7 +246,7 @@ const Temperatures = ({
               patterns={patterns}
               aridity={aridity} />
           ) : null,
-          inRange([20, 30], srange) ? (
+          summer.B.visible ? (
             <TemperatureRow
               key={9}
               name={(<HotSummer />)}
@@ -255,7 +254,7 @@ const Temperatures = ({
               patterns={patterns}
               aridity={aridity} />
           ) : null,
-          inRange([10, 20], srange) ? (
+          summer.C.visible ? (
             <TemperatureRow
               key={10}
               name={(<TemperedSummer />)}

@@ -7,6 +7,7 @@ import { initialState } from './selectors';
 
 const filterTemperatures = (original, temperatures) => {
   const types = temperaturesTypes.filter(temperatures).map(t => `${t.value}`);
+  console.log('visible types', types);
   const f = t => types.indexOf(t.properties.Temperatur) > -1;
   return original.temperatures.features.filter(f);
 };
@@ -24,15 +25,23 @@ const filterCircles = (original, { month_range, types }) => {
   return original.circles.features.filter(f);
 };
 
-const updateTemperatures = (state, action) => {
+
+const toggleTemperatureTypeVisibility = (state, action) => {
+  console.log('filters.reducer.toggleTemperatureTypeVisibility', action);
   const temperatures = {
     ...state.temperatures,
-    [action.temperature.name]: {
-      ...action.temperature,
-      range: action.range,
-    },
+    [action.temperature]:{
+      ...state.temperatures[action.temperature],
+      [action.temperatureType.name]:{
+        ...action.temperatureType,
+        visible:!action.temperatureType.visible
+      }
+    }
   };
+  const nbFeaturesBefore = state.filtered.temperatures.features.length;
+  const filteredFeatures = filterTemperatures(state.original, temperatures);
 
+  console.log('before', nbFeaturesBefore, 'after', filterTemperatures.length);
   return {
     ...state,
     temperatures,
@@ -40,10 +49,10 @@ const updateTemperatures = (state, action) => {
       ...state.filtered,
       temperatures: {
         ...state.original.temperatures,
-        features: filterTemperatures(state.original, temperatures),
+        features: filteredFeatures,
       }
-    },
-  };
+    }
+  }
 };
 
 const toggleAridityVisibility = (state, action) => {
@@ -114,8 +123,8 @@ export default (state = initialState, action) => {
         original: action.data,
         filtered: action.data,
       };
-    case actions.UPDATE_TEMPERATURE_RANGE:
-      return updateTemperatures(state, action);
+    case actions.TOGGLE_TEMPERATURE_TYPE_VISIBILITY:
+      return toggleTemperatureTypeVisibility(state, action);
     case actions.TOGGLE_ARIDITY_VISIBILITY:
       return toggleAridityVisibility(state, action);
     case actions.UPDATE_DRY_MONTHS_RANGE:

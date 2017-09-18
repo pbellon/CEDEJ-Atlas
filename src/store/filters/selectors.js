@@ -1,12 +1,36 @@
 export const initialState = {
   temperatures: {
     winter: {
-      name: 'winter',
-      range: [0, 30],
+      A: {
+        name: 'A',
+        visible: true,
+      },
+      B: {
+        name: 'B',
+        visible: true,
+      },
+      C: {
+        name: 'C',
+        visible: true,
+      },
+      D: { 
+        name: 'D',
+        visible: true,
+      },
     },
     summer: {
-      name: 'summer',
-      range: [10, 30],
+      A: {
+        name: 'A',
+        visible: true,
+      },
+      B: {
+        name: 'B',
+        visible: true,
+      },
+      C: {
+        name: 'C',
+        visible: true,
+      },
     },
   },
   aridity: {
