@@ -49,9 +49,9 @@ const Error = styled.span`
 class AtlasContainer extends Component {
   static propTypes = {
     data: PropTypes.shape({
-      aridity: PropTypes.array,
-      circles: PropTypes.array,
-      temperatures: PropTypes.array,
+      aridity: PropTypes.object,
+      circles: PropTypes.object,
+      temperatures: PropTypes.object,
     }),
     canvasURL: PropTypes.string,
     circleTypes: PropTypes.object,

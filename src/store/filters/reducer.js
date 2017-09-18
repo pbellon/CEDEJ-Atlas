@@ -8,14 +8,14 @@ import { initialState } from './selectors';
 const filterTemperatures = (original, temperatures) => {
   const types = temperaturesTypes.filter(temperatures).map(t => `${t.value}`);
   const f = t => types.indexOf(t.properties.Temperatur) > -1;
-  return original.temperatures.filter(f);
+  return original.temperatures.features.filter(f);
 };
 
 const filterAridity = (original, aridity) => {
   const types = Object.keys(aridity)
     .filter(type => aridity[type].visible);
   const f = aridity => types.indexOf(aridity.properties.d_TYPE) > -1;
-  return original.aridity.filter(f);
+  return original.aridity.features.filter(f);
 };
 
 const filterCircles = (original, { month_range, types }) => {
@@ -38,7 +38,10 @@ const updateTemperatures = (state, action) => {
     temperatures,
     filtered: {
       ...state.filtered,
-      temperatures: filterTemperatures(state.original, temperatures),
+      temperatures: {
+        ...state.original.temperatures,
+        features: filterTemperatures(state.original, temperatures),
+      }
     },
   };
 };
@@ -57,7 +60,10 @@ const toggleAridityVisibility = (state, action) => {
     aridity,
     filtered: {
       ...state.filtered,
-      aridity: filterAridity(state.original, aridity),
+      aridity: {
+        ...state.original.aridity,
+        features: filterAridity(state.original, aridity),
+      }
     },
   };
 };

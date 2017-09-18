@@ -13,23 +13,23 @@ export function* loadData() {
       deserts,
     } = yield call(api.getMapData);
     
-    const aridityFeatures = aridity.features
+    aridity.features = aridity.features
       .filter(a => a.properties.d_TYPE != null);
 
-    const circlesFeatures = circles.features
+    circles.features = circles.features
       .filter(c => c.properties.size_ != null && c.properties.colours != null);
 
-    const temperaturesFeatures = temperatures.features
+    temperatures.features = temperatures.features
       .filter(t => parseInt(t.properties.Temperatur, 10) > 0);
 
     const dataToTurfize = {
-      aridity: aridityFeatures,
-      temperatures: temperaturesFeatures,
-      circles: circlesFeatures,
+      aridity,
+      temperatures,
+      circles,
     };
     
     Object.keys(dataToTurfize).forEach(i => {
-      turfizeGeoJSON(dataToTurfize[i]);
+      turfizeGeoJSON(dataToTurfize[i].features);
     });
 
     const data = {

@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 import {
   Map,
   TileLayer,
-  LayerGroup,
-  Circle,
   ScaleControl,
   ZoomControl,
 } from 'react-leaflet';
@@ -22,6 +20,7 @@ import {
   ContextualInfoPopup,
   DesertsLayer,
   CanvasLayer,
+  CanvasTiles, 
 } from 'components';
 
 import { filterFeatures } from 'utils/data';
@@ -168,12 +167,21 @@ export default class Atlas extends Component {
       <CedejWatermark position={ 'bottomright' } width={50} />
       <ScaleControl position={ 'bottomright' }/>
       <TileLayer url={ BASE_LAYER_URL } />
-      <CanvasLayer
+      
+      { /* <CanvasLayer
         onRendered={ onRender }
         opacity={ showAreas ? 1 : 0 }
         bbox={ bbox } 
         zIndex={ 400 } 
         data={canvasData}
+        delegate={ CanvasDelegate }/> */ }
+
+
+      <CanvasTiles
+        onRendered={ onRender }
+        opacity={ showAreas ? 1 : 0 }
+        zIndex={ 400 } 
+        data={ canvasData }
         delegate={ CanvasDelegate }/>
       <CirclesLayer
         types={circleTypes}
@@ -181,7 +189,7 @@ export default class Atlas extends Component {
         onCirclesCreated={ onCirclesCreated }
         showContextualInfo={ showContextualInfo }
         hideContextualInfo={ hideContextualInfo }
-        show={ showCircles } circles={ data.circles }/>
+        show={ showCircles } circles={ data.circles.features }/>
       <TileLayer zIndex={ 500 } url={ MAPBOX_WATER_URL } />
       <TileLayer zIndex={ 600 } url={ MAPBOX_WATER_LABEL_URL } />
       <DesertsLayer

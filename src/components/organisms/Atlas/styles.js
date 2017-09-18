@@ -1,7 +1,8 @@
 import * as temperatures from 'utils/temperatures';
 import * as circles from 'utils/circles';
 
-const areaColor = (feature) => temperatures.findTemperature(feature).color;
+const areaColor = (value) => temperatures.findByValue(value).color;
+
 const circleColor = (feature) => circles.circleColor(feature);
 
 

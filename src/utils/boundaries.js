@@ -154,17 +154,17 @@ export const addBoundary = ({ pattern, ...options }) => {
   }
 };
 
-const initData = ({ boundaries, projection }) => {
+const initData = ({ boundaries, context, drawPath }) => {
   let i = 0;
   let boundary;
   const _boundaries = [];
   const len = boundaries.length;
-  const fnPath = geoPath().projection(projection);
+  const fnPath = (feature)=>(drawPath(feature, context).toString());
 
   for (i; i < len; i += 1) {
     boundary = boundaries[i];
     const path = fnPath(boundary);
-    const id = `${boundary.properties.OBJECTID_1}-${i}`;
+    const id = `${boundary.tags.OBJECTID_1}-${i}`;
     // console.log('boundary id:', id);
     const properties = new pathProperties(path, id);
     _boundaries.push({
@@ -181,18 +181,20 @@ const initData = ({ boundaries, projection }) => {
 export const addBoundaries = ({
   patterns,
   boundaries,
+  drawPath,
+  context,
   projection,
   ...options
 }) => {
   let path;
   let i = 0;
-  const pathes = initData({ boundaries, projection });
+  const pathes = initData({ boundaries, drawPath, context });
   const len = pathes.length;
   for (i; i < len; i += 1) {
     path = pathes[i];
-    const pattern = patterns.findByFeature(path.boundary);
+    const pattern = patterns.findByKey(path.boundary.tags.d_TYPE);
     if (pattern && pattern.boundaries) {
-      addBoundary({ pattern, path, ...options });
+      addBoundary({ pattern, path, context, ...options });
     }
   }
 };
