@@ -7,7 +7,10 @@ export const filterFeatures = (data, latLng) => {
   const pt = point([latLng.lng, latLng.lat]);
   const result = {};
   Object.keys(data).forEach(i => {
-    const set = data[i];
+    let set = data[i];
+    if(typeof set === typeof {}){
+      set = set.features;
+    }
     const matching = set.find(f => {
       return f._turfObj && inside(pt, f._turfObj);
     });
