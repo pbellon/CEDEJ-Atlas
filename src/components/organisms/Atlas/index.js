@@ -152,7 +152,7 @@ export default class Atlas extends Component {
         onclick={this.onClick.bind(this)}
         maxBounds={bounds}
         minZoom={2}
-        maxZoom={6}
+        maxZoom={10}
         renderer={canvas()}
         animate={true}
         zoomControl={false}
