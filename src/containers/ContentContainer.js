@@ -15,11 +15,17 @@ const Placeholder = styled.div`
   flex-shrink: 0;
 `;
 const Container = styled.div`
-  max-width: 80%;
-  margin-left: auto;
+  max-width: 60%;
+  margin: auto;
   padding-top: ${({noTopPadding})=>noTopPadding?0:50}px;
   padding-left: 30px;
   padding-right: 15px;
+  @media (max-width: 1500px){
+    max-width: 70%;
+  }
+  @media (max-width: 1100px){
+    max-width: 80%;
+  }
 `;
 const ContentContainer = ({ children, ...props }) => (
   <Holder {...props }>
