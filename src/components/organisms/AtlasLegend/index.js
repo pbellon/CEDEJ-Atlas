@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { font, palette } from 'styled-theme'
 import {
@@ -9,12 +8,11 @@ import {
   TemperaturesLegend,
   CirclesLegend,
   LegendMoreInfos,
+  LegendMoreInfosPrint,
   LegendToggleButton,
   LegendTooltips,
 } from 'components'; 
 
-import { fromFilters, fromLegend, fromLayers } from 'store/selectors';
-import { toggleLegend } from 'store/actions';
 import { visibleTypes, objToArray } from 'utils';
 import { legend } from 'utils/styles';
 
@@ -36,6 +34,10 @@ const Legend = styled.div`
   &:hover {
     overflow: ${({isOpened})=>isOpened?'auto':'hidden'};
   }
+
+  &.legend--print {
+    max-width: 100%;
+  }
 `;
 
 const Table = styled.table``;
@@ -45,7 +47,7 @@ const Holder = styled.div`
   overflow: auto;
 `;
 
-const LegendContent = ({ filters, layers })=>{
+const LegendContent = ({ filters, layers, print })=>{
   const {
     temperatures: { visible: showTemperatures },
     circles: { visible: showCircles },
@@ -60,18 +62,29 @@ const LegendContent = ({ filters, layers })=>{
   return (
     <Holder>
       <Table>
-        <TemperaturesLegend filters={ filters } layers={layers} />
+        <TemperaturesLegend print={print} filters={ filters } layers={layers} />
         { showCircles && (
-          <CirclesLegend filters={ filters}/>
+          <CirclesLegend print={print} filters={ filters}/>
         )}
         { noData && (
           <tbody><tr><th>Pas de données à visualiser</th></tr></tbody>
         )}
       </Table>
-      <LegendMoreInfos/>
+      { !print && (
+        <LegendMoreInfos/>
+      )}
+      { print && (
+        <LegendMoreInfosPrint/>
+      )}
     </Holder>
   );
 };
+
+LegendContent.defaultProps = {
+  print: false,
+};
+
+
 const VisibleIfOpened = styled.div`
   transition: opacity .5s ease;
   opacity: ${({isOpened})=>isOpened?1:0};
@@ -82,20 +95,24 @@ const visibilityButtonStyle = {
   right: 0,
   left: 0,
 };
+
 const AtlasLegend = ({
   isOpened,
   filters,
   layers,
-  toggleLegend 
+  print, 
 }) => {
   return (
     <div>
-      <Legend isOpened={ isOpened }>
-        <LegendToggleButton
-            style={visibilityButtonStyle} />
+      <Legend 
+        className={`legend ${print ? 'legend--print':''}`}
+        isOpened={ isOpened }>
+        { !print && (
+          <LegendToggleButton style={visibilityButtonStyle} />
+        )}
         
         <VisibleIfOpened isOpened={ isOpened }>
-          <LegendContent layers={ layers } filters={ filters }/>
+          <LegendContent print={ print } layers={ layers } filters={ filters }/>
         </VisibleIfOpened>
       </Legend>
       <LegendTooltips/>
@@ -103,13 +120,9 @@ const AtlasLegend = ({
   );
 };
 
-const mapStateToProps = (state)=>({
-  isOpened: fromLegend.isOpened(state),
-  filters: fromFilters.filters(state),
-  layers: fromLayers.layers(state), 
-});
+AtlasLegend.defaultProps = {
+  print: false,
+  isOpened: true,
+};
 
-const mapDispatchToProps = (dispatch)=>({
-  toggleLegend: ()=>dispatch(toggleLegend()),
-})
-export default connect(mapStateToProps)(AtlasLegend);
+export default AtlasLegend;

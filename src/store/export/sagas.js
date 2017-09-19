@@ -18,9 +18,10 @@ export function* watchPreviewMap(){
   }
 }
 
-export function* renderMap(renderData) {
+export function* renderDownloadableMap(renderData) {
   try {
     const data = yield call(carto.render, renderData);
+    console.log('map downloadabled rendered !', data);
     yield put(actions.downloadMap(data));
   } catch (e) {
     yield put(actions.mapRenderFailure(e));
@@ -38,8 +39,8 @@ export function* downloadMap(renderedMap) {
 
 export function* watchRenderDownloadableMap() {
   while (true) {
-    const { format } = yield take(actions.RENDER_DOWNLOADABLE);
-    yield call(renderMap, { format });
+    const data = yield take(actions.RENDER_DOWNLOADABLE);
+    yield call(renderDownloadableMap, data);
   }
 }
 

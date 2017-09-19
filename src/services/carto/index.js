@@ -5,10 +5,15 @@ import leafletImage from 'leaflet-image';
 const carto = {};
 
 carto.render = (data) => {
+  console.log('carto.render', data);
   return new Promise((resolve, reject) => {
-    renderHtml().then((html) => {
+    renderHtml(data).then((html) => {
+      console.log('html rendered', html);
       htmlTo(html, data.format)
-        .then((blobURL) => resolve({ url: blobURL, format: data.format }))
+        .then((blobURL) =>{
+          console.log('downloadable created !', blobURL);
+          resolve({ url: blobURL, format: data.format })
+        })
         .catch((error) => {
           console.error('An error occured while rendering', error);
           reject(error);

@@ -1,9 +1,8 @@
-import { html2pdf, html2canvas } from './html2pdf';
+import { html2pdf, html2canvas } from './html2pdf2';
+import formats from 'utils/formats';
 
-const formats = {
-  PDF: 'pdf',
-  PNG: 'png',
-};
+const A4 = [297,210];
+const A4px = A4.map((mm) => mm * 3.779528);
 
 const A2 = [594, 420]; // A2 in mm;
 const A2px = A2.map((mm) => mm * 3.779528);
@@ -20,7 +19,7 @@ const htmlToPDF = (html, opts) => {
     const defaultOpts = {
       orientation: 'landscape',
       unit: 'mm',
-      format: A2,
+      format: A4,
     };
     const options = Object.assign({}, defaultOpts, opts);
 
@@ -34,13 +33,19 @@ const htmlToPDF = (html, opts) => {
 
 const htmlToPNG = (html) => {
   const toBlob = (canvas) => {
-    return canvas.toBlob();
+    return new Promise((resolve, reject)=>{
+      try {
+        canvas.toBlob(resolve);
+      } catch (e) {
+        reject(e)
+      }
+    });
   };
 
   return new Promise((resolve, reject) => {
     const promise = html2canvas(html, {
-      width: A2px[0],
-      height: A2px[1],
+      width: A4px[0],
+      height: A4px[1],
     });
 
     promise.then(toBlob)

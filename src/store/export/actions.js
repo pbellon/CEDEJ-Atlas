@@ -35,12 +35,10 @@ export const previewFail = (error)=>({
   error,
 });
 
-export const startExport = (exportType)=>({ type: START_EXPORT, exportType});
-
 export const openExportModal = ()=>({ type:OPEN_MODAL });
 export const closeExportModal = ()=>({ type:CLOSE_MODAL });
 
-export const canvasRendered = (url) => {
+export const renderDownloadableSuccess = (url) => {
   return {
     type: RENDER_DOWNLOADABLE_SUCCESS,
     url,

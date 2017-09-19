@@ -78,7 +78,7 @@ const config = createConfig([
       'babel-polyfill',
       'd3-path',
       'geojson-vt',
-      // 'jspdf',
+      'jspdf',
       'html2canvas',
       'jsx-to-string',
       'leaflet',

@@ -6,7 +6,7 @@
 * http://opensource.org/licenses/mit-license
 */
 import html2canvas from 'html2canvas';
-// import jsPDF from 'jspdf';
+import jsPDF from 'jspdf';
 
 const html2pdf = (html, options) => {
   const pdf = jsPDF(options);

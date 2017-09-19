@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import formats from 'utils/formats';
 
 import styled from 'styled-components';
 import {
   closeExportModal,
-  startExport,
+  renderDownloadableMap,
   previewExport,
 } from 'store/actions';
-import { fromExport } from 'store/selectors';
+import { fromExport, fromLayers, fromFilters, } from 'store/selectors';
 
 import { LoadingIndicator, Modal, Button, PDFIcon, PNGIcon } from 'components';
 
@@ -30,10 +31,13 @@ const exportModalStyle = {
 };
 const ExportModal = ({
   isOpen,
-  mapRef,
+  mapReference,
   exportInPNG,
   exportInPDF,
+  filters,
+  layers,
   isPreviewing,
+  isRendering,
   mapPreview,
   onAfterOpen,
   onClose,
@@ -42,25 +46,45 @@ const ExportModal = ({
     style={exportModalStyle} 
     isOpen={isOpen}
     closeable={true}
-    onAfterOpen={()=>onAfterOpen(mapRef)}
+    onAfterOpen={()=>onAfterOpen(mapReference)}
     onClose={onClose}>
     <ExportPreview isPreviewing={isPreviewing} mapPreview={mapPreview}/>
-    <Button onClick={exportInPNG}><PNGIcon height={25} width={25}/>&nbsp;Exporter en PNG</Button>
-    &nbsp;<Button onClick={exportInPDF}><PDFIcon height={25} width={25}/>&nbsp;Exporter en PDF</Button>
+    
+    { isRendering && (
+      <div>
+        <b>Rendu en cours</b>
+        <LoadingIndicator/>
+      </div>
+    )}
+
+    <Button onClick={exportInPNG({mapReference, mapPreview, layers, filters})}>
+      <PNGIcon height={25} width={25}/>&nbsp;Exporter en PNG
+    </Button>
+    &nbsp;
+    <Button onClick={exportInPDF({mapReference, mapPreview, layers, filters})}>
+      <PDFIcon height={25} width={25}/>&nbsp;Exporter en PDF
+    </Button>
     
   </Modal>
 );
 
 const mapStateToProps = state => ({
-  mapRef: fromExport.mapReference(state),
+  layers: fromLayers.layers(state),
+  filters: fromFilters.filters(state),
+  mapReference: fromExport.mapReference(state),
   isOpen: fromExport.isModalOpened(state),
   mapPreview: fromExport.mapPreview(state),
   isPreviewing: fromExport.isPreviewing(state),
+  isRendering: fromExport.isRenderingDownloadable(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-  exportInPNG: ()=>dispatch(startExport({type:'PNG'})),
-  exportInPDF: ()=>dispatch(startExport({type:'PDF'})),
+  exportInPNG: (data)=>()=>(
+    dispatch(renderDownloadableMap({format:formats.PNG, ...data}))
+  ),
+  exportInPDF: (data)=>()=>(
+    dispatch(renderDownloadableMap({format:formats.PDF, ...data}))
+  ),
   onClose: ()=>dispatch(closeExportModal()),
   onAfterOpen: (mapRef)=>dispatch(previewExport(mapRef)),
 });

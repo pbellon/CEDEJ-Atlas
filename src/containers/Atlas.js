@@ -22,7 +22,6 @@ import {
 
 import {
   Atlas,
-  AtlasLegend,
   LoadingIndicator,
   Sidebar,
   TutorialModal,
@@ -31,7 +30,7 @@ import {
   AtlasExportButton,
 } from 'components';
 
-import { Sidebar as SidebarContainer } from 'containers';
+import { Sidebar as SidebarContainer, AtlasLegend } from 'containers';
 
 const Holder = styled.div`
   position: absolute;
@@ -77,6 +76,8 @@ class AtlasContainer extends Component {
 
   render() {
     const {
+      print,
+      mapReference,
       canvasURL,
       circleTypes,
       bindMapReference,
@@ -100,9 +101,6 @@ class AtlasContainer extends Component {
         { error &&
           <Error>{ error.message }</Error>
         }
-        { canvasURL &&
-          <img src={canvasURL} alt={'Render map'} width="100%" height="auto" />
-        }
         { data && (
           <Atlas
             bindMapReference={bindMapReference}
@@ -120,20 +118,28 @@ class AtlasContainer extends Component {
           />)
         }
         { data && (<AtlasLegend />) }
+        { !print && (
+          <Sidebar zIndex={1000}>
+            <SidebarToggleButton />
+            <SidebarContainer>
+              <AtlasFilters />
+              <AtlasExportButton/>
+            </SidebarContainer>
+          </Sidebar>
+        )}
 
-        <Sidebar zIndex={1000}>
-          <SidebarToggleButton />
-          <SidebarContainer>
-            <AtlasFilters />
-            <AtlasExportButton/>
-          </SidebarContainer>
-        </Sidebar>
+        { print && (
+          <PrintOverlay mapReference={mapReference}/>
+        )}
       </Holder>
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
+  print: ownProps.print,
+  mapReference: ownProps.mapReference,
+  canvasURL: ownProps.canvasURL,
   isSidebarOpened: fromSidebar.isOpened(state),
   isContextualInfoVisible: fromAtlas.isContextualInfoVisible(state),
   isRendering: fromAtlas.isRendering(state),
