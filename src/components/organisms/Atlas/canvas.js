@@ -4,8 +4,6 @@ import * as patternsUtil from 'utils/patterns';
 import * as boundaries from 'utils/boundaries';
 import { LatLng, Point } from 'leaflet';
 import geojsonvt from 'geojson-vt';
-import * as topojson from 'topojson-client';
-
 
 const drawFeaturePath = (feature, ctx, pad=0, ratio=1)=>{
   const type = feature.type;
