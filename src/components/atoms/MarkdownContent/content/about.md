@@ -48,12 +48,13 @@ Application web :
 - [styled-tools](https://github.com/diegohaz/styled-tools)
 
 
-Cartographie:
+Cartographie et visualisation:
 - [Leaflet](http://leafletjs.com/)
 - [Turf](http://turfjs.org/)
 - [React-Leaflet](https://github.com/PaulLeCam/react-leaflet)
 - [Leaflet-Image](https://github.com/mapbox/leaflet-image)
-- [d3-geo](https://github.com/d3/d3-geo)
+- [GeojsonVT](https://github.com/mapbox/geojson-vt)
+- [d3-path](https://github.com/d3/d3-path)
 
 ### Conditions d’utilisation
 
