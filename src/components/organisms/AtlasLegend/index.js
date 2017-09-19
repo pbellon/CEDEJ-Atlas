@@ -25,14 +25,15 @@ const Legend = styled.div`
   z-index: 1000;
   top: 0;
   bottom: 0;
-  left: ${({isOpened})=>isOpened?0:-(legend.width - 40)}px;
+  left: 0;
+  transform: translate(${({isOpened})=>isOpened ? 0: '-87%'}, 0);
   padding: 5px;
   padding-top: 0;
-  width: ${legend.width}px;
+  max-width: ${legend.width}px;
   overflow: hidden;
-  transition: left .5s ease-in-out;
+  transition: transform .5s ease-in-out;
+  
   &:hover {
-    width: ${({isOpened})=>isOpened?(legend.width+14):legend.width}px;
     overflow: ${({isOpened})=>isOpened?'auto':'hidden'};
   }
 `;

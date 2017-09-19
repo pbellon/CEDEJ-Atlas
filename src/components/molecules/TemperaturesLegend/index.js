@@ -92,9 +92,17 @@ const WinterName = ({ children }) => (
   </tr>
 );
 
-const TemperatureRow = ({ name, temperature, patterns, aridity })=>{
+const TemperatureRow = ({
+  name,
+  temperature,
+  patterns,
+  aridity,
+  layers: {
+    aridity:{visible:showAridity},
+  }
+})=>{
   const temp = findTemperature(temperature);
-  const visibleAridities = visibleTypes(aridity);
+  const visibleAridities = showAridity ? visibleTypes(aridity) : [];
   return (
     <tr>
       <Td align={'left'}>{ name }</Td>
@@ -153,6 +161,7 @@ const TemperaturesRows = ({
   },
   aridity,
   patterns,
+  layers,
 })=>(
   [
     (<tr key={'h-h'}>
@@ -162,7 +171,7 @@ const TemperaturesRows = ({
     winter.A.visible && ([
       (<WinterName key={'h-0'}>Hiver chaud (20 à 30°C)</WinterName>),
       summer.A.visible ? (
-        <TemperatureRow
+        <TemperatureRow layers={layers}
         name={(<VeryHotSummer />)}
         key={0}
         temperature={1}
@@ -170,7 +179,7 @@ const TemperaturesRows = ({
         aridity={aridity} />
       ) : null,
       summer.B.visible ? (
-        <TemperatureRow 
+        <TemperatureRow layers={layers} 
         key={1}
         name={(<HotSummer />)}
         aridity={aridity}
@@ -181,7 +190,7 @@ const TemperaturesRows = ({
     winter.B.visible && ([
       (<WinterName key={'h-1'}>Hiver tempéré (10 à 20°)</WinterName>),
       summer.A.visible ? (
-        <TemperatureRow
+        <TemperatureRow layers={layers}
         key={2}
         name={(<VeryHotSummer />)}
         temperature={3}
@@ -189,7 +198,7 @@ const TemperaturesRows = ({
         aridity={aridity} />
       ) : null,                                 
       summer.B.visible ? (
-        <TemperatureRow
+        <TemperatureRow layers={layers}
         key={3}
         name={(<HotSummer />)}
         temperature={4}
@@ -197,7 +206,7 @@ const TemperaturesRows = ({
         aridity={aridity} />
       ) : null,
       summer.C.visible ? (
-        <TemperatureRow
+        <TemperatureRow layers={layers}
         key={4}
         name={(<TemperedSummer />)}
         temperature={5}
@@ -208,7 +217,7 @@ const TemperaturesRows = ({
     winter.C.visible && ([
       (<WinterName key={'h-2'}>Hiver frais (0 à 10°)</WinterName>),
       summer.A.visible ? (
-        <TemperatureRow
+        <TemperatureRow layers={layers}
         key={5}
         name={(<VeryHotSummer />)}
         temperature={6}
@@ -216,7 +225,7 @@ const TemperaturesRows = ({
         aridity={aridity} />
       ) : null,
       summer.B.visible ? (
-        <TemperatureRow
+        <TemperatureRow layers={layers}
         key={6}  
         name={(<HotSummer />)}
         temperature={7}
@@ -224,7 +233,7 @@ const TemperaturesRows = ({
         aridity={aridity} />
       ) : null,
       summer.C.visible ? (
-        <TemperatureRow
+        <TemperatureRow layers={layers}
         key={7}
         name={(<TemperedSummer />)}
         temperature={8}
@@ -235,7 +244,7 @@ const TemperaturesRows = ({
     winter.D.visible && ([
       (<WinterName key={'h-3'}>Hiver froid (moins de 0°)</WinterName>),
       summer.A.visible ? (
-        <TemperatureRow
+        <TemperatureRow layers={layers}
         key={8}
         name={(<VeryHotSummer />)}
         temperature={9}
@@ -243,7 +252,7 @@ const TemperaturesRows = ({
         aridity={aridity} />
       ) : null,
       summer.B.visible ? (
-        <TemperatureRow
+        <TemperatureRow layers={layers}
         key={9}
         name={(<HotSummer />)}
         temperature={10}
@@ -251,7 +260,7 @@ const TemperaturesRows = ({
         aridity={aridity} />
       ) : null,
       summer.C.visible ? (
-        <TemperatureRow
+        <TemperatureRow layers={layers}
         key={10}
         name={(<TemperedSummer />)}
         temperature={11}
@@ -271,6 +280,10 @@ const Temperatures = ({
     aridity: { visible:showAridity },
   }
 }) => {
+  const layers = {
+    temperatures:{ visible:showTemperatures },
+    aridity: { visible: showAridity },
+  };
   const hasVisibleAridity = showAridity && visibleTypes(aridity).length > 0;
   const hasVisibleTemperatures = showTemperatures && (
     visibleTypes(winter).length > 0 && visibleTypes(summer).length > 0
@@ -282,6 +295,7 @@ const Temperatures = ({
       temperatures:{summer,winter},
       aridity,
       patterns,
+      layers,
     }
   ): null;
   const tempsRowsFragment = createFragment({temperatures:temperatureRows});
@@ -295,7 +309,7 @@ const Temperatures = ({
         tempsRowsFragment
       ): null,
       !hasVisibleTemperatures && hasVisibleAridity? (
-        <TemperatureRow
+        <TemperatureRow layers={layers}
           key={'aridity-row'}
           aridity={aridity}
           patterns={patterns}/>
