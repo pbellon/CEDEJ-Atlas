@@ -2,11 +2,8 @@
 import camelCase from 'lodash.camelcase';
 
 import { combineReducers } from 'redux';
-import { reducer as form } from 'redux-form';
 
-const reducers = {
-  form,
-};
+const reducers = {};
 
 const req = require.context('.', true, /\.\/.+\/reducer\.js$/);
 

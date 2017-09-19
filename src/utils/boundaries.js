@@ -1,5 +1,3 @@
-import { geoPath } from 'd3-geo';
-
 // import * as patterns from './patterns';
 const BOUNDARY_COLOR = 'rgba(0,0,0,0.7)';
 const TEETH_GAP = 20;
