@@ -3,67 +3,89 @@ import { arrToObj, inRange } from 'utils';
 const TEMPERATURES = [
   {
     value: 1,
-    winter: 'A', // [20, 30],
-    summer: 'A', // [30],
+    winter: 'A', 
+    winter_range: [20, 30],
+    summer: 'A',
+    summer_range: [30],
     color: '#b76648',
   },
   {
     value: 2,
-    winter: 'A', // [20, 30],
-    summer: 'B', // [20, 30],
+    winter: 'A',
+    winter_range: [20, 30],
+    summer: 'B',
+    summer_range: [20, 30],
     color: '#e07a54',
   },
   {
     value: 3,
-    winter: 'B', // [10, 20],
-    summer: 'A', // [30],
+    winter: 'B',
+    winter_range: [10, 20],
+    summer: 'A',
+    summer_range: [30],
     color: '#bf7534',
   },
   {
-    winter: 'B', //[10, 20],
-    summer: 'B', // [20, 30],
+    winter: 'B',
+    winter_range: [10, 20],
+    summer: 'B',
+    summer_range: [20, 30],
     value: 4,
     color: '#e68839',
   },
   {
     value: 5,
-    winter: 'B', // [10, 20],
-    summer: 'C', // [10, 20],
+    winter: 'B',
+    winter_range: [10, 20],
+    summer: 'C',
+    summer_range: [10, 20],
     color: '#edad78',
   },
   {
     value: 6,
-    winter: 'C', // [0, 10],
-    summer: 'A', // [30],
+    winter: 'C',
+    winter_range: [0, 10],
+    summer: 'A',
+    summer_range: [30],
     color: '#c19931',
   },
   {
     value: 7,
-    winter: 'C', // [0, 10],
-    summer: 'B', // [20, 30],
+    winter: 'C',
+    winter_range: [0, 10],
+    summer: 'B',
+    summer_range: [20, 30],
     color: '#e3b131',
   },
   {
     value: 8,
-    winter: 'C', // [0, 10],
-    summer: 'C', //[10, 20],
+    winter: 'C',
+    winter_range: [0, 10],
+    summer: 'C',
+    summer_range: [10, 20],
     color: '#e8c66b',
   },
   {
     value: 9,
-    winter: 'D', // [0],
-    summer: 'A', // [30],
+    winter: 'D',
+    winter_range: [0],
+    summer: 'A',
+    summer_range: [30],
     color: '#95a053',
   },
   {
-    winter: 'D', // [0],
-    summer: 'B', // [20, 30],
+    winter: 'D',
+    winter_range: [0],
+    summer: 'B',
+    summer_range: [20, 30],
     value: 10,
     color: '#abb85c',
   },
   {
-    winter: 'D', // [0],
-    summer: 'C', // [10, 20],
+    winter: 'D',
+    winter_range: [0],
+    summer: 'C',
+    summer_range: [10, 20],
     value: 11,
     color: '#c4cd8d',
   },
@@ -94,8 +116,8 @@ export const filter = ({
     ));
 }
 
-export const getSummerRange = (value)=>findByValue(value).summer;
-export const getWinterRange = (value)=>findByValue(value).winter;
+export const getSummerRange = (value)=>findByValue(value).summer_range;
+export const getWinterRange = (value)=>findByValue(value).winter_range;
 
 export const findByValue = (value)=>TEMPS_OBJ[value]
 

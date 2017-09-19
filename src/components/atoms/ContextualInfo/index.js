@@ -27,7 +27,6 @@ const TemperaturesInfo = ({
     properties: {Temperatur}
   }
 }) => {
-  console.log('TemperaturesInfo');
   const summerRange = temperaturesUtils.getSummerRange(Temperatur);
   const winterRange = temperaturesUtils.getWinterRange(Temperatur);
   return (
