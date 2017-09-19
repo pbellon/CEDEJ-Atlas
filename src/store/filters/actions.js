@@ -10,13 +10,12 @@ export const updateTemperatureRange = (temperature, range) => ({
   range,
 });
 
-export const toggleTemperatureVisibility = (temperature, type)=>{
-  return {
-    type: TOGGLE_TEMPERATURE_TYPE_VISIBILITY,
-    temperature,
-    temperatureType:type,
-  };
-}
+export const toggleTemperatureVisibility = (temperature, type)=>({
+  type: TOGGLE_TEMPERATURE_TYPE_VISIBILITY,
+  temperature,
+  temperatureType:type,
+});
+
 export const toggleAridityVisibility = (aridity) => ({
   type: TOGGLE_ARIDITY_VISIBILITY,
   aridity,

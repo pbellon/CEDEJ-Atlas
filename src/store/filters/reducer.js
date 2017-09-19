@@ -7,27 +7,37 @@ import { initialState } from './selectors';
 
 const filterTemperatures = (original, temperatures) => {
   const types = temperaturesTypes.filter(temperatures).map(t => `${t.value}`);
-  console.log('visible types', types);
-  const f = t => types.indexOf(t.properties.Temperatur) > -1;
-  return original.temperatures.features.filter(f);
+  if(types.length > 0){
+    const f = t => types.indexOf(t.properties.Temperatur) > -1;
+    return original.temperatures.features.filter(f);
+  } else {
+    return [];
+  }
 };
 
 const filterAridity = (original, aridity) => {
   const types = Object.keys(aridity)
     .filter(type => aridity[type].visible);
-  const f = aridity => types.indexOf(aridity.properties.d_TYPE) > -1;
-  return original.aridity.features.filter(f);
+  if(types.length > 0){
+    const f = aridity => types.indexOf(aridity.properties.d_TYPE) > -1;
+    return original.aridity.features.filter(f);
+  } else {
+    return [];
+  }
 };
 
 const filterCircles = (original, { month_range, types }) => {
   const sizes = circlesTypes.sizesForRange(month_range).map(s => s.value);
-  const f = (circle) => sizes.indexOf(circle.properties.size_) > -1;
-  return original.circles.features.filter(f);
+  if(sizes.length > 0){
+    const f = (circle) => sizes.indexOf(circle.properties.size_) > -1;
+    return original.circles.features.filter(f);
+  } else {
+    return [];
+  }
 };
 
 
 const toggleTemperatureTypeVisibility = (state, action) => {
-  console.log('filters.reducer.toggleTemperatureTypeVisibility', action);
   const temperatures = {
     ...state.temperatures,
     [action.temperature]:{
@@ -38,10 +48,7 @@ const toggleTemperatureTypeVisibility = (state, action) => {
       }
     }
   };
-  const nbFeaturesBefore = state.filtered.temperatures.features.length;
-  const filteredFeatures = filterTemperatures(state.original, temperatures);
 
-  console.log('before', nbFeaturesBefore, 'after', filterTemperatures.length);
   return {
     ...state,
     temperatures,
@@ -49,7 +56,7 @@ const toggleTemperatureTypeVisibility = (state, action) => {
       ...state.filtered,
       temperatures: {
         ...state.original.temperatures,
-        features: filteredFeatures,
+        features: filterTemperatures(state.original, temperatures),
       }
     }
   }

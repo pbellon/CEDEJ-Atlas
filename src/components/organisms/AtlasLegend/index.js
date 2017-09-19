@@ -59,9 +59,7 @@ const LegendContent = ({ filters, layers })=>{
   return (
     <Holder>
       <Table>
-        { showTemperatures && (
-          <TemperaturesLegend filters={ filters } />
-        )}
+        <TemperaturesLegend filters={ filters } layers={layers} />
         { showCircles && (
           <CirclesLegend filters={ filters}/>
         )}
