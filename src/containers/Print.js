@@ -6,22 +6,33 @@ import {
   AtlasLegend,
 } from 'components';
 
-const PrintLegend = styled(AtlasLegend)`
-  transform: rotate(90deg);
-`;
 const PrintImage = styled.img`
-  width: 100%;
+  width: auto;
+  height: 100%;
+  margin: auto;
 `;
 
-const Page = styled.div`
-  padding: 15px;
-  height: ${({height})=>height}px;
-  width: ${({width})=>width}px;
+const PrintLegend = styled(AtlasLegend)`
+  font-family: Arial, sans-serif;
+  .legend {
+    overflow: visible;
+  }
 `;
+
+
+const Page = styled.div.attrs({
+  className:'print__page-break',
+})`
+  position: relative;
+  height: 100vh;
+`;
+
 const Holder = styled.div`
   font-family: Arial, sans-serif;
 `;
 
+const rotateImg = (ref,{width, height})=>{
+}
 
 const PrintContainer = ({
   mapPreview,
@@ -29,16 +40,17 @@ const PrintContainer = ({
   layers,
   filters,
   width,
-  height 
+  height,
+  ...props
 }) => {
   const size = {width,height};
   return (
-    <Holder>
+    <Holder {...props}>
       <Page>  
         <PrintImage
+          ref={(ref)=>rotateImg(ref, size)}
           src={mapPreview}
           alt={'Render map'}
-          width="100%"
           height="auto" />
       </Page>
       <Page>

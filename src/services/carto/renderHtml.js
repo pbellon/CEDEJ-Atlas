@@ -11,9 +11,12 @@ import StyleWrapper from './StyleWrapper';
 const renderHtml = ({mapPreview, mapReference, layers, filters}) => {
   return new Promise((resolve, reject) => {
     try {
-      let ref;
       const renderContainer = document.getElementById('render');
+      renderContainer.childNodes.forEach(
+        (node)=>renderContainer.removeChild(node)
+      );
       const props = {
+        className: 'rendered',
         width: 3508,
         height: 2480,
         layers,
@@ -22,9 +25,12 @@ const renderHtml = ({mapPreview, mapReference, layers, filters}) => {
         mapReference,
       };
       render(
-        <PrintContainer onRef={(_ref)=>ref=_ref} {...props}/>,
+        <PrintContainer {...props}/>,
         renderContainer,
-        ()=>resolve(ref)
+        ()=>{
+          const rendered =  renderContainer.querySelector('.rendered');
+          resolve(rendered);
+        }
       );
     } catch (e) {
       reject(e);

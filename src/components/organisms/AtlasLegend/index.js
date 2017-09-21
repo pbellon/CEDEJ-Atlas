@@ -36,7 +36,11 @@ const Legend = styled.div`
   }
 
   &.legend--print {
+    font-family: Arial, sans-serif;
     max-width: 100%;
+    position: static;
+    top: auto;
+    overflow: visible;
   }
 `;
 
@@ -115,11 +119,17 @@ const AtlasLegend = ({
           <LegendContent print={ print } layers={ layers } filters={ filters }/>
         </VisibleIfOpened>
       </Legend>
-      <LegendTooltips/>
+      <LegendTooltips layers={layers} filters={filters}/>
     </div>
   );
 };
+AtlasLegend.propTypes = {
+  layers: PropTypes.object.isRequired,
+  filters: PropTypes.object.isRequired,
+  print: PropTypes.bool,
+  isOpened: PropTypes.bool,
 
+};
 AtlasLegend.defaultProps = {
   print: false,
   isOpened: true,

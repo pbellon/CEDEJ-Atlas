@@ -37,16 +37,53 @@ import jsPDF from 'jspdf';
  *    sent as settings to their corresponding functions.
  */
 
-/* ---------- MAIN FUNCTION ---------- */
 
-export const html2pdf = (source, opt) => {
+
+// Size in pt of various paper formats
+const pageFormats = {
+  'a0'  : [2383.94, 3370.39], 'a1'  : [1683.78, 2383.94],
+  'a2'  : [1190.55, 1683.78], 'a3'  : [ 841.89, 1190.55],
+  'a4'  : [ 595.28,  841.89], 'a5'  : [ 419.53,  595.28],
+  'a6'  : [ 297.64,  419.53], 'a7'  : [ 209.76,  297.64],
+  'a8'  : [ 147.40,  209.76], 'a9'  : [ 104.88,  147.40],
+  'a10' : [  73.70,  104.88], 'b0'  : [2834.65, 4008.19],
+  'b1'  : [2004.09, 2834.65], 'b2'  : [1417.32, 2004.09],
+  'b3'  : [1000.63, 1417.32], 'b4'  : [ 708.66, 1000.63],
+  'b5'  : [ 498.90,  708.66], 'b6'  : [ 354.33,  498.90],
+  'b7'  : [ 249.45,  354.33], 'b8'  : [ 175.75,  249.45],
+  'b9'  : [ 124.72,  175.75], 'b10' : [  87.87,  124.72],
+  'c0'  : [2599.37, 3676.54], 'c1'  : [1836.85, 2599.37],
+  'c2'  : [1298.27, 1836.85], 'c3'  : [ 918.43, 1298.27],
+  'c4'  : [ 649.13,  918.43], 'c5'  : [ 459.21,  649.13],
+  'c6'  : [ 323.15,  459.21], 'c7'  : [ 229.61,  323.15],
+  'c8'  : [ 161.57,  229.61], 'c9'  : [ 113.39,  161.57],
+  'c10' : [  79.37,  113.39], 'dl'  : [ 311.81,  623.62],
+  'letter'            : [612,   792],
+  'government-letter' : [576,   756],
+  'legal'             : [612,  1008],
+  'junior-legal'      : [576,   360],
+  'ledger'            : [1224,  792],
+  'tabloid'           : [792,  1224],
+  'credit-card'       : [153,   243]
+};
+
+/* ---------- MAIN FUNCTION ---------- */
+const debugWindow = (canvas, title='')=>{
+  const url = canvas.toDataURL('image/jpeg', 1);
+  const { width, height } = canvas;
+  const windowTitle = 'DEBUG TITLE' + title.length > 0 ? ` - ${title}` : '';
+  window.open(url, 'CanvasDebugWindow', `width=${width} height=${height}`);
+};
+
+export const html2pdf = (_source, opt) => {
+  console.log('html2pdf', _source, opt);
   return new Promise((resolve, reject)=>{
     // Handle input.
     opt = objType(opt) === 'object' ? opt : {};
-    var source = html2pdf.parseInput(source, opt);
+    const source = parseInput(_source, opt);
 
     // Determine the PDF page size.
-    var pageSize = jsPDF.getPageSize(opt.jsPDF);
+    const pageSize = getPageSize(opt.jsPDF);
     pageSize.inner = {
       width:  pageSize.width - opt.margin[1] - opt.margin[3],
       height: pageSize.height - opt.margin[0] - opt.margin[2]
@@ -54,7 +91,7 @@ export const html2pdf = (source, opt) => {
     pageSize.inner.ratio = pageSize.inner.height / pageSize.inner.width;
 
     // Copy the source element into a PDF-styled container div.
-    var container = html2pdf.makeContainer(source, pageSize);
+    var container = makeContainer(source, pageSize);
     var overlay = container.parentElement;
 
     // Get the locations of all hyperlinks.
@@ -65,7 +102,7 @@ export const html2pdf = (source, opt) => {
       var containerRect = unitConvert(container.getBoundingClientRect(), pageSize.k);
 
       // Treat each client rect as a separate link (for text-wrapping).
-      Array.prototype.forEach.call(links, function(link) {
+      links.forEach((link) => {
         var clientRects = link.getClientRects();
         for (var i=0; i<clientRects.length; i++) {
           var clientRect = unitConvert(clientRects[i], pageSize.k);
@@ -78,19 +115,26 @@ export const html2pdf = (source, opt) => {
 
     // Render the canvas and pass the result to makePDF.
     opt.html2canvas.onrendered = function(canvas) {
-      document.body.removeChild(overlay);
       try {
-        const pdf = html2pdf.makePDF(canvas, pageSize, opt);
+        debugger;
+        debugWindow(canvas, 'Full canvas');
+        const pdf = makePDF(canvas, pageSize, opt);
         resolve(pdf);
-      } catch (e){
-        reject(reject);
+      } catch (e) {
+        reject(e);
       }
+
+      document.body.removeChild(overlay);
     }
-    html2canvas(container, opt.html2canvas);
+    try {
+      html2canvas(container, opt.html2canvas);
+    } catch(e){
+      reject(e);
+    }
   });
 };
 
-html2pdf.parseInput = function(source, opt) {
+const parseInput = (source, opt) => {
   // Parse the opt object.
   opt.jsPDF = opt.jsPDF || {};
   opt.html2canvas = opt.html2canvas || {};
@@ -133,7 +177,7 @@ html2pdf.parseInput = function(source, opt) {
   return source;
 };
 
-html2pdf.makeContainer = function(source, pageSize) {
+const makeContainer = (source, pageSize) => {
   // Define the CSS styles for the container and its overlay parent.
   var overlayCSS = {
     position: 'fixed', overflow: 'hidden', zIndex: 1000,
@@ -150,26 +194,26 @@ html2pdf.makeContainer = function(source, pageSize) {
   overlayCSS.opacity = 0;
 
   // Create and attach the elements.
-  var overlay = createElement('div',   { className: 'html2pdf__overlay', style: overlayCSS });
-  var container = createElement('div', { className: 'html2pdf__container', style: containerCSS });
+  var overlay = createElement('div',   { className: 'print__overlay', style: overlayCSS });
+  var container = createElement('div', { className: 'print__container', style: containerCSS });
   container.appendChild(source);
   overlay.appendChild(container);
   document.body.appendChild(overlay);
 
   // Enable page-breaks.
-  var pageBreaks = source.querySelectorAll('.html2pdf__page-break');
+  var pageBreaks = source.querySelectorAll('.print__page-break');
   var pxPageHeight = pageSize.inner.height * pageSize.k / 72 * 96;
-  Array.prototype.forEach.call(pageBreaks, function(el) {
+  pageBreaks.forEach(function(el) {
     el.style.display = 'block';
     var clientRect = el.getBoundingClientRect();
-    el.style.height = pxPageHeight - (clientRect.top % pxPageHeight) + 'px';
+    el.style.height = `${pxPageHeight}px`;
   }, this);
 
   // Return the container.
   return container;
 };
 
-html2pdf.makePDF = (canvas, pageSize, opt) => {
+const makePDF = (canvas, pageSize, opt) => {
   // Calculate the number of pages.
   const ctx = canvas.getContext('2d');
   const pxFullHeight = canvas.height;
@@ -187,11 +231,6 @@ html2pdf.makePDF = (canvas, pageSize, opt) => {
   const pdf = new jsPDF(opt.jsPDF);
 
   for (let page=0; page<nPages; page += 1) {
-    // Trim the final page to reduce file size.
-    if (page === nPages-1) {
-      pageCanvas.height = pxFullHeight % pxPageHeight;
-      pageHeight = pageCanvas.height * pageSize.inner.width / pageCanvas.width;
-    }
 
     // Display the page.
     const w = pageCanvas.width;
@@ -202,7 +241,12 @@ html2pdf.makePDF = (canvas, pageSize, opt) => {
 
     // Add the page to the PDF.
     if (page)  pdf.addPage();
-    var imgData = pageCanvas.toDataURL('image/' + opt.image.type, opt.image.quality);
+    var imgData = pageCanvas.toDataURL('image/jpeg', opt.image.quality);
+    window.open(
+      imgData,
+      'Debug page',
+      `width=${pageCanvas.width} height=${pageCanvas.height}`
+    );
     pdf.addImage(imgData, opt.image.type, opt.margin[1], opt.margin[0],
                  pageSize.inner.width, pageHeight);
 
@@ -295,7 +339,11 @@ const unitConvert = (obj, k) => {
 };
 
 // Get dimensions of a PDF page, as determined by jsPDF.
-jsPDF.getPageSize = function(orientation, unit, format) {
+const getPageSize = function(orientation, unit, format) {
+  let k;
+  let pageHeight;
+  let pageWidth;
+  let tmp;
   // Decode options object
   if (typeof orientation === 'object') {
     var options = orientation;
@@ -308,35 +356,7 @@ jsPDF.getPageSize = function(orientation, unit, format) {
   unit        = unit || 'mm';
   format      = format || 'a4';
   orientation = ('' + (orientation || 'P')).toLowerCase();
-  var format_as_string = ('' + format).toLowerCase();
-
-  // Size in pt of various paper formats
-  pageFormats = {
-    'a0'  : [2383.94, 3370.39], 'a1'  : [1683.78, 2383.94],
-    'a2'  : [1190.55, 1683.78], 'a3'  : [ 841.89, 1190.55],
-    'a4'  : [ 595.28,  841.89], 'a5'  : [ 419.53,  595.28],
-    'a6'  : [ 297.64,  419.53], 'a7'  : [ 209.76,  297.64],
-    'a8'  : [ 147.40,  209.76], 'a9'  : [ 104.88,  147.40],
-    'a10' : [  73.70,  104.88], 'b0'  : [2834.65, 4008.19],
-    'b1'  : [2004.09, 2834.65], 'b2'  : [1417.32, 2004.09],
-    'b3'  : [1000.63, 1417.32], 'b4'  : [ 708.66, 1000.63],
-    'b5'  : [ 498.90,  708.66], 'b6'  : [ 354.33,  498.90],
-    'b7'  : [ 249.45,  354.33], 'b8'  : [ 175.75,  249.45],
-    'b9'  : [ 124.72,  175.75], 'b10' : [  87.87,  124.72],
-    'c0'  : [2599.37, 3676.54], 'c1'  : [1836.85, 2599.37],
-    'c2'  : [1298.27, 1836.85], 'c3'  : [ 918.43, 1298.27],
-    'c4'  : [ 649.13,  918.43], 'c5'  : [ 459.21,  649.13],
-    'c6'  : [ 323.15,  459.21], 'c7'  : [ 229.61,  323.15],
-    'c8'  : [ 161.57,  229.61], 'c9'  : [ 113.39,  161.57],
-    'c10' : [  79.37,  113.39], 'dl'  : [ 311.81,  623.62],
-    'letter'            : [612,   792],
-    'government-letter' : [576,   756],
-    'legal'             : [612,  1008],
-    'junior-legal'      : [576,   360],
-    'ledger'            : [1224,  792],
-    'tabloid'           : [792,  1224],
-    'credit-card'       : [153,   243]
-  };
+  let format_as_string = ('' + format).toLowerCase();
 
   // Unit conversion
   switch (unit) {
@@ -385,8 +405,12 @@ jsPDF.getPageSize = function(orientation, unit, format) {
   }
 
   // Return information (k is the unit conversion ratio from pts)
-  var info = { 'width': pageWidth, 'height': pageHeight, 'unit': unit, 'k': k };
-  return info;
+  return {
+    width: pageWidth,
+    height: pageHeight,
+    unit,
+    k,
+  };
 };
 
 

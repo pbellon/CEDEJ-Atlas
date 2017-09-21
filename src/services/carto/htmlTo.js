@@ -11,24 +11,23 @@ const blobToURL = (blob) => {
   return URL.createObjectURL(blob);
 };
 
-const htmlToPDF = (html, opts) => {
-  return new Promise((resolve, reject) => {
-    const toBlob = (pdf) => {
-      return pdf.output('blob');
-    };
-    const defaultOpts = {
-      orientation: 'landscape',
-      unit: 'mm',
-      format: A4,
-    };
-    const options = Object.assign({}, defaultOpts, opts);
+const htmlToPDF = (html, opts={}) => {
+  const toBlob = (pdf) => {
+    return pdf.output('blob');
+  };
+  const jsPDFOpts = {
+    orientation: 'portrait',
+    unit: 'mm',
+    format: 'a4',
+  };
+  const options = {
+    ...opts,
+    jsPDF: jsPDFOpts,
+  };
 
-    html2pdf(html, options)
-      .then(toBlob)
-      .then(blobToURL)
-      .then(resolve)
-      .catch(reject);
-  });
+  return html2pdf(html, options)
+    .then(toBlob)
+    .then(blobToURL);
 };
 
 const htmlToPNG = (html) => {
@@ -56,21 +55,15 @@ const htmlToPNG = (html) => {
 };
 
 const htmlTo = (html, format) => {
-  return new Promise((resolve, reject) => {
-    let promise = null;
-    switch (format) {
-      case formats.PDF:
-        promise = htmlToPDF(html);
-        break;
-      case formats.PNG:
-        promise = htmlToPNG(html);
-        break;
-      default:
-        promise = htmlToPDF(html);
-        break;
-    }
-    promise.then(resolve).catch(reject);
-  });
+  console.log('htmlTo', html, format); 
+  switch (format) {
+    case formats.PDF:
+      return htmlToPDF(html);
+    case formats.PNG:
+      return htmlToPNG(html);
+    default:
+      return htmlToPDF(html);
+  }
 };
 
 export default htmlTo;
