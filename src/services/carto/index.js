@@ -2,7 +2,6 @@ import renderPrintLegend from './renderPrintLegend';
 import generatePDF from './generatePDF'; 
 import rotatePreview from './rotatePreview'; 
 
-import htmlTo from './htmlTo';
 import leafletImage from 'leaflet-image';
 import formats from 'utils/formats';
 

@@ -4414,7 +4414,7 @@ lcid@^1.0.0:
 
 "leaflet-image@git+https://git@github.com/pbellon/leaflet-image#gh-pages":
   version "0.4.0"
-  resolved "git+https://git@github.com/pbellon/leaflet-image#312a6f1977f77ab3581621943bc91a410119a345"
+  resolved "git+https://git@github.com/pbellon/leaflet-image#1aec84904ddce7d39027ae1d58fedb6d32300546"
   dependencies:
     d3-queue "2.0.3"
 
