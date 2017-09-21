@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components'; 
 import { Control, DomUtil } from 'leaflet'; 
 import { MapControl } from 'react-leaflet';
-import Logo from './logo.png' 
+import { Watermark as WatermarkLogo } from 'images' 
 
 import './styles.css'; 
 
 const Watermark = Control.extend({
   options: {
     position: 'bottomright',
-    logoUrl: Logo,
+    logoUrl: '',
     logoAltText: ''
     
   },
@@ -50,7 +50,7 @@ class CedejWatermark extends MapControl {
   }
   createLeafletElement(props){
     return new Watermark({
-      logoUrl: Logo,
+      logoUrl: WatermarkLogo,
       logoAlt: 'Logo du CEDEJ',
       linkUrl: 'http://cedej-eg.org/',
       linkTitle: 'Visiter le site du CEDEJ',

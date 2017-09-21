@@ -6,6 +6,12 @@ export const updateTooltips = ()=>{
 }
 export const noop = ()=>null;
 
+export const debugCanvas = (canvas)=>{
+  const { width, height } = canvas;
+  const strF = `width=${width} height=${height}`;
+  window.open(canvas.toDataURL('image/png', 1), 'DebugCanvasWindow', strF);
+}
+
 export const arrToObj = (arr, key = (v) => v.value) => {
   const obj = {};
   arr.forEach(v => {

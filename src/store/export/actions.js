@@ -54,6 +54,12 @@ export const renderDownloadableMap = (data, resolve, reject) => {
   };
 };
 
+export const renderDownloadableMapFailure = (error, resolve, rejet) => ({
+  type: RENDER_DOWNLOADABLE_FAIL,
+  error,
+  resolve,
+  reject,
+});
 export const mapRenderFailure = (error) => ({
   type: RENDER_FAIL,
   error,

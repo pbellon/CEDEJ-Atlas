@@ -123,6 +123,7 @@ const AtlasLegend = ({
     </div>
   );
 };
+
 AtlasLegend.propTypes = {
   layers: PropTypes.object.isRequired,
   filters: PropTypes.object.isRequired,
@@ -130,6 +131,7 @@ AtlasLegend.propTypes = {
   isOpened: PropTypes.bool,
 
 };
+
 AtlasLegend.defaultProps = {
   print: false,
   isOpened: true,

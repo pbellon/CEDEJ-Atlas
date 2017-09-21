@@ -21,10 +21,10 @@ export function* watchPreviewMap(){
 export function* renderDownloadableMap(renderData) {
   try {
     const data = yield call(carto.render, renderData);
-    console.log('map downloadabled rendered !', data);
     yield put(actions.downloadMap(data));
   } catch (e) {
-    yield put(actions.mapRenderFailure(e));
+    console.error('Error during downloadable map rendering', e);
+    yield put(actions.renderDownloadableMapFailure(e));
   }
 }
 
