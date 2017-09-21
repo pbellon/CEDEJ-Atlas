@@ -44,6 +44,10 @@ class CanvasTilesLayer extends MapLayer {
 
   redraw(){
     this.leafletElement.redraw();
+    this.onRendered();
+  }
+
+  onRendered(){
     this.props.onRendered && this.props.onRendered();
   }
   updateLeafletElement(
@@ -65,6 +69,8 @@ class CanvasTilesLayer extends MapLayer {
         aridity:toAridity,
         temperatures: toTemps
       });
+    } else {
+      this.onRendered();
     }
 
     if(fromAridityVisibility != toAridityVisibility){
