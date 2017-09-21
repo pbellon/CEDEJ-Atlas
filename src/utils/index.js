@@ -1,7 +1,9 @@
-// import * as data from './data';
-// import * as patterns from './patterns';
-// import * as boundaries from './boundaries';
+import ReactTooltip from 'react-tooltip';
 
+export const updateTooltips = ()=>{
+  console.log('updateTooltips!'); 
+  ReactTooltip.rebuild();
+}
 export const noop = ()=>null;
 
 export const arrToObj = (arr, key = (v) => v.value) => {
