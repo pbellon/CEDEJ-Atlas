@@ -2,6 +2,8 @@ import renderHtml from './renderHtml';
 import htmlTo from './htmlTo';
 import leafletImage from 'leaflet-image';
 import formats from 'utils/formats';
+
+import { Watermark } from 'images';
 const { A4px } = formats;
 const carto = {};
 const rotatePreview = ({mapPreview, ...data})=>{
@@ -73,41 +75,51 @@ const addScaleToCanvas = (canvas, mapRef)=>{
   // first we draw the km scale.
   const offy = 100; 
   const offx = 10;
+  const rectFill = 'rgba(255, 255, 255, 0.5)';
   ctx.beginPath();
   ctx.strokeStyle = '#666';
-  ctx.fillStyle = '#000';
   ctx.lineWidth = 2;
   ctx.textAlign = 'end';
   const kmw = scaleWidth(kmScale);
   const kmt = scaleText(kmScale);
+  ctx.fillStyle = rectFill;
+  ctx.fillRect(cw - offx - kmw, ch - offy - scaleHeight, kmw, scaleHeight);
+  
   ctx.moveTo(cw - offx, ch - offy - scaleHeight);
   ctx.lineTo(cw - offx, ch - offy);
   ctx.lineTo(cw - offx - kmw, ch - offy);
   ctx.lineTo(cw - offx - kmw, ch - offy - scaleHeight);
   ctx.stroke();
+  ctx.fillStyle = '#000';
   ctx.fillText(kmt, cw - offx - 4, ch - offy - 4, kmw); 
   // then the mile scale
   const mw = scaleWidth(mileScale);
   const mt = scaleText(mileScale);
+
+  ctx.fillStyle = rectFill;
+  ctx.fillRect(cw - offx - mw, ch - offy, mw, scaleHeight);
+  
   ctx.moveTo(cw - offx, ch - (offy - scaleHeight));
   ctx.lineTo(cw - offx, ch - offy);
   ctx.lineTo(cw - offx - mw, ch - offy);
   ctx.lineTo(cw - offx - mw, ch - (offy - scaleHeight));
   ctx.stroke();
-  ctx.fillText(mt, cw - offx - 4, ch - (offy - 14), mw); 
+  
+  ctx.fillStyle = '#000';
+  ctx.fillText(mt, cw - offx - 4, ch - (offy - 14), mw);
+  ctx.closePath();
 }
 
 const addWatermarkToCanvas = (canvas, mapRef)=>{
   return new Promise((resolve, reject)=>{
     const ctx = canvas.getContext('2d');
     const { width: cw, height: ch } = canvas;
-    const watermark = mapRef._controlContainer.querySelector('.leaflet-watermark img');
-    const { width: iw, height: ih } = watermark;
     const img = new Image();
     const offx = 10;
     const offy = 10;
-    img.src = watermark.src;
+    img.src = Watermark;
     img.onload = ()=>{
+      const { width: iw, height: ih } = img;
       ctx.drawImage(img, cw - offx - iw, ch - offy - ih, iw, ih);
       resolve(canvas);
     }
