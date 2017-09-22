@@ -43,7 +43,7 @@ const addStripes = (canvas, {
   const tile = thickness + stripeGap;
   const repeats = ((diagLength * 2) + offset) / tile;
 
-  ctx.strokeStyle = 'black';
+  ctx.strokeStyle = '#BFBFBF';
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
   ctx.strokeWidth = thickness;

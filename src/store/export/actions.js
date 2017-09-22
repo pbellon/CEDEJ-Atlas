@@ -38,10 +38,9 @@ export const previewFail = (error)=>({
 export const openExportModal = ()=>({ type:OPEN_MODAL });
 export const closeExportModal = ()=>({ type:CLOSE_MODAL });
 
-export const renderDownloadableSuccess = (url) => {
+export const renderDownloadableMapSuccess = (url) => {
   return {
     type: RENDER_DOWNLOADABLE_SUCCESS,
-    url,
   };
 };
 

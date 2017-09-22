@@ -1,9 +1,9 @@
-const rotatePreview = ({mapPreview, ...data})=>{
-  return new Promise((resolve, reject)=>{
+const rotatePreview = ({mapPreview, ...data}) => {
+  return new Promise((resolve, reject) => {
     try {
       const img = new Image();
       const canvas = document.createElement('canvas');
-      img.src = mapPreview;
+      img.src = mapPreview.url;
       img.onload = ()=>{
         const iw = img.width;
         const ih = img.height;
@@ -20,12 +20,12 @@ const rotatePreview = ({mapPreview, ...data})=>{
         ctx.translate(-iw*0.5, -ih*0.5);
         ctx.drawImage(img,0,0);
         ctx.setTransform(1,0,0,1,0,0); 
-        resolve({mapPreview:canvas, ...data}); 
+        resolve({mapPreview:{canvas}, ...data}); 
       }
     } catch(e) {
       reject(e);
     }
   });
-}
+};
 
 export default rotatePreview;

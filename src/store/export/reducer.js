@@ -36,6 +36,33 @@ export default (state = initialState, action)=>{
         previewing: false,
         error: action.error,
       };
+    case actions.RENDER_DOWNLOADABLE:
+      return {
+        ...state,
+        renderingDownloadable: true,
+      };
+    case actions.RENDER_DOWNLOADABLE_SUCCES:
+      return {
+        ...state,
+        renderingDownloadable: false,
+      };
+    case actions.RENDER_DOWNLOADABLE_FAILURE:
+      return {
+        ...state,
+        error: action.error,
+        renderingDownloadable: false
+      };
+    case actions.DOWNLOAD_MAP_SUCCESS: 
+      return {
+        ...state,
+        renderingDownloadable: false,
+      }
+    case actions.DOWNLOAD_MAP_FAIL:
+      return {
+        ...state,
+        renderingDownloadable: false,
+        error: action.error,
+      }
     default: return state;
 
   }

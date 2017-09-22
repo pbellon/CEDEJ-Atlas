@@ -8,13 +8,7 @@ import { AtlasLegend } from 'components';
 
 import html2canvas from 'html2canvas'; 
 
-console.log('legend', AtlasLegend);
-const PrintLegend = styled(AtlasLegend)`
-  font-family: Arial, sans-serif;
-  .legend {
-    overflow: visible;
-  }
-`;
+// convert rendered legend to an image with html2canvas.
 const convertToImage = ({legendNode, ...data}) => {
   return new Promise((resolve, reject)=>{
     const size = {
@@ -36,10 +30,11 @@ const convertToImage = ({legendNode, ...data}) => {
   });
 }
 
+// render the legen HTML node
 const renderHtml = ({layers, filters, ...data}) => {
   const removeAllChildren = (node)=>{
     node.childNodes.forEach(
-      (child)=>renderContainer.removeChild(child)
+      (child)=>node.removeChild(child)
     );
   };
 
@@ -47,15 +42,9 @@ const renderHtml = ({layers, filters, ...data}) => {
     try {
       const renderContainer = document.getElementById('render');
       removeAllChildren(renderContainer);
-      const props = {
-        print: true,
-        width: 3508,
-        height: 2480,
-        layers,
-        filters,
-      };
+      const props = { layers, filters, print: true };
       render(
-        <PrintLegend {...props}/>,
+        <AtlasLegend {...props}/>,
         renderContainer,
         ()=>{
           const rendered =  renderContainer.querySelector('.legend');
@@ -68,6 +57,7 @@ const renderHtml = ({layers, filters, ...data}) => {
   });
 };
 
+// allows to render the map's legend & convert it to an image
 const renderPrintLegend = (data)=>{
   return new Promise((resolve, reject)=>{
     renderHtml(data)

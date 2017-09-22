@@ -21,7 +21,7 @@ const ExportPreview = ({ isPreviewing, mapPreview })=>(
   <PreviewHolder>
     <LoadingIndicator isLoading={isPreviewing} />
     { !isPreviewing && mapPreview && (
-      <PreviewImage src={mapPreview} alt="Apperçu de la carte avant export"/>
+      <PreviewImage src={mapPreview.url} alt="Apperçu de la carte avant export"/>
     )}
   </PreviewHolder>
 );
@@ -50,13 +50,7 @@ const ExportModal = ({
     onClose={onClose}>
     <ExportPreview isPreviewing={isPreviewing} mapPreview={mapPreview}/>
     
-    { isRendering && (
-      <div>
-        <b>Rendu en cours</b>
-        <LoadingIndicator/>
-      </div>
-    )}
-
+    <LoadingIndicator isLoading={isRendering}/>
     <Button onClick={exportInPNG({mapReference, mapPreview, layers, filters})}>
       <PNGIcon height={25} width={25}/>&nbsp;Exporter en PNG
     </Button>

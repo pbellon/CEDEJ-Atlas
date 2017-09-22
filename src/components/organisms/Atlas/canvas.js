@@ -127,7 +127,7 @@ export class CanvasDelegate {
     }
     if(isAridityVisible){
       n = aridity.length;
-      context.globalCompositeOperation = 'destination-out';
+      // context.globalCompositeOperation = 'destination-out';
       for(i = 0; i < n; i++){
         // create aridity textures and substract them from areas paths (if needed)
         // draw aridity boundaries (for certains kinds of aridity)
