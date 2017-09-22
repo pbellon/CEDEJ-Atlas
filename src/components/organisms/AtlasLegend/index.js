@@ -15,6 +15,7 @@ import {
 
 import { visibleTypes, objToArray } from 'utils';
 import { legend } from 'utils/styles';
+import formats from 'utils/formats';
 
 const Legend = styled.div`
   font-family: ${font('primary')};
@@ -37,7 +38,7 @@ const Legend = styled.div`
 
   &.legend--print {
     font-family: Arial, sans-serif;
-    max-width: 100%;
+    max-width: 590px;
     position: static;
     top: auto;
     overflow: visible;

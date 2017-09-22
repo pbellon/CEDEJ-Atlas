@@ -1,7 +1,6 @@
 import React, { Component } from 'react'; 
 import styled from 'styled-components';
 import createFragment from 'react-addons-create-fragment'; 
-import Tooltip from 'react-tooltip';
 
 import {
   LegendCategoryName, 
@@ -10,70 +9,15 @@ import {
   Th,
   TrName,
   TrNameContent,
+  TemperatureLegendPattern,
 } from 'components';
 import { inRange, visibleTypes } from 'utils'; 
 
 import * as patternUtils from 'utils/patterns';
-import * as boundaries from 'utils/boundaries';
 import * as aridityUtils from 'utils/aridity';
 
 import { findByValue as findTemperature } from 'utils/temperatures';
 
-const areaPatternPath = ({ width: w, height:h })=>`
-  M2,2L${w - 2},2L${w - 2},${h - 2}L2,${h - 2}Z
-`;
-
-class AreaPattern extends Component {
-  drawCanvas(canvas) {
-    if(!canvas){ return; } 
-    const { patterns, aridity, temperature:pTemperature } = this.props;
-    const context = canvas.getContext('2d');
-    let pattern; 
-    let temperature = pTemperature; 
-    if(aridity){ pattern = patterns.findByKey(aridity.name); }
-    const p = areaPatternPath(canvas);
-    const props = new boundaries.pathProperties(p);
-    const path = {
-      isExterior: true,
-      path: p,
-      properties: props,
-      length: props.totalLength()
-    };
-
-    const p2d = new Path2D(path.path);
-    if (!temperature) {
-      temperature = { color: '#BBB' }
-    }
-    
-    context.fillStyle = temperature.color;
-    context.fill(p2d);
-    
-    if(pattern && pattern.stripes){
-
-      context.globalCompositeOperation = 'destination-out';
-      context.fillStyle = pattern.canvasPattern;
-      context.beginPath();
-      context.fill(p2d);
-      context.closePath();
-    }
-    if(aridity){
-      context.globalCompositeOperation = 'source-over';
-      boundaries.addBoundary({ context, path, pattern, gap: 20 });
-    } 
-  
-  }
-
-  render() {
-    return (
-      <Td>
-        <canvas
-          width={ 35 }
-          height={ 15 }
-          ref={(canvas)=>this.drawCanvas(canvas)}/>
-      </Td>
-    );
-  }
-}
 
 const SummerName = styled(Reduced)`
   padding-left: 7px;
@@ -108,7 +52,7 @@ const TemperatureRow = ({
       <Td align={'left'}>{ name }</Td>
       {
         visibleAridities.map((ar,key) => (
-          <AreaPattern
+          <TemperatureLegendPattern
             key={key}
             patterns={ patterns } aridity={ ar }
             temperature={ temp }/>
@@ -117,41 +61,62 @@ const TemperatureRow = ({
       }
       {
         (visibleAridities.length === 0) && (
-          <AreaPattern temperature={ temp }/>
+          <TemperatureLegendPattern temperature={ temp }/>
         )
       }
     </tr>
   );
 };
 
-const AridityName = ({ aridity }) => {
-  const style = {
-    fontSize: '0.65rem',
-    lineHeight: '0.7rem',
-  };
-  return (
-    <Th
-      style={style}
-      width={40}
-      data-tip 
-      data-for={`tooltip-aridity-${aridity.name}` }>
-      { aridityUtils.getName(aridity) }
-    </Th>
-  )
+const ATh = styled(Td)`
+  font-size: 0.65rem;
+  line-height: 0.7rem;
+  .legend--print & {
+    width: 60px;
+    font-weight: bold;
+  
+  }
+`;
 
-};
+const AridityName = ({ aridity }) => (
+  <ATh
+    width={40}
+    data-tip 
+    data-for={`tooltip-aridity-${aridity.name}` }>
+    { aridityUtils.getName(aridity) }
+  </ATh>
+);
+const ATd = styled(Td)`
+  font-size: 0.6rem;
+  line-height: 0.6rem;
+`;
 
-const AridityNames = ({ aridity })=>{
+const AridityPrecipitations = ({aridity})=>(
+  <ATd>
+    P/Etp<br/>{ aridityUtils.getPrecipitations(aridity) }
+  </ATd>
+);
+
+const AridityNames = ({ aridity, print })=>{
   const visibleAridities = visibleTypes(aridity);
   if(!visibleAridities.length){ return null; }
-  return (
+  return [
     <tr>
       <TrName><TrNameContent>Aridité</TrNameContent></TrName>
       { visibleAridities.map((aridity, key) => (
         <AridityName aridity={ aridity } key={ key }/>
       ))}
-    </tr>
-  );
+    </tr>,
+
+    print ? (
+      <tr>
+        <td></td>
+        { visibleAridities.map((aridity, key) => (
+          <AridityPrecipitations key={key} aridity={aridity}/>
+        ))}
+      </tr>
+    ) : null
+  ];
 };
 
 const TemperaturesRows = ({
@@ -271,6 +236,7 @@ const TemperaturesRows = ({
   ]
 );
 const Temperatures = ({
+  print,
   filters: {
     temperatures:{ summer, winter },
     aridity,
@@ -299,15 +265,17 @@ const Temperatures = ({
     }
   ): null;
   const tempsRowsFragment = createFragment({temperatures:temperatureRows});
+  
+  const aridityNamesRows = hasVisibleAridity ? AridityNames({
+    aridity,
+    print,
+  }) : null;
+  const aridityNamesFragment = createFragment({aridity:aridityNamesRows});
   return (
     <tbody>
     {[
-      hasVisibleAridity ? (
-        <AridityNames key={'aridity'} aridity={ aridity }/>
-      ) : null,
-      hasVisibleTemperatures ? (
-        tempsRowsFragment
-      ): null,
+      aridityNamesFragment,
+      tempsRowsFragment,
       !hasVisibleTemperatures && hasVisibleAridity? (
         <TemperatureRow layers={layers}
           key={'aridity-row'}

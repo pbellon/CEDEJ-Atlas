@@ -25,20 +25,17 @@ const CircleTypeSymbol = styled.span`
   display: inline-block;
 `;
 
-const CircleTooltipContent = styled.div`
-  font-weight: normal;
-  max-width: 400px;
-`;
-
-
-const CircleTypeRow = ({ circle })=> {
+const CircleTypeRow = ({ circle, print })=> {
   return (
     <tr>
-      <td colSpan={2} >
+      <td colSpan={2}>
         <span data-tip data-for={`tooltip-circle-${circle}`}>
           <CircleTypeSymbol circle={ circle } />&nbsp;
           <Reduced>
-            { circlesUtils.droughtRegime(circle) }
+            { !print ? (
+              circlesUtils.droughtRegime(circle)
+            ) : circlesUtils.droughtFullRegime(circle) 
+            }
           </Reduced>
         </span>
       </td>
@@ -48,7 +45,7 @@ const CircleTypeRow = ({ circle })=> {
 
 const NormalWeight = styled.span`font-weight: normal`;
 
-const CirclesLegend = ({ filters })=>{
+const CirclesLegend = ({ filters, print })=>{
   const types = filters.circles.types;
   const visibleTypes = Object.keys(types)
     .map(k => types[k])
@@ -75,6 +72,11 @@ const CirclesLegend = ({ filters })=>{
         <Th align={'left'} style={{marginTop:'-5px'}}>
           <LegendCategoryName>
             <span data-tip data-for="tooltip-nb-months">Nombre de mois secs</span>
+            { print && (
+              <NormalWeight>
+                &nbsp;recevant moins de 30mm de précipitations
+              </NormalWeight>
+            )}
           </LegendCategoryName>
         </Th>
         <Td>
@@ -88,6 +90,9 @@ const CirclesLegend = ({ filters })=>{
               <span data-tip data-for="tooltip-regime">
                 Périodes des sécheresses
               </span>
+              { print && (
+                <NormalWeight>&nbsp;et régimes des précipitations</NormalWeight>
+              )}
             </LegendCategoryName>
           </Th>
         </tr>
@@ -101,12 +106,12 @@ const CirclesLegend = ({ filters })=>{
       )}
       {
         isVisible('A') && (
-          <CircleTypeRow circle={ 'A' } />
+          <CircleTypeRow print={print} circle={ 'A' } />
         )
       }
       {
         isVisible('B') && (
-          <CircleTypeRow circle={ 'B' } />
+          <CircleTypeRow print={print} circle={ 'B' } />
         )
       }
 
@@ -119,12 +124,12 @@ const CirclesLegend = ({ filters })=>{
       )}
       {
         isVisible('C') && (
-          <CircleTypeRow circle={ 'C' } />
+          <CircleTypeRow print={print} circle={ 'C' } />
         )
       }
       {
         isVisible('D') && (
-          <CircleTypeRow circle={ 'D' } />
+          <CircleTypeRow print={print} circle={ 'D' } />
         )
       }
       { hasTypes(['E', 'F'], types) && (
@@ -136,12 +141,12 @@ const CirclesLegend = ({ filters })=>{
       )}
       {
         isVisible('E') && (
-          <CircleTypeRow circle={ 'E' } />
+          <CircleTypeRow print={print} circle={ 'E' } />
         )
       }
       {
         isVisible('F') && (
-          <CircleTypeRow circle={ 'F' } />
+          <CircleTypeRow print={print} circle={ 'F' } />
         )
       }
     </tbody>
