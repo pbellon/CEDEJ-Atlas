@@ -6,10 +6,12 @@ import { Route } from 'react-router-dom';
 import {
   loadData,
   renderSuccess,
+  mapReady,
   showContextualInfo,
   hideContextualInfo,
   bindMapReference,
   setCircleSizesRefs,
+  onAdd,
   zoom,
 } from 'store/actions';
 
@@ -63,6 +65,7 @@ class AtlasContainer extends Component {
     showCircles: PropTypes.bool,
     onZoom: PropTypes.func,
     onCirclesCreated: PropTypes.func,
+    onCirclesAdded: PropTypes.func,
     onRender: PropTypes.func,
     loadData: PropTypes.func.isRequired,
     bindMapReference: PropTypes.func.isRequired,
@@ -92,7 +95,9 @@ class AtlasContainer extends Component {
       isSidebarOpened,
       onZoom,
       onCirclesCreated,
+      onCirclesAdded,
       onRender,
+      onMapReady,
       onMapPage,
     } = this.props;
     return (
@@ -109,9 +114,11 @@ class AtlasContainer extends Component {
             isSidebarOpened={isSidebarOpened}
             showContextualInfo={showContextualInfo}
             hideContextualInfo={hideContextualInfo}
-            onZoomEnd={onZoom}
+            onZoom={onZoom}
             onRender={onRender}
+            onMapReady={onMapReady}
             onCirclesCreated={onCirclesCreated}
+            onCirclesAdded={onCirclesAdded}
             showAridity={showAridity}
             showTemperatures={showTemperatures}
             showCircles={showCircles}
@@ -155,10 +162,12 @@ const mapDispatchToProps = dispatch => ({
   bindMapReference: (ref)=>dispatch(bindMapReference(ref)),
   onZoom: () => dispatch(zoom()),
   onCirclesCreated: (circleSizes) => dispatch(setCircleSizesRefs(circleSizes)),
+  onCirclesAdded: (sizes) => dispatch(onAdd(sizes)),
   showContextualInfo: (data) => dispatch(showContextualInfo(data)),
   hideContextualInfo: () => dispatch(hideContextualInfo()),
   loadData: () => dispatch(loadData()),
   onRender: () => dispatch(renderSuccess()),
+  onMapReady: ()=>dispatch(mapReady()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AtlasContainer);

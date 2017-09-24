@@ -1,7 +1,7 @@
 export const RENDER = 'map/render/start';
 export const RENDER_SUCCESS = 'map/render/success';
 export const RENDER_FAIL = 'map/render/fail';
-
+export const MAP_READY = 'map/ready';
 
 export const SHOW_CONTEXTUAL_INFO = 'map/legend/show_info';
 export const HIDE_CONTEXTUAL_INFO = 'map/legend/hide_info';
@@ -14,6 +14,7 @@ export const zoom = () => ({
   type: ZOOM,
 });
 
+export const mapReady = () => ({ type: MAP_READY });
 
 export const startRender = () => ({ type: RENDER });
 

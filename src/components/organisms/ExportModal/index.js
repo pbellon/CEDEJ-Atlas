@@ -8,7 +8,13 @@ import {
   renderDownloadableMap,
   previewExport,
 } from 'store/actions';
-import { fromExport, fromLayers, fromFilters, } from 'store/selectors';
+
+import {
+  fromExport,
+  fromLayers,
+  fromFilters,
+  fromCircles,
+} from 'store/selectors';
 
 import { LoadingIndicator, Modal, Button, PDFIcon, PNGIcon } from 'components';
 
@@ -31,17 +37,16 @@ const exportModalStyle = {
 };
 const ExportModal = ({
   isOpen,
-  mapReference,
+  exportData,
   exportInPNG,
   exportInPDF,
-  filters,
-  layers,
   isPreviewing,
   isRendering,
   mapPreview,
+  mapReference,
   onAfterOpen,
   onClose,
-})=>(
+}) => (
   <Modal
     style={exportModalStyle} 
     isOpen={isOpen}
@@ -51,11 +56,11 @@ const ExportModal = ({
     <ExportPreview isPreviewing={isPreviewing} mapPreview={mapPreview}/>
     
     <LoadingIndicator isLoading={isRendering}/>
-    <Button onClick={exportInPNG({mapReference, mapPreview, layers, filters})}>
+    <Button onClick={exportInPNG(exportData)}>
       <PNGIcon height={25} width={25}/>&nbsp;Exporter en PNG
     </Button>
     &nbsp;
-    <Button onClick={exportInPDF({mapReference, mapPreview, layers, filters})}>
+    <Button onClick={exportInPDF(exportData)}>
       <PDFIcon height={25} width={25}/>&nbsp;Exporter en PDF
     </Button>
     
@@ -63,11 +68,17 @@ const ExportModal = ({
 );
 
 const mapStateToProps = state => ({
-  layers: fromLayers.layers(state),
-  filters: fromFilters.filters(state),
+  exportData: {
+    circleSizes: fromCircles.sizes(state),
+    layers: fromLayers.layers(state),
+    mapPreview: fromExport.mapPreview(state),
+    mapReference: fromExport.mapReference(state),
+    filters: fromFilters.filters(state),
+    circleSizes: fromCircles.sizes(state),
+  },
   mapReference: fromExport.mapReference(state),
-  isOpen: fromExport.isModalOpened(state),
   mapPreview: fromExport.mapPreview(state),
+  isOpen: fromExport.isModalOpened(state),
   isPreviewing: fromExport.isPreviewing(state),
   isRendering: fromExport.isRenderingDownloadable(state),
 });

@@ -4,12 +4,12 @@ import { render } from 'react-dom';
 import styled from 'styled-components';
 import formats from 'utils/formats';
 import { debugCanvas } from 'utils';
-import { AtlasLegend } from 'components'; 
+import { AtlasLegend, LegendMoreInfosPrint } from 'components'; 
 
 import html2canvas from 'html2canvas'; 
 
 // convert rendered legend to an image with html2canvas.
-const convertToImage = ({legendNode, ...data}) => {
+const convertToImage = (node) => {
   return new Promise((resolve, reject)=>{
     const size = {
       width: formats.A4px[1],
@@ -22,7 +22,7 @@ const convertToImage = ({legendNode, ...data}) => {
       }
     };
     try {
-      html2canvas(legendNode, opts);
+      html2canvas(node, opts);
     } catch (e) {
       reject(e);
     }
@@ -31,7 +31,7 @@ const convertToImage = ({legendNode, ...data}) => {
 }
 
 // render the legen HTML node
-const renderHtml = ({layers, filters, ...data}) => {
+const renderHtml = (component) => {
   const removeAllChildren = (node)=>{
     node.childNodes.forEach(
       (child)=>node.removeChild(child)
@@ -42,13 +42,12 @@ const renderHtml = ({layers, filters, ...data}) => {
     try {
       const renderContainer = document.getElementById('render');
       removeAllChildren(renderContainer);
-      const props = { layers, filters, print: true };
       render(
-        <AtlasLegend {...props}/>,
+        component,
         renderContainer,
         ()=>{
-          const rendered =  renderContainer.querySelector('.legend');
-          resolve({legendNode: rendered, ...data });
+          const rendered =  renderContainer.childNodes[0];
+          resolve(rendered);
         }
       );
     } catch (e) {
@@ -57,15 +56,28 @@ const renderHtml = ({layers, filters, ...data}) => {
   });
 };
 
+const renderLegend = ({layers, filters, circleSizes, ...data}) => {
+  const props = { layers, filters, print: true, circleSizes };
+  const component = <AtlasLegend {...props}/>;
+  return new Promise((resolve, reject)=>{
+    renderHtml(component).then(convertToImage).then((canvas)=>{
+      resolve({legendImage:canvas, ...data});
+    });
+  });
+}
+
+const renderMoreInfos = (data)=>{
+  return new Promise((resolve, reject) => {
+    renderHtml(<LegendMoreInfosPrint/>).then(convertToImage).then((canvas)=>{
+      resolve({legendMoreInfosImage: canvas, ...data});
+    });
+  })
+};
+
 // allows to render the map's legend & convert it to an image
 const renderPrintLegend = (data)=>{
-  return new Promise((resolve, reject)=>{
-    renderHtml(data)
-      .then(convertToImage)
-      .then((canvas)=>{
-        resolve({legendImage: canvas, ...data});
-      }).catch(reject);
-  });
+  return renderLegend(data)
+    .then(renderMoreInfos); 
 }
 
 export default renderPrintLegend;

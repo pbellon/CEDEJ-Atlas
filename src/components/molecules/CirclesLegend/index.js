@@ -10,6 +10,7 @@ import {
   TrName,
   TrNameContent,
   CirclesRangeSymbol,
+  PrintCircleMonthRangeLegend,
 } from 'components';
 
 import { visibleTypes } from 'utils'; 
@@ -28,7 +29,7 @@ const CircleTypeSymbol = styled.span`
 const CircleTypeRow = ({ circle, print })=> {
   return (
     <tr>
-      <td colSpan={2}>
+      <td colSpan={5}>
         <span data-tip data-for={`tooltip-circle-${circle}`}>
           <CircleTypeSymbol circle={ circle } />&nbsp;
           <Reduced>
@@ -45,7 +46,8 @@ const CircleTypeRow = ({ circle, print })=> {
 
 const NormalWeight = styled.span`font-weight: normal`;
 
-const CirclesLegend = ({ filters, print })=>{
+const CirclesLegend = ({ filters, circleSizes, print })=>{
+  console.log('circleSizes', circleSizes);
   const types = filters.circles.types;
   const visibleTypes = Object.keys(types)
     .map(k => types[k])
@@ -79,10 +81,19 @@ const CirclesLegend = ({ filters, print })=>{
             )}
           </LegendCategoryName>
         </Th>
-        <Td>
-          <CirclesRangeSymbol width={40} height={40} /> 
-        </Td>
+        { !print && (
+          <Td>
+            <CirclesRangeSymbol width={40} height={40} /> 
+          </Td>
+        )}
       </tr>
+      { print && ( 
+        <tr>
+          <td colSpan={5}>
+            <PrintCircleMonthRangeLegend sizes={circleSizes}/>
+          </td>
+        </tr>
+      )}
       { visibleTypes.length > 0 && (
         <tr>
           <Th colSpan={2} align={'left'} style={{marginTop:'-5px'}}>

@@ -1,5 +1,5 @@
 export const initialState = {
-  sizeRefs: {},
+  refs: {},
   sizes: {},
 };
 

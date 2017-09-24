@@ -86,6 +86,7 @@
     "@turf/inside": "^4.6.0",
     "babel-polyfill": "^6.20.0",
     "d3-path": "^1.0.5",
+    "d3-scale": "^1.0.6",
     "geojson-vt": "^2.4.0",
     "history": "^4.6.3",
     "html2canvas": "^0.5.0-beta4",

@@ -38,21 +38,24 @@ const Legend = styled.div`
 
   &.legend--print {
     font-family: Arial, sans-serif;
-    max-width: 590px;
+    max-width: 700px;
     position: static;
     top: auto;
     overflow: visible;
+    [data-tip]:after {
+      display: none;
+    }
   }
 `;
 
 const Table = styled.table``;
 
 const Holder = styled.div`
-  padding-top: 30px;
+  padding-top: ${({print})=>print?0:30}px;
   overflow: auto;
 `;
 
-const LegendContent = ({ filters, layers, print })=>{
+const LegendContent = ({ filters, layers, circleSizes, print })=>{
   const {
     temperatures: { visible: showTemperatures },
     circles: { visible: showCircles },
@@ -61,15 +64,15 @@ const LegendContent = ({ filters, layers, print })=>{
     ...filters.circles.types,
     ...filters.temperatures,
     ...filters.aridity
-  }; 
+  };
   const noFilters = visibleTypes(allTypes).length === 0; 
   const noData = ((!showTemperatures) && (!showCircles)) || (noFilters);
   return (
-    <Holder>
+    <Holder print={print}>
       <Table>
         <TemperaturesLegend print={print} filters={ filters } layers={layers} />
         { showCircles && (
-          <CirclesLegend print={print} filters={ filters}/>
+          <CirclesLegend print={print} filters={filters} circleSizes={circleSizes}/>
         )}
         { noData && (
           <tbody><tr><th>Pas de données à visualiser</th></tr></tbody>
@@ -77,9 +80,6 @@ const LegendContent = ({ filters, layers, print })=>{
       </Table>
       { !print && (
         <LegendMoreInfos/>
-      )}
-      { print && (
-        <LegendMoreInfosPrint/>
       )}
     </Holder>
   );
@@ -105,7 +105,8 @@ const AtlasLegend = ({
   isOpened,
   filters,
   layers,
-  print, 
+  print,
+  circleSizes,
 }) => {
   return (
     <div>
@@ -117,7 +118,11 @@ const AtlasLegend = ({
         )}
         
         <VisibleIfOpened isOpened={ isOpened }>
-          <LegendContent print={ print } layers={ layers } filters={ filters }/>
+          <LegendContent
+            circleSizes={circleSizes}
+            print={ print }
+            layers={ layers }
+            filters={ filters }/>
         </VisibleIfOpened>
       </Legend>
       <LegendTooltips layers={layers} filters={filters}/>
@@ -128,6 +133,7 @@ const AtlasLegend = ({
 AtlasLegend.propTypes = {
   layers: PropTypes.object.isRequired,
   filters: PropTypes.object.isRequired,
+  circleSizes: PropTypes.object.isRequired,
   print: PropTypes.bool,
   isOpened: PropTypes.bool,
 

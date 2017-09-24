@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import { scaleLinear } from 'd3-scale';
 import { LayerGroup, Circle, Polygon } from 'react-leaflet';
 import { circleColor } from 'utils/circles';
 import TrianglePoints from './triangle'; 
-const visibleTypes = types => (
-  Object.keys(types)
-    .map(key => types[key])
-    .filter(type => type.visible)
-);
+import { visibleTypes } from 'utils'; 
 
 const circleStyle = (circle, types) => {
   if(types[circle.properties.colours].visible){
@@ -37,24 +33,37 @@ class CirclesLayer extends Component {
     this.sizes = {};
   }
 
-  addToSizes(circle, $ref){
+  addToSizes(circle, $ref, radius=null){
     const { onCirclesCreated, onRender } = this.props;
     const size = circle.properties.size_;
+    const onAdded = (sizes)=>{
+      const sizesArr = Object.keys(sizes).map(k => sizes[k]);
+      return sizesArr.map((size)=>{
+        return new Promise((resolve, reject)=>{
+          size.leafletElement.on('add', resolve);
+        })
+      })
+    }
     if(!this.sizes[size]){
+
       this.sizes[size] = $ref;
+
       if(this.hasAllSizes()){
         onCirclesCreated(this.sizes);
       }
     }
   }
 
-  bindElement(ref, elem, type){
-    if(type === 'circle'){
-      this.addToSizes(elem, ref);
-    }
-    this.renderedElements += 1; 
+  bindElement(ref, elem, type, radius){
+    this.addToSizes(elem, ref, radius);
+    this.renderedElements += 1;
     if(this.renderedElements === this.props.circles.length){
       this.props.onRender();
+      setTimeout(()=>{
+        setTimeout(()=>{
+          this.props.onCirclesAdded(this.sizes);
+        }, 1000);
+      }, 100);
     }
   }
 
@@ -63,8 +72,7 @@ class CirclesLayer extends Component {
   }
   
   updateSizeKeys(circles){
-    this.sizeKeys = circles.map(({ properties }) => properties.size_)
-      .filter((size)=>size !== '01');
+    this.sizeKeys = circles.map(({ properties }) => properties.size_);
   }
 
   shouldComponentUpdate(toProps){
@@ -82,6 +90,7 @@ class CirclesLayer extends Component {
     return false;
   }
 
+  
   render(){
     const {
       show=true,
@@ -96,7 +105,6 @@ class CirclesLayer extends Component {
       this.props.onRender();
       return null;
     }
-    
     return (
       <LayerGroup>
       {
@@ -105,14 +113,17 @@ class CirclesLayer extends Component {
           const coords = circle.geometry.coordinates;
           const center = [ coords[1], coords[0]];
           const size = circle.properties.size_;
-          const radius = 10000 + 5000 * parseInt(size);
+          const scale = scaleLinear()
+            .domain([10, 70])
+            .range([15000, 80000]);
+          const radius = scale(parseInt(size)*10);
           const style = circleStyle(circle, types);
           style.fillOpacity= show?1:0;
           if(size === '01'){
             const points = TrianglePoints(center, radius);
             elem = (
               <Polygon
-                ref={ (ref) => this.bindElement(ref, circle, 'triangle') }
+                ref={ (ref) => this.bindElement(ref, circle, 'triangle', radius) }
                 { ...style  }
                 positions={ points }
                 key={ key }/>

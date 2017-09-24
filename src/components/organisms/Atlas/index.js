@@ -49,6 +49,7 @@ export default class Atlas extends Component {
     onRender: PropTypes.func,
     isSidebarOpened: PropTypes.bool,
     onCirclesCreated: PropTypes.func.isRequired,
+    onCirclesAdded: PropTypes.func.isRequired,
     showContextualInfo: PropTypes.func.isRequired,
     hideContextualInfo: PropTypes.func.isRequired,
     bindMapReference: PropTypes.func.isRequired,
@@ -80,26 +81,10 @@ export default class Atlas extends Component {
     if(!mapRef){ return; }
     this.mapRef = mapRef;
     this.map = mapRef.leafletElement;
-
+    this.map.on('zoomend', this.props.onZoom);
     this.props.bindMapReference(this.map);
-
-    // if(mapRef){ this.setState({mapRef: mapRef.leafletElement}); }
-    /* 
-    if (this.props.onRender) {
-      this.map = this.map || mapRef.leafletElement;
-      // TODO: replace by dispatch or props callback
-      leafletImage(this.map, (err, canvas) => {
-        if (err) {
-          console.error(err);
-          return;
-        }
-        const url = canvas.toDataURL();
-        // this.props.onRender(url);
-      });
-    }
-    */
   }
-
+  
   hideTooltip(){
     this.setState({ showTooltip: false });
   }
@@ -107,8 +92,6 @@ export default class Atlas extends Component {
   showTooltip(tooltipPosition, tooltipData){
     this.setState({ showTooltip: true, tooltipPosition, tooltipData }); 
   }
-  
-  
 
   onClick(e){
     // useful to avoid looking up for deserts.
@@ -129,9 +112,11 @@ export default class Atlas extends Component {
       showAridity,
       showTemperatures,
       onRender,
+      onMapReady,
       circleTypes,
       showContextualInfo,
       hideContextualInfo,
+      onCirclesAdded,
       onCirclesCreated,
       isSidebarOpened,
     } = this.props;
@@ -141,13 +126,15 @@ export default class Atlas extends Component {
       181.00012207031295,  84.62359619140625
     ];
     const klass = `sidebar-${isSidebarOpened ? 'opened' : 'closed'}`;
-    const position = [10, 35];
+    this.position = [10, 35];
+    this.zoom = 3;
     const bounds = new LatLngBounds(
       new LatLng(bbox[0] - 20, bbox[1] - 150), 
       new LatLng(bbox[2] + 20, bbox[3] + 150) 
     );
     return (
       <Map
+        whenReady={onMapReady}
         ref={(ref) => this.bindContainer(ref)}
         className={klass}
         onclick={this.onClick.bind(this)}
@@ -157,7 +144,7 @@ export default class Atlas extends Component {
         renderer={canvas()}
         animate={true}
         zoomControl={false}
-        center={position} zoom={3} >
+        center={this.position} zoom={this.zoom}>
       <ContextualInfoPopup
         onClose={ this.hideTooltip.bind(this) } 
         show={ showTooltip }
@@ -168,15 +155,6 @@ export default class Atlas extends Component {
       <CedejWatermark position={ 'bottomright' } width={50} />
       <ScaleControl position={ 'bottomright' }/>
       <TileLayer url={ BASE_LAYER_URL } />
-      
-      { /* <CanvasLayer
-        onRendered={ onRender }
-        opacity={ showAridity ? 1 : 0 }
-        bbox={ bbox } 
-        zIndex={ 400 } 
-        data={canvasData}
-        delegate={ CanvasDelegate }/> */ }
-
 
       <CanvasTiles
         onRendered={ onRender }
@@ -187,7 +165,8 @@ export default class Atlas extends Component {
         delegate={ CanvasDelegate }/>
       <CirclesLayer
         types={circleTypes}
-        onRender={ onRender }  
+        onRender={ onRender } 
+        onCirclesAdded={ onCirclesAdded }
         onCirclesCreated={ onCirclesCreated }
         showContextualInfo={ showContextualInfo }
         hideContextualInfo={ hideContextualInfo }

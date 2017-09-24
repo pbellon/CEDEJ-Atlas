@@ -5,7 +5,13 @@ import formats, { px2mm } from 'utils/formats';
 
 import rotatePreview from './rotatePreview'; 
 
-const generateImagesArchive = ({ mapPreview, legendImage, format, ...data }) => {
+const generateImagesArchive = ({
+  mapPreview,
+  legendImage,
+  legendMoreInfosImage,
+  format,
+  ...data
+}) => {
   const zip = new jsZIP();
   const addImage = (img, name)=>{
     return new Promise((resolve, reject)=>{
@@ -19,7 +25,8 @@ const generateImagesArchive = ({ mapPreview, legendImage, format, ...data }) => 
   return new Promise((resolve, reject)=>{
     Promise.all([
       addImage(mapPreview.canvas, 'map'),
-      addImage(legendImage, 'legend')
+      addImage(legendImage, 'legend'),
+      addImage(legenMoreInfosImage, 'legend-infos')
     ]).then(()=>{
       zip.generateAsync({type: 'blob'}).then((blob) => {
         resolve({blob, format:'zip', ...data});
@@ -28,7 +35,12 @@ const generateImagesArchive = ({ mapPreview, legendImage, format, ...data }) => 
   });
 };
 
-const generatePDF = ({mapPreview, legendImage, ...data})=>{
+const generatePDF = ({
+  mapPreview,
+  legendImage,
+  legendMoreInfosImage,
+  ...data
+}) => {
   let i = 0;
   const addPage = (pdf, img)=>{
     if(i > 0){
@@ -44,6 +56,7 @@ const generatePDF = ({mapPreview, legendImage, ...data})=>{
       const { canvas } = pdf;
       addPage(pdf, mapPreview.canvas);
       addPage(pdf, legendImage);
+      addPage(pdf, legendMoreInfosImage);
       const blob = pdf.output('blob');
       resolve({blob, ...data});
     } catch (e) {
