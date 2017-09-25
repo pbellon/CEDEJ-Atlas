@@ -5,50 +5,6 @@ import { Svg as GenericSvg, CanvasCircle, CanvasTriangle } from 'components'
 
 import * as circlesUtils from 'utils/circles';
 
-const Svg = styled(GenericSvg)`
-  
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  
-  circle, polygon {
-    fill: rgba(255,255,255,0);
-    stroke-width: 1px;
-    stroke: #BBB;
-  }
-`;
-
-const Symbol = ({ radius, children }) => {
-  const width = (radius * 2) + 2;
-  return (
-    <Svg viewBox={`0 0 ${width} ${width}`} height={width} width={width}>
-      { children }
-    </Svg>
-  );
-};
-
-const Triangle = ({radius}) => (
-  <Symbol radius={radius}>
-    <polygon 
-      stroke="#bbb"
-      strokeWidth="1px"
-      fill="rgba(255, 255, 255, 0)" 
-      points={`1 1, ${radius*2} 1, ${radius} ${radius*2}`}/>
-  </Symbol>
-);
-
-const Circle = ({radius}) => (
-  <Symbol radius={radius}>
-    <circle
-      stroke="#bbb"
-      strokeWidth="1px"
-      fill="rgba(255, 255, 255, 0)" 
-      cx={radius+1} cy={radius+1} r={radius}/>
-  </Symbol>
-);
-
 const Holder = styled.table`
   width: 100%;
   table-layout: fixed;
