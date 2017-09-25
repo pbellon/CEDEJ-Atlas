@@ -41,14 +41,12 @@ const renderHtml = (component) => {
   return new Promise((resolve, reject) => {
     try {
       const renderContainer = document.getElementById('render');
-      renderContainer.parentNode.style.overflow = 'visible';
       removeAllChildren(renderContainer);
       render(
         component,
         renderContainer,
         ()=>{
           const rendered =  renderContainer.childNodes[0];
-          renderContainer.parentNode.style.overflow = 'hidden';
           resolve(rendered);
         }
       );
@@ -78,8 +76,17 @@ const renderMoreInfos = (data)=>{
 
 // allows to render the map's legend & convert it to an image
 const renderPrintLegend = (data)=>{
-  return renderLegend(data)
-    .then(renderMoreInfos); 
+  return new Promise((resolve, reject) => {
+    const holder = document.querySelector('.render-holder');
+    holder.style.overflow = 'visible';
+    
+    renderLegend(data)
+      .then(renderMoreInfos)
+      .then((data)=>{
+        holder.style.overflow = 'hidden';
+        resolve(data);
+      })
+  })
 }
 
 export default renderPrintLegend;

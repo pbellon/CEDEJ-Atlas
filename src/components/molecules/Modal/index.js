@@ -7,8 +7,17 @@ import jsxToString from 'jsx-to-string';
 import { Heading, IconButton } from 'components';
 
 injectGlobal`
+  body #app {
+    filter: blur(0px);
+    transition: filter .33s ease-in-out;
+  }
   body.ReactModal__Body--open {
     overflow: hidden;
+
+    & #app {
+      filter: blur(5px);
+    }
+
   }
 `;
 
@@ -49,7 +58,7 @@ const ModalBox = styled(ReactModal)`
   outline: none;
   box-sizing: border-box;
   min-width: 320px;
-  max-width: calc(640px - 1rem);
+  max-width: calc(800px - 1rem);
   max-height: calc(100% - 1rem);
   padding-top: ${({ hasHeader }) => hasHeader ? 0 : '1rem'};
   @media screen and (max-width: 640px) {
