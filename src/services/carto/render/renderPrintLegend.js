@@ -11,10 +11,18 @@ import html2canvas from 'html2canvas';
 // convert rendered legend to an image with html2canvas.
 const convertToImage = (node) => {
   return new Promise((resolve, reject)=>{
+    const style = window.getComputedStyle(node);
+    const h = Math.round(
+      parseFloat(style.getPropertyValue('height').replace('px', ''))
+    );
+    const w = Math.round(
+      parseFloat(style.getPropertyValue('width').replace('px', ''))
+    );
     const size = {
-      width: formats.A4px[1],
-      height: formats.A4px[0] + 400,
-    }
+      width: w,
+      height: h,
+    };
+
     const opts = {
       ...size,
       onrendered: (canvas)=>{

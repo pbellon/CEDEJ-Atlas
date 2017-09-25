@@ -46,7 +46,7 @@ const generatePDF = ({
     if(i > 0){
       pdf.addPage();
     }
-    const imgData = img.toDataURL('image/png', 0.9);
+    const imgData = img.toDataURL('image/png', 0.8);
     pdf.addImage(imgData, 0, 0, px2mm(img.width), px2mm(img.height));
     i += 1;
   }
