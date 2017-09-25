@@ -82,6 +82,8 @@ const Holder = styled.div`
 `;
 
 const Top = styled.div`
+  position: absolute;
+  z-index: 11;
   top: 0;
   left: 0;
   right:0;
