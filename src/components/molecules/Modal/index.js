@@ -7,17 +7,8 @@ import jsxToString from 'jsx-to-string';
 import { Heading, IconButton } from 'components';
 
 injectGlobal`
-  body #app {
-    filter: blur(0px);
-    transition: filter .33s ease-in-out;
-  }
   body.ReactModal__Body--open {
     overflow: hidden;
-
-    & #app {
-      filter: blur(5px);
-    }
-
   }
 `;
 
