@@ -6,3 +6,5 @@ Dans chacune des zones les **modalités de régime thermique** sont définies pa
 La durée des **périodes de sécheresse** et le régime des précipitations sont indiqués par des cercles colorés pour un millier de stations représentatives.
 
 *Carte établie sous la coordination de l'Unesco préparée et réalisée par le Laboratoire de Cartographie thématique du CERCG, Centre National de la Recherche Scientifique, Paris, 1977*
+
+Source : Carte UNESCO, 1977.
