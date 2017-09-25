@@ -2,8 +2,9 @@ import jsPDF from 'jspdf';
 import jsZIP from 'jszip';
 
 import formats, { px2mm } from 'utils/formats'; 
-
+import 'utils/canvasToBlob';
 import rotatePreview from './rotatePreview'; 
+
 
 const generateImagesArchive = ({
   mapPreview,
@@ -72,19 +73,8 @@ const generateBlob = ({ format, ...data })=>{
   }
 }
 
-const toDataURL = ({blob, ...data})=>{
-  return new Promise((resolve, reject)=>{
-    try {
-      const url = URL.createObjectURL(blob);
-      resolve({ url, ...data });
-    } catch (e) {
-      reject(e);
-    }
-  })
-};
-
 const generateDownloadable = (data)=>{
-  return generateBlob(data).then(toDataURL);
+  return generateBlob(data);
 }
 
 export default generateDownloadable;
