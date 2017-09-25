@@ -1,6 +1,8 @@
 # À Propos
 
-Le **[Centre d’Études et de Documentation Économiques, Juridiques et sociales](cedej-eg.org)** (CEDEJ) est un centre de recherches en sciences humaines et sociales spécialisé sur l’Égypte contemporaine. Ce centre, créé en 1968, est implanté au Caire. Il constitue une Unité Mixte des Instituts Français de Recherche à l’Étranger (UMIFRE) placée sous la double tutelle du Ministère de l'Europe et des Affaires Etrangères (MEAE) ainsi que du Centre National de la Recherche Scientifique (CNRS) dont il constitue, depuis 2006, une Unité de Service et de Recherche, l’USR 3123.</br></br>
+Le **[Centre d’Études et de Documentation Économiques, Juridiques et sociales](cedej-eg.org)** (CEDEJ) est un centre de recherches en sciences humaines et sociales spécialisé sur l’Égypte contemporaine. Ce centre, créé en 1968, est implanté au Caire. Il constitue une Unité Mixte des Instituts Français de Recherche à l’Étranger (UMIFRE) placée sous la double tutelle du Ministère de l'Europe et des Affaires Etrangères (MEAE) ainsi que du Centre National de la Recherche Scientifique (CNRS) dont il constitue, depuis 2006, une Unité de Service et de Recherche, l’USR 3123.</br>
+Au sein du CEDEJ, Manal Ghoneim, Mahmoud Abdallah, Mohammed El-Samman et Mahmoud Hassab El-Nabi ont apporté une contribution décisive à la réalisation de la carte numérique mondiale de l'aridité.
+</br></br>
 
 Le **[Laboratoire Cognitions Humaine et Artificielle](http://www.cognition-usages.org/chart2/)** (CHArt) est une équipe interdisciplinaire regroupant des chercheurs en sciences cognitives, en mathématique et en informatique. Cette Équipe d’Accueil (EA 4004) placée sous quatre tutelles (EPHE, Université Paris 8, Université Paris 10, Université Paris 12) a comme objet d’étude les systèmes cognitifs naturels et artificiels ainsi que leurs interactions pragmatiques et sémantiques. </br>
 
@@ -9,11 +11,11 @@ Le **[Laboratoire Cognitions Humaine et Artificielle](http://www.cognition-usage
 ### Éditeur du site
 [CEDEJ](http://cedej-eg.org/) </br>
 Etablissement à Autonomie financière</br>
-Responsable éditoriale: Hala Bayoumi </br>
-Adresse: Ministère de l'Europe et  des Affaires Etrangères, </br>
+Responsable éditoriale : Hala Bayoumi </br>
+Adresse : Ministère de l'Europe et  des Affaires Etrangères, </br>
 Service de la Valise diplomatique - Ambassade de France en République Arabe d’Egypte
 CEDEJ – Le Caire | 13 rue Louveau 92438 Chatillon Cedex </br>
-Téléphone: (00 202) 27 93 03 50</br>
+Téléphone : (00 202) 27 93 03 50</br>
 Email : cedej@cedej-eg.org</br>
 Site web : www.cedej-eg.org</br>
 
@@ -24,8 +26,8 @@ www.github.com</br>
 
 ### Développement
 [Skoli](www.skoli.fr)</br>
-Siège: 11 rue Duphot – 69003 Lyon</br>
-Adresse professionnelle:
+Siège : 11 rue Duphot – 69003 Lyon</br>
+Adresse professionnelle :
 9, rue de la Martinière 69001 - Lyon</br>
 Téléphone : + 33 (0)4 72 45 79 37</br>
 Email : contact@skoli.fr</br>
@@ -48,7 +50,7 @@ Application web :
 - [styled-tools](https://github.com/diegohaz/styled-tools)
 
 
-Cartographie et visualisation:
+Cartographie et visualisation :
 - [Leaflet](http://leafletjs.com/)
 - [Turf](http://turfjs.org/)
 - [React-Leaflet](https://github.com/PaulLeCam/react-leaflet)
