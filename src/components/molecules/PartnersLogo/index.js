@@ -33,22 +33,22 @@ const PartnersLogo = (props)=>(
   <Holder {...props}>
     <ImgHolder>
       <Link to={'https://www.ephe.fr/'} title={'Visiter le site de l\'École Pratique des Hautes Études'}>
-        <img src={EpheLogo} height={110}/>
+        <img src={EpheLogo} height={props.horizontal ? 80 : 110}/>
       </Link>
     </ImgHolder>
     <ImgHolder>
       <Link to={'http://www.cnrs.fr'} title='Visiter le site du CNRS'>
-        <img src={CnrsLogo} height={100}/>
+        <img src={CnrsLogo} height={props.horizontal ? 70 : 100 }/>
       </Link>
     </ImgHolder>
     <ImgHolder>
       <Link to={'http://cedej-eg.org'} title={'Visiter le site du CEDEJ'}>
-        <img src={CedejLogo} height={110}/>
+        <img src={CedejLogo} height={props.horizontal ? 80 : 110}/>
       </Link>
     </ImgHolder>
     <ImgHolder>
       <Link to={'http://www.diplomatie.gouv.fr/fr/'} title={'Visiter le site du Ministère'}>
-        <img src={MaeLogo} height={110}/>
+        <img src={MaeLogo} height={props.horizontal ? 70: 110}/>
       </Link>
     </ImgHolder>
   </Holder>

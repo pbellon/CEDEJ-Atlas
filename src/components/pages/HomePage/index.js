@@ -10,6 +10,7 @@ import {
   PartnersLogo,
   Markdown,
   Heading,
+  Bold,
 } from 'components';
 import { fromAtlas } from 'store/selectors'; 
 
@@ -18,7 +19,8 @@ import Background from './background.png';
 const HomeTitleDescription = `Un portail élaboré par le [CEDEJ](http://cedej-eg.org/), une unité mixte française de recherche à l’étranger du [CNRS](http://www.cnrs.fr/) et du [Ministère de l'Europe et des Affaires étrangères](http://www.diplomatie.gouv.fr/fr/)`;
 
 
-const HomeActionText = `**Créer votre carte personnalisée des zones arides et [contribuer à l’actualisation de la base de données](/page/contribute) sur l’aridité**`;
+const HomeActionText = `**CRÉER votre carte personnalisée des zones arides  
+[CONTRIBUER à l’actualisation de la base de données](/page/contribute) sur l’aridité**`;
 
 const Centered = styled.div`
   text-align: center;
@@ -71,7 +73,7 @@ const Holder = styled.div`
   left: 0;
   right: 0;
   top: 4em;
-  bottom: 4em;
+  bottom: 2em;
   z-index: 10;
   @media (max-width: 1200px){
     max-width: 80%;
@@ -92,7 +94,7 @@ const Bottom = styled.div`
   right:0;
 `;
 const BottomBar = styled.div`
-  height: 200px;
+  height: 100px;
   bottom: 0;
   position: absolute;
   left:0;
@@ -119,11 +121,15 @@ const TitleHolder = styled.div`
 const MainTitle = styled(Heading)`
   display: block;
   padding-right: 1em;
-  width: 200px;
+  width: 225px;
   font-size: 4em;
   line-height: 1em;
   margin: 0 !important;
   border-right: 2px solid ${palette('grayscale', 2)};
+  text-transform: uppercase;
+  & .grey {
+    color: ${palette('grayscale', 2)};
+  }
 `;
 
 const MainDescription = styled(Markdown)`
@@ -153,7 +159,7 @@ const Middle = styled.div`
 
 const HomeTitle = styled(()=>(
   <TitleHolder>
-    <MainTitle level={1}>Aridity World Map</MainTitle>
+    <MainTitle level={1}>Aridity <span className='grey'>World</span> Map</MainTitle>
     <MainDescription source={HomeTitleDescription}/>
   </TitleHolder>
 ))``;
@@ -185,10 +191,10 @@ const HomePage = ({isLoading}) => {
             </Centered>
             </Middle>
 
-            <Bottom style={{height:'6.66em'}}><Left>© CEDEJ - 2017</Left></Bottom>
+            <Bottom style={{height:'3.1em'}}><Left><Bold>© CEDEJ - 2017</Bold></Left></Bottom>
             <BottomBar>
               <Center style={{maxWidth:'500px', margin:'auto'}}>
-                <PartnersLogo height={'200px'} horizontal={true}/>
+                <PartnersLogo height={'120px'} horizontal={true}/>
               </Center>
             </BottomBar>
         </Content>
