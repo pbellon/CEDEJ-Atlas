@@ -26,7 +26,7 @@ const generateImagesArchive = ({
     Promise.all([
       addImage(mapPreview.canvas, 'map'),
       addImage(legendImage, 'legend'),
-      addImage(legenMoreInfosImage, 'legend-infos')
+      addImage(legendMoreInfosImage, 'legend-infos')
     ]).then(()=>{
       zip.generateAsync({type: 'blob'}).then((blob) => {
         resolve({blob, format:'zip', ...data});
