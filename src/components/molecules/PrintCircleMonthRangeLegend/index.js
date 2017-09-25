@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Svg as GenericSvg } from 'components' 
+
+import { Svg as GenericSvg, CanvasCircle, CanvasTriangle } from 'components' 
 
 import * as circlesUtils from 'utils/circles';
 
@@ -67,13 +68,24 @@ const Description = styled.span`
   font-size: 0.6rem;
 `;
 
-const LegendElement = ({size, height})=>{
-  let symbol = <Circle radius={size.radius}/>;
+const LegendElement = styled(({size, height:elHeight})=>{
+  const width = (size.radius * 2) + 2;
+  const height = width;
+
+  let symbol = <CanvasCircle width={width} height={height} radius={size.radius}/>;
   if(size.key === '01') {
-    symbol = <Triangle radius={size.radius}/>;
+    symbol = <CanvasTriangle width={width} height={height} radius={size.radius}/>;
   }
-  return <Std height={height}>{ symbol }</Std>;
-}
+  return <Std height={elHeight}>{ symbol }</Std>;
+})`
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+  }
+`;
 
 const Dtr = styled.tr`
   vertical-align: bottom;
@@ -90,7 +102,7 @@ const PrintCircleMonthRangeLegend = ({sizes})=>{
     return parseInt(a.key) > parseInt(b.key);
   })
   if(!(sizesArr.length > 0)){ return null; }
-  const maxHeight = sizesArr[sizesArr.length - 1].radius;
+  const maxHeight = (sizesArr[sizesArr.length - 1].radius * 2) + 2;
 
   return (
     <Holder>

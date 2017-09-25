@@ -46,8 +46,7 @@ const CircleTypeRow = ({ circle, print })=> {
 
 const NormalWeight = styled.span`font-weight: normal`;
 
-const CirclesLegend = ({ filters, circleSizes, print })=>{
-  console.log('circleSizes', circleSizes);
+const CirclesLegend = ({ filters, circleSizes, print }) => {
   const types = filters.circles.types;
   const visibleTypes = Object.keys(types)
     .map(k => types[k])
