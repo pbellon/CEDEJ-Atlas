@@ -78,7 +78,7 @@ const renderMoreInfos = (data)=>{
 
 // allows to render the map's legend & convert it to an image
 const renderPrintLegend = (data)=>{
-  return renderLegend(data);
+  return renderLegend(data)
     .then(renderMoreInfos); 
 }
 
