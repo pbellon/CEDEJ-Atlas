@@ -81,7 +81,9 @@ export default class Atlas extends Component {
     if(!mapRef){ return; }
     this.mapRef = mapRef;
     this.map = mapRef.leafletElement;
-    this.map.on('zoomend', this.props.onZoom);
+    this.map.on('zoomend', ()=>{
+      setTimeout(()=>this.props.onZoom(), 1000);
+    });
     this.props.bindMapReference(this.map);
   }
   

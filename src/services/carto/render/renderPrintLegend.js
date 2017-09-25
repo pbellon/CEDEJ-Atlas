@@ -13,7 +13,7 @@ const convertToImage = (node) => {
   return new Promise((resolve, reject)=>{
     const size = {
       width: formats.A4px[1],
-      height: formats.A4px[0],
+      height: formats.A4px[0] + 400,
     }
     const opts = {
       ...size,
@@ -41,12 +41,14 @@ const renderHtml = (component) => {
   return new Promise((resolve, reject) => {
     try {
       const renderContainer = document.getElementById('render');
+      renderContainer.parentNode.style.overflow = 'visible';
       removeAllChildren(renderContainer);
       render(
         component,
         renderContainer,
         ()=>{
           const rendered =  renderContainer.childNodes[0];
+          renderContainer.parentNode.style.overflow = 'hidden';
           resolve(rendered);
         }
       );
@@ -76,7 +78,7 @@ const renderMoreInfos = (data)=>{
 
 // allows to render the map's legend & convert it to an image
 const renderPrintLegend = (data)=>{
-  return renderLegend(data)
+  return renderLegend(data);
     .then(renderMoreInfos); 
 }
 

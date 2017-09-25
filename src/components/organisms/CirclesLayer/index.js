@@ -115,7 +115,7 @@ class CirclesLayer extends Component {
           const size = circle.properties.size_;
           const scale = scaleLinear()
             .domain([10, 70])
-            .range([15000, 80000]);
+            .range([15000, 70000]);
           const radius = scale(parseInt(size)*10);
           const style = circleStyle(circle, types);
           style.fillOpacity= show?1:0;
