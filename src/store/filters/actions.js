@@ -1,14 +1,7 @@
-export const UPDATE_TEMPERATURE_RANGE = 'FILTERS/TEMPERATURES/UPDATE';
 export const TOGGLE_ARIDITY_VISIBILITY = 'FILTERS/ARIDITY/TOGGLE';
-export const UPDATE_DRY_MONTHS_RANGE = 'FILTERS/CIRCLES/MONTHS';
-export const TOGGLE_CIRCLE_TYPE_VISIBILITY = 'FILTERS/CIRCLES/TOGGLE';
+export const TOGGLE_CIRCLE_SIZE_VISIBILITY = 'FILTERS/CIRCLES/SIZES/TOGGLE';
+export const TOGGLE_CIRCLE_TYPE_VISIBILITY = 'FILTERS/CIRCLES/TYPES/TOGGLE';
 export const TOGGLE_TEMPERATURE_TYPE_VISIBILITY = 'FILTERS/TEMPERATURES/TOGGLE';
-
-export const updateTemperatureRange = (temperature, range) => ({
-  type: UPDATE_TEMPERATURE_RANGE,
-  temperature,
-  range,
-});
 
 export const toggleTemperatureVisibility = (temperature, type)=>({
   type: TOGGLE_TEMPERATURE_TYPE_VISIBILITY,
@@ -21,13 +14,12 @@ export const toggleAridityVisibility = (aridity) => ({
   aridity,
 });
 
-
-export const updateDryMonthsRange = (range) => ({
-  type: UPDATE_DRY_MONTHS_RANGE,
-  range,
+export const toggleCircleSizeVisibility = (circleSize) => ({
+  type: TOGGLE_CIRCLE_SIZE_VISIBILITY,
+  circleSize,
 });
 
-export const toggleCircleTypeVisibility = (circle) => ({
+export const toggleCircleTypeVisibility = (circleType) => ({
   type: TOGGLE_CIRCLE_TYPE_VISIBILITY,
-  circle,
+  circleType,
 });

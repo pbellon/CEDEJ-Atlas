@@ -53,6 +53,15 @@ export const initialState = {
   },
   circles: {
     month_range: [1, 12],
+    sizes: {
+      '01': { name: '01', visible: true }, 
+      '02': { name: '02', visible: true }, 
+      '03': { name: '03', visible: true }, 
+      '04': { name: '04', visible: true }, 
+      '05': { name: '05', visible: true }, 
+      '06': { name: '06', visible: true }, 
+      '07': { name: '07', visible: true }, 
+    },
     types: {
       A: {
         visible: true,
@@ -99,6 +108,7 @@ export const aridity = (state, name) => {
 };
 
 export const circlesTypes = state => state.circles.types;
+export const circlesSizes = state => state.circles.sizes;
 
 export const dryMonths = state => state.circles.month_range;
 

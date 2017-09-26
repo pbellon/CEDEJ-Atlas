@@ -26,16 +26,22 @@ const filterAridity = (original, aridity) => {
   }
 };
 
-const filterCircles = (original, { month_range, types }) => {
+const filterCircles = (original, { sizes, types }) => {
   const visibleTypes = Object.keys(types)
     .filter(key => types[key].visible);
   
-    const sizes = circlesTypes.sizesForRange(month_range).map(s => s.value);
-  const sizeFilter = (circle) => sizes.indexOf(circle.properties.size_) > -1;
-  const typeFilter = (circle) => (
-    visibleTypes.indexOf(circle.properties.colours) >-1
+  const visibleSizes = Object.keys(sizes)
+    .filter(key => sizes[key].visible);
+
+  const sizeFilter = (circle) => (
+    visibleSizes.indexOf(circle.properties.size_) > -1
   );
-  if(sizes.length > 0){
+
+  const typeFilter = (circle) => (
+    visibleTypes.indexOf(circle.properties.colours) > -1
+  );
+
+  if(visibleSizes.length > 0){
     let f = sizeFilter;
     if(visibleTypes.length > 0){
       f = (circle) => sizeFilter(circle) && typeFilter(circle);
@@ -94,10 +100,19 @@ const toggleAridityVisibility = (state, action) => {
   };
 };
 
-const updateDryMonthsRange = (state, action) => {
+// makes a circle size visible or not.
+const toggleCircleSizeVisibility = (state, action) => {
+  const size = state.circles.sizes[action.circleSize.name];
+
   const _circles = {
     ...state.circles,
-    month_range: action.range,
+    sizes: {
+      ...state.circles.sizes,
+      [size.name]: {
+        ...size,
+        visible: !size.visible,
+      }
+    }
   };
 
   return {
@@ -106,22 +121,22 @@ const updateDryMonthsRange = (state, action) => {
     filtered: {
       ...state.filtered,
       circles: {
-        ...state.original.circles,
-        features: filterCircles(state.original, _circles),
+        ...state.filtered.circles,
+        features: filterCircles(state.original, _circles)
       }
-    },
+    }
   };
 };
 
 const toggleCircleTypeVisibility = (state, action) => {
-  const circle = state.circles.types[action.circle.name];
+  const type = state.circles.types[action.circleType.name];
   const _circles = {
     ...state.circles,
     types: {
       ...state.circles.types,
-      [circle.name]: {
-        ...circle,
-        visible: !action.circle.visible,
+      [type.name]: {
+        ...type,
+        visible: !type.visible,
       },
     },
   };
@@ -151,8 +166,8 @@ export default (state = initialState, action) => {
       return toggleTemperatureTypeVisibility(state, action);
     case actions.TOGGLE_ARIDITY_VISIBILITY:
       return toggleAridityVisibility(state, action);
-    case actions.UPDATE_DRY_MONTHS_RANGE:
-      return updateDryMonthsRange(state, action);
+    case actions.TOGGLE_CIRCLE_SIZE_VISIBILITY:
+      return toggleCircleSizeVisibility(state, action);
     case actions.TOGGLE_CIRCLE_TYPE_VISIBILITY:
       return toggleCircleTypeVisibility(state, action);
     default:
