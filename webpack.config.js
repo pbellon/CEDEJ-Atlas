@@ -104,7 +104,6 @@ const config = createConfig([
       'react-tooltip',
       'redux',
       'redux-saga',
-      'style-loader',
       'styled-components',
       'styled-tools',
       'styled-theme',
