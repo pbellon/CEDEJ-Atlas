@@ -8,6 +8,7 @@ class CanvasTriangle extends Component {
     radius: PropTypes.number.isRequired,
     stroke: PropTypes.string,
     strokeWidth: PropTypes.number,
+    style: PropTypes.object,
   }
   static defaultProps = {
     stroke: '#BBB',
@@ -28,8 +29,9 @@ class CanvasTriangle extends Component {
   }
 
   render(){
-    const { width, height } = this.props;
+    const { width, height, ...props } = this.props;
     return (<canvas
+      { ...props }
       width={width}
       height={height}
       ref={(ref)=>this.draw(ref)}/>

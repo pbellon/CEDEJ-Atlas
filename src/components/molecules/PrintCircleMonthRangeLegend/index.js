@@ -24,24 +24,23 @@ const Description = styled.span`
   font-size: 0.6rem;
 `;
 
-const LegendElement = styled(({size, height:elHeight})=>{
+const LegendElement = ({size, height:elHeight})=>{
   const width = (size.radius * 2) + 2;
   const height = width;
+  const style = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    margin: 'auto',
+  };
 
-  let symbol = <CanvasCircle width={width} height={height} radius={size.radius}/>;
+  let symbol = <CanvasCircle style={style} width={width} height={height} radius={size.radius}/>;
   if(size.key === '01') {
-    symbol = <CanvasTriangle width={width} height={height} radius={size.radius}/>;
+    symbol = <CanvasTriangle style={style} width={width} height={height} radius={size.radius}/>;
   }
   return <Std height={elHeight}>{ symbol }</Std>;
-})`
-  canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    margin: 0;
-  }
-`;
+};
 
 const Dtr = styled.tr`
   vertical-align: bottom;

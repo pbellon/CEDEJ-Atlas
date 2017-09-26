@@ -8,6 +8,7 @@ class CanvasCircle extends Component {
     radius: PropTypes.number.isRequired,
     stroke: PropTypes.string,
     strokeWidth: PropTypes.number,
+    style: PropTypes.objet,
   }
   static defaultProps = {
     stroke: '#BBB',
@@ -24,8 +25,9 @@ class CanvasCircle extends Component {
   }
 
   render(){
-    const { width, height } = this.props;
+    const { width, height, ...props } = this.props;
     return (<canvas
+      { ...props }
       width={width}
       height={height}
       ref={(ref)=>this.draw(ref)}/>
