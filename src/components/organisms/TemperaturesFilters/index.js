@@ -15,7 +15,7 @@ const TemperaturesFilters = ({
   <div>
     <Heading
       style={{marginBottom:0}}
-      level={6}>Températures d'hiver</Heading>
+      level={6}>Type(s) d'hiver</Heading>
      
     <ToggleFilter
       layer={ layer } 
@@ -43,25 +43,25 @@ const TemperaturesFilters = ({
  
     <Heading
       style={{marginBottom:0}}
-      level={6}>Températures d'été</Heading>
+      level={6}>Type(s) d'été</Heading>
      
     <ToggleFilter
       layer={ layer } 
       toggled={ sTypes.A.visible }
       onToggle={ toggleSummerType(sTypes.A) }
-      label={'Été chaud (plus de 30°C)'}/>
+      label={'Été très chaud (plus de 30°C)'}/>
 
     <ToggleFilter
       layer={ layer } 
       toggled={ sTypes.B.visible }
       onToggle={ toggleSummerType(sTypes.B) }
-      label={'Été tempéré (20 à 30°C)'}/>
+      label={'Été chaud (20 à 30°C)'}/>
     
     <ToggleFilter
       layer={ layer } 
       toggled={ sTypes.C.visible }
       onToggle={ toggleSummerType(sTypes.C) }
-      label={'Été frais (10 à 20°C)'}/>
+      label={'Été tempéré (10 à 20°C)'}/>
 
    
   </div>
