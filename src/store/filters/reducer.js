@@ -27,9 +27,19 @@ const filterAridity = (original, aridity) => {
 };
 
 const filterCircles = (original, { month_range, types }) => {
-  const sizes = circlesTypes.sizesForRange(month_range).map(s => s.value);
+  const visibleTypes = Object.keys(types)
+    .filter(key => types[key].visible);
+  
+    const sizes = circlesTypes.sizesForRange(month_range).map(s => s.value);
+  const sizeFilter = (circle) => sizes.indexOf(circle.properties.size_) > -1;
+  const typeFilter = (circle) => (
+    visibleTypes.indexOf(circle.properties.colours) >-1
+  );
   if(sizes.length > 0){
-    const f = (circle) => sizes.indexOf(circle.properties.size_) > -1;
+    let f = sizeFilter;
+    if(visibleTypes.length > 0){
+      f = (circle) => sizeFilter(circle) && typeFilter(circle);
+    }
     return original.circles.features.filter(f);
   } else {
     return [];
@@ -105,20 +115,27 @@ const updateDryMonthsRange = (state, action) => {
 
 const toggleCircleTypeVisibility = (state, action) => {
   const circle = state.circles.types[action.circle.name];
-  const circles = {
+  const _circles = {
     ...state.circles,
     types: {
       ...state.circles.types,
       [circle.name]: {
         ...circle,
-        visible: !circle.visible,
+        visible: !action.circle.visible,
       },
     },
   };
 
   return {
     ...state,
-    circles
+    circles: _circles,
+    filtered: {
+      ...state.filtered,
+      circles: {
+        ...state.original.circles,
+        features: filterCircles(state.original, _circles)
+      },
+    },
   };
 };
 

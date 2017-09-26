@@ -6,8 +6,8 @@ import { circleColor } from 'utils/circles';
 import TrianglePoints from './triangle'; 
 import { visibleTypes } from 'utils'; 
 
-const circleStyle = (circle, types) => {
-  if(types[circle.properties.colours].visible){
+const circleStyle = (circle, fill=true) => {
+  if(fill){
     const color = circleColor(circle);
     return {
       stroke: false,
@@ -100,7 +100,7 @@ class CirclesLayer extends Component {
     
     this.renderedElements = 0;
     this.updateSizeKeys(circles);
-    
+    const _types = visibleTypes(types);
     if(circles.length === 0){
       this.props.onRender();
       return null;
@@ -117,7 +117,7 @@ class CirclesLayer extends Component {
             .domain([10, 70])
             .range([15000, 70000]);
           const radius = scale(parseInt(size)*10);
-          const style = circleStyle(circle, types);
+          const style = circleStyle(circle, _types.length > 0);
           style.fillOpacity= show?1:0;
           if(size === '01'){
             const points = TrianglePoints(center, radius);
