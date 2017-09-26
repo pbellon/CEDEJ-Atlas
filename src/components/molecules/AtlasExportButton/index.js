@@ -8,16 +8,24 @@ import { openExportModal } from 'store/actions';
 
 const Button = styled(GenericButton)`
   width:100%;
-  margin-top: 1em;
   pointer-events: ${({visible})=>visible?'auto':'none'};
   opacity: ${({visible})=>visible?1:0};
   transition: opacity .5s ease-in-out;
 `;
 
+const Holder = styled.div`
+  position: fixed;
+  left: 0;
+  right:0;
+  bottom:0;
+`;
+
 const AtlasExportButton = (props)=>(
-  <Button {...props }>
-    Exporter
-  </Button>
+  <Holder>
+    <Button {...props }>
+      Exporter
+    </Button>
+  </Holder>
 );
 
 const mapStateToProps = state => ({

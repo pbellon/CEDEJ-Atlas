@@ -9,7 +9,7 @@ import { sidebar, navbar } from 'utils/styles';
 
 const Side = styled.div`
   position: fixed;
-  overflow: auto;
+  overflow: hidden;
   top: ${navbar.height}px;
   z-index: ${(props)=>(props.zIndex || 0)};
   bottom: 0px;
