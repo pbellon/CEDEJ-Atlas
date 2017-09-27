@@ -1,6 +1,10 @@
-import * as actions from './actions';
+import union from '@turf/union';
+import { featureReduce } from '@turf/meta';
+
 import * as temperaturesTypes from 'utils/temperatures';
 import * as circlesTypes from 'utils/circles';
+
+import * as actions from './actions';
 
 import { DATA_LOAD_SUCCESS } from '../data/actions';
 import { initialState } from './selectors';
@@ -52,7 +56,79 @@ const filterCircles = (original, { sizes, types }) => {
   }
 };
 
+const chunkize = (arr, chunkSize=10) => {
+  const len = arr.length;
+  const nbChunks = Math.round(len/chunkSize);
+  console.log('nbChunks', nbChunks, len);
+  const res = [];
+  let i = 0;
+  for(i; i < nbChunks; i++){
+    const j = i * chunkSize;
+    res.push(arr.slice(j, j + chunkSize)); 
+  }
+  return res;
+};
 
+const reduceFeatures = (features) => {
+  let i = 0;
+  let polygon;
+  const featuresChunks = chunkize(features, 37);
+  const len = featuresChunks.length;
+  const polygons = [];
+  for(i; i < len; i++){
+    polygons.push(union.apply(null, featuresChunks[i]));
+  }
+  return union.apply(null, polygons);
+}
+
+const featuresUnionMask = ({
+  temperatures,
+  aridity,
+  filtered,
+  ...state,
+}) => {
+  console.log('featuresUnionMask');
+  const { winter, summer } = temperatures;
+  const {
+    aridity:{features:fAridity},
+    temperatures:{features:fTemperatures},
+  } = filtered;
+
+  const toArr = (obj) => Object.keys(obj).map(key => obj[key]);
+  const hasElems = (arr) => arr.length > 0;
+  const hasFiltered = (arr) => arr.filter(el => el.visible).length !== arr.length;
+  
+  const winterArr = toArr(winter);
+  const summerArr = toArr(summer);
+  const aridityArr = toArr(aridity);
+
+  const shouldPerform = (
+    hasElems(fAridity) && hasElems(fTemperatures)
+  ) && (
+    hasFiltered(winterArr) || hasFiltered(summerArr) || hasFiltered(aridityArr)
+  );
+
+  let unionMask;
+  
+  if(shouldPerform){
+    let start = (new Date()).getTime();
+    const aridityUnion = reduceFeatures(fAridity);
+    let elleapsed = (new Date()).getTime() - start;
+    console.log('Took', elleapsed / 1000, 'seconds');
+    start = (new Date()).getTime();
+    const temperaturesUnion = reduceFeatures(fTemperatures);
+    elleapsed = (new Date()).getTime() - start; 
+    console.log('Took', elleapsed / 1000, 'seconds');
+  }
+
+  return {
+    temperatures,
+    aridity,
+    filtered,
+    unionMask,
+    ...state,
+  }
+}
 const toggleTemperatureTypeVisibility = (state, action) => {
   const temperatures = {
     ...state.temperatures,
@@ -65,7 +141,7 @@ const toggleTemperatureTypeVisibility = (state, action) => {
     }
   };
 
-  return {
+  return featuresUnionMask({
     ...state,
     temperatures,
     filtered: {
@@ -75,7 +151,7 @@ const toggleTemperatureTypeVisibility = (state, action) => {
         features: filterTemperatures(state.original, temperatures),
       }
     }
-  }
+  });
 };
 
 const toggleAridityVisibility = (state, action) => {
@@ -87,7 +163,7 @@ const toggleAridityVisibility = (state, action) => {
     },
   };
   
-  return {
+  return featuresUnionMask({
     ...state,
     aridity,
     filtered: {
@@ -97,7 +173,7 @@ const toggleAridityVisibility = (state, action) => {
         features: filterAridity(state.original, aridity),
       }
     },
-  };
+  });
 };
 
 // makes a circle size visible or not.
