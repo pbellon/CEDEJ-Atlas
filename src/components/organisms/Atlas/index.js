@@ -174,7 +174,6 @@ export default class Atlas extends Component {
         hideContextualInfo={ hideContextualInfo }
         show={ showCircles } circles={ data.circles.features }/>
       <TileLayer zIndex={ 500 } url={ MAPBOX_WATER_URL } />
-      <TileLayer zIndex={ 600 } url={ MAPBOX_WATER_LABEL_URL } />
       <DesertsLayer
         minZoom={4} data={ deserts }/>
       </Map>
