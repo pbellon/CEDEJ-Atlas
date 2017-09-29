@@ -41,6 +41,7 @@ import { CanvasDelegate } from './canvas';
 export default class Atlas extends Component {
   static propTypes = {
     data: PropTypes.object,
+    counts: PropTypes.object,
     showAridity: PropTypes.bool,
     showTemperatures: PropTypes.bool,
     showCircles: PropTypes.bool,
@@ -50,8 +51,6 @@ export default class Atlas extends Component {
     isSidebarOpened: PropTypes.bool,
     onCirclesCreated: PropTypes.func.isRequired,
     onCirclesAdded: PropTypes.func.isRequired,
-    showContextualInfo: PropTypes.func.isRequired,
-    hideContextualInfo: PropTypes.func.isRequired,
     bindMapReference: PropTypes.func.isRequired,
     width: PropTypes.number,
     height: PropTypes.number,
@@ -60,11 +59,6 @@ export default class Atlas extends Component {
   static defaultProps = {
     print: false,
     isSidebarOpened: true,
-  }
-  
-  static childContextTypes = {
-    showContextualInfo: PropTypes.func,
-    hideContextualInfo: PropTypes.func
   }
 
   constructor(props){
@@ -110,19 +104,18 @@ export default class Atlas extends Component {
     const { showTooltip, tooltipPosition, tooltipData } = this.state;
     const {
       data,
+      counts,
       showCircles,
       showAridity,
       showTemperatures,
       onRender,
       onMapReady,
       circleTypes,
-      showContextualInfo,
-      hideContextualInfo,
       onCirclesAdded,
       onCirclesCreated,
       isSidebarOpened,
     } = this.props;
-    const { deserts, ...canvasData } = data;
+    const { deserts, circles, ...canvasData } = data;
     const bbox = [
       -179.2165527343741, -56.157571400448376,
       181.00012207031295,  84.62359619140625
@@ -164,16 +157,17 @@ export default class Atlas extends Component {
         showTemperatures={ showTemperatures }
         zIndex={ 400 } 
         data={ canvasData }
+        counts={ counts }
         delegate={ CanvasDelegate }/>
       <CirclesLayer
         types={circleTypes}
         onRender={ onRender } 
         onCirclesAdded={ onCirclesAdded }
         onCirclesCreated={ onCirclesCreated }
-        showContextualInfo={ showContextualInfo }
-        hideContextualInfo={ hideContextualInfo }
-        show={ showCircles } circles={ data.circles.features }/>
-      <TileLayer zIndex={ 500 } url={ MAPBOX_WATER_URL } />
+        show={ showCircles } circles={ circles.features }/>
+      { 
+        // <TileLayer zIndex={ 500 } url={ MAPBOX_WATER_URL } /> 
+      }
       <DesertsLayer
         minZoom={4} data={ deserts }/>
       </Map>

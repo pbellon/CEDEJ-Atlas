@@ -49,15 +49,18 @@ const Error = styled.span`
 
 class AtlasContainer extends Component {
   static propTypes = {
+    counts: PropTypes.shape({
+      aridity: PropTypes.object,
+      temperatures: PropTypes.object,
+    }),
     data: PropTypes.shape({
+      deserts: PropTypes.object,
       aridity: PropTypes.object,
       circles: PropTypes.object,
       temperatures: PropTypes.object,
     }),
-    canvasURL: PropTypes.string,
     circleTypes: PropTypes.object,
     error: PropTypes.object,
-    isContextualInfoVisible: PropTypes.bool,
     isRendering: PropTypes.bool,
     isSidebarOpened: PropTypes.bool,
     showTemperatures: PropTypes.bool,
@@ -69,25 +72,21 @@ class AtlasContainer extends Component {
     onRender: PropTypes.func,
     loadData: PropTypes.func.isRequired,
     bindMapReference: PropTypes.func.isRequired,
-    showContextualInfo: PropTypes.func.isRequired,
-    hideContextualInfo: PropTypes.func.isRequired,
   }
-
+  
   componentDidMount() {
     this.props.loadData();
   }
 
   render() {
     const {
-      print,
       mapReference,
       canvasURL,
       circleTypes,
       bindMapReference,
       data,
+      counts,
       error,
-      showContextualInfo,
-      hideContextualInfo,
       showAridity,
       showTemperatures,
       showCircles,
@@ -110,10 +109,9 @@ class AtlasContainer extends Component {
           <Atlas
             bindMapReference={bindMapReference}
             data={data}
+            counts={counts}
             circleTypes={circleTypes}
             isSidebarOpened={isSidebarOpened}
-            showContextualInfo={showContextualInfo}
-            hideContextualInfo={hideContextualInfo}
             onZoom={onZoom}
             onRender={onRender}
             onMapReady={onMapReady}
@@ -125,26 +123,19 @@ class AtlasContainer extends Component {
           />)
         }
         { data && (<AtlasLegend />) }
-        { !print && (
-          <Sidebar zIndex={1000}>
-            <SidebarToggleButton />
-            <SidebarContainer>
-              <AtlasFilters />
-              <AtlasExportButton/>
-            </SidebarContainer>
-          </Sidebar>
-        )}
-
-        { print && (
-          <PrintOverlay mapReference={mapReference}/>
-        )}
+        <Sidebar zIndex={1000}>
+          <SidebarToggleButton />
+          <SidebarContainer>
+            <AtlasFilters />
+            <AtlasExportButton/>
+          </SidebarContainer>
+        </Sidebar>
       </Holder>
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  print: ownProps.print,
   mapReference: ownProps.mapReference,
   canvasURL: ownProps.canvasURL,
   isSidebarOpened: fromSidebar.isOpened(state),
@@ -154,6 +145,7 @@ const mapStateToProps = (state, ownProps) => ({
   showTemperatures: fromLayers.isLayerVisible(state, fromLayers.temperatures(state)),
   showCircles: fromLayers.isLayerVisible(state, fromLayers.circles(state)),
   data: fromFilters.data(state),
+  counts: fromFilters.counts(state),
   circleTypes: fromFilters.circlesTypes(state),
   error: state.atlas.error,
 });
@@ -163,8 +155,6 @@ const mapDispatchToProps = dispatch => ({
   onZoom: () => dispatch(zoom()),
   onCirclesCreated: (circleSizes) => dispatch(setCircleSizesRefs(circleSizes)),
   onCirclesAdded: (sizes) => dispatch(onAdd(sizes)),
-  showContextualInfo: (data) => dispatch(showContextualInfo(data)),
-  hideContextualInfo: () => dispatch(hideContextualInfo()),
   loadData: () => dispatch(loadData()),
   onRender: () => dispatch(renderSuccess()),
   onMapReady: ()=>dispatch(mapReady()),

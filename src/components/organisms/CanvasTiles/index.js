@@ -28,11 +28,21 @@ class CanvasTilesLayer extends MapLayer {
   }
   
   updateAridityVisiblity(visibility){
+    if(!visibility){
+      this.delegate.disableMask();
+    } else {
+      this.delegate.enableMask();
+    }
     this.delegate.updateAridityVisibility(visibility);
     this.redraw();
   }
 
   updateTemperaturesVisiblity(visibility){
+    if(!visibility){
+      this.delegate.disableMask();
+    } else {
+      this.delegate.enableMask();
+    }
     this.delegate.updateTemperaturesVisibility(visibility);
     this.redraw();
   }
@@ -54,17 +64,47 @@ class CanvasTilesLayer extends MapLayer {
     {
       showAridity: fromAridityVisibility,
       showTemperatures: fromTemperaturesVisibility,
-      data:{ temperatures: fromTemps, aridity:fromAridity}
+      data:{
+        temperatures: fromTemps,
+        aridity:fromAridity,
+      }
     },
     {
       showAridity: toAridityVisibility,
       showTemperatures: toTemperaturesVisibility,
-      data:{ temperatures:toTemps, aridity:toAridity}
+      data:{
+        temperatures:toTemps,
+        aridity:toAridity,
+      },
+      counts: {
+        temperatures: tempsCounts,
+        aridity: aridityCounts,
+      }
     }
   ) {
+    console.log('counts', tempsCounts, aridityCounts);
+    const shouldEnableMask = (
+      (
+        tempsCounts.original != tempsCounts.current
+      ) && (
+        tempsCounts.current > 0
+      )
+    ) || (
+        (
+          aridityCounts.original != aridityCounts.current
+        ) && (
+          aridityCounts.current > 0
+        )
+    );
+    console.log('shouldEnableMask', shouldEnableMask);
     const diffAridity = fromAridity.features.length != toAridity.features.length;
     const diffTemps = fromTemps.features.length != toTemps.features.length;
     if(diffTemps || diffAridity){
+      if(shouldEnableMask){
+        this.delegate.enableMask();
+      } else {
+        this.delegate.disableMask();
+      }
       this.updateData({
         aridity:toAridity,
         temperatures: toTemps

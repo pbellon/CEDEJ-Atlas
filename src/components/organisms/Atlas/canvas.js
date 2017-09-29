@@ -1,10 +1,11 @@
-import { areaColor } from './styles';
 import { path as d3Path } from 'd3-path'; 
 import * as patternsUtil from 'utils/patterns';
 import * as boundaries from 'utils/boundaries';
 import { LatLng, Point } from 'leaflet';
 import geojsonvt from 'geojson-vt';
+import { debugCanvas } from 'utils';
 
+import { areaColor } from './styles';
 const drawFeaturePath = (feature, ctx, pad=0, ratio=1)=>{
   const type = feature.type;
   ratio = ctx.canvas.height / 4096;
@@ -23,19 +24,20 @@ const drawFeaturePath = (feature, ctx, pad=0, ratio=1)=>{
       else path.moveTo(p[0] * ratio + pad, p[1] * ratio + pad);
     }
   }
-  // if (type === 3 || type === 1) ctx.fill('evenodd');
-  // ctx.stroke();
   return path;
 }
 
-const drawArea = ({context, area, drawPath})=>{
-  const color = areaColor(area.tags.Temperatur);
+const drawArea = ({context, area, drawPath, forceColor, strokeWidth=1})=>{
+  const color = forceColor || areaColor(area.tags.Temperatur);
+  context.lineWidth = strokeWidth;
   context.fillStyle = color;
   context.strokeStyle = color;
   context.beginPath();
   const path = new Path2D(drawPath(area, context));
-  context.stroke(path);
-  context.fill(path);
+  if(strokeWidth > 0){
+    context.stroke(path);
+  }
+  context.fill(path, 'evenodd');
 };
 
 const drawPattern = ({context, aridity, drawPath, patterns}) => {
@@ -45,13 +47,14 @@ const drawPattern = ({context, aridity, drawPath, patterns}) => {
   context.fillStyle = pattern.canvasPattern;
   context.beginPath();
   const path = new Path2D(drawPath(aridity, context));
-  context.fill(path);
+  context.fill(path, 'evenodd');
 };
 
 const tau = 2 * Math.PI;
 export class CanvasDelegate {
   constructor(data){
     const self = this;
+    this.shouldUseMask = false;
     this.visibility = {
       aridity: true,
       temperatures: true,
@@ -68,6 +71,7 @@ export class CanvasDelegate {
     };
     this.processData(data);
   }
+
   updateAridityVisibility(visibility){
     this.visibility.aridity = visibility;
   }
@@ -97,60 +101,105 @@ export class CanvasDelegate {
       temperatures: tTemps ? tTemps.features : [],
     };
   }
+
+  enableMask(){
+    this.shouldUseMask = true;
+  }
+
+  disableMask(){
+    this.shouldUseMask = false;
+  }
+  createMask(modelCanvas, temperatures, aridity){
+    let canvas;
+    if(this.shouldUseMask){
+      canvas = document.createElement('canvas');
+      canvas.width = modelCanvas.width;
+      canvas.height = modelCanvas.height;
+      const ctx = canvas.getContext('2d');
+      this.drawAreas(ctx, aridity, 'red', 3);
+      ctx.globalCompositeOperation = 'xor';
+      this.drawAreas(ctx, temperatures, 'red', 2);
+      ctx.clip();
+    }
+    return canvas;
+
+  }
   setLayer(layer){ this.layer = layer; }
   updateData(data){
     this.processData(data);
   }
 
   draw({canvas, coords, size, layer}){
-    let i, n;
-
     const { aridity, temperatures } = this.getTileFeatures(coords);
     const {
       aridity:isAridityVisible,
       temperatures:isTemperaturesVisible 
     } = this.visibility;
 
-    // const zoom = Math.pow(2, 8 + zoomLevel) / 2 / Math.PI; 
+    const mask = this.createMask(canvas, temperatures, aridity);
     const context = canvas.getContext("2d");
     const patterns = this.patterns = this.patterns || patternsUtil.initPatterns(context);
-
     context.clearRect(0, 0, canvas.width, canvas.height);
-    // context.translate(origin.x, origin.y);
-    if(isTemperaturesVisible){
-      n = temperatures.length;
-      context.globalCompositeOperation = 'source-over';
-      for(i = 0; i < n; i++){
-        // draw zones with different colors to do
-        drawArea({area:temperatures[i], context, drawPath:drawFeaturePath});
+    context.globalCompositeOperation = 'source-over';
+    try { 
+      if(isTemperaturesVisible){
+        this.drawAreas(context, temperatures, null, 0);
       }
-    }
-    if(isAridityVisible){
-      n = aridity.length;
-      // context.globalCompositeOperation = 'destination-out';
-      for(i = 0; i < n; i++){
-        // create aridity textures and substract them from areas paths (if needed)
-        // draw aridity boundaries (for certains kinds of aridity)
-        drawPattern({
-          aridity: aridity[i],
-          patterns,
+
+      if(isAridityVisible){
+        this.drawAridityPatterns(context, aridity, patterns);
+        boundaries.addBoundaries({
           context,
-          drawPath:drawFeaturePath
+          patterns,
+          drawPath: drawFeaturePath,
+          boundaries: aridity,
+          layer:this.layer,
         });
       }
 
-      context.globalCompositeOperation = 'source-over';
-      boundaries.addBoundaries({
-        context,
-        patterns,
-        drawPath: drawFeaturePath,
-        boundaries: aridity,
-        layer:this.layer,
-      });
+      if(mask){
+        context.globalCompositeOperation = 'destination-out';
+        context.drawImage(mask, 0, 0, mask.width, mask.height);
+      }
+      context.clip();
+    } catch(e) {
+      console.error('error while drawing', e);
+      throw e;
     }
     return canvas;
-
   }
+
+  drawAreas(context, features, color, strokeWidth=1){
+    let i = 0;
+    const n = features.length;
+    for(i; i < n; i++){
+      // draw zones with different colors to do
+      drawArea({
+        area:features[i],
+        context,
+        drawPath:drawFeaturePath,
+        forceColor:color,
+        strokeWidth,
+      });
+    }
+  }
+
+  drawAridityPatterns(context, aridity, patterns){
+    let i = 0;
+    const n = aridity.length;
+    for(i; i < n; i++){
+      // create aridity textures and substract them from areas paths (if needed)
+      // draw aridity boundaries (for certains kinds of aridity)
+      drawPattern({
+        aridity: aridity[i],
+        patterns,
+        context,
+        drawPath:drawFeaturePath
+      });
+    }
+  }
+
+
   render(args){
     return new Promise((resolve, reject)=>{
       try {
