@@ -1,12 +1,12 @@
 import { put, fork, call, take } from 'redux-saga/effects';
 import { turfizeGeoJSON } from 'utils/data';
 import api from 'services/api';
-import simplify from '@turf/simplify';
 import * as actions from './actions';
 
-const simplifyPolygon = (feature) => (
-  simplify(feature, 0.0025)
-);
+// import simplify from '@turf/simplify';
+// const simplifyPolygon = (feature) => (
+//  simplify(feature, 0.001)
+// );
 
 export function* loadData() {
   try {
@@ -18,15 +18,13 @@ export function* loadData() {
     } = yield call(api.getMapData);
     
     aridity.features = aridity.features
-      .filter(a => a.properties.d_TYPE != null)
-      .map(simplifyPolygon);
+      .filter(a => a.properties.d_TYPE != null);
 
     circles.features = circles.features
       .filter(c => c.properties.size_ != null && c.properties.colours != null);
 
     temperatures.features = temperatures.features
-      .filter(t => parseInt(t.properties.Temperatur, 10) > 0)
-      .map(simplifyPolygon);
+      .filter(t => parseInt(t.properties.Temperatur, 10) > 0);
 
     const dataToTurfize = {
       aridity,
@@ -48,6 +46,10 @@ export function* loadData() {
     console.error('Data loading failed', e);
     yield put(actions.loadFailure(e));
   }
+}
+
+function * runSagas(data, worker){
+  yield call(loadData, data);
 }
 
 export function* watchLoadData() {
