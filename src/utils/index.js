@@ -1,7 +1,6 @@
 import ReactTooltip from 'react-tooltip';
 
 export const updateTooltips = ()=>{
-  console.log('updateTooltips!'); 
   ReactTooltip.rebuild();
 }
 export const noop = ()=>null;
