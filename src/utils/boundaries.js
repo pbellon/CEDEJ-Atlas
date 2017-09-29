@@ -87,18 +87,14 @@ const teethBoundaries = ({ context, path, gap=TEETH_GAP }) => {
   // du triangle.
   const path2d = new Path2D(path.path);
   const nbMarkers = Math.floor(path.length / gap) + 1;
-
+  context.save();
   context.strokeStyle =  BOUNDARY_COLOR;
   context.lineWidth = BOUNDARY_WIDTH;
   context.lineJoin = 'round';
-
-  context.beginPath();
   context.stroke(path2d);
-  context.closePath();
   context.fillStyle = BOUNDARY_COLOR;
   // optimisation possible: faire un prérendu des triangle et dessiner
   // ensuite les triangle
-  context.beginPath();
   for (let i = 1; i <= nbMarkers; i += 1) {
     const l = i * gap;
     const { base0, base1, tops } = triangleAt(path, l);
@@ -113,16 +109,18 @@ const teethBoundaries = ({ context, path, gap=TEETH_GAP }) => {
     context.lineTo(top[0], top[1]);
     context.fill();
   }
-  context.closePath();
+  context.clip();
+  context.restore();
 };
 
 const fullBoundaries = ({ context, path }) => {
   const path2d = new Path2D(path.path);
   context.strokeStyle = BOUNDARY_COLOR;
   context.lineWidth = BOUNDARY_WIDTH;
-  context.beginPath();
+  context.save();
   context.stroke(path2d);
-  context.closePath();
+  context.clip();
+  context.restore();
 };
 
 const dashedBoundaries = ({ context, path }) => {
@@ -130,9 +128,10 @@ const dashedBoundaries = ({ context, path }) => {
   context.strokeStyle = BOUNDARY_COLOR;
   context.lineWidth = BOUNDARY_WIDTH;
   context.setLineDash([5, 5]);
-  context.beginPath();
+  context.save();
   context.stroke(path2d);
-  context.closePath();
+  context.clip();
+  context.restore();
   context.setLineDash([]);
 };
 

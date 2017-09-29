@@ -127,14 +127,14 @@ export class CanvasDelegate {
         aridityCanvas.getContext('2d'),
         aridity,
         'black',
-        3
+        2 
       );
       
       this.drawAreas(
         temperaturesCanvas.getContext('2d'),
         temperatures,
         'black',
-        2
+        0
       );
       
       const ctx = canvas.getContext('2d');
