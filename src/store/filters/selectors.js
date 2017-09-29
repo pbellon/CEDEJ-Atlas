@@ -1,4 +1,21 @@
 export const initialState = {
+  isUpdatingUnionMask: true,
+  originalCounts: {
+    temperatures: 7,
+    aridity: 4,
+  },
+  counts: {
+    temperatures:{
+      original: 7,
+      previous: 7,
+      current: 7,
+    },
+    aridity: {
+      original: 4,
+      previous: 4,
+      current: 4,
+    },
+  },
   temperatures: {
     winter: {
       A: {
@@ -113,5 +130,6 @@ export const circlesSizes = state => state.circles.sizes;
 export const dryMonths = state => state.circles.month_range;
 
 export const filters = state => state;
-
+export const isUpdatingUnionMask = state => state.isUpdatingUnionMask
 export const data = state => state.filtered;
+export const counts = state => state.counts;

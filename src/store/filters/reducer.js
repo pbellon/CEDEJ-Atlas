@@ -1,6 +1,3 @@
-import union from '@turf/union';
-import { featureReduce } from '@turf/meta';
-
 import * as temperaturesTypes from 'utils/temperatures';
 import * as circlesTypes from 'utils/circles';
 
@@ -56,79 +53,10 @@ const filterCircles = (original, { sizes, types }) => {
   }
 };
 
-const chunkize = (arr, chunkSize=10) => {
-  const len = arr.length;
-  const nbChunks = Math.round(len/chunkSize);
-  console.log('nbChunks', nbChunks, len);
-  const res = [];
-  let i = 0;
-  for(i; i < nbChunks; i++){
-    const j = i * chunkSize;
-    res.push(arr.slice(j, j + chunkSize)); 
-  }
-  return res;
-};
+const visibleTypesCount = (types) => (
+  Object.keys(types).filter(key => types[key].visible).length
+);
 
-const reduceFeatures = (features) => {
-  let i = 0;
-  let polygon;
-  const featuresChunks = chunkize(features, 37);
-  const len = featuresChunks.length;
-  const polygons = [];
-  for(i; i < len; i++){
-    polygons.push(union.apply(null, featuresChunks[i]));
-  }
-  return union.apply(null, polygons);
-}
-
-const featuresUnionMask = ({
-  temperatures,
-  aridity,
-  filtered,
-  ...state,
-}) => {
-  console.log('featuresUnionMask');
-  const { winter, summer } = temperatures;
-  const {
-    aridity:{features:fAridity},
-    temperatures:{features:fTemperatures},
-  } = filtered;
-
-  const toArr = (obj) => Object.keys(obj).map(key => obj[key]);
-  const hasElems = (arr) => arr.length > 0;
-  const hasFiltered = (arr) => arr.filter(el => el.visible).length !== arr.length;
-  
-  const winterArr = toArr(winter);
-  const summerArr = toArr(summer);
-  const aridityArr = toArr(aridity);
-
-  const shouldPerform = (
-    hasElems(fAridity) && hasElems(fTemperatures)
-  ) && (
-    hasFiltered(winterArr) || hasFiltered(summerArr) || hasFiltered(aridityArr)
-  );
-
-  let unionMask;
-  
-  if(shouldPerform){
-    let start = (new Date()).getTime();
-    const aridityUnion = reduceFeatures(fAridity);
-    let elleapsed = (new Date()).getTime() - start;
-    console.log('Took', elleapsed / 1000, 'seconds');
-    start = (new Date()).getTime();
-    const temperaturesUnion = reduceFeatures(fTemperatures);
-    elleapsed = (new Date()).getTime() - start; 
-    console.log('Took', elleapsed / 1000, 'seconds');
-  }
-
-  return {
-    temperatures,
-    aridity,
-    filtered,
-    unionMask,
-    ...state,
-  }
-}
 const toggleTemperatureTypeVisibility = (state, action) => {
   const temperatures = {
     ...state.temperatures,
@@ -140,10 +68,22 @@ const toggleTemperatureTypeVisibility = (state, action) => {
       }
     }
   };
-
-  return featuresUnionMask({
+  const tempsCount = ({winter, summer}) => (
+    visibleTypesCount(winter) + visibleTypesCount(summer)
+  );
+  
+  const counts = {
+    ...state.counts,
+    temperatures: {
+      original: state.counts.temperatures.original,
+      previous: tempsCount(state.temperatures),
+      current: tempsCount(temperatures),
+    },
+  };
+  return {
     ...state,
     temperatures,
+    counts,
     filtered: {
       ...state.filtered,
       temperatures: {
@@ -151,7 +91,7 @@ const toggleTemperatureTypeVisibility = (state, action) => {
         features: filterTemperatures(state.original, temperatures),
       }
     }
-  });
+  };
 };
 
 const toggleAridityVisibility = (state, action) => {
@@ -162,10 +102,19 @@ const toggleAridityVisibility = (state, action) => {
       visible: !state.aridity[action.aridity.name].visible,
     },
   };
-  
-  return featuresUnionMask({
+  const counts = {
+    ...state.counts,
+    aridity: {
+      original: state.counts.aridity.original,
+      previous: visibleTypesCount(state.aridity),
+      current: visibleTypesCount(aridity),
+    },
+  };
+
+  return {
     ...state,
     aridity,
+    counts,
     filtered: {
       ...state.filtered,
       aridity: {
@@ -173,7 +122,7 @@ const toggleAridityVisibility = (state, action) => {
         features: filterAridity(state.original, aridity),
       }
     },
-  });
+  };
 };
 
 // makes a circle size visible or not.
@@ -231,22 +180,30 @@ const toggleCircleTypeVisibility = (state, action) => {
 };
 
 export default (state = initialState, action) => {
+  let result;
   switch (action.type) {
     case DATA_LOAD_SUCCESS:
-      return {
+      result = {
         ...state,
         original: action.data,
         filtered: action.data,
       };
+      break;
     case actions.TOGGLE_TEMPERATURE_TYPE_VISIBILITY:
-      return toggleTemperatureTypeVisibility(state, action);
+      result = toggleTemperatureTypeVisibility(state, action);
+      break;
     case actions.TOGGLE_ARIDITY_VISIBILITY:
-      return toggleAridityVisibility(state, action);
+      result = toggleAridityVisibility(state, action);
+      break;
     case actions.TOGGLE_CIRCLE_SIZE_VISIBILITY:
-      return toggleCircleSizeVisibility(state, action);
+      result = toggleCircleSizeVisibility(state, action);
+      break;
     case actions.TOGGLE_CIRCLE_TYPE_VISIBILITY:
-      return toggleCircleTypeVisibility(state, action);
+      result = toggleCircleTypeVisibility(state, action);
+      break;
     default:
-      return state;
+      result = state;
+      break;
   }
+  return result;
 };
