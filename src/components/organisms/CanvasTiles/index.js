@@ -82,7 +82,6 @@ class CanvasTilesLayer extends MapLayer {
       }
     }
   ) {
-    console.log('counts', tempsCounts, aridityCounts);
     const shouldEnableMask = (
       (
         tempsCounts.original != tempsCounts.current
@@ -96,7 +95,6 @@ class CanvasTilesLayer extends MapLayer {
           aridityCounts.current > 0
         )
     );
-    console.log('shouldEnableMask', shouldEnableMask);
     const diffAridity = fromAridity.features.length != toAridity.features.length;
     const diffTemps = fromTemps.features.length != toTemps.features.length;
     if(diffTemps || diffAridity){

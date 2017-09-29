@@ -66,7 +66,6 @@ const AridityInfo = ({
 );
 
 const CirclesInfo = ({ circles: { properties: { size_, colours }}}) => {
-  console.log('CirclesInfo!');
   const droughtMonths = circlesUtils.getDroughtMonths(size_);
   return (
     <Info>
