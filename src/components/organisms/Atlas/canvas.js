@@ -109,16 +109,38 @@ export class CanvasDelegate {
   disableMask(){
     this.shouldUseMask = false;
   }
+
+  createCanvas(modelCanvas){
+    const canvas = document.createElement('canvas');
+    canvas.width = modelCanvas.width;
+    canvas.height = modelCanvas.height;
+    return canvas;
+  }
+
   createMask(modelCanvas, temperatures, aridity){
     let canvas;
     if(this.shouldUseMask){
-      canvas = document.createElement('canvas');
-      canvas.width = modelCanvas.width;
-      canvas.height = modelCanvas.height;
+      canvas = this.createCanvas(modelCanvas);
+      const aridityCanvas = this.createCanvas(modelCanvas);
+      const temperaturesCanvas = this.createCanvas(modelCanvas);
+      this.drawAreas(
+        aridityCanvas.getContext('2d'),
+        aridity,
+        'black',
+        3
+      );
+      
+      this.drawAreas(
+        temperaturesCanvas.getContext('2d'),
+        temperatures,
+        'black',
+        2
+      );
+      
       const ctx = canvas.getContext('2d');
-      this.drawAreas(ctx, aridity, 'red', 3);
+      ctx.drawImage(aridityCanvas,0,0, canvas.width, canvas.height);
       ctx.globalCompositeOperation = 'xor';
-      this.drawAreas(ctx, temperatures, 'red', 2);
+      ctx.drawImage(temperaturesCanvas,0,0, canvas.width, canvas.height);
       ctx.clip();
     }
     return canvas;
