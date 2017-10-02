@@ -19,7 +19,8 @@ import {
   CirclesLayer,
   ContextualInfoPopup,
   DesertsLayer,
-  CanvasTiles, 
+  AridityTemperaturesLayer,
+  LakesRiversLayer,
 } from 'components';
 
 import { filterFeatures } from 'utils/data';
@@ -35,8 +36,6 @@ import {
   MAPBOX_WATER_LABEL_URL,
   MAPBOX_WATER_URL
 } from './constants'; 
-
-import { CanvasDelegate } from './canvas';
 
 export default class Atlas extends Component {
   static propTypes = {
@@ -91,7 +90,7 @@ export default class Atlas extends Component {
 
   onClick(e){
     // useful to avoid looking up for deserts.
-    const { data:{ deserts, ...searchInFeatures}} = this.props;
+    const { data:{ deserts, lakesAndRivers, ...searchInFeatures}} = this.props;
     const features = filterFeatures(searchInFeatures,  e.latlng);
     if(Object.keys(features).length){
       this.showTooltip(e.latlng, features);
@@ -115,7 +114,7 @@ export default class Atlas extends Component {
       onCirclesCreated,
       isSidebarOpened,
     } = this.props;
-    const { deserts, circles, ...canvasData } = data;
+    const { deserts, lakesAndRivers, circles, ...aridityAndTemperatures } = data;
     const bbox = [
       -179.2165527343741, -56.157571400448376,
       181.00012207031295,  84.62359619140625
@@ -135,7 +134,7 @@ export default class Atlas extends Component {
         onclick={this.onClick.bind(this)}
         maxBounds={bounds}
         minZoom={2}
-        maxZoom={9}
+        maxZoom={7}
         renderer={canvas()}
         animate={true}
         zoomControl={false}
@@ -151,14 +150,19 @@ export default class Atlas extends Component {
       <ScaleControl position={ 'bottomright' }/>
       <TileLayer url={ BASE_LAYER_URL } />
 
-      <CanvasTiles
+      <AridityTemperaturesLayer
         onRendered={ onRender }
         showAridity={ showAridity }
         showTemperatures={ showTemperatures }
         zIndex={ 400 } 
-        data={ canvasData }
-        counts={ counts }
-        delegate={ CanvasDelegate }/>
+        data={ aridityAndTemperatures }
+        counts={ counts }/>
+      
+      <LakesRiversLayer
+        data={ lakesAndRivers }
+        zIndex={ 500 }/>
+        
+
       <CirclesLayer
         types={circleTypes}
         onRender={ onRender } 

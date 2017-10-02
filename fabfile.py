@@ -43,7 +43,7 @@ def cleanData():
     cleanJSON('aridity.json', ['d_TYPE', 'OBJECTID_1']);
 
 def combineDataFiles(out='data/compiled.json'):
-    files = ['circles','temperatures', 'deserts', 'aridity']
+    files = ['circles','temperatures', 'deserts', 'aridity', 'rivers', 'lakes']
     result = {}
     for name in files:
         fd = open("data/clean/%s.json" % name, 'r')

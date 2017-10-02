@@ -15,8 +15,15 @@ export function* loadData() {
       temperatures,
       circles,
       deserts,
+      lakes,
+      rivers,
     } = yield call(api.getMapData);
     
+    const lakesAndRivers = {
+      lakes,
+      rivers,
+    };
+   
     aridity.features = aridity.features
       .filter(a => a.properties.d_TYPE != null);
 
@@ -39,6 +46,7 @@ export function* loadData() {
     const data = {
       ...dataToTurfize,
       deserts,
+      lakesAndRivers,
     };
 
     yield put(actions.loadSuccess(data));

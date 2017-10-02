@@ -6,5 +6,6 @@ dist
 *.swo
 node_modules
 coverage
+shapefiles
 webpack/webpack-assets.json
 *.pyc

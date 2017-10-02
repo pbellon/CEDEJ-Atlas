@@ -9,4 +9,5 @@ export const MAPBOX_WATER_URL = 'https://api.mapbox.com/styles/v1/skoli/cj5qqg6d
 
 export const VECTOR_TILE_URL = 'https://basemaps.arcgis.com/v1/arcgis/rest/services/World_Basemap/VectorTileServer/tile/{z}/{y}/{x}.pbf';
 
+export const WORLD_OCEAN_REFERENCE = 'https://services.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Reference/MapServer/tile/{z}/{y}/{x}.png';
 

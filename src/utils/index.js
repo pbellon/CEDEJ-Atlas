@@ -4,7 +4,7 @@ export const updateTooltips = ()=>{
   ReactTooltip.rebuild();
 }
 export const noop = ()=>null;
-
+export const isFunction = (f)=>typeof f === typeof noop;
 export const debugCanvas = (canvas)=>{
   const { width, height } = canvas;
   const strF = `width=${width} height=${height}`;
