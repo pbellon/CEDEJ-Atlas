@@ -84,10 +84,7 @@
     "@turf/circle": "^4.6.0",
     "@turf/helpers": "^4.6.0",
     "@turf/inside": "^4.6.0",
-    "@turf/kinks": "^4.7.3",
     "@turf/simplify": "^4.7.3",
-    "@turf/union": "^4.7.3",
-    "@turf/unkink-polygon": "^4.7.3",
     "babel-polyfill": "^6.20.0",
     "d3-path": "^1.0.5",
     "d3-scale": "^1.0.6",
@@ -126,6 +123,6 @@
     "styled-theme": "^0.3.0",
     "styled-tools": "^0.1.2",
     "validator": "^7.0.0",
-    "whatwg-fetch": "^2.0.2"
+    "whatwg-fetch": "^2.0.2",
   }
 }
