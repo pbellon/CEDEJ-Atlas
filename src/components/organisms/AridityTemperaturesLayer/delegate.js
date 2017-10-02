@@ -83,7 +83,15 @@ class Delegate extends CanvasDelegate {
         this.drawAreas({
           context,
           features: aridity,
-          fillStyle: (feature)=>patterns.findByKey(feature.tags.d_TYPE).canvasPattern,
+          fillStyle: (feature)=>{
+            return patterns.findByKey(feature.tags.d_TYPE).canvasPattern
+          },
+          stopCondition: (feature)=>{
+            const pattern = patterns.findByKey(feature.tags.d_TYPE);
+            if(!pattern){ return true; }
+            if(!pattern.stripes){ return true; }
+            return false;
+          },
           strokeWidth: 0
         });
         boundaries.addBoundaries({

@@ -82,30 +82,33 @@ class CanvasDelegate {
     if(strokeStyle){
       context.strokeStyle = strokeStyle;
     }
-    context.beginPath();
+    // context.beginPath();
     const path = new Path2D(this.drawPath(area, context));
     if(strokeWidth > 0){
       context.stroke(path);
     }
     context.fill(path, 'evenodd');
-    context.closePath();
+    // context.closePath();
   }
 
-  drawAreas({context, features, fillStyle, strokeStyle, strokeWidth=1}){
+  drawAreas({context, features, fillStyle, strokeStyle, strokeWidth=1, stopCondition}){
     let i = 0;
     const n = features.length;
     for(i; i < n; i++){
       const area = features[i];
+      if(stopCondition){
+        if(stopCondition(area)){ continue; }
+      }
       const fill = isFunction(fillStyle) ? fillStyle(area) : fillStyle;
       const stroke = isFunction(strokeStyle) ? strokeStyle(area) : strokeStyle;
-      if(!fill){ return }
+      const strokeW = isFunction(strokeWidth) ? strokeWidth(area) : strokeWidth;
       // draw zones with different colors to do
       this.drawArea({
         area,
         context,
         fillStyle:fill,
         strokeStyle:stroke,
-        strokeWidth,
+        strokeWidth:strokeW,
       });
     }
   }
