@@ -5,6 +5,7 @@ dist
 *.swp
 *.swo
 node_modules
+public/data
 coverage
 shapefiles
 webpack/webpack-assets.json
