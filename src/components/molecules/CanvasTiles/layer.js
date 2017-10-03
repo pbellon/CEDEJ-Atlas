@@ -76,9 +76,11 @@ export const CanvasTiles = GridLayer.extend({
       height: bounds.getNorthEast().lat - bounds.getSouthWest().lat
     };
   },
+
   getZoom: function(){
     return this._map.getZoom();
   },
+
   createTile: function(coords){
     const tile = DomUtil.create('canvas', 'leaflet-tile');
     const size = this.getTileSize();
