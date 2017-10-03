@@ -54,16 +54,15 @@ export const CanvasTiles = GridLayer.extend({
 
   tilePoint: function (map, coords,tilePoint, tileSize) {
     // start coords to tile 'space'
-    var s = tilePoint.multiplyBy(tileSize);
+    const s = tilePoint.multiplyBy(tileSize);
 
     // actual coords to tile 'space'
-    var p = map.project(new LatLng(coords[0], coords[1]));
+    const p = map.project(new LatLng(coords[0], coords[1]));
 
     // point to draw
-    var x = Math.round(p.x - s.x);
-    var y = Math.round(p.y - s.y);
-    return {x: x,
-      y: y};
+    const x = Math.round(p.x - s.x);
+    const y = Math.round(p.y - s.y);
+    return {x, y};
   },
    /**
     * Creates a query for the quadtree from bounds
@@ -77,9 +76,13 @@ export const CanvasTiles = GridLayer.extend({
       height: bounds.getNorthEast().lat - bounds.getSouthWest().lat
     };
   },
+  getZoom: function(){
+    return this._map.getZoom();
+  },
   createTile: function(coords){
     const tile = DomUtil.create('canvas', 'leaflet-tile');
     const size = this.getTileSize();
+    const zoom = this.getZoom();
     tile.width = size.x;
     tile.height = size.y;
     if(this._drawDelegate){
@@ -88,48 +91,11 @@ export const CanvasTiles = GridLayer.extend({
         layer: this,
         size,
         coords,
+        zoom,
       });
     }
     return tile;
   },
-  _draw: function (tileCanvas, tilePoint, zoom) {
-
-    var tileSize = this.options.tileSize;
-
-    var nwPoint = tilePoint.multiplyBy(tileSize);
-    var sePoint = nwPoint.add(new Point(tileSize, tileSize));
-
-
-    // padding to draw points that overlap with this tile but their center is in other tile
-    var pad = new Point(this.options.padding, this.options.padding);
-
-    nwPoint = nwPoint.subtract(pad);
-    sePoint = sePoint.add(pad);
-
-    var bounds = new LatLngBounds(this._map.unproject(sePoint), this._map.unproject(nwPoint));
-    var zoomScale  = 1 / ((40075016.68 / tileSize) / Math.pow(2, zoom));
-    // console.time('process');
-
-    if (this._drawDelegate) {
-      this._drawDelegate.draw({
-        layer: this,
-        canvas: tileCanvas,
-        tilePoint: tilePoint,
-        bounds: bounds,
-        size: tileSize,
-        zoomScale: zoomScale,
-        zoom: zoom,
-        options: this.options,
-      });
-    }
-    this._onRendered && this._onRendered();
-
-    // console.timeEnd('process');
-
-
-  },
-
-
 });
 
 export const canvasTiles = function (drawDelegate, onRendered, options) {
