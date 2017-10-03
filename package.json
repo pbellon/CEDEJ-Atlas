@@ -123,6 +123,6 @@
     "styled-theme": "^0.3.0",
     "styled-tools": "^0.1.2",
     "validator": "^7.0.0",
-    "whatwg-fetch": "^2.0.2",
+    "whatwg-fetch": "^2.0.2"
   }
 }
