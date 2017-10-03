@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { LayerGroup, Pane, CircleMarker, Tooltip } from 'react-leaflet'; 
+import { LayerGroup, Pane, CircleMarker, Tooltip } from 'react-leaflet';
 import { Polygon } from 'leaflet';
 
 import { DesertName } from 'components';
@@ -8,49 +8,62 @@ import { DesertName } from 'components';
 import './DesertsLayer.css';
 
 class DesertsLayer extends Component {
-  constructor(props, context){
+  static propTypes = {
+    minZoom: PropTypes.number,
+    data: PropTypes.shape({
+      features: PropTypes.array,
+    }),
+  };
+
+  constructor(props, context) {
     super(props, context);
     this.tooltips = [];
   }
 
-  addToTooltips(ref, scalerank){
+  shouldComponentUpdate() { return false; }
+  
+  addToTooltips(ref, scalerank) {
     this.tooltips.push({
       tooltipRef: ref,
-      scalerank: scalerank
+      scalerank,
     });
   }
   
-  checkZoom(){
+  checkZoom() {
     const { minZoom } = this.props;
     const { map } = this.context;
     const zoom = map.getZoom();
-    if(zoom >= minZoom){
-      this.tooltips.filter(({scalerank})=>scalerank>=zoom).forEach(this.hideTooltip);
-      this.tooltips.filter(({scalerank})=>scalerank<zoom).forEach(this.showTooltip);
+    if (zoom >= minZoom) {
+      this.tooltips
+        .filter(({ scalerank }) => scalerank >= zoom)
+        .forEach(this.hideTooltip);
+
+      this.tooltips
+        .filter(({ scalerank }) => scalerank < zoom)
+        .forEach(this.showTooltip);
     } else {
       this.tooltips.forEach(this.hideTooltip);
     }
-
   }
-  shouldComponentUpdate(){ return false; }
-  showTooltip(tooltip){
-    if(tooltip.tooltipRef){
-      const { tooltipRef: { leafletElement }} = tooltip;
+  
+  showTooltip(tooltip) {
+    if (tooltip.tooltipRef) {
+      const { tooltipRef: { leafletElement } } = tooltip;
       leafletElement.openTooltip();
     }
   }
 
-  hideTooltip(tooltip){
-    if(tooltip.tooltipRef){
-      const { tooltipRef: { leafletElement }} = tooltip;
+  hideTooltip(tooltip) {
+    if (tooltip.tooltipRef) {
+      const { tooltipRef: { leafletElement } } = tooltip;
       leafletElement.closeTooltip();
     }
   }
 
-  render(){
-    const { data, minZoom } = this.props;
+  render() {
+    const { data } = this.props;
     const { map } = this.context;
-    map.on('zoomend', this.checkZoom.bind(this)); 
+    map.on('zoomend', () => this.checkZoom());
     const Tooltips = data.features.map((feature, key) => {
       const polygon = new Polygon(feature.geometry.coordinates).addTo(map);
       const center = polygon.getBounds().getCenter();
@@ -58,20 +71,21 @@ class DesertsLayer extends Component {
       map.removeLayer(polygon);
       return (
         <CircleMarker
-          ref={(ref)=>this.addToTooltips(ref, feature.properties.scalerank)}
+          ref={(ref) => this.addToTooltips(ref, feature.properties.scalerank)}
           fill={false}
           stroke={false}
           key={key}
-          center={ [center.lng, center.lat ] }>
-          <Tooltip pane={'desert-tooltip'} style={{opacity: 1}} permanent>
-            <DesertName desert={ feature }>{ label }</DesertName>
+          center={[center.lng, center.lat]}
+        >
+          <Tooltip pane={'desert-tooltip'} style={{ opacity: 1 }} permanent>
+            <DesertName desert={feature}>{ label }</DesertName>
           </Tooltip>
         </CircleMarker>
       );
     });
     return (
-      <Pane name={'desert-tooltip'} style={{zIndex: 1200}}>
-        <LayerGroup onAdd={ this.checkZoom.bind(this)}>
+      <Pane name={'desert-tooltip'} style={{ zIndex: 1200 }}>
+        <LayerGroup onAdd={() => this.checkZoom()}>
           { Tooltips }
         </LayerGroup>
       </Pane>

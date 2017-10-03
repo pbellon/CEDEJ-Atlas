@@ -14,31 +14,31 @@ export const DOWNLOAD_MAP = 'map/download';
 export const DOWNLOAD_MAP_SUCCESS = 'map/download/success';
 export const DOWNLOAD_MAP_FAIL = 'map/download/fail';
 
-export const bindMapReference = (mapReference)=>({
+export const bindMapReference = (mapReference) => ({
   type: BIND_MAP_REFERENCE,
-  mapReference
+  mapReference,
 });
 
 
-export const previewExport = (mapRef)=>({
+export const previewExport = (mapRef) => ({
   type: PREVIEW_EXPORT,
   mapReference: mapRef,
 });
 
-export const previewDone = (preview)=>({
+export const previewDone = (preview) => ({
   type: PREVIEW_DONE,
   preview,
 });
 
-export const previewFail = (error)=>({
+export const previewFail = (error) => ({
   type: PREVIEW_FAIL,
   error,
 });
 
-export const openExportModal = ()=>({ type:OPEN_MODAL });
-export const closeExportModal = ()=>({ type:CLOSE_MODAL });
+export const openExportModal = () => ({ type: OPEN_MODAL });
+export const closeExportModal = () => ({ type: CLOSE_MODAL });
 
-export const renderDownloadableMapSuccess = (url) => {
+export const renderDownloadableMapSuccess = () => {
   return {
     type: RENDER_DOWNLOADABLE_SUCCESS,
   };
@@ -53,15 +53,11 @@ export const renderDownloadableMap = (data, resolve, reject) => {
   };
 };
 
-export const renderDownloadableMapFailure = (error, resolve, rejet) => ({
+export const renderDownloadableMapFailure = (error, resolve, reject) => ({
   type: RENDER_DOWNLOADABLE_FAIL,
   error,
   resolve,
   reject,
-});
-export const mapRenderFailure = (error) => ({
-  type: RENDER_FAIL,
-  error,
 });
 
 export const downloadMap = (data, resolve, reject) => ({
@@ -77,5 +73,5 @@ export const mapDownloadSuccess = (data) => ({
 });
 
 export const mapDownloadFailure = (error) => ({
-  type: DOWNLOAD_MAP_FAIL,  error,
+  type: DOWNLOAD_MAP_FAIL, error,
 });

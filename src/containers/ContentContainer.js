@@ -17,7 +17,7 @@ const Placeholder = styled.div`
 const Container = styled.div`
   max-width: 60%;
   margin: auto;
-  padding-top: ${({noTopPadding})=>noTopPadding?0:50}px;
+  padding-top: ${({ noTopPadding }) => noTopPadding ? 0 : 50}px;
   padding-left: 30px;
   padding-right: 15px;
   @media (max-width: 1500px){
@@ -28,15 +28,15 @@ const Container = styled.div`
   }
 `;
 const ContentContainer = ({ children, ...props }) => (
-  <Holder {...props }>
+  <Holder {...props}>
     <Container>
       <Content>
-      { 
-        children
-      }
+        {
+          children
+        }
       </Content>
     </Container>
-    <Placeholder/>
+    <Placeholder />
   </Holder>
 );
 
@@ -46,6 +46,6 @@ ContentContainer.propTypes = {
 
 ContentContainer.defaultProps = {
   verticalAlign: false,
-}
+};
 
 export default ContentContainer;

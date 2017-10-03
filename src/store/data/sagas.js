@@ -56,17 +56,12 @@ export function* loadData() {
   }
 }
 
-function * runSagas(data, worker){
-  yield call(loadData, data);
-}
-
 export function* watchLoadData() {
   while (true) {
     const data = yield take(actions.DATA_LOAD);
     yield call(loadData, data);
   }
 }
-
 
 export default function* () {
   yield fork(watchLoadData);

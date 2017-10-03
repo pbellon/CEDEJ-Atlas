@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /* canvas-toBlob.js
  * A canvas.toBlob() implementation.
  * 2016-05-26

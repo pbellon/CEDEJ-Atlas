@@ -5,7 +5,7 @@ export const initialState = {
     aridity: 4,
   },
   counts: {
-    temperatures:{
+    temperatures: {
       original: 7,
       previous: 7,
       current: 7,
@@ -30,7 +30,7 @@ export const initialState = {
         name: 'C',
         visible: true,
       },
-      D: { 
+      D: {
         name: 'D',
         visible: true,
       },
@@ -71,13 +71,13 @@ export const initialState = {
   circles: {
     month_range: [1, 12],
     sizes: {
-      '01': { name: '01', visible: true }, 
-      '02': { name: '02', visible: true }, 
-      '03': { name: '03', visible: true }, 
-      '04': { name: '04', visible: true }, 
-      '05': { name: '05', visible: true }, 
-      '06': { name: '06', visible: true }, 
-      '07': { name: '07', visible: true }, 
+      '01': { name: '01', visible: true },
+      '02': { name: '02', visible: true },
+      '03': { name: '03', visible: true },
+      '04': { name: '04', visible: true },
+      '05': { name: '05', visible: true },
+      '06': { name: '06', visible: true },
+      '07': { name: '07', visible: true },
     },
     types: {
       A: {
@@ -130,6 +130,6 @@ export const circlesSizes = state => state.circles.sizes;
 export const dryMonths = state => state.circles.month_range;
 
 export const filters = state => state;
-export const isUpdatingUnionMask = state => state.isUpdatingUnionMask
+export const isUpdatingUnionMask = state => state.isUpdatingUnionMask;
 export const data = state => state.filtered;
 export const counts = state => state.counts;

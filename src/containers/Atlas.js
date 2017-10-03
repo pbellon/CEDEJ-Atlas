@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Route } from 'react-router-dom';
+
 import {
   loadData,
   renderSuccess,
   mapReady,
-  showContextualInfo,
-  hideContextualInfo,
   bindMapReference,
   setCircleSizesRefs,
   onAdd,
@@ -26,7 +24,6 @@ import {
   Atlas,
   LoadingIndicator,
   Sidebar,
-  TutorialModal,
   AtlasFilters,
   SidebarToggleButton,
   AtlasExportButton,
@@ -68,6 +65,7 @@ class AtlasContainer extends Component {
     showAridity: PropTypes.bool,
     showCircles: PropTypes.bool,
     onZoom: PropTypes.func,
+    onMapReady: PropTypes.func,
     onCirclesCreated: PropTypes.func,
     onCirclesAdded: PropTypes.func,
     onRender: PropTypes.func,
@@ -81,8 +79,6 @@ class AtlasContainer extends Component {
 
   render() {
     const {
-      mapReference,
-      canvasURL,
       circleTypes,
       bindMapReference,
       data,
@@ -98,10 +94,9 @@ class AtlasContainer extends Component {
       onCirclesAdded,
       onRender,
       onMapReady,
-      onMapPage,
     } = this.props;
     return (
-      <Holder className='atlas-holder'>
+      <Holder className={'atlas-container'}>
         <LoadingIndicator isLoading={isRendering} />
         { error &&
           <Error>{ error.message }</Error>
@@ -128,7 +123,7 @@ class AtlasContainer extends Component {
           <SidebarToggleButton />
           <SidebarContainer>
             <AtlasFilters />
-            <AtlasExportButton/>
+            <AtlasExportButton />
           </SidebarContainer>
         </Sidebar>
       </Holder>
@@ -136,9 +131,7 @@ class AtlasContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  mapReference: ownProps.mapReference,
-  canvasURL: ownProps.canvasURL,
+const mapStateToProps = state => ({
   isSidebarOpened: fromSidebar.isOpened(state),
   isContextualInfoVisible: fromAtlas.isContextualInfoVisible(state),
   isRendering: fromAtlas.isRendering(state),
@@ -152,13 +145,13 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  bindMapReference: (ref)=>dispatch(bindMapReference(ref)),
+  bindMapReference: (ref) => dispatch(bindMapReference(ref)),
   onZoom: () => dispatch(zoom()),
   onCirclesCreated: (circleSizes) => dispatch(setCircleSizesRefs(circleSizes)),
   onCirclesAdded: (sizes) => dispatch(onAdd(sizes)),
   loadData: () => dispatch(loadData()),
   onRender: () => dispatch(renderSuccess()),
-  onMapReady: ()=>dispatch(mapReady()),
+  onMapReady: () => dispatch(mapReady()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AtlasContainer);

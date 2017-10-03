@@ -1,4 +1,4 @@
-import { CanvasTiles } from 'components'; 
+import { CanvasTiles } from 'components';
 
 import Delegate from './delegate';
 

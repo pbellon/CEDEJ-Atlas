@@ -8,7 +8,7 @@ export const filterFeatures = (data, latLng) => {
   const result = {};
   Object.keys(data).forEach(i => {
     let set = data[i];
-    if(typeof set === typeof {}){
+    if (typeof set === typeof {}) {
       set = set.features;
     }
     const matching = set.find(f => {

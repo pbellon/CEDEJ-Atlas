@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import {
@@ -10,17 +11,24 @@ import {
 import { fromTutorial } from 'store/selectors';
 import { hideTutorial } from 'store/actions';
 
-const TutorialTitle = ()=> <span>Comment utiliser la carte</span>
+const TutorialTitle = () => <span>Comment utiliser la carte</span>;
 
-const TutorialModal = ({isOpen, inMap, onClose})=>(
+const TutorialModal = ({ isOpen, inMap, onClose }) => (
   <Modal
-    title={<TutorialTitle/>}
+    title={<TutorialTitle />}
     isOpen={isOpen && inMap}
     onClose={onClose}
-    closeable={true}>
-    <Markdown source={Content.Tutorial}/>
+    closeable
+  >
+    <Markdown source={Content.Tutorial} />
   </Modal>
 );
+
+TutorialModal.propTypes = {
+  isOpen: PropTypes.bool,
+  inMap: PropTypes.bool,
+  onClose: PropTypes.func,
+};
 
 const mapStateToProps = (state, ownProps) => ({
   inMap: ownProps.inMap,
@@ -28,7 +36,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onClose: ()=>dispatch(hideTutorial()),
+  onClose: () => dispatch(hideTutorial()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TutorialModal);

@@ -14,7 +14,7 @@ export default (state = initialState, action) => {
         ...state,
         showMoreInfos: true,
       };
-    case actions.HIDE_MORE_INFOS: 
+    case actions.HIDE_MORE_INFOS:
       return {
         ...state,
         showMoreInfos: false,

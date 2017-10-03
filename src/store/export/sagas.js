@@ -2,19 +2,28 @@ import { take, put, call, fork } from 'redux-saga/effects';
 import carto from 'services/carto';
 import * as actions from './actions';
 
-export function* previewMap({mapReference}){
+export function* previewMap({ mapReference }) {
   try {
     const data = yield call(carto.preview, mapReference);
     yield put(actions.previewDone(data));
-  } catch(e) {
+  } catch (e) {
     yield put(actions.previewFail(e));
-}
+  }
 }
 
-export function* watchPreviewMap(){
+export function* watchPreviewMap() {
   while (true) {
     const data = yield take(actions.PREVIEW_EXPORT);
     yield call(previewMap, data);
+  }
+}
+
+export function* downloadMap(renderedMap) {
+  try {
+    const data = yield call(carto.download, renderedMap);
+    yield put(actions.mapDownloadSuccess(data));
+  } catch (e) {
+    yield put(actions.mapDownloadFailure(e));
   }
 }
 
@@ -25,15 +34,6 @@ export function* renderDownloadableMap(renderData) {
   } catch (e) {
     console.error('Error during downloadable map rendering', e);
     yield put(actions.renderDownloadableMapFailure(e));
-  }
-}
-
-export function* downloadMap(renderedMap) {
-  try {
-    const data = yield call(carto.download, renderedMap);
-    yield put(actions.mapDownloadSuccess(data));
-  } catch (e) {
-    yield put(actions.mapDownloadFailure(e));
   }
 }
 
@@ -51,7 +51,7 @@ export function* watchDownloadMap() {
   }
 }
 
-export default function* (){
+export default function* () {
   yield fork(watchPreviewMap);
   yield fork(watchRenderDownloadableMap);
   yield fork(watchDownloadMap);

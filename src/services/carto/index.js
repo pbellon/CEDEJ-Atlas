@@ -5,7 +5,7 @@ import download from './download';
 const carto = {
   render,
   preview,
-  download
+  download,
 };
 
 export default carto;

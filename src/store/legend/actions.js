@@ -12,4 +12,4 @@ export const hideMoreInfos = () => ({
 
 export const showMoreInfos = () => ({
   type: SHOW_MORE_INFOS,
-})
+});

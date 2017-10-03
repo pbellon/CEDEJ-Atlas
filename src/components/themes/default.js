@@ -4,11 +4,15 @@ import { reversePalette } from 'styled-theme/composer';
 const theme = {};
 
 theme.palette = {
-  primary: ['rgb(221, 19, 19)', 'rgb(216, 56, 56)',
+  primary: [
+    'rgb(221, 19, 19)',
+    'rgb(216, 56, 56)',
     'rgb(151, 5, 5)',
-    'rgb(240, 179, 179)', 
-    'rgb(151, 5, 5)', 
-     '#71bcf7', '#c2e2fb'],
+    'rgb(240, 179, 179)',
+    'rgb(151, 5, 5)',
+    '#71bcf7',
+    '#c2e2fb',
+  ],
   secondary: ['#c2185b', '#e91e63', '#f06292', '#f8bbd0'],
   danger: ['#d32f2f', '#f44336', '#f8877f', '#ffcdd2'],
   alert: ['#ffa000', '#ffc107', '#ffd761', '#ffecb3'],

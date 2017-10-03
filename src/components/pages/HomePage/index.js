@@ -1,10 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import styled from 'styled-components'; 
+import styled from 'styled-components';
 import { font, palette } from 'styled-theme';
 import {
   Content as GenericContent,
-  MarkdownContent,
   Button as _Button,
   LoadingIcon,
   PartnersLogo,
@@ -12,15 +12,14 @@ import {
   Heading,
   Bold,
 } from 'components';
-import { fromAtlas } from 'store/selectors'; 
+import { fromAtlas } from 'store/selectors';
 
 import Background from './background.png';
 
-const HomeTitleDescription = `Un portail élaboré par le [CEDEJ](http://cedej-eg.org/), une unité mixte française de recherche à l’étranger du [CNRS](http://www.cnrs.fr/) et du [Ministère de l'Europe et des Affaires étrangères](http://www.diplomatie.gouv.fr/fr/)`;
+const HomeTitleDescription = 'Un portail élaboré par le [CEDEJ](http://cedej-eg.org/), une unité mixte française de recherche à l’étranger du [CNRS](http://www.cnrs.fr/) et du [Ministère de l\'Europe et des Affaires étrangères](http://www.diplomatie.gouv.fr/fr/)';
 
 
-const HomeActionText = `**CRÉER votre carte personnalisée des zones arides  
-[CONTRIBUER à l’actualisation de la base de données](/page/contribute) sur l’aridité**`;
+const HomeActionText = '**CRÉER votre carte personnalisée des zones arides  \n[CONTRIBUER à l’actualisation de la base de données](/page/contribute) sur l’aridité**';
 
 const Centered = styled.div`
   text-align: center;
@@ -159,14 +158,14 @@ const Middle = styled.div`
   justify-content: space-around;
 `;
 
-const HomeTitle = styled(()=>(
+const HomeTitle = () => (
   <TitleHolder>
-    <MainTitle level={1}>Aridity <span className='grey'>World</span> Map</MainTitle>
-    <MainDescription source={HomeTitleDescription}/>
+    <MainTitle level={1}>Aridity <span className={'grey'}>World</span> Map</MainTitle>
+    <MainDescription source={HomeTitleDescription} />
   </TitleHolder>
-))``;
+);
 
-const HomePage = ({isLoading}) => {
+const HomePage = ({ isLoading }) => {
   return (
     <div>
       <AtlasBackground />
@@ -174,16 +173,16 @@ const HomePage = ({isLoading}) => {
         <Content>
           <Top>
             <Left>
-              <HomeTitle/>
+              <HomeTitle />
             </Left>
           </Top>
           <Middle>
             <Centered>
-              <Markdown source={HomeActionText}/>
-              <Button to='/map'>
+              <Markdown source={HomeActionText} />
+              <Button to={'/map'}>
                 { isLoading && (
                   <LoadingHolder>
-                    <LoadingIcon reverse={true}/>Chargement de la carte
+                    <LoadingIcon reverse />Chargement de la carte
                   </LoadingHolder>
                 )}
                 { !isLoading && (
@@ -191,22 +190,28 @@ const HomePage = ({isLoading}) => {
                 )}
               </Button>
             </Centered>
-            </Middle>
+          </Middle>
 
-            <Bottom style={{height:'3.1em'}}><Left><Bold>© CEDEJ - 2017</Bold></Left></Bottom>
-            <BottomBar>
-              <Center style={{maxWidth:'500px', margin:'auto'}}>
-                <PartnersLogo height={'120px'} horizontal={true}/>
-              </Center>
-            </BottomBar>
+          <Bottom style={{ height: '3.1em' }}>
+            <Left><Bold>© CEDEJ - 2017</Bold></Left>
+          </Bottom>
+          <BottomBar>
+            <Center style={{ maxWidth: '500px', margin: 'auto' }}>
+              <PartnersLogo height={'120px'} horizontal />
+            </Center>
+          </BottomBar>
         </Content>
       </Holder>
     </div>
   );
 };
 
+HomePage.propTypes = {
+  isLoading: PropTypes.bool,
+};
+
 const mapStateToProps = state => ({
-  isLoading: fromAtlas.isRendering(state)
+  isLoading: fromAtlas.isRendering(state),
 });
 
 export default connect(mapStateToProps)(HomePage);

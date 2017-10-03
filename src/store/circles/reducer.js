@@ -4,21 +4,19 @@ import * as atlasActions from '../atlas/actions';
 
 const getSizes = ({ refs }) => {
   const sizes = {};
-  if(!refs){
+  if (!refs) {
     return {};
   }
   Object.keys(refs).forEach(key => {
     const { leafletElement } = refs[key];
-    if(key === '01'){
+    if (key === '01') {
       const parts = leafletElement._parts[0];
-      if(parts && (parts.length > 1)){
+      if (parts && (parts.length > 1)) {
         const radius = (parts[1].x - parts[0].x) / 2;
         sizes[key] = radius;
       }
-    } else {
-      if(leafletElement._radius){
-        sizes[key] = leafletElement._radius;
-      }
+    } else if (leafletElement._radius) {
+      sizes[key] = leafletElement._radius;
     }
   });
   return sizes;

@@ -1,8 +1,8 @@
 import { initialState } from './selectors';
 import * as actions from './actions';
 
-export default (state = initialState, action)=>{
-  switch(action.type){
+export default (state = initialState, action) => {
+  switch (action.type) {
     case actions.BIND_MAP_REFERENCE:
       return {
         ...state,
@@ -30,7 +30,6 @@ export default (state = initialState, action)=>{
         previewing: false,
       };
     case actions.PREVIEW_FAIL:
-      console.error('Map preview failed:', action.error);
       return {
         ...state,
         previewing: false,
@@ -50,22 +49,19 @@ export default (state = initialState, action)=>{
       return {
         ...state,
         error: action.error,
-        renderingDownloadable: false
+        renderingDownloadable: false,
       };
-    case actions.DOWNLOAD_MAP_SUCCESS: 
+    case actions.DOWNLOAD_MAP_SUCCESS:
       return {
         ...state,
         renderingDownloadable: false,
-      }
+      };
     case actions.DOWNLOAD_MAP_FAIL:
       return {
         ...state,
         renderingDownloadable: false,
         error: action.error,
-      }
+      };
     default: return state;
-
   }
-
-  return state;
-}
+};

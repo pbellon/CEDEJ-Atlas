@@ -1,4 +1,3 @@
-// import * as patterns from './patterns';
 const BOUNDARY_COLOR = 'rgba(0,0,0,0.7)';
 const TEETH_GAP = 20;
 const BOUNDARY_WIDTH = 1.33;
@@ -79,7 +78,7 @@ const triangleAt = (path, l, base = 4, height = 4) => {
   };
 };
 
-const teethBoundaries = ({ context, path, gap=TEETH_GAP }) => {
+const teethBoundaries = ({ context, path, gap = TEETH_GAP }) => {
   // piste d'optimisation:
   // au lieu de faire (pour chaque triangle) une verif sur l'appartenance
   // d'un point à un chemin nous pouvons calculer le "centroid" de chaque
@@ -88,7 +87,7 @@ const teethBoundaries = ({ context, path, gap=TEETH_GAP }) => {
   const path2d = new Path2D(path.path);
   const nbMarkers = Math.floor(path.length / gap) + 1;
   context.save();
-  context.strokeStyle =  BOUNDARY_COLOR;
+  context.strokeStyle = BOUNDARY_COLOR;
   context.lineWidth = BOUNDARY_WIDTH;
   context.lineJoin = 'round';
   context.stroke(path2d);
@@ -156,7 +155,7 @@ const initData = ({ boundaries, context, drawPath }) => {
   let boundary;
   const _boundaries = [];
   const len = boundaries.length;
-  const fnPath = (feature)=>(drawPath(feature, context).toString());
+  const fnPath = (feature) => (drawPath(feature, context).toString());
 
   for (i; i < len; i += 1) {
     boundary = boundaries[i];

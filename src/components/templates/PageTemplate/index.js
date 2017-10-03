@@ -1,16 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route } from 'react-router-dom';
 import styled from 'styled-components';
-import { size } from 'styled-theme';
-import { navbar } from 'utils/styles'; 
-import {
-  Navbar,
-  Sidebar,
-  SidebarToggleButton,
-  AtlasFilters,
-  PartnersLogo,
-} from 'components';
+
+import { Navbar } from 'components';
+import { navbar } from 'utils/styles';
 
 const ContainerHolder = styled.div`
   position: fixed;
@@ -34,7 +27,7 @@ const Container = styled.div`
 
 const AppTemplate = ({ children }) => (
   <div className="page-template">
-    <Navbar/>
+    <Navbar />
     <ContainerHolder>
       <Container>
         { children }

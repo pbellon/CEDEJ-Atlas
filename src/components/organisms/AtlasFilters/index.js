@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types'; 
 import { connect } from 'react-redux';
-import styled from 'styled-components'; 
+import styled from 'styled-components';
 
 import {
   LayerFilterGroup,
@@ -14,13 +15,18 @@ import { fromSidebar } from 'store/selectors';
 
 const Container = styled.div`
   transition: opacity .5s ease;
-  opacity: ${({visible})=>visible?1:0};
-  pointer-events:${({visible})=>visible?'auto':'none'};
+  opacity: ${({ visible }) => visible ? 1 : 0};
+  pointer-events:${({ visible }) => visible ? 'auto' : 'none'};
 `;
 
-const AtlasFilters = ({visible})=>(
+const headingStyle = {
+  marginBottom: '0.1rem',
+  fontWeight:'bold'
+};
+
+const AtlasFilters = ({ visible }) => (
   <Container visible={visible}>
-    <Heading level={3} style={{marginBottom: '0.1rem', fontWeight:'bold'}}>Personnaliser la carte</Heading>
+    <Heading level={3} style={headingStyle}>Personnaliser la carte</Heading>
     <LayerFilterGroup layer={ 'aridity' }
       heading={'Aridité'}>
       <AridityFilters/>
@@ -37,6 +43,10 @@ const AtlasFilters = ({visible})=>(
     </LayerFilterGroup>
   </Container>
 );
+
+AtlasFilters.propTypes = {
+  visible: PropTypes.bool,
+};
 
 export default connect(state => ({
   visible: fromSidebar.isOpened(state),

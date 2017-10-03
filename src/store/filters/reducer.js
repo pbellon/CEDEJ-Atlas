@@ -1,5 +1,4 @@
 import * as temperaturesTypes from 'utils/temperatures';
-import * as circlesTypes from 'utils/circles';
 
 import * as actions from './actions';
 
@@ -8,23 +7,24 @@ import { initialState } from './selectors';
 
 const filterTemperatures = (original, temperatures) => {
   const types = temperaturesTypes.filter(temperatures).map(t => `${t.value}`);
-  if(types.length > 0){
+  let result = [];
+  if (types.length > 0) {
     const f = t => types.indexOf(t.properties.Temperatur) > -1;
-    return original.temperatures.features.filter(f);
-  } else {
-    return [];
+    result = original.temperatures.features.filter(f);
   }
+  return result;
 };
 
 const filterAridity = (original, aridity) => {
   const types = Object.keys(aridity)
     .filter(type => aridity[type].visible);
-  if(types.length > 0){
+  let result = [];
+
+  if (types.length > 0) {
     const f = aridity => types.indexOf(aridity.properties.d_TYPE) > -1;
-    return original.aridity.features.filter(f);
-  } else {
-    return [];
+    result = original.aridity.features.filter(f);
   }
+  return result;
 };
 
 const filterCircles = (original, { sizes, types }) => {
@@ -41,16 +41,16 @@ const filterCircles = (original, { sizes, types }) => {
   const typeFilter = (circle) => (
     visibleTypes.indexOf(circle.properties.colours) > -1
   );
-
-  if(visibleSizes.length > 0){
+  let result = [];
+  if (visibleSizes.length > 0) {
     let f = sizeFilter;
-    if(visibleTypes.length > 0){
+    if (visibleTypes.length > 0) {
       f = (circle) => sizeFilter(circle) && typeFilter(circle);
     }
-    return original.circles.features.filter(f);
-  } else {
-    return [];
+    result = original.circles.features.filter(f);
   }
+
+  return result;
 };
 
 const visibleTypesCount = (types) => (
@@ -60,15 +60,16 @@ const visibleTypesCount = (types) => (
 const toggleTemperatureTypeVisibility = (state, action) => {
   const temperatures = {
     ...state.temperatures,
-    [action.temperature]:{
+    [action.temperature]: {
       ...state.temperatures[action.temperature],
-      [action.temperatureType.name]:{
+      [action.temperatureType.name]: {
         ...action.temperatureType,
-        visible:!action.temperatureType.visible
-      }
-    }
+        visible: !action.temperatureType.visible,
+      },
+    },
   };
-  const tempsCount = ({winter, summer}) => (
+
+  const tempsCount = ({ winter, summer }) => (
     visibleTypesCount(winter) + visibleTypesCount(summer)
   );
   
@@ -89,8 +90,8 @@ const toggleTemperatureTypeVisibility = (state, action) => {
       temperatures: {
         ...state.original.temperatures,
         features: filterTemperatures(state.original, temperatures),
-      }
-    }
+      },
+    },
   };
 };
 
@@ -120,7 +121,7 @@ const toggleAridityVisibility = (state, action) => {
       aridity: {
         ...state.original.aridity,
         features: filterAridity(state.original, aridity),
-      }
+      },
     },
   };
 };
@@ -136,8 +137,8 @@ const toggleCircleSizeVisibility = (state, action) => {
       [size.name]: {
         ...size,
         visible: !size.visible,
-      }
-    }
+      },
+    },
   };
 
   return {
@@ -147,9 +148,9 @@ const toggleCircleSizeVisibility = (state, action) => {
       ...state.filtered,
       circles: {
         ...state.filtered.circles,
-        features: filterCircles(state.original, _circles)
-      }
-    }
+        features: filterCircles(state.original, _circles),
+      },
+    },
   };
 };
 
@@ -173,7 +174,7 @@ const toggleCircleTypeVisibility = (state, action) => {
       ...state.filtered,
       circles: {
         ...state.original.circles,
-        features: filterCircles(state.original, _circles)
+        features: filterCircles(state.original, _circles),
       },
     },
   };

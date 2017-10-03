@@ -75,8 +75,8 @@ const createCanvasPattern = ({ stripes }) => {
   return p;
 };
 
-export const findPatternByValue = (value)=>(
-  PATTERNS.find(({ key }) => key = value)
+export const findPatternByValue = (value) => (
+  PATTERNS.find(({ key }) => key === value)
 );
 
 export const findPattern = ({ properties: { d_TYPE: type } }) => {

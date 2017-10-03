@@ -1,8 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import formats from 'utils/formats';
 
-import styled from 'styled-components';
 import {
   closeExportModal,
   renderDownloadableMap,
@@ -16,21 +16,15 @@ import {
   fromCircles,
 } from 'store/selectors';
 
-import { LoadingIndicator, Modal, Button, PDFIcon, PNGIcon } from 'components';
+import {
+  Modal,
+  LoadingIndicator,
+  ExportPreview,
+  Button,
+  PDFIcon,
+  PNGIcon,
+} from 'components';
 
-const PreviewHolder = styled.div``;
-const PreviewImage = styled.img`
-  max-width: 100%;
-`;
-
-const ExportPreview = ({ isPreviewing, mapPreview })=>(
-  <PreviewHolder>
-    <LoadingIndicator isLoading={isPreviewing} />
-    { !isPreviewing && mapPreview && (
-      <PreviewImage src={mapPreview.url} alt="Apperçu de la carte avant export"/>
-    )}
-  </PreviewHolder>
-);
 
 const exportModalStyle = {
   minWidth: '600px',
@@ -48,24 +42,41 @@ const ExportModal = ({
   onClose,
 }) => (
   <Modal
-    style={exportModalStyle} 
+    style={exportModalStyle}
     isOpen={isOpen}
-    closeable={true}
-    onAfterOpen={()=>onAfterOpen(mapReference)}
-    onClose={onClose}>
-    <ExportPreview isPreviewing={isPreviewing} mapPreview={mapPreview}/>
+    closeable
+    onAfterOpen={() => onAfterOpen(mapReference)}
+    onClose={onClose}
+  >
+    <ExportPreview
+      isPreviewing={isPreviewing}
+      mapPreview={mapPreview}
+    />
     
-    <LoadingIndicator isLoading={isRendering}/>
+    <LoadingIndicator isLoading={isRendering} />
     <Button onClick={exportInPNG(exportData)}>
-      <PNGIcon height={25} width={25}/>&nbsp;Exporter en PNG
+      <PNGIcon height={25} width={25} />&nbsp;Exporter en PNG
     </Button>
     &nbsp;
     <Button onClick={exportInPDF(exportData)}>
-      <PDFIcon height={25} width={25}/>&nbsp;Exporter en PDF
+      <PDFIcon height={25} width={25} />&nbsp;Exporter en PDF
     </Button>
-    
   </Modal>
 );
+
+ExportModal.propTypes = {
+  isOpen: PropTypes.bool,
+  exportData: PropTypes.object,
+  exportInPNG: PropTypes.func,
+  exportInPDF: PropTypes.func,
+  onAfterOpen: PropTypes.func,
+  onClose: PropTypes.func,
+  mapReference: PropTypes.object,
+  isPreviewing: PropTypes.bool,
+  isRendering: PropTypes.bool,
+  mapPreview: PropTypes.object,
+
+};
 
 const mapStateToProps = state => ({
   exportData: {
@@ -74,7 +85,6 @@ const mapStateToProps = state => ({
     mapPreview: fromExport.mapPreview(state),
     mapReference: fromExport.mapReference(state),
     filters: fromFilters.filters(state),
-    circleSizes: fromCircles.sizes(state),
   },
   mapReference: fromExport.mapReference(state),
   mapPreview: fromExport.mapPreview(state),
@@ -84,14 +94,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  exportInPNG: (data)=>()=>(
-    dispatch(renderDownloadableMap({format:formats.PNG, ...data}))
+  exportInPNG: (data) => () => (
+    dispatch(renderDownloadableMap({ format: formats.PNG, ...data }))
   ),
-  exportInPDF: (data)=>()=>(
-    dispatch(renderDownloadableMap({format:formats.PDF, ...data}))
+  exportInPDF: (data) => () => (
+    dispatch(renderDownloadableMap({ format: formats.PDF, ...data }))
   ),
-  onClose: ()=>dispatch(closeExportModal()),
-  onAfterOpen: (mapRef)=>dispatch(previewExport(mapRef)),
+  onClose: () => dispatch(closeExportModal()),
+  onAfterOpen: (mapRef) => dispatch(previewExport(mapRef)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExportModal);

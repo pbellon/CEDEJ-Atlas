@@ -1,15 +1,16 @@
 import ReactTooltip from 'react-tooltip';
 
-export const updateTooltips = ()=>{
+export const updateTooltips = () => {
   ReactTooltip.rebuild();
-}
-export const noop = ()=>null;
-export const isFunction = (f)=>typeof f === typeof noop;
-export const debugCanvas = (canvas)=>{
+};
+
+export const noop = () => null;
+export const isFunction = (f) => typeof f === typeof noop;
+export const debugCanvas = (canvas) => {
   const { width, height } = canvas;
   const strF = `width=${width} height=${height}`;
   window.open(canvas.toDataURL('image/png', 1), 'DebugCanvasWindow', strF);
-}
+};
 
 export const arrToObj = (arr, key = (v) => v.value) => {
   const obj = {};
@@ -28,7 +29,7 @@ export const fakeContext = () => document.createElement('canvas')
 
 export const visibleTypes = (types) => {
   return Object.keys(types)
-    .map( name => types[name])
+    .map(name => types[name])
     .filter(type => type.visible);
 };
 // export { data, patterns, boundaries };

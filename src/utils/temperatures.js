@@ -1,9 +1,9 @@
-import { arrToObj, inRange } from 'utils';
+import { arrToObj } from 'utils';
 
 const TEMPERATURES = [
   {
     value: 1,
-    winter: 'A', 
+    winter: 'A',
     winter_range: [20, 30],
     summer: 'A',
     summer_range: [30],
@@ -109,17 +109,17 @@ export const filter = ({
   return TEMPERATURES
     .filter(temp => (
       (
-        winterVisible.indexOf(temp.winter) > -1 
+        winterVisible.indexOf(temp.winter) > -1
       ) && (
         summerVisible.indexOf(temp.summer) > -1
       )
     ));
-}
+};
 
-export const getSummerRange = (value)=>findByValue(value).summer_range;
-export const getWinterRange = (value)=>findByValue(value).winter_range;
+export const findByValue = (value) => TEMPS_OBJ[value];
+export const getSummerRange = (value) => findByValue(value).summer_range;
+export const getWinterRange = (value) => findByValue(value).winter_range;
 
-export const findByValue = (value)=>TEMPS_OBJ[value]
 
 export const findTemperature = ({ properties: { Temperatur } }) => (
   findByValue(Temperatur)

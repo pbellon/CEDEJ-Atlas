@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { size, palette } from 'styled-theme';
-import { Route } from 'react-router-dom';
+import { palette } from 'styled-theme';
 import { connect } from 'react-redux';
 import { fromSidebar } from 'store/selectors';
 import { sidebar, navbar } from 'utils/styles';
@@ -11,7 +10,7 @@ const Side = styled.div`
   position: fixed;
   overflow: hidden;
   top: ${navbar.height}px;
-  z-index: ${(props)=>(props.zIndex || 0)};
+  z-index: ${(props) => (props.zIndex || 0)};
   bottom: 0px;
   right: 0px;
   transform: translate(0, 0);
@@ -24,24 +23,28 @@ const Side = styled.div`
   }
 `;
 
-const Sidebar = ({ children, opened, ...props})=>{
-  const klass = opened ? '':'closed';
+const Sidebar = ({ children, opened, ...props }) => {
+  const klass = opened ? '' : 'closed';
   return (
     <Side className={klass} {...props}>
       { children }
-     </Side>
+    </Side>
   );
 };
 Sidebar.propTypes = {
   opened: PropTypes.bool,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
 };
 
 Sidebar.defaultProps = {
   zIndex: 5,
 };
 
-const mapStateToProps = (state)=>({
-  opened: fromSidebar.isOpened(state)
+const mapStateToProps = (state) => ({
+  opened: fromSidebar.isOpened(state),
 });
 
 export default connect(mapStateToProps)(Sidebar);
