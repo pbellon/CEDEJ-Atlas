@@ -65,17 +65,28 @@ class AridityTemperaturesLayer extends CanvasTiles {
   ) {
     const shouldEnableMask = (
       (
-        tempsCounts.original != tempsCounts.current
-      ) && (
-        tempsCounts.current > 0
-      )
-    ) || (
+        (
+          tempsCounts.original != tempsCounts.current
+        ) && (
+          tempsCounts.current > 0
+        ) 
+      ) || (
         (
           aridityCounts.original != aridityCounts.current
         ) && (
           aridityCounts.current > 0
         )
+      )
+    ) && (
+      (
+        toAridityVisibility && toTemperaturesVisibility
+      ) && (
+        toTemps.features.length > 0
+      ) && (
+        toAridity.features.length > 0
+      )
     );
+    
     const diffAridity = fromAridity.features.length != toAridity.features.length;
     const diffTemps = fromTemps.features.length != toTemps.features.length;
     if(diffTemps || diffAridity){
