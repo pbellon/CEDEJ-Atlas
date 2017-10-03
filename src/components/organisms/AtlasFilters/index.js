@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
@@ -21,25 +21,30 @@ const Container = styled.div`
 
 const headingStyle = {
   marginBottom: '0.1rem',
-  fontWeight:'bold'
+  fontWeight: 'bold',
 };
 
 const AtlasFilters = ({ visible }) => (
   <Container visible={visible}>
     <Heading level={3} style={headingStyle}>Personnaliser la carte</Heading>
-    <LayerFilterGroup layer={ 'aridity' }
-      heading={'Aridité'}>
-      <AridityFilters/>
-    </LayerFilterGroup>
-    <LayerFilterGroup layer={ 'temperatures' } 
-      heading={'Températures'}>
-      <TemperaturesFilters/>
+    <LayerFilterGroup
+      layer={'aridity'}
+      heading={'Aridité'}
+    >
+      <AridityFilters />
     </LayerFilterGroup>
     <LayerFilterGroup
-      layer={ 'circles' }
+      layer={'temperatures'}
+      heading={'Températures'}
+    >
+      <TemperaturesFilters />
+    </LayerFilterGroup>
+    <LayerFilterGroup
+      layer={'circles'}
       heading={'Sécheresse'}
-      headingStyle={{marginTop:0}}>
-      <DryFilters/>
+      headingStyle={{ marginTop: 0 }}
+    >
+      <DryFilters />
     </LayerFilterGroup>
   </Container>
 );

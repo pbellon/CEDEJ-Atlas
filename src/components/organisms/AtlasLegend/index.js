@@ -1,21 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
-import { font, palette } from 'styled-theme'
+import { font, palette } from 'styled-theme';
 import {
-  ContextualInfo,
-  TemperaturesLegend,
-  CirclesLegend,
-  LegendMoreInfos,
-  LegendMoreInfosPrint,
+  LegendContent,
   LegendToggleButton,
   LegendTooltips,
-} from 'components'; 
+} from 'components';
 
-import { visibleTypes, objToArray } from 'utils';
 import { legend } from 'utils/styles';
-import formats from 'utils/formats';
 
 const Legend = styled.div`
   font-family: ${font('primary')};
@@ -25,16 +19,12 @@ const Legend = styled.div`
   top: 0;
   bottom: 0;
   left: 0;
-  transform: translate(${({isOpened})=>isOpened ? 0: '-87%'}, 0);
+  transform: translate(${({ isOpened }) => isOpened ? 0 : '-87%'}, 0);
   padding: 5px;
   padding-top: 0;
   max-width: ${legend.width}px;
-  overflow: hidden;
+  overflow: ${({ isOpened }) => isOpened ? 'auto' : 'hidden'};
   transition: transform .5s ease-in-out;
-  
-  &:hover {
-    overflow: ${({isOpened})=>isOpened?'auto':'hidden'};
-  }
 
   &.legend--print {
     font-family: Arial, sans-serif;
@@ -48,53 +38,13 @@ const Legend = styled.div`
   }
 `;
 
-const Table = styled.table``;
-
-const Holder = styled.div`
-  padding-top: ${({print})=>print?0:30}px;
-  overflow: auto;
-`;
-
-const LegendContent = ({ filters, layers, circleSizes, print })=>{
-  const {
-    temperatures: { visible: showTemperatures },
-    circles: { visible: showCircles },
-  } = layers;
-  const allTypes = {
-    ...filters.circles.types,
-    ...filters.temperatures,
-    ...filters.aridity
-  };
-  const noFilters = visibleTypes(allTypes).length === 0; 
-  const noData = ((!showTemperatures) && (!showCircles)) || (noFilters);
-  return (
-    <Holder print={print}>
-      <Table>
-        <TemperaturesLegend print={print} filters={ filters } layers={layers} />
-        { showCircles && (
-          <CirclesLegend print={print} filters={filters} circleSizes={circleSizes}/>
-        )}
-        { noData && (
-          <tbody><tr><th>Pas de données à visualiser</th></tr></tbody>
-        )}
-      </Table>
-      { !print && (
-        <LegendMoreInfos/>
-      )}
-    </Holder>
-  );
-};
-
-LegendContent.defaultProps = {
-  print: false,
-};
-
 
 const VisibleIfOpened = styled.div`
   transition: opacity .5s ease;
-  opacity: ${({isOpened})=>isOpened?1:0};
-  pointer-events: ${({isOpened})=>isOpened?'auto':'none'};
+  opacity: ${({ isOpened }) => isOpened ? 1 : 0};
+  pointer-events: ${({ isOpened }) => isOpened ? 'auto' : 'none'};
 `;
+
 const visibilityButtonStyle = {
   position: 'absolute',
   right: 0,
@@ -110,22 +60,24 @@ const AtlasLegend = ({
 }) => {
   return (
     <div>
-      <Legend 
-        className={`legend ${print ? 'legend--print':''}`}
-        isOpened={ isOpened }>
+      <Legend
+        className={`legend ${print ? 'legend--print' : ''}`}
+        isOpened={isOpened}
+      >
         { !print && (
           <LegendToggleButton style={visibilityButtonStyle} />
         )}
         
-        <VisibleIfOpened isOpened={ isOpened }>
+        <VisibleIfOpened isOpened={isOpened}>
           <LegendContent
             circleSizes={circleSizes}
-            print={ print }
-            layers={ layers }
-            filters={ filters }/>
+            print={print}
+            layers={layers}
+            filters={filters}
+          />
         </VisibleIfOpened>
       </Legend>
-      <LegendTooltips layers={layers} filters={filters}/>
+      <LegendTooltips layers={layers} filters={filters} />
     </div>
   );
 };

@@ -74,7 +74,7 @@ class DesertsLayer extends Component {
           ref={(ref) => this.addToTooltips(ref, feature.properties.scalerank)}
           fill={false}
           stroke={false}
-          key={key}
+          key={`marker-${key}`}
           center={[center.lng, center.lat]}
         >
           <Tooltip pane={'desert-tooltip'} style={{ opacity: 1 }} permanent>
@@ -91,7 +91,7 @@ class DesertsLayer extends Component {
       </Pane>
     );
   }
-};
+}
 
 DesertsLayer.contextTypes = {
   map: PropTypes.object,

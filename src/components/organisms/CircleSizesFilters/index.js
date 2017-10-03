@@ -23,32 +23,35 @@ const Holder = styled.div``;
 const CircleSizesFilters = ({
   onToggle,
   sizes,
-  disabled,
-  layer
+  layer,
 }) => {
   const sarr = Object.keys(sizes)
     .map(key => sizes[key]);
 
   const cols = [
-    [ sarr[0], sarr[2], sarr[4], sarr[6] ],
-    [ sarr[1], sarr[3], sarr[5], ]
+    [sarr[0], sarr[2], sarr[4], sarr[6]],
+    [sarr[1], sarr[3], sarr[5]],
   ];
 
   return (
     <Holder>
       <Heading
-        style={{marginBottom:0}}
-        level={6}>Nombre de mois secs</Heading>
+        style={{ marginBottom: 0 }}
+        level={6}
+      >
+        Nombre de mois secs
+      </Heading>
       <Cols>
         { cols.map((colSizes, colKey) => (
-          <Col key={colKey}>
-            { colSizes.map((size, key) => (
+          <Col key={`col-circlefilter-${colKey}`}>
+            { colSizes.map(size => (
               <ToggleFilter
-                key={key}
+                key={`circle-filter-${size.name}`}
                 layer={layer}
                 toggled={size.visible}
                 onToggle={onToggle(size)}
-                label={monthsDescription(size.name)}/>
+                label={monthsDescription(size.name)}
+              />
             ))}
           </Col>
         ))}
@@ -57,15 +60,21 @@ const CircleSizesFilters = ({
   );
 };
 
+CircleSizesFilters.propTypes = {
+  onToggle: PropTypes.func,
+  sizes: PropTypes.object,
+  layer: PropTypes.object,
+};
+
 const mapDispatchToProps = dispatch => ({
-  onToggle: (type)=>()=>(
+  onToggle: (type) => () => (
     dispatch(toggleCircleSizeVisibility(type))
-  )
+  ),
 });
 
 const mapStateToProps = (state, ownProps) => ({
   sizes: fromFilters.circlesSizes(state),
-  layer: ownProps.layer
+  layer: ownProps.layer,
 });
 
 
