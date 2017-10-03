@@ -9,13 +9,32 @@ import {
   Th,
   TrName,
   TrNameContent,
-  CirclesRangeSymbol,
+  CircleSizesSymbol,
   PrintCircleMonthRangeLegend,
 } from 'components';
 
 import { visibleTypes } from 'utils'; 
 
 import * as circlesUtils from 'utils/circles';
+
+
+const CircleSizesLegend = styled(Td).attrs({
+  colSpan: 4,
+})`
+text-align: left;
+& > .cols {
+  display: flex;
+  align-items: center;
+  svg {
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: 40px;
+  }
+  span {
+    padding-left: 1em;
+  }
+}
+`;
 
 const CircleTypeSymbol = styled.span`
   background-color: ${({ circle })=>circlesUtils.colorByValue(circle)};
@@ -81,9 +100,12 @@ const CirclesLegend = ({ filters, circleSizes, print }) => {
           </LegendCategoryName>
         </Th>
         { !print && (
-          <Td>
-            <CirclesRangeSymbol width={40} height={40} /> 
-          </Td>
+          <CircleSizesLegend>
+            <div className={'cols'}>
+              <CircleSizesSymbol width={40} height={40} />
+              <Reduced>Valeur exacte disponible au clic sur chaque cercle</Reduced>
+            </div>
+          </CircleSizesLegend>
         )}
       </tr>
       { print && ( 
