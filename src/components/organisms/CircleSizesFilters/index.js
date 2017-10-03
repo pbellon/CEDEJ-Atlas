@@ -6,29 +6,61 @@ import styled from 'styled-components';
 import { fromFilters } from 'store/selectors';
 import { toggleCircleSizeVisibility } from 'store/actions';
 import { ToggleFilter, Heading } from 'components';
-import * as circlesUtils from 'utils/circles';
+import { monthsDescription } from 'utils/circles';
+
+const Cols = styled.div`
+  display: flex;
+  justify-content: space-around;
+  
+`;
+
+const Col = styled.div`
+  flex-grow: 1;
+  flex-base: 1;
+`;
 
 const Holder = styled.div``;
-const CircleSizesFilters = ({ onToggle, sizes, disabled, layer})=>(
-  <Holder>
-    <Heading
-      style={{marginBottom:0}}
-      level={6}>Nombre de mois secs</Heading>
-    { Object.keys(sizes).map(key => {
-      const size = sizes[key];
-      return (
-        <ToggleFilter key={key} layer={layer}
-          toggled={size.visible}
-          onToggle={onToggle(size)}
-          label={circlesUtils.monthsDescription(key)}/>
-      );
-    })}
-  </Holder>
-);
+const CircleSizesFilters = ({
+  onToggle,
+  sizes,
+  disabled,
+  layer
+}) => {
+  const sarr = Object.keys(sizes)
+    .map(key => sizes[key]);
 
+  const cols = [
+    [ sarr[0], sarr[2], sarr[4], sarr[6] ],
+    [ sarr[1], sarr[3], sarr[5], ]
+  ];
+
+  return (
+    <Holder>
+      <Heading
+        style={{marginBottom:0}}
+        level={6}>Nombre de mois secs</Heading>
+      <Cols>
+        { cols.map((colSizes, colKey) => (
+          <Col key={colKey}>
+            { colSizes.map((size, key) => (
+              <ToggleFilter
+                key={key}
+                layer={layer}
+                toggled={size.visible}
+                onToggle={onToggle(size)}
+                label={monthsDescription(size.name)}/>
+            ))}
+          </Col>
+        ))}
+      </Cols>
+    </Holder>
+  );
+};
 
 const mapDispatchToProps = dispatch => ({
-  onToggle: (type)=>()=>dispatch(toggleCircleSizeVisibility(type))
+  onToggle: (type)=>()=>(
+    dispatch(toggleCircleSizeVisibility(type))
+  )
 });
 
 const mapStateToProps = (state, ownProps) => ({
