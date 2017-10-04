@@ -43,16 +43,16 @@ def cleanData():
     cleanJSON('aridity.json', ['d_TYPE', 'OBJECTID_1']);
 
 def combineDataFiles(out='data/compiled.json'):
-    files = ['circles','temperatures', 'deserts', 'aridity', 'rivers', 'lakes']
+    files = ['circles','temperatures', 'deserts', 'aridity', 'rivers', 'lakes', 'waterLabels']
     result = {}
     for name in files:
-        fd = open("data/clean/%s.json" % name, 'r')
+        fd = codecs.open("data/clean/%s.json" % name, 'r', 'utf-8')
         fdata = json.load(fd)
         result[name] = fdata
         fd.close()
     
-    with open(out, 'w') as outd:
-        json.dump(result, outd)
+    with codecs.open(out, 'w', 'utf-8') as outd:
+        json.dump(result, outd, separators=(',',':'))
 
 def cleanTopo():
     cleanJSON('topo-circles.json', ['size_', 'colours'], 'topo', 'circles');

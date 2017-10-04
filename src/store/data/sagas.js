@@ -15,6 +15,7 @@ export function* loadData() {
       temperatures,
       circles,
       deserts,
+      waterLabels,
       lakes,
       rivers,
     } = yield call(api.getMapData);
@@ -47,6 +48,7 @@ export function* loadData() {
       ...dataToTurfize,
       deserts,
       lakesAndRivers,
+      waterLabels,
     };
 
     yield put(actions.loadSuccess(data));

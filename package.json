@@ -6,43 +6,20 @@
     "start": "npm run dev",
     "env:dev": "cross-env NODE_ENV=development",
     "env:prod": "cross-env NODE_ENV=production",
-    "env:example": "cross-env SOURCE=src-example",
-    "test": "jest",
-    "coverage": "npm test -- --coverage",
-    "postcoverage": "opn coverage/lcov-report/index.html",
     "lint": "eslint src src-example private webpack.config.js",
-    "storybook": "start-storybook -p 9001 -c private/storybook",
-    "storybook:example": "npm run env:example -- npm run storybook",
     "dev": "npm run env:dev -- webpack-dev-server",
-    "dev:example": "npm run env:example -- npm run dev",
     "build:clean": "rimraf \"dist/!(.git*|Procfile)**\"",
     "build:copy": "copyfiles -u 1 public/* public/**/* dist",
-    "build:data": "./manage.sh buildData",
+    "build:data": "fab combineDataFiles",
     "prebuild": "npm run build:clean && npm run build:copy",
     "build": "npm run env:prod -- webpack",
-    "deploy": "npm run build:clean && npm run build && surge dist",
-    "build:example": "npm run env:example -- npm run build"
-  },
-  "jest": {
-    "moduleDirectories": [
-      "src",
-      "src-example",
-      "node_modules"
-    ],
-    "moduleNameMapper": {
-      "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/private/jest/fileMock.js",
-      "^(components|containers)$": "<rootDir>/private/jest/componentsMock.js",
-      "^(store|\\.\\.)\\/selectors$": "<rootDir>/private/jest/selectorsMock.js",
-      "^(store|\\.\\.)\\/actions$": "<rootDir>/private/jest/actionsMock.js"
-    }
+    "deploy": "npm run build:clean && npm run build && surge dist"
   },
   "devDependencies": {
-    "@kadira/storybook": "^2.35.2",
     "@webpack-blocks/dev-server2": "^0.4.0",
     "@webpack-blocks/webpack2": "^0.4.0",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.2",
-    "babel-jest": "^19.0.0",
     "babel-loader": "^7.0.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.0",
@@ -65,7 +42,6 @@
     "file-loader": "^0.11.0",
     "html-loader": "^0.4.5",
     "html-webpack-plugin": "^2.26.0",
-    "jest-cli": "^19.0.0",
     "opn-cli": "^3.1.0",
     "raw-loader": "^0.5.1",
     "react-test-renderer": "^15.5.4",
@@ -81,11 +57,16 @@
     "write-file-webpack-plugin": "^4.0.2"
   },
   "dependencies": {
+    "@turf/bbox": "^5.0.0",
+    "@turf/bbox-polygon": "^4.7.3",
+    "@turf/centroid": "^4.7.3",
     "@turf/circle": "^4.6.0",
+    "@turf/flatten": "^4.7.3",
     "@turf/helpers": "^4.6.0",
     "@turf/inside": "^4.6.0",
     "@turf/simplify": "^4.7.3",
     "babel-polyfill": "^6.20.0",
+    "babel-preset-es2016": "^6.24.1",
     "d3-path": "^1.0.5",
     "d3-scale": "^1.0.6",
     "file-saver": "^1.3.3",

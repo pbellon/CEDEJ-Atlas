@@ -16,7 +16,8 @@ import {
   CedejWatermark,
   CirclesLayer,
   ContextualInfoPopup,
-  DesertsLayer,
+  DesertLabelsLayer,
+  WaterLabelsLayer,
   AridityTemperaturesLayer,
   LakesRiversLayer,
 } from 'components';
@@ -68,8 +69,15 @@ export default class Atlas extends Component {
   onClick(e) {
     // useful to avoid looking up for deserts.
     const {
-      data: { deserts, lakesAndRivers, ...searchInFeatures },
+      data: { aridity, temperatures, circles },
     } = this.props;
+    
+    const searchInFeatures = {
+      aridity,
+      temperatures,
+      circles,
+    };
+
     const features = filterFeatures(searchInFeatures, e.latlng);
     if (Object.keys(features).length) {
       this.showTooltip(e.latlng, features);
@@ -111,7 +119,13 @@ export default class Atlas extends Component {
       onCirclesCreated,
       isSidebarOpened,
     } = this.props;
-    const { deserts, lakesAndRivers, circles, ...aridityAndTemperatures } = data;
+    const {
+      deserts,
+      lakesAndRivers,
+      circles,
+      waterLabels,
+      ...aridityAndTemperatures,
+    } = data;
     const bbox = [
       -179.2165527343741, -56.157571400448376,
       181.00012207031295, 84.62359619140625,
@@ -174,7 +188,8 @@ export default class Atlas extends Component {
           circles={circles.features}
         />
         
-        <DesertsLayer minZoom={4} data={deserts} />
+        <WaterLabelsLayer data={waterLabels} />
+        <DesertLabelsLayer minZoom={4} data={deserts} />
       </Map>
     );
   }
