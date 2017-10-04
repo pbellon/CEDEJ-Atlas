@@ -36,14 +36,14 @@ class Delegate extends CanvasDelegate {
         context: aridityCanvas.getContext('2d'),
         features: aridity,
         fillStyle: 'black',
-        strokeWidth: 2 
+        strokeWidth: 2,
       });
       
       this.drawAreas({
         context: temperaturesCanvas.getContext('2d'),
         features: temperatures,
         fillStyle: 'black',
-        strokeWidth: 0
+        strokeWidth: 1,
       });
       
       const ctx = canvas.getContext('2d');

@@ -54,14 +54,20 @@ class GeoJSONLabelsLayer extends Component {
   showTooltip(tooltip) {
     if (tooltip.tooltipRef) {
       const { tooltipRef: { leafletElement } } = tooltip;
-      leafletElement.openTooltip();
+      const content = leafletElement._tooltip._container.firstChild;
+      if (content.style.opacity != 1 || !content.style.opacity) {
+        content.style.opacity = 1;
+      }
     }
   }
 
   hideTooltip(tooltip) {
     if (tooltip.tooltipRef) {
       const { tooltipRef: { leafletElement } } = tooltip;
-      leafletElement.closeTooltip();
+      const content = leafletElement._tooltip._container.firstChild;
+      if (content.style.opacity != 0 || !content.style.opacity) {
+        content.style.opacity = 0;
+      }
     }
   }
 
@@ -89,20 +95,12 @@ class GeoJSONLabelsLayer extends Component {
         const polygons = flatten(feature);
         polygons.features.forEach(p => (
           centroids.push(
-            centroid(
-              bboxPolygon(
-                bbox(p)
-              )
-            )
+            centroid(p)
           )
         ))
       } else {
         centroids.push(
-          centroid(
-            bboxPolygon(
-              bbox(feature)
-            )
-          )
+          centroid(feature)
         );
       }
       
@@ -119,8 +117,9 @@ class GeoJSONLabelsLayer extends Component {
             <Tooltip
               pane={`${layerName}-tooltip`}
               style={{ opacity: 1 }}
-              position={'center'}
+              direction={'center'}
               sticky={false}
+              interactive={false}
               permanent
             >
               { labelElement } 
@@ -129,7 +128,6 @@ class GeoJSONLabelsLayer extends Component {
         ));
       });
     }
-    console.log('created tooltips', Tooltips);
     return (
       <Pane name={`${layerName}-tooltip`} style={{ zIndex: 1200 }}>
         <LayerGroup onAdd={() => this.checkZoom()}>
