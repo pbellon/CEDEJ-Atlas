@@ -4,7 +4,8 @@
       "modules": false
     }],
     "react",
-    "stage-1"
+    "stage-1",
+    "es2016",
   ],
   "plugins": [
     "react-hot-loader/babel"
