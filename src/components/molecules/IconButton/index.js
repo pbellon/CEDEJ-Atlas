@@ -1,16 +1,16 @@
-import React from 'react'
-import PropTypes from 'prop-types' 
-import styled, { css, keyframes } from 'styled-components'
-import { ifProp, get } from 'styled-tools'
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled, { css, keyframes } from 'styled-components';
+import { ifProp, get } from 'styled-tools';
 
-import { Icon, Button } from 'components'
+import { Icon, Button } from 'components';
 
 
 const fadeIn = keyframes`
   0% { display: none; opacity: 0; }
   1% { display: block: opacity: 0; }
   100% { display: block; opacity: 1; }
-`
+`;
 
 const StyledButton = styled(Button)`
   max-width: ${props => props.hasText && !props.collapsed ? '100%' : '2.5em'};
@@ -39,14 +39,14 @@ const StyledButton = styled(Button)`
       flex: 0 !important;
     }
   `)}
-`
+`;
 
 const Text = styled.span`
   padding: 0.4375em;
   @media screen and (max-width: ${get('breakpoint')}px) {
     display: ${ifProp('responsive', 'none !important')};
   }
-`
+`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -54,15 +54,15 @@ const Wrapper = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
-`
+`;
 
 const StyledIcon = styled(Icon)`
   flex: none;
-`
+`;
 
 const IconButton = ({ icon, children, ...props }) => {
-  const { breakpoint, right, responsive, height } = props
-  const iconElement = <StyledIcon height={height / 2.5} icon={icon} />
+  const { breakpoint, right, responsive, height } = props;
+  const iconElement = <StyledIcon height={height / 2.5} icon={icon} />;
   return (
     <StyledButton hasText={!!children} {...props}>
       <Wrapper>
@@ -73,8 +73,8 @@ const IconButton = ({ icon, children, ...props }) => {
         {right && iconElement}
       </Wrapper>
     </StyledButton>
-  )
-}
+  );
+};
 
 IconButton.propTypes = {
   icon: PropTypes.string.isRequired,
@@ -84,10 +84,10 @@ IconButton.propTypes = {
   right: PropTypes.bool,
   height: PropTypes.number,
   children: PropTypes.node,
-}
+};
 
 IconButton.defaultProps = {
   breakpoint: 420,
-}
+};
 
-export default IconButton
+export default IconButton;

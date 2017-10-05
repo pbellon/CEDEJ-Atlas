@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Button as _B } from 'components';
 
@@ -27,24 +28,38 @@ const Symbol = styled.div`
 const ToggleSymbol = ({ align, toggled }) => {
   const openedSign = align === 'left' ? '>' : '<';
   const closedSign = align === 'left' ? '<' : '>';
-  const symbolToUse = toggled ? openedSign : closedSign; 
-  return (<Symbol align={ align }><span>{ symbolToUse }</span></Symbol>);
+  const symbolToUse = toggled ? openedSign : closedSign;
+  return (<Symbol align={align}><span>{ symbolToUse }</span></Symbol>);
 };
 
-const ToggleButton = ({ toggled, toggle, align, children, ...props})=>{
-    return (
-    <div {...props}>
-      <Button align={align}
-        onClick={ toggle }>
-        <ToggleSymbol align={ align } toggled={ toggled } />
-        { children }
-      </Button>
-    </div>
-  );
+ToggleSymbol.propTypes = {
+  align: PropTypes.oneOf(['left', 'right']),
+  toggled: PropTypes.bool,
+};
+
+const ToggleButton = ({ toggled, toggle, align, children, ...props }) => (
+  <div {...props}>
+    <Button
+      align={align}
+      onClick={toggle}
+    >
+      <ToggleSymbol align={align} toggled={toggled} />
+      { children }
+    </Button>
+  </div>
+);
+
+ToggleButton.propTypes = {
+  ...ToggleSymbol.propTypes,
+  toggle: PropTypes.func.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
 };
 
 ToggleButton.defaultProps = {
   align: 'left',
 };
 
-export default ToggleButton; 
+export default ToggleButton;

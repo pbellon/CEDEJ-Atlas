@@ -24,7 +24,7 @@ const LoadingIndicator = ({ isLoading = false }) => (
   <Holder isLoading={isLoading}><LoadingIcon /></Holder>
 );
 
-LoadingIcon.propTypes = {
+LoadingIndicator.propTypes = {
   isLoading: PropTypes.bool,
 };
 

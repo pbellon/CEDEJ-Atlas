@@ -18,12 +18,15 @@ const ATh = styled(Td)`
 const AridityName = ({ aridity }) => (
   <ATh
     width={40}
-    data-tip 
+    data-tip
     data-for={`tooltip-aridity-${aridity.name}`}
   >
     { getName(aridity) }
   </ATh>
 );
+AridityName.propTypes = {
+  aridity: PropTypes.object,
+};
 
 const ATd = styled(Td)`
   font-size: 0.6rem;
@@ -32,13 +35,16 @@ const ATd = styled(Td)`
 
 const AridityPrecipitations = ({ aridity }) => (
   <ATd>
-    P/Etp<br/>{ getPrecipitations(aridity) }
+    P/Etp<br />{ getPrecipitations(aridity) }
   </ATd>
 );
+AridityPrecipitations.propTypes = {
+  aridity: PropTypes.object,
+};
 
 const AridityNames = ({ aridity, print }) => {
   const visibleAridities = visibleTypes(aridity);
-  if(!visibleAridities.length){ return null; }
+  if (!visibleAridities.length) { return null; }
   return [
     <tr>
       <TrName><TrNameContent>Aridité</TrNameContent></TrName>
@@ -48,13 +54,19 @@ const AridityNames = ({ aridity, print }) => {
     </tr>,
     print ? (
       <tr>
-        <td></td>
+        <td />
         { visibleAridities.map((aridity, key) => (
           <AridityPrecipitations key={key} aridity={aridity} />
         ))}
       </tr>
-    ) : null
+    ) : null,
   ];
 };
+
+AridityNames.propTypes = {
+  aridity: PropTypes.object,
+  print: PropTypes.bool,
+};
+
 
 export default AridityNames;

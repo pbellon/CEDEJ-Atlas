@@ -15,29 +15,29 @@ class CanvasTiles extends MapLayer {
   };
 
   static defaultProps = {
-    onRendered: noop
+    onRendered: noop,
   };
 
 
   createLeafletElement(props) {
-    const { delegate, onRendered, data, ...options }= this.getOptions(props);
+    const { delegate, onRendered, data, ...options } = this.getOptions(props);
 
     this.delegate = new delegate(data);
     return canvasTiles(this.delegate, onRendered, options);
   }
   
 
-  updateData(data){
+  updateData(data) {
     this.delegate.updateData(data);
     this.redraw();
   }
 
-  redraw(){
+  redraw() {
     this.leafletElement.redraw();
     this.onRendered();
   }
 
-  onRendered(){
+  onRendered() {
     this.props.onRendered && this.props.onRendered();
   }
 }

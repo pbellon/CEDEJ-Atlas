@@ -20,7 +20,7 @@ const MoreInfoTitle = () => <Bold>À propos de la légende</Bold>
 const LegendMoreInfos = () => (
   <Holder>
     <Heading level={2}><MoreInfoTitle /></Heading>
-    <Markdown source={ MarkdownContent.LegendInfos } />
+    <Markdown source={MarkdownContent.LegendInfos} />
   </Holder>
 );
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux'; 
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import { Button as GenericButton } from 'components';
@@ -8,8 +8,8 @@ import { openExportModal } from 'store/actions';
 
 const Button = styled(GenericButton)`
   width:100%;
-  pointer-events: ${({visible})=>visible?'auto':'none'};
-  opacity: ${({visible})=>visible?1:0};
+  pointer-events: ${({ visible }) => visible ? 'auto' : 'none'};
+  opacity: ${({ visible }) => visible ? 1 : 0};
   transition: opacity .5s ease-in-out;
 `;
 
@@ -20,9 +20,9 @@ const Holder = styled.div`
   bottom:0;
 `;
 
-const AtlasExportButton = (props)=>(
+const AtlasExportButton = (props) => (
   <Holder>
-    <Button {...props }>
+    <Button {...props}>
       Exporter
     </Button>
   </Holder>
@@ -34,7 +34,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onClick: ()=>(dispatch(openExportModal())),
+  onClick: () => (dispatch(openExportModal())),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AtlasExportButton);

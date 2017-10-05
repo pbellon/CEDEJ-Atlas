@@ -75,6 +75,8 @@ const config = createConfig([
       '@turf/circle',
       '@turf/helpers',
       '@turf/inside',
+      '@turf/centroid',
+      '@turf/flatten',
       'babel-polyfill',
       'd3-path',
       'd3-scale',

@@ -9,11 +9,11 @@ const PreviewImage = styled.img`
   max-width: 100%;
 `;
 
-const ExportPreview = ({ isPreviewing, mapPreview })=>(
+const ExportPreview = ({ isPreviewing, mapPreview }) => (
   <PreviewHolder>
     <LoadingIndicator isLoading={isPreviewing} />
     { !isPreviewing && mapPreview && (
-      <PreviewImage src={mapPreview.url} alt="Apperçu de la carte avant export"/>
+      <PreviewImage src={mapPreview.url} alt="Apperçu de la carte avant export" />
     )}
   </PreviewHolder>
 );

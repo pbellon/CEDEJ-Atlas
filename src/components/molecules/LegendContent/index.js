@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components'; 
+import styled from 'styled-components';
 import {
   TemperaturesLegend,
   CirclesLegend,
@@ -15,7 +15,7 @@ const Holder = styled.div`
   overflow: auto;
 `;
 
-const LegendContent = ({ filters, layers, circleSizes, print })=>{
+const LegendContent = ({ filters, layers, circleSizes, print }) => {
   const {
     aridity: { visible: showAridity },
     temperatures: { visible: showTemperatures },
@@ -24,25 +24,33 @@ const LegendContent = ({ filters, layers, circleSizes, print })=>{
   const allTypes = {
     ...filters.circles.types,
     ...filters.temperatures,
-    ...filters.aridity
+    ...filters.aridity,
   };
-  const noFilters = visibleTypes(allTypes).length === 0; 
+  const noFilters = visibleTypes(allTypes).length === 0;
   const noData = (
     (!showTemperatures) && (!showCircles) && (!showAridity)
   ) || (noFilters);
   return (
     <Holder print={print}>
       <Table>
-        <TemperaturesLegend print={print} filters={ filters } layers={layers} />
+        <TemperaturesLegend
+          print={print}
+          filters={filters}
+          layers={layers}
+        />
         { showCircles && (
-          <CirclesLegend print={print} filters={filters} circleSizes={circleSizes}/>
+          <CirclesLegend
+            print={print}
+            filters={filters}
+            circleSizes={circleSizes}
+          />
         )}
         { noData && (
           <tbody><tr><th>Pas de données à visualiser</th></tr></tbody>
         )}
       </Table>
       { !print && (
-        <LegendMoreInfos/>
+        <LegendMoreInfos />
       )}
     </Holder>
   );

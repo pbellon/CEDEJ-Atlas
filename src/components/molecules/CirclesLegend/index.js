@@ -1,9 +1,9 @@
-import React from 'react'; 
+import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Markdown from 'react-markdown';
-import Tooltip from 'react-tooltip';
+
 import {
-  LegendCategoryName, 
+  LegendCategoryName,
   Reduced,
   Td,
   Th,
@@ -13,31 +13,28 @@ import {
   PrintCircleMonthRangeLegend,
 } from 'components';
 
-import { visibleTypes } from 'utils'; 
-
 import * as circlesUtils from 'utils/circles';
-
 
 const CircleSizesLegend = styled(Td).attrs({
   colSpan: 4,
 })`
-text-align: left;
-& > .cols {
-  display: flex;
-  align-items: center;
-  svg {
-    flex-grow: 0;
-    flex-shrink: 0;
-    width: 40px;
+  text-align: left;
+  & > .cols {
+    display: flex;
+    align-items: center;
+    svg {
+      flex-grow: 0;
+      flex-shrink: 0;
+      width: 40px;
+    }
+    span {
+      padding-left: 1em;
+    }
   }
-  span {
-    padding-left: 1em;
-  }
-}
 `;
 
 const CircleTypeSymbol = styled.span`
-  background-color: ${({ circle })=>circlesUtils.colorByValue(circle)};
+  background-color: ${({ circle }) => circlesUtils.colorByValue(circle)};
   width: 10px;
   height: 10px;
   border: 1px solid black;
@@ -45,22 +42,26 @@ const CircleTypeSymbol = styled.span`
   display: inline-block;
 `;
 
-const CircleTypeRow = ({ circle, print })=> {
+const CircleTypeRow = ({ circle, print }) => {
   return (
     <tr>
       <td colSpan={5}>
         <span data-tip data-for={`tooltip-circle-${circle}`}>
-          <CircleTypeSymbol circle={ circle } />&nbsp;
+          <CircleTypeSymbol circle={circle} />&nbsp;
           <Reduced>
             { !print ? (
-              circlesUtils.droughtRegime(circle)
-            ) : circlesUtils.droughtFullRegime(circle) 
+                circlesUtils.droughtRegime(circle)
+              ) : circlesUtils.droughtFullRegime(circle)
             }
           </Reduced>
         </span>
       </td>
     </tr>
   );
+};
+CircleTypeRow.propTypes = {
+  circle: PropTypes.string,
+  print: PropTypes.bool,
 };
 
 const NormalWeight = styled.span`font-weight: normal`;
@@ -70,11 +71,12 @@ const CirclesLegend = ({ filters, circleSizes, print }) => {
   const visibleTypes = Object.keys(types)
     .map(k => types[k])
     .filter(t => t.visible);
-  const isVisible = t =>types[t].visible;
-  const hasTypes = (types, ctrl)=>{
+
+  const isVisible = t => types[t].visible;
+  const hasTypes = (types, ctrl) => {
     let i = 0;
-    for(i; i < types.length; i+=1){
-      if(ctrl[types[i]].visible){
+    for (i; i < types.length; i += 1) {
+      if (ctrl[types[i]].visible) {
         return true;
       }
     }
@@ -84,12 +86,12 @@ const CirclesLegend = ({ filters, circleSizes, print }) => {
   return (
     <tbody>
       <tr>
-        <TrName style={{paddingTop: '5px'}}>
+        <TrName style={{ paddingTop: '5px' }}>
           <TrNameContent>Sécheresse</TrNameContent>
         </TrName>
       </tr>
       <tr>
-        <Th align={'left'} style={{marginTop:'-5px'}}>
+        <Th align={'left'} style={{ marginTop: '-5px' }}>
           <LegendCategoryName>
             <span data-tip data-for="tooltip-nb-months">Nombre de mois secs</span>
             { print && (
@@ -108,16 +110,16 @@ const CirclesLegend = ({ filters, circleSizes, print }) => {
           </CircleSizesLegend>
         )}
       </tr>
-      { print && ( 
+      { print && (
         <tr>
           <td colSpan={5}>
-            <PrintCircleMonthRangeLegend sizes={circleSizes}/>
+            <PrintCircleMonthRangeLegend sizes={circleSizes} />
           </td>
         </tr>
       )}
       { visibleTypes.length > 0 && (
         <tr>
-          <Th colSpan={2} align={'left'} style={{marginTop:'-5px'}}>
+          <Th colSpan={2} align={'left'} style={{ marginTop: '-5px' }}>
             <LegendCategoryName>
               <span data-tip data-for="tooltip-regime">
                 Périodes des sécheresses
@@ -130,7 +132,7 @@ const CirclesLegend = ({ filters, circleSizes, print }) => {
         </tr>
       )}
       { hasTypes(['A', 'B'], types) && (
-        <tr><Th colSpan={3} align={ 'left' }>
+        <tr><Th colSpan={3} align={'left'}>
           <LegendCategoryName>
             <Reduced>Sécheresse d'été dominante</Reduced>
           </LegendCategoryName>
@@ -138,12 +140,12 @@ const CirclesLegend = ({ filters, circleSizes, print }) => {
       )}
       {
         isVisible('A') && (
-          <CircleTypeRow print={print} circle={ 'A' } />
+          <CircleTypeRow print={print} circle={'A'} />
         )
       }
       {
         isVisible('B') && (
-          <CircleTypeRow print={print} circle={ 'B' } />
+          <CircleTypeRow print={print} circle={'B'} />
         )
       }
 
@@ -165,7 +167,7 @@ const CirclesLegend = ({ filters, circleSizes, print }) => {
         )
       }
       { hasTypes(['E', 'F'], types) && (
-        <tr><Th align={ 'left' }>
+        <tr><Th align={'left'}>
           <LegendCategoryName>
             <Reduced>Régimes de transition</Reduced>
           </LegendCategoryName>
@@ -173,16 +175,22 @@ const CirclesLegend = ({ filters, circleSizes, print }) => {
       )}
       {
         isVisible('E') && (
-          <CircleTypeRow print={print} circle={ 'E' } />
+          <CircleTypeRow print={print} circle={'E'} />
         )
       }
       {
         isVisible('F') && (
-          <CircleTypeRow print={print} circle={ 'F' } />
+          <CircleTypeRow print={print} circle={'F'} />
         )
       }
     </tbody>
   );
+};
+
+CirclesLegend.propTypes = {
+  print: PropTypes.bool,
+  circleSizes: PropTypes.object,
+  filters: PropTypes.object,
 };
 
 export default CirclesLegend;

@@ -13,7 +13,10 @@
     "build:data": "fab combineDataFiles",
     "prebuild": "npm run build:clean && npm run build:copy",
     "build": "npm run env:prod -- webpack",
-    "deploy": "npm run build:clean && npm run build && surge dist"
+    "deploy": "npm run deploy:prepare && npm run deploy:update && npm run deploy:push",
+    "deploy:prepare": "npm run build:clean && npm run build",
+    "deploy:update": "git add dist && git commit -m \"Update dist\"",
+    "deploy:push": "git subtree push --prefix dist origin gh-pages"
   },
   "devDependencies": {
     "@webpack-blocks/dev-server2": "^0.4.0",

@@ -1,5 +1,6 @@
 import React from 'react';
-import styled from 'styled-components'; 
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const oceanFontSize = ({ feature: { properties: { scalerank } } }) => {
   switch (scalerank) {
@@ -41,8 +42,12 @@ const WaterLabel = (props) => {
     case 'gulf':
     case 'ocean':
       return <OceanLabel {...props} />;
-    default: return <LakeLabel {...props} /> ;
+    default: return <LakeLabel {...props} />;
   }
-}
+};
+
+WaterLabel.propTypes = {
+  feature: PropTypes.object,
+};
 
 export default WaterLabel;

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 // assets
-import MdVisibility from 'react-icons/lib/md/visibility'; 
+import MdVisibility from 'react-icons/lib/md/visibility';
 import MdVisibilityOff from 'react-icons/lib/md/visibility-off';
 
 
@@ -38,38 +38,47 @@ class LayerFilterGroup extends Component {
   static propTypes = {
     headingStyle: PropTypes.object,
     hidden: PropTypes.bool,
-    layer:PropTypes.object.isRequired,
+    layer: PropTypes.object.isRequired,
     heading: PropTypes.string,
+    toggleVisibility: PropTypes.func.isRequired,
+    children: PropTypes.oneOfType([
+      PropTypes.node,
+      PropTypes.arrayOf(PropTypes.node),
+    ]),
   };
   static childContextTypes = {
-    layer: PropTypes.object
+    layer: PropTypes.object,
   };
 
-  getChildContext(){
+  getChildContext() {
     return {
-      layer: this.props.layer
+      layer: this.props.layer,
     };
-  };
-  render(){
-    const {toggleVisibility, layer, heading, headingStyle, children} = this.props;
+  }
+
+  render() {
+    const { toggleVisibility, layer, heading, headingStyle, children } = this.props;
     const Icon = layer.visible ? MdVisibility : MdVisibilityOff;
     const klass = layer.visible ? '' : 'hidden';
     return (
-      <LayerContainer className={ klass }>
-        <Heading level={4}
+      <LayerContainer className={klass}>
+        <Heading
+          level={4}
           style={{
-            marginTop:0,
-            ...headingStyle
+            marginTop: 0,
+            ...headingStyle,
           }}
-          onClick={ toggleVisibility(layer) } >
-          <span><Icon/> { heading }</span>
+          onClick={toggleVisibility(layer)}
+        >
+          <span><Icon /> { heading }</span>
         </Heading>
         { children }
       </LayerContainer>
     );
-  };
-};
-const mapStateToProps = (state, props)=>{
+  }
+}
+
+const mapStateToProps = (state, props) => {
   const layer = fromLayers.layerByName(state, props.layer);
   return {
     hidden: !layer.visible,
@@ -78,7 +87,8 @@ const mapStateToProps = (state, props)=>{
   };
 };
 
-const mapDispatchToProps = (dispatch)=>({
-  toggleVisibility: (layer)=>()=>dispatch(toggleLayerVisibility(layer))
-})
+const mapDispatchToProps = (dispatch) => ({
+  toggleVisibility: (layer) => () => dispatch(toggleLayerVisibility(layer)),
+});
+
 export default connect(mapStateToProps, mapDispatchToProps)(LayerFilterGroup);

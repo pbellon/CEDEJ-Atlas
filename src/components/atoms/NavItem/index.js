@@ -21,12 +21,12 @@ const IconHolder = styled.span`
   }
 `;
 
-const NavItem = ({ to, icon, title, isHome}) => {
-  const Link = isHome ? HomeNavLink : NavLink; 
+const NavItem = ({ to, icon, title, isHome }) => {
+  const Link = isHome ? HomeNavLink : NavLink;
   return (
     <Item>
-      <Link to={ to }>
-        <IconHolder>{icon}</IconHolder><Blank/>{title}
+      <Link to={to}>
+        <IconHolder>{icon}</IconHolder><Blank />{title}
       </Link>
     </Item>
   );

@@ -9,10 +9,10 @@ const FixedBar = styled.div`
   width: ${sidebar.width}px;
   top:${navbar.height}px;
   bottom:0;
-  right:${({visible})=>visible?0:-400}px;
+  right:${({ visible }) => visible ? 0 : -400}px;
   z-index: 1000;
-  transition-delay: ${({visible})=>visible?.33:0}s;
-  transition-duration: ${({visible})=>visible?.33:0}s;
+  transition-delay: ${({ visible }) => visible ? 0.33 : 0}s;
+  transition-duration: ${({ visible }) => visible ? 0.33 : 0}s;
   transition-property: right;
   transition-timing-function: ease-in-out;
   display: flex;
@@ -29,9 +29,9 @@ const FixedBar = styled.div`
   }
 `;
 
-const FixedPartnersLogo = (props)=>(
+const FixedPartnersLogo = (props) => (
   <FixedBar {...props}> 
-    <PartnersLogo/>
+    <PartnersLogo />
   </FixedBar>
 );
 
