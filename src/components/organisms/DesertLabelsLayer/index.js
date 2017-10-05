@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { DesertName, GeoJSONLabelsLayer } from 'components';
 
@@ -9,7 +9,7 @@ class DesertLabelsLayer extends GeoJSONLabelsLayer {
     ...GeoJSONLabelsLayer.defaultProps,
     layerName: 'desert',
     bindFeatureToLabel: (feature, label) => (
-      <DesertName desert={feature}>{ label }</DesertName> 
+      <DesertName desert={feature}>{ label }</DesertName>
     ),
   };
 }

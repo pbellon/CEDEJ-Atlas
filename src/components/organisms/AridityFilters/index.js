@@ -8,26 +8,22 @@ const Cols = styled.div`
   justify-content: space-around;
 `;
 
-
 const Col = styled.div`
   flex-grow: 1;
   flex-base: 1;
 `;
 
+const AridityFilters = () => (
+  <Cols>
+    <Col>
+      <ToggleAridityVisibility label={'Hyper Aride'} aridity={'hyper'} />
+      <ToggleAridityVisibility label={'Aride'} aridity={'arid'} />
+    </Col>
+    <Col>
+      <ToggleAridityVisibility label={'Semi Aride'} aridity={'semi'} />
+      <ToggleAridityVisibility label={'Sub Humide'} aridity={'subHumide'} />
+    </Col>
+  </Cols>
+);
 
-
-const AridityFilters = ()=>{
-  return (
-    <Cols>
-      <Col>
-        <ToggleAridityVisibility label={ 'Hyper Aride' } aridity={ 'hyper'} />
-        <ToggleAridityVisibility label={ 'Aride' } aridity={ 'arid' } />
-      </Col>
-      <Col>
-        <ToggleAridityVisibility label={ 'Semi Aride' } aridity={ 'semi' }/>
-        <ToggleAridityVisibility label={ 'Sub Humide' } aridity={ 'subHumide' }/>
-      </Col>
-    </Cols>
-  );
-}
 export default AridityFilters;

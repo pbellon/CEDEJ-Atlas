@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { WaterLabel, GeoJSONLabelsLayer } from 'components';
 
@@ -10,7 +10,7 @@ class WaterLabelsLayer extends GeoJSONLabelsLayer {
     layerName: 'water-labels',
     useMultipleCentroids: true,
     bindFeatureToLabel: (feature, label) => (
-      <WaterLabel feature={feature}>{ label }</WaterLabel> 
+      <WaterLabel feature={feature}>{ label }</WaterLabel>
     ),
   };
 }

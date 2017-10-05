@@ -1,7 +1,7 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-import { palette } from 'styled-theme'; 
 import { LoadingIcon } from 'components';
 
 const Holder = styled.div`
@@ -15,13 +15,17 @@ const Holder = styled.div`
   bottom: 0;
   background-color: rgba(255,255,255,0.8);
   z-index: 800;
-  opacity: ${({ isLoading })=>isLoading?1:0};
-  pointer-events: ${({isLoading})=>isLoading?'auto':'none'};
+  opacity: ${({ isLoading }) => isLoading ? 1 : 0};
+  pointer-events: ${({ isLoading }) => isLoading ? 'auto' : 'none'};
 `;
 
 
-const LoadingIndicator = ({isLoading=false})=>(
-  <Holder isLoading={ isLoading }><LoadingIcon/></Holder>
+const LoadingIndicator = ({ isLoading = false }) => (
+  <Holder isLoading={isLoading}><LoadingIcon /></Holder>
 );
+
+LoadingIcon.propTypes = {
+  isLoading: PropTypes.bool,
+};
 
 export default LoadingIndicator;

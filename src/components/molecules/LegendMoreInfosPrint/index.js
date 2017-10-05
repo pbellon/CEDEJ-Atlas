@@ -1,9 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Markdown from 'react-markdown';
 
-import { MarkdownContent, Heading } from 'components'
+import { MarkdownContent, Heading } from 'components';
 import formats from 'utils/formats';
 
 const Holder = styled.div`
@@ -15,12 +14,13 @@ const Holder = styled.div`
 const Bold = styled.span`
   font-weight: bold;
 `;
-const MoreInfoTitle = ()=><Bold>À propos de la légende</Bold>
 
-const LegendMoreInfos = ({opened, show, hide}) => (
+const MoreInfoTitle = () => <Bold>À propos de la légende</Bold>
+
+const LegendMoreInfos = () => (
   <Holder>
-    <Heading level={2}><MoreInfoTitle/></Heading>
-    <Markdown source={ MarkdownContent.LegendInfos }/>
+    <Heading level={2}><MoreInfoTitle /></Heading>
+    <Markdown source={ MarkdownContent.LegendInfos } />
   </Holder>
 );
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Markdown from 'react-markdown';
@@ -10,17 +11,23 @@ import { fromLegend } from 'store/selectors';
 const Holder = styled.div`
   margin-top: 1em;
 `;
-const MoreInfoTitle = ()=><span>À propos de la légende</span>
 
-const LegendMoreInfos = ({opened, show, hide}) => (
+const MoreInfoTitle = () => <span>À propos de la légende</span>
+
+const LegendMoreInfos = ({ opened, show, hide }) => (
   <Holder>
-    <Link onClick={ show }>Plus d'infos sur la légende</Link>
-    <Modal isOpen={ opened } title={<MoreInfoTitle/>} onClose={hide} closeable={true}>
-      <Markdown source={ MarkdownContent.LegendInfos }/>
+    <Link onClick={show}>Plus d'infos sur la légende</Link>
+    <Modal isOpen={ opened } title={<MoreInfoTitle />} onClose={hide} closeable={true}>
+      <Markdown source={MarkdownContent.LegendInfos} />
     </Modal>
-
   </Holder>
 );
+
+LegendMoreInfos.propTypes = {
+  opened: PropTypes.bool,
+  show: PropTypes.func,
+  hide: PropTypes.func,
+};
 
 const mapStateToProps = state => ({
   opened: fromLegend.moreInfosVisible(state),

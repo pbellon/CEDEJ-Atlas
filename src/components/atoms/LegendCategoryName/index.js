@@ -7,4 +7,4 @@ const LegendCategoryName = styled.span`
   display: block;
 `;
 
-export default LegendCategoryName; 
+export default LegendCategoryName;

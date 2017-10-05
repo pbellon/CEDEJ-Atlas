@@ -5,33 +5,45 @@ import { toggleAridityVisibility } from 'store/actions';
 import { fromFilters } from 'store/selectors';
 import { ToggleFilter } from 'components';
 
-const ToggleAridityFilter = ({onToggle, toggled, aridity, label}, { layer })=>{
-  return (
-    <ToggleFilter
-      layer={ layer }
-      onToggle={ onToggle(aridity) } 
-      toggled={ toggled } 
-      label={ label }/>
-  );
+const ToggleAridityFilter = ({
+  onToggle,
+  toggled,
+  aridity,
+  label,
+}, { layer }) => (
+  <ToggleFilter
+    layer={layer}
+    onToggle={onToggle(aridity)}
+    toggled={toggled}
+    label={label}
+  />
+);
+
+ToggleAridityFilter.propTypes = {
+  onToggle: PropTypes.func,
+  toggle: PropTypes.func,
+  toggled: PropTypes.bool,
+  aridity: PropTypes.object,
+  label: PropTypes.string,
 };
 
 ToggleAridityFilter.contextTypes = {
   layer: PropTypes.object,
 };
 
-const mapStateToProps = (state, props)=>{
+const mapStateToProps = (state, props) => {
   const aridity = fromFilters.aridity(state, props.aridity);
   return {
     toggled: aridity.visible,
     label: props.label,
     aridity,
   };
-}
+};
 
-const mapDispatchToProps = (dispatch)=>({
-  onToggle: (aridity)=>{
-    return ()=>dispatch(toggleAridityVisibility(aridity));
-  }
+const mapDispatchToProps = (dispatch) => ({
+  onToggle: (aridity) => (
+    () => dispatch(toggleAridityVisibility(aridity))
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToggleAridityFilter);

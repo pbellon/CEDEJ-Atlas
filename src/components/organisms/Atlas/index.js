@@ -124,7 +124,7 @@ export default class Atlas extends Component {
       lakesAndRivers,
       circles,
       waterLabels,
-      ...aridityAndTemperatures,
+      ...aridityAndTemperatures
     } = data;
     const bbox = [
       -179.2165527343741, -56.157571400448376,

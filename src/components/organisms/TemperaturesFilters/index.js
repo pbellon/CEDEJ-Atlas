@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { font, palette } from 'styled-theme';
 import { fromFilters } from 'store/selectors';
 import { toggleTemperatureVisibility } from 'store/actions';
-import { Heading, ToggleFilter, TooltipWrapper as Tooltip } from 'components';
+import { Heading, ToggleFilter } from 'components';
 import { visibleTypes } from 'utils';
 
 const ERRORS = {
@@ -23,7 +23,7 @@ const temperatureError = (winterTypes, summerTypes) => {
     return ERRORS.noSummerSelected;
   }
 
-  if((visibleSummers.length > 0) && (visibleWinters.length === 0)) {
+  if ((visibleSummers.length > 0) && (visibleWinters.length === 0)) {
     return ERRORS.noWinterSelected;
   }
 };
@@ -31,7 +31,7 @@ const temperatureError = (winterTypes, summerTypes) => {
 const ErrorMessage = styled.div`
   font-family: ${font('primary')};
   font-size: 0.8rem;
-  opacity: ${({ visible }) => visible ? 1 :  0};
+  opacity: ${({ visible }) => visible ? 1 : 0};
   line-height: ${({ visible }) => visible ? '1em' : 0};
   transition: opacity .2s ease, line-height .33s ease;
   color: ${palette('primary', 0)};
@@ -43,7 +43,7 @@ const TemperaturesFilters = ({
   summerTypes: sTypes,
   toggleWinterType,
   toggleSummerType,
-}, { layer }) => ( 
+}, { layer }) => (
   <div>
     <Heading
       style={{ marginBottom: 0 }}
@@ -53,7 +53,7 @@ const TemperaturesFilters = ({
     </Heading>
      
     <ErrorMessage visible={noWinterSelected(error)}>
-      <span>Vous devez sélectionner au moins un type d'hiver</span>
+      <span>Vous devez sélectionner au moins un type d&#39;hiver</span>
     </ErrorMessage>
     <ToggleFilter
       layer={layer}
@@ -90,7 +90,7 @@ const TemperaturesFilters = ({
       Type(s) d&#39;été
     </Heading>
     <ErrorMessage visible={noSummerSelected(error)}>
-      <span>Vous devez sélectionner au moins un type d'été</span>
+      <span>Vous devez sélectionner au moins un type d&#39;été</span>
     </ErrorMessage>
 
     <ToggleFilter
@@ -117,6 +117,7 @@ const TemperaturesFilters = ({
 );
 
 TemperaturesFilters.propTypes = {
+  error: PropTypes.string,
   winterTypes: PropTypes.object,
   summerTypes: PropTypes.object,
   toggleWinterType: PropTypes.func,

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { font } from 'styled-theme';
 import * as circles from 'utils/circles';
 import * as aridity from 'utils/aridity';
-import { visibleTypes, updateTooltips } from 'utils'; 
+import { visibleTypes, updateTooltips } from 'utils';
 
 const LegendTooltipContent = styled.div`
   max-width: 400px;
@@ -19,34 +19,35 @@ const Holder = styled.div`
 `;
 
 class LegendTooltips extends Component {
-  shouldComponentUpdate({layers:toLayers,filters:toFilters}){
+  shouldComponentUpdate({ layers: toLayers, filters: toFilters }) {
     const {
-      layers:{
-        circles:{visible:circlesVisible},
-        aridity:{visible:aridityVisible}
+      layers: {
+        circles: { visible: circlesVisible },
+        aridity: { visible: aridityVisible },
       },
-      filters:{
-        circles:{types},
-        aridity
-      }
+      filters: {
+        circles: { types },
+        aridity,
+      },
     } = this.props;
-    let shouldUpdateTooltips = (
-      circlesVisible != toLayers.circles.visible
+
+    const shouldUpdateTooltips = (
+      circlesVisible !== toLayers.circles.visible
     ) || (
-      aridityVisible != toLayers.aridity.visible
+      aridityVisible !== toLayers.aridity.visible
     ) || (
-      visibleTypes(types).length != visibleTypes(toFilters.circles.types).length
+      visibleTypes(types).length !== visibleTypes(toFilters.circles.types).length
     ) || (
-      visibleTypes(aridity).length != visibleTypes(toFilters.aridity).length
+      visibleTypes(aridity).length !== visibleTypes(toFilters.aridity).length
     );
 
-    if(shouldUpdateTooltips){
+    if (shouldUpdateTooltips) {
       updateTooltips();
     }
 
     return false;
   }
-  render(){
+  render() {
     return (
       <Holder>
         <Tooltip id="tooltip-nb-months">
@@ -69,22 +70,24 @@ class LegendTooltips extends Component {
               <Tooltip
                 key={key}
                 place="right"
-                id={`tooltip-aridity-${value}`}>
+                id={`tooltip-aridity-${value}`}
+              >
                 <LegendTooltipContent>
-                  <Markdown source={description}/>
+                  <Markdown source={description} />
                 </LegendTooltipContent>
               </Tooltip>
             )
         )}
         { circles.allDroughtRegimes()
-            .map(({value, regime_full}, key) => (
-              <Tooltip 
+            .map(({ value, regime_full }, key) => (
+              <Tooltip
                 key={key}
                 place="right"
                 class="custom-tooltip"
-                id={`tooltip-circle-${value}`}>
+                id={`tooltip-circle-${value}`}
+              >
                 <LegendTooltipContent>
-                  <Markdown source={regime_full}/>
+                  <Markdown source={regime_full} />
                 </LegendTooltipContent>
               </Tooltip>
           ))
@@ -93,4 +96,10 @@ class LegendTooltips extends Component {
     );
   }
 }
+
+LegendTooltips.propTypes = {
+  layers: PropTypes.object,
+  filters: PropTypes.object,
+};
+
 export default LegendTooltips;
