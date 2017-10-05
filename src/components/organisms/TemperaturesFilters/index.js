@@ -11,12 +11,14 @@ import { visibleTypes } from 'utils';
 const ERRORS = {
   noSummerSelected: 'NO_SUMMER',
   noWinterSelected: 'NO_WINTER',
+  noCorrelation: 'NO_CORRELATION',
 };
 
 const noWinterSelected = (err) => err === ERRORS.noWinterSelected;
 const noSummerSelected = (err) => err === ERRORS.noSummerSelected;
+const noCorrelation = (err) => err === ERRORS.noCorrelation;
 
-const temperatureError = (winterTypes, summerTypes) => {
+const temperatureError = (winterTypes, summerTypes, data) => {
   const visibleWinters = visibleTypes(winterTypes);
   const visibleSummers = visibleTypes(summerTypes);
   if ((visibleWinters.length > 0) && (visibleSummers.length === 0)) {
@@ -25,6 +27,9 @@ const temperatureError = (winterTypes, summerTypes) => {
 
   if ((visibleSummers.length > 0) && (visibleWinters.length === 0)) {
     return ERRORS.noWinterSelected;
+  }
+  if ((visibleSummers.length > 0) && (visibleWinters.length > 0) && (data && data.temperatures.features.length === 0)) {
+    return ERRORS.noCorrelation;
   }
 };
 
@@ -45,6 +50,10 @@ const TemperaturesFilters = ({
   toggleSummerType,
 }, { layer }) => (
   <div>
+    <ErrorMessage visible={noCorrelation(error)}>
+      <span>Les types de températures sélectionnés ne sont pas corrélés.</span>
+    </ErrorMessage>
+
     <Heading
       style={{ marginBottom: 0 }}
       level={6}
@@ -131,7 +140,8 @@ TemperaturesFilters.contextTypes = {
 const mapStateToProps = state => ({
   error: temperatureError(
     fromFilters.winterTemperatures(state),
-    fromFilters.summerTemperatures(state)
+    fromFilters.summerTemperatures(state),
+    fromFilters.data(state),
   ),
   winterTypes: fromFilters.winterTemperatures(state),
   summerTypes: fromFilters.summerTemperatures(state),
