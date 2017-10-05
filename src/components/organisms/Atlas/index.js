@@ -19,7 +19,7 @@ import {
   DesertLabelsLayer,
   WaterLabelsLayer,
   AridityTemperaturesLayer,
-  LakesRiversLayer,
+  WaterLayer,
 } from 'components';
 
 import { filterFeatures } from 'utils/data';
@@ -173,7 +173,7 @@ export default class Atlas extends Component {
           counts={counts}
         />
         
-        <LakesRiversLayer
+        <WaterLayer
           data={lakesAndRivers}
           zIndex={500}
         />

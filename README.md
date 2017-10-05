@@ -1,5 +1,5 @@
 ## Setup
-
+ 
 ### 1. Get the source code
 
 Just clone one of the ARc [branches](#branches):
@@ -17,7 +17,7 @@ $ yarn install
 ```
 
 ### 3. Run the app
- 
+  
 ```sh
 $ npm run dev
 # OR 
@@ -30,3 +30,27 @@ It will start the development server with [HMR](https://webpack.github.io/docs/h
 
 Now you can open [http://localhost:3000](http://localhost:3000) in your browser and see the application running.
 
+
+## Main Components
+
+This app tries to follow the [Atomic](http://atomicdesign.bradfrost.com/table-of-contents/) design principles.
+
+You'll find those main components to be the key elements of the application:
+
+- Atlas
+  - CirclesLayer
+  - DesertLabelsLayer
+  - WaterLabelsLayer
+  - WaterLayer
+
+- Sidebar
+- Navbar
+- AtlasLegend
+  - TemperaturesLegend
+  - AridityLegendNames
+- AtlasFilters
+  - AridityFilters
+  - TemperaturesFilters
+  - CircleSizesFilters
+  - CircleTypesFilters
+- 
