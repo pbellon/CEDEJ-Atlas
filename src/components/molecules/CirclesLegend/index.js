@@ -134,7 +134,7 @@ const CirclesLegend = ({ filters, circleSizes, print }) => {
       { hasTypes(['A', 'B'], types) && (
         <tr><Th colSpan={3} align={'left'}>
           <LegendCategoryName>
-            <Reduced>Sécheresse d'été dominante</Reduced>
+            <Reduced>Sécheresse d&#39;été dominante</Reduced>
           </LegendCategoryName>
         </Th></tr>
       )}
@@ -152,18 +152,18 @@ const CirclesLegend = ({ filters, circleSizes, print }) => {
       { hasTypes(['C', 'D'], types) && (
         <tr><Th colSpan={3} align={'left'}>
           <LegendCategoryName>
-            <Reduced>Sécheresse d'hiver dominante</Reduced>
+            <Reduced>Sécheresse d&#39;hiver dominante</Reduced>
           </LegendCategoryName>
         </Th></tr>
       )}
       {
         isVisible('C') && (
-          <CircleTypeRow print={print} circle={ 'C' } />
+          <CircleTypeRow print={print} circle={'C'} />
         )
       }
       {
         isVisible('D') && (
-          <CircleTypeRow print={print} circle={ 'D' } />
+          <CircleTypeRow print={print} circle={'D'} />
         )
       }
       { hasTypes(['E', 'F'], types) && (

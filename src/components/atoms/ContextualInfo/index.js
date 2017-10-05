@@ -55,7 +55,7 @@ const TemperaturesInfo = ({
               <span>Entre { winterRange[0] } et { winterRange[1] } degrés</span>
             )}
           </span>
-        } 
+        }
       />
     </Info>
   );
@@ -65,7 +65,7 @@ const AridityInfo = ({
   aridity: {
     properties: { d_TYPE },
   },
-})=>(
+}) => (
   <Info>
     <InfoRow title={'Type d\'aridité'} info={aridityUtils.getName(d_TYPE)} />
   </Info>
@@ -76,8 +76,8 @@ const CirclesInfo = ({
     properties: {
       size_,
       colours,
-    }
-  }
+    },
+  },
 }) => {
   const droughtMonths = circlesUtils.getDroughtMonths(size_);
   return (
@@ -108,16 +108,16 @@ const CirclesInfo = ({
 };
 
 const ContextualInfo = ({ data: { temperatures, aridity, circles } }) => {
-  if (!temperatures && !aridity && !circles) { return null };
+  if (!temperatures && !aridity && !circles) { return null; };
   return (
     <Holder>
       <InfoList>
-        { temperatures && (<TemperaturesInfo temperatures={ temperatures } />) }
-        { aridity && (<AridityInfo aridity={ aridity } />) }
-        { circles && (<CirclesInfo circles={ circles } />) }
+        { temperatures && (<TemperaturesInfo temperatures={temperatures} />) }
+        { aridity && (<AridityInfo aridity={aridity} />) }
+        { circles && (<CirclesInfo circles={circles} />) }
       </InfoList>
     </Holder>
   );
 };
 
-export default ContextualInfo; 
+export default ContextualInfo;

@@ -1,14 +1,12 @@
 import styled from 'styled-components';
 import { font, palette } from 'styled-theme';
 
-const Holder = styled.div``;
-
 const Content = styled.div`
-  font-family: ${ font('primary') };
+  font-family: ${font('primary')};
   line-height: 1.5em;
   & h1 {
     font-size: 3.5em;
-    margin-top: ${({noTopPadding})=>noTopPadding?0:'0.75em'};
+    margin-top: ${({ noTopPadding }) => noTopPadding ? 0 : '0.75em'};
   }
 
   & h2 {
@@ -28,7 +26,6 @@ const Content = styled.div`
   img {
     max-width: 100%;
   }
-  
 `;
 
 export default Content;

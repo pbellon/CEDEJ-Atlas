@@ -1,7 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
-import NavLink from '../NavLink'; 
+import NavLink from '../NavLink';
 
 const HomeNavLink = styled(NavLink)`
   background-color: ${palette('white', 2)};

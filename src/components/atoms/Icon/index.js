@@ -1,12 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import { palette } from 'styled-theme'
-import { ifProp } from 'styled-tools'
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { palette } from 'styled-theme';
+import { ifProp } from 'styled-tools';
 
-import * as icons from './icons'; 
+import * as icons from './icons';
 
-export const fontSize = ({ height }) => height ? `${height / 16}rem` : '1.25em'
+export const fontSize = ({ height }) => height ? `${height / 16}rem` : '1.25em';
 
 const Wrapper = styled.span`
   display: inline-block;
@@ -23,12 +23,12 @@ const Wrapper = styled.span`
     fill: currentcolor;
     stroke: currentcolor;
   }
-`
+`;
 
 const Icon = ({ icon, ...props }) => {
   const SvgIcon = icons[icon];
 
-  return <Wrapper {...props}><SvgIcon/></Wrapper>
+  return <Wrapper {...props}><SvgIcon /></Wrapper>;
 };
 
 Icon.propTypes = {
@@ -36,6 +36,6 @@ Icon.propTypes = {
   height: PropTypes.number,
   palette: PropTypes.string,
   reverse: PropTypes.bool,
-}
+};
 
-export default Icon
+export default Icon;

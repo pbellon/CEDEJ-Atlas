@@ -57,7 +57,7 @@ class AreaPattern extends Component {
 }
 
 AreaPattern.propTypes = {
-  temperature: PropType.oneOfType([
+  temperature: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,
   ]),

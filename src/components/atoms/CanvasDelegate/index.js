@@ -28,7 +28,7 @@ class CanvasDelegate {
   getTileFeatures({ x, y, z }) {
     const res = {};
     Object.keys(this.tiled).forEach(key => {
-      const fTiled = this.tiled[key].getTile(z,x,y);
+      const fTiled = this.tiled[key].getTile(z, x, y);
       res[key] = fTiled ? fTiled.features : [];
     });
     return res;
@@ -58,7 +58,7 @@ class CanvasDelegate {
     let j = 0;
     let k = 0;
     const glen = feature.geometry.length;
-    for (j; j < feature.geometry.length; j+=1) {
+    for (j; j < glen; j += 1) {
       const geom = feature.geometry[j];
       const sglen = geom.length;
       if (type === 1) {
@@ -73,7 +73,7 @@ class CanvasDelegate {
         continue;
       }
 
-      for (k = 0; k < sglen; k+=1) {
+      for (k = 0; k < sglen; k += 1) {
         const p = geom[k];
         if (k) {
           path.lineTo((p[0] * ratio) + pad, (p[1] * ratio) + pad);
@@ -114,7 +114,7 @@ class CanvasDelegate {
   }) {
     let i = 0;
     const n = features.length;
-    for (i; i < n; i++) {
+    for (i; i < n; i += 1) {
       const area = features[i];
       if (stopCondition) {
         if (stopCondition(area)) { continue; }
@@ -127,9 +127,9 @@ class CanvasDelegate {
       this.drawArea({
         area,
         context,
-        fillStyle:fill,
-        strokeStyle:stroke,
-        strokeWidth:strokeW,
+        fillStyle: fill,
+        strokeStyle: stroke,
+        strokeWidth: strokeW,
       });
     }
   }

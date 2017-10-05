@@ -4,11 +4,11 @@ import ReactMarkdown from 'react-markdown';
 import { Link } from 'components';
 
 const customRenderers = {
-  Link: Link
-}
+  Link
+};
 
-const Markdown = ({...props})=>(
-  <ReactMarkdown renderers={customRenderers} {...props}/>
+const Markdown = ({ ...props }) => (
+  <ReactMarkdown renderers={customRenderers} {...props} />
 );
 
 export default Markdown;

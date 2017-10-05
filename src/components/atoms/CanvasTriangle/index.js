@@ -15,26 +15,28 @@ class CanvasTriangle extends Component {
     strokeWidth: 1,
   }
 
-  draw(canvas){
+  draw(canvas) {
     const { strokeWidth, stroke, radius } = this.props;
     const ctx = canvas.getContext('2d');
     ctx.strokeStyle = stroke;
     ctx.lineWidth = strokeWidth;
     ctx.beginPath();
-    ctx.moveTo(strokeWidth,strokeWidth);
-    ctx.lineTo(radius*2, strokeWidth);
-    ctx.lineTo(radius, radius*2);
+    ctx.moveTo(strokeWidth, strokeWidth);
+    ctx.lineTo(radius * 2, strokeWidth);
+    ctx.lineTo(radius, radius * 2);
     ctx.lineTo(strokeWidth, strokeWidth);
     ctx.stroke();
   }
 
-  render(){
+  render() {
     const { width, height, ...props } = this.props;
-    return (<canvas
-      { ...props }
-      width={width}
-      height={height}
-      ref={(ref)=>this.draw(ref)}/>
+    return (
+      <canvas
+        {...props}
+        width={width}
+        height={height}
+        ref={(ref) => this.draw(ref)}
+      />
     );
   }
 }

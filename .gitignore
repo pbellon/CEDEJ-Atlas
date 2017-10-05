@@ -1,6 +1,5 @@
 .DS_Store
 .happypack
-dist
 *.log
 *.swp
 *.swo
