@@ -104,7 +104,7 @@ class GeoJSONLabelsLayer extends Component {
         );
       }
       
-      centroids.forEach(_centroid => {
+      centroids.forEach((_centroid, j) => {
         const center = _centroid.geometry.coordinates;
         Tooltips.push((
           <CircleMarker

@@ -1,17 +1,49 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import styled from 'styled-components';
+import { font, palette } from 'styled-theme';
 import { fromFilters } from 'store/selectors';
 import { toggleTemperatureVisibility } from 'store/actions';
-import { Heading, ToggleFilter } from 'components';
+import { Heading, ToggleFilter, TooltipWrapper as Tooltip } from 'components';
+import { visibleTypes } from 'utils';
+
+const ERRORS = {
+  noSummerSelected: 'NO_SUMMER',
+  noWinterSelected: 'NO_WINTER',
+};
+
+const noWinterSelected = (err) => err === ERRORS.noWinterSelected;
+const noSummerSelected = (err) => err === ERRORS.noSummerSelected;
+
+const temperatureError = (winterTypes, summerTypes) => {
+  const visibleWinters = visibleTypes(winterTypes);
+  const visibleSummers = visibleTypes(summerTypes);
+  if ((visibleWinters.length > 0) && (visibleSummers.length === 0)) {
+    return ERRORS.noSummerSelected;
+  }
+
+  if((visibleSummers.length > 0) && (visibleWinters.length === 0)) {
+    return ERRORS.noWinterSelected;
+  }
+};
+
+const ErrorMessage = styled.div`
+  font-family: ${font('primary')};
+  font-size: 0.8rem;
+  opacity: ${({ visible }) => visible ? 1 :  0};
+  line-height: ${({ visible }) => visible ? '1em' : 0};
+  transition: opacity .2s ease, line-height .33s ease;
+  color: ${palette('primary', 0)};
+`;
 
 const TemperaturesFilters = ({
+  error,
   winterTypes: wTypes,
   summerTypes: sTypes,
   toggleWinterType,
   toggleSummerType,
-}, { layer }) => (
+}, { layer }) => ( 
   <div>
     <Heading
       style={{ marginBottom: 0 }}
@@ -20,6 +52,9 @@ const TemperaturesFilters = ({
       Type(s) d&#39;hiver
     </Heading>
      
+    <ErrorMessage visible={noWinterSelected(error)}>
+      <span>Vous devez sélectionner au moins un type d'hiver</span>
+    </ErrorMessage>
     <ToggleFilter
       layer={layer}
       toggled={wTypes.A.visible}
@@ -54,7 +89,10 @@ const TemperaturesFilters = ({
     >
       Type(s) d&#39;été
     </Heading>
-     
+    <ErrorMessage visible={noSummerSelected(error)}>
+      <span>Vous devez sélectionner au moins un type d'été</span>
+    </ErrorMessage>
+
     <ToggleFilter
       layer={layer}
       toggled={sTypes.A.visible}
@@ -90,6 +128,10 @@ TemperaturesFilters.contextTypes = {
 };
 
 const mapStateToProps = state => ({
+  error: temperatureError(
+    fromFilters.winterTemperatures(state),
+    fromFilters.summerTemperatures(state)
+  ),
   winterTypes: fromFilters.winterTemperatures(state),
   summerTypes: fromFilters.summerTemperatures(state),
 });
