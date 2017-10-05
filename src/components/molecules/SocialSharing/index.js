@@ -12,7 +12,7 @@ import {
 import FacebookProvider, { Share } from 'react-facebook';
 import { FacebookIcon, TwitterIcon } from 'components';
 
-const getCurrentHref = ()=>window.location.href;
+const getCurrentHref = () => window.location.href;
 
 const Holder = styled.div`
   display: flex;
@@ -31,7 +31,7 @@ const twitterHref =()=>{
   }&hashtags=${TWEET_HASHTAGS}`;
 
 }
-const openModal = (href, w, h)=>{
+const openModal = (href, w, h) => {
   let ww = window.innerWidth;
   let wh = window.innerHeight;
   let wstyle = `
@@ -41,18 +41,18 @@ const openModal = (href, w, h)=>{
   window.open(href, name, wstyle);
 }
 
-const shareTwitter = ()=>{
+const shareTwitter = () => {
   const href = twitterHref();
   openModal(href, 600, 320);
 }
 
-const SocialSharing = ()=>(
+const SocialSharing = () => (
   <Holder>
     <FacebookProvider
       appId={FACEBOOK_APP_ID}
       version={FACEBOOK_SDK_VERSION}>
       <Share>
-        <FacebookIcon width={25} height={25}/>
+        <FacebookIcon width={25} height={25} />
       </Share>
     </FacebookProvider>
     <TwitterIcon onClick={shareTwitter} width={25} height={25}/>
