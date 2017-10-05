@@ -38,7 +38,10 @@ const TemperatureRow = ({
 };
 
 TemperatureRow.propTypes = {
-  name: PropTypes.string,
+  name: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+  ]),
   temperature: PropTypes.number,
   patterns: PropTypes.object,
   aridity: PropTypes.object,

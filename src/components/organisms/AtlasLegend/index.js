@@ -13,7 +13,7 @@ import { legend } from 'utils/styles';
 
 const Legend = styled.div`
   font-family: ${font('primary')};
-  background: ${palette('white', 0)};
+  background: ${palette('white', 1)};
   position: absolute;
   z-index: 1000;
   top: 0;
