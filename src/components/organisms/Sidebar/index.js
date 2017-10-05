@@ -21,6 +21,10 @@ const Side = styled.div`
   &.closed {
     transform: translate(${sidebar.width - 40}px, 0);
   }
+
+  h4 + div h6:first-child {
+    margin-top: 0;
+  } 
 `;
 
 const Sidebar = ({ children, opened, ...props }) => {
