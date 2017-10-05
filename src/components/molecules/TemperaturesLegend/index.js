@@ -32,7 +32,7 @@ const Temperatures = ({
   const hasVisibleTemperatures = showTemperatures && (
     visibleTypes(winter).length > 0 && visibleTypes(summer).length > 0
   );
- 
+
   const patterns = patternUtils.initPatterns();
 
   const temperatureRows = hasVisibleTemperatures ? TemperatureLegendRows({
@@ -43,14 +43,14 @@ const Temperatures = ({
   }) : null;
 
   const tempsRowsFragment = createFragment({ temperatures: temperatureRows });
-  
+
   const aridityNamesRows = hasVisibleAridity ? AridityLegendNames({
     aridity,
     print,
   }) : null;
 
   const aridityNamesFragment = createFragment({ aridity: aridityNamesRows });
-  
+
   return (
     <tbody>
       {[

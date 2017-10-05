@@ -30,7 +30,7 @@ const FixedBar = styled.div`
 `;
 
 const FixedPartnersLogo = (props) => (
-  <FixedBar {...props}> 
+  <FixedBar {...props}>
     <PartnersLogo />
   </FixedBar>
 );

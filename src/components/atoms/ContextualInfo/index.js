@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 import * as circlesUtils from 'utils/circles';
 import * as temperaturesUtils from 'utils/temperatures';
@@ -21,6 +22,11 @@ const Info = styled.li`
 const InfoRow = ({ title, info }) => (
   <div><b>{ title }:</b>&nbsp;{ info }</div>
 );
+
+InfoRow.propTypes = {
+  title: PropTypes.string,
+  info: PropTypes.node,
+};
 
 const TemperaturesInfo = ({
   temperatures: {
@@ -61,6 +67,10 @@ const TemperaturesInfo = ({
   );
 };
 
+TemperaturesInfo.propTypes = {
+  temperatures: PropTypes.object,
+};
+
 const AridityInfo = ({
   aridity: {
     properties: { d_TYPE },
@@ -70,6 +80,10 @@ const AridityInfo = ({
     <InfoRow title={'Type d\'aridité'} info={aridityUtils.getName(d_TYPE)} />
   </Info>
 );
+
+AridityInfo.propTypes = {
+  aridity: PropTypes.object,
+};
 
 const CirclesInfo = ({
   circles: {
@@ -107,8 +121,12 @@ const CirclesInfo = ({
   );
 };
 
+CirclesInfo.propTypes = {
+  circles: PropTypes.object,
+};
+
 const ContextualInfo = ({ data: { temperatures, aridity, circles } }) => {
-  if (!temperatures && !aridity && !circles) { return null; };
+  if (!temperatures && !aridity && !circles) { return null; }
   return (
     <Holder>
       <InfoList>
@@ -118,6 +136,10 @@ const ContextualInfo = ({ data: { temperatures, aridity, circles } }) => {
       </InfoList>
     </Holder>
   );
+};
+
+ContextualInfo.propTypes = {
+  data: PropTypes.object,
 };
 
 export default ContextualInfo;

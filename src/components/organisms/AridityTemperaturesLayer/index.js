@@ -84,7 +84,7 @@ class AridityTemperaturesLayer extends CanvasTiles {
         toAridity.features.length > 0
       )
     );
-    
+
     const diffAridity = fromAridity.features.length !== toAridity.features.length;
     const diffTemps = fromTemps.features.length !== toTemps.features.length;
     if (diffTemps || diffAridity) {

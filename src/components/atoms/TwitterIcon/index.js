@@ -1,6 +1,6 @@
 import React from 'react';
 import { SvgIcon } from 'components';
-// took from https://github.com/simple-icons/simple-icons/ 
+// took from https://github.com/simple-icons/simple-icons/
 
 const Twitter = (props) => (
   <SvgIcon {...props} viewBox="0 0 24 24">

@@ -18,14 +18,12 @@ class CanvasTiles extends MapLayer {
     onRendered: noop,
   };
 
-
   createLeafletElement(props) {
     const { delegate, onRendered, data, ...options } = this.getOptions(props);
 
     this.delegate = new delegate(data);
     return canvasTiles(this.delegate, onRendered, options);
   }
-  
 
   updateData(data) {
     this.delegate.updateData(data);

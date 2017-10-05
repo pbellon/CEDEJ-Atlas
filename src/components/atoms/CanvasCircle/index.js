@@ -10,27 +10,31 @@ class CanvasCircle extends Component {
     strokeWidth: PropTypes.number,
     style: PropTypes.objet,
   }
+
   static defaultProps = {
     stroke: '#BBB',
     strokeWidth: 1,
   }
-  draw(canvas){
+
+  draw(canvas) {
     const { strokeWidth, stroke, radius } = this.props;
     const ctx = canvas.getContext('2d');
     ctx.strokeStyle = stroke;
     ctx.lineWidth = strokeWidth;
     ctx.beginPath();
-    ctx.arc(radius+strokeWidth,radius+strokeWidth, radius, 0, Math.PI * 2, false);
+    ctx.arc(radius + strokeWidth, radius + strokeWidth, radius, 0, Math.PI * 2, false);
     ctx.stroke();
   }
 
-  render(){
+  render() {
     const { width, height, ...props } = this.props;
-    return (<canvas
-      { ...props }
-      width={width}
-      height={height}
-      ref={(ref)=>this.draw(ref)}/>
+    return (
+      <canvas
+        {...props}
+        width={width}
+        height={height}
+        ref={(ref) => this.draw(ref)}
+      />
     );
   }
 }

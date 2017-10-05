@@ -22,7 +22,7 @@ const configureStore = (initialState, services = {}) => {
   ];
 
   const store = createStore(reducer, initialState, compose(...enhancers));
-  
+
   sagaMiddleware.run(sagas, services);
 
   return store;

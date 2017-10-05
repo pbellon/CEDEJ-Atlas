@@ -67,7 +67,6 @@ const AtlasLegend = ({
         { !print && (
           <LegendToggleButton style={visibilityButtonStyle} />
         )}
-        
         <VisibleIfOpened isOpened={isOpened}>
           <LegendContent
             circleSizes={circleSizes}

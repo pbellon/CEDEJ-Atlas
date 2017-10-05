@@ -65,13 +65,13 @@ export default class Atlas extends Component {
       tooltipData: null,
     };
   }
-  
+
   onClick(e) {
     // useful to avoid looking up for deserts.
     const {
       data: { aridity, temperatures, circles },
     } = this.props;
-    
+
     const searchInFeatures = {
       aridity,
       temperatures,
@@ -85,7 +85,7 @@ export default class Atlas extends Component {
       this.hideTooltip();
     }
   }
-  
+
   hideTooltip() {
     this.setState({ showTooltip: false });
   }
@@ -103,7 +103,7 @@ export default class Atlas extends Component {
     });
     this.props.bindMapReference(this.map);
   }
-  
+
   render() {
     const { showTooltip, tooltipPosition, tooltipData } = this.state;
     const {
@@ -172,12 +172,11 @@ export default class Atlas extends Component {
           data={aridityAndTemperatures}
           counts={counts}
         />
-        
+
         <WaterLayer
           data={lakesAndRivers}
           zIndex={500}
         />
-          
 
         <CirclesLayer
           types={circleTypes}
@@ -187,7 +186,7 @@ export default class Atlas extends Component {
           show={showCircles}
           circles={circles.features}
         />
-        
+
         <WaterLabelsLayer data={waterLabels} />
         <DesertLabelsLayer minZoom={4} data={deserts} />
       </Map>

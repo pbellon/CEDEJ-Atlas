@@ -7,7 +7,7 @@ import { palette } from 'styled-theme';
 import { styles } from '../Link';
 
 const StyledNavLink = styled(({ theme, reverse, palette, ...props }) =>
-  <RouterNavLink exact activeClassName={ 'active' } {...props} />
+  <RouterNavLink exact activeClassName={'active'} {...props} />
 )`
   ${styles}
   display:block;

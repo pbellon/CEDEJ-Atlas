@@ -50,7 +50,7 @@ class CanvasDelegate {
   draw() {
     throw new Error('You have to implement the draw method !');
   }
-  
+
   drawPath(feature, ctx, pad = 0) {
     const type = feature.type;
     const ratio = ctx.canvas.height / 4096;
@@ -110,7 +110,7 @@ class CanvasDelegate {
     fillStyle,
     strokeStyle,
     strokeWidth = 1,
-    stopCondition
+    stopCondition,
   }) {
     let i = 0;
     const n = features.length;

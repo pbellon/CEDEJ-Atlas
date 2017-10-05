@@ -41,14 +41,14 @@ class Delegate extends CanvasDelegate {
         fillStyle: 'black',
         strokeWidth: 2,
       });
-      
+
       this.drawAreas({
         context: temperaturesCanvas.getContext('2d'),
         features: temperatures,
         fillStyle: 'black',
         strokeWidth: 1,
       });
-      
+
       const ctx = canvas.getContext('2d');
       ctx.drawImage(aridityCanvas, 0, 0, canvas.width, canvas.height);
       ctx.globalCompositeOperation = 'xor';
@@ -67,7 +67,7 @@ class Delegate extends CanvasDelegate {
 
     const mask = this.createMask(canvas, temperatures, aridity);
     const context = canvas.getContext('2d');
-    
+
     this.patterns = (
       this.patterns || patternsUtil.initPatterns(context)
     );
@@ -75,7 +75,7 @@ class Delegate extends CanvasDelegate {
 
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.globalCompositeOperation = 'source-over';
-    
+
     try {
       if (isTemperaturesVisible) {
         this.drawAreas({

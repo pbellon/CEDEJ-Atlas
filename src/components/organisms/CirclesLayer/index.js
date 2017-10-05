@@ -54,7 +54,7 @@ class CirclesLayer extends Component {
     if (this.props.circles.length !== toProps.circles.length) { return true; }
     return false;
   }
-  
+
   addToSizes(circle, $ref) {
     const { onCirclesCreated } = this.props;
     const size = circle.properties.size_;
@@ -84,18 +84,18 @@ class CirclesLayer extends Component {
   hasAllSizes() {
     return this.sizeKeys.every((key) => this.sizes[key] !== null);
   }
-  
+
   updateSizeKeys(circles) {
     this.sizeKeys = circles.map(({ properties }) => properties.size_);
   }
-  
+
   render() {
     const {
       show = true,
       circles,
       types,
     } = this.props;
-    
+
     this.renderedElements = 0;
     this.updateSizeKeys(circles);
     const _types = visibleTypes(types);

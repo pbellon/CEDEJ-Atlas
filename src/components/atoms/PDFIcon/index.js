@@ -8,7 +8,7 @@ const PDFIcon = (props) => (
     y="0px"
     viewBox="0 0 482.14 482.14"
     style={{
-      enableBackground: 'new 0 0 482.14 482.14'
+      enableBackground: 'new 0 0 482.14 482.14',
     }}
   >
     <g>

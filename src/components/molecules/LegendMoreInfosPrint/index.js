@@ -15,7 +15,7 @@ const Bold = styled.span`
   font-weight: bold;
 `;
 
-const MoreInfoTitle = () => <Bold>À propos de la légende</Bold>
+const MoreInfoTitle = () => <Bold>À propos de la légende</Bold>;
 
 const LegendMoreInfos = () => (
   <Holder>

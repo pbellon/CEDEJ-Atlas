@@ -31,7 +31,7 @@ const NavbarTabs = () => (
       icon={<AtlasIcon />}
       title={'Carte numérique mondiale des zones arides'}
     />
-    
+
     <NavItem
       icon={<ProjectIcon />}
       title={'Le projet'}

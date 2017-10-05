@@ -62,7 +62,7 @@ const renderHtml = (component) => {
 const renderLegend = ({ layers, filters, circleSizes, ...data }) => {
   const props = { layers, filters, print: true, circleSizes };
   const component = <AtlasLegend {...props} />;
-   
+
   return new Promise((resolve) => {
     renderHtml(component).then(convertToImage).then((canvas) => {
       resolve({ legendImage: canvas, ...data });
@@ -83,7 +83,7 @@ const renderPrintLegend = (data) => {
   return new Promise((resolve) => {
     const holder = document.querySelector('.render-holder');
     holder.style.overflow = 'visible';
-    
+
     renderLegend(data)
       .then(renderMoreInfos)
       .then((data) => {

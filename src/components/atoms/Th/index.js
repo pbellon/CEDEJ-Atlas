@@ -12,4 +12,4 @@ const Th = styled.th`
   `)}
 `;
 
-export default Th; 
+export default Th;

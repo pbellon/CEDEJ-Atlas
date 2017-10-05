@@ -7,7 +7,7 @@ import {
 
 export const CanvasTiles = GridLayer.extend({
   isCanvasLayer: function () { return true; },
-  
+
   initialize: function (drawDelegate, onRendered, options) {
     this._drawDelegate = drawDelegate;
 
@@ -60,7 +60,7 @@ export const CanvasTiles = GridLayer.extend({
     const y = Math.round(p.y - s.y);
     return { x, y };
   },
-  
+
   /**
    * Creates a query for the quadtree from bounds
    */
@@ -68,7 +68,7 @@ export const CanvasTiles = GridLayer.extend({
     if (bounds.getSouthWest() === undefined) {
       return { x: 0, y: 0, width: 0.1, height: 0.1 };
     }
-    
+
     return {
       x: bounds.getSouthWest().lng,
       y: bounds.getSouthWest().lat,

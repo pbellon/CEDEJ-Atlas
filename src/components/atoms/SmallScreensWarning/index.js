@@ -3,7 +3,7 @@ import MediaQuery from 'react-responsive';
 
 import { Modal } from 'components';
 
-const Title = () => <span>Écran non supporté</span>
+const Title = () => <span>Écran non supporté</span>;
 
 class SmallScreensWarning extends Component {
   constructor(props) {

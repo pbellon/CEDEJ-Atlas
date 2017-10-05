@@ -17,10 +17,10 @@ const getFontSize = ({
 
 
 const textBorders = [
-  '0.01em 0 1px #FFF', 
-  '-0.01em 0 1px #FFF', 
-  '0 0.01em 1px #FFF', 
-  '0 -0.01em 1px #FFF', 
+  '0.01em 0 1px #FFF',
+  '-0.01em 0 1px #FFF',
+  '0 0.01em 1px #FFF',
+  '0 -0.01em 1px #FFF',
   '0.01em 0.01em 1px #FFF',
   '-0.01em -0.01em 1px #FFF',
 ].join(', ');

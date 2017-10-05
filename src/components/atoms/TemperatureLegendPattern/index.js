@@ -28,10 +28,10 @@ class AreaPattern extends Component {
     if (!temperature) {
       temperature = { color: 'white' };
     }
-    
+
     context.fillStyle = temperature.color;
     context.fill(p2d);
-    
+
     if (pattern && pattern.stripes) {
       context.fillStyle = pattern.canvasPattern;
       context.beginPath();

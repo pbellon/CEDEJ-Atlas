@@ -89,7 +89,7 @@ class PatternList {
     this.context = context;
     this.initPatterns();
   }
-  
+
   initPatterns() {
     this.patterns = this.patterns.map(pattern => {
       let _pattern = pattern;
@@ -109,7 +109,7 @@ class PatternList {
   findByFeature(aridity) {
     return this.findByKey(aridity.properties.d_TYPE);
   }
-  
+
   all() { return this.patterns; }
 }
 

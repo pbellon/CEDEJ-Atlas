@@ -19,12 +19,12 @@ export function* loadData() {
       lakes,
       rivers,
     } = yield call(api.getMapData);
-    
+
     const lakesAndRivers = {
       lakes,
       rivers,
     };
-   
+
     aridity.features = aridity.features
       .filter(a => a.properties.d_TYPE != null);
 
@@ -39,7 +39,7 @@ export function* loadData() {
       temperatures,
       circles,
     };
-    
+
     Object.keys(dataToTurfize).forEach(i => {
       turfizeGeoJSON(dataToTurfize[i].features);
     });

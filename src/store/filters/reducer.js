@@ -30,7 +30,7 @@ const filterAridity = (original, aridity) => {
 const filterCircles = (original, { sizes, types }) => {
   const visibleTypes = Object.keys(types)
     .filter(key => types[key].visible);
-  
+
   const visibleSizes = Object.keys(sizes)
     .filter(key => sizes[key].visible);
 
@@ -72,7 +72,7 @@ const toggleTemperatureTypeVisibility = (state, action) => {
   const tempsCount = ({ winter, summer }) => (
     visibleTypesCount(winter) + visibleTypesCount(summer)
   );
-  
+
   const counts = {
     ...state.counts,
     temperatures: {

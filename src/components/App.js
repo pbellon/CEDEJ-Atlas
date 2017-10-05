@@ -1,11 +1,10 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import {
+import styled, {
   injectGlobal,
-  ThemeProvider
+  ThemeProvider,
 } from 'styled-components';
-import styled from 'styled-components'; 
 import {
   HomePage,
   ContentPage,
@@ -17,8 +16,9 @@ import {
 } from 'components';
 import { Atlas } from 'containers';
 // https://github.com/diegohaz/arc/wiki/Styling
-import theme from './themes/default';
 import { navbar } from 'utils/styles';
+import theme from './themes/default';
+
 injectGlobal`
   body {
     margin: 0;
@@ -75,7 +75,7 @@ const OverlayHolder = styled.div`
   padding-bottom: 50px;
   z-index: 20;
   transition: transform .2s ease-in-out;
-  transform: translate(0, ${({visible})=>visible?0:'100vh'});
+  transform: translate(0, ${({ visible }) => visible ? 0 : '100vh'});
 
 `;
 
@@ -83,36 +83,46 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <PageTemplate>
-        <SmallScreensWarning/>
-        <ExportModal/>
-        <AtlasHolder className='atlas-holder'>
-          <Atlas/>
-          <Route path="/map" exact children={(mapProps)=>(
-            <TutorialModal inMap={mapProps.match != null}/>
-          )}/>
+        <SmallScreensWarning />
+        <ExportModal />
+        <AtlasHolder className="atlas-holder">
+          <Atlas />
+          <Route
+            path="/map"
+            exact
+            children={(mapProps) => (
+              <TutorialModal inMap={mapProps.match != null} />
+            )}
+          />
         </AtlasHolder>
-        <Route path="/" exact children={(homeProps)=>{
-          const inHome = homeProps.match != null;
-          return (
-            <OverlayHolder className='home-page-holder' visible={ inHome }>
-              <HomePage/>
-            </OverlayHolder>
-          );
-        }}/>
-        <Route path="/page" children={(pageProps)=>{
-          const inPage = pageProps.match != null;
-          return ( 
-            <div>
-              <OverlayHolder className='content-page-holder' visible={ inPage }>
-              { inPage && (
-                <ContentPage/>
-              )}
-              
-            </OverlayHolder>
-          <FixedPartnersLogo visible={ inPage }/>
-          </div>
-         );
-        }}/>
+        <Route
+          path="/"
+          exact
+          children={(homeProps) => {
+            const inHome = homeProps.match != null;
+            return (
+              <OverlayHolder className="home-page-holder" visible={inHome}>
+                <HomePage />
+              </OverlayHolder>
+            );
+          }}
+        />
+        <Route
+          path="/page"
+          children={(pageProps) => {
+            const inPage = pageProps.match != null;
+            return (
+              <div>
+                <OverlayHolder className="content-page-holder" visible={inPage}>
+                  { inPage && (
+                    <ContentPage />
+                  )}
+                </OverlayHolder>
+                <FixedPartnersLogo visible={inPage} />
+              </div>
+            );
+          }}
+        />
       </PageTemplate>
     </ThemeProvider>
   );

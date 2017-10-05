@@ -52,7 +52,7 @@ const ExportModal = ({
       isPreviewing={isPreviewing}
       mapPreview={mapPreview}
     />
-    
+
     <LoadingIndicator isLoading={isRendering} />
     <Button onClick={exportInPNG(exportData)}>
       <PNGIcon height={25} width={25} />&nbsp;Exporter en PNG

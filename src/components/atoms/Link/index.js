@@ -27,17 +27,19 @@ const Anchor = styled.a`${styles}`;
 
 const Link = ({ to, nodeKey, href, literal, ...props }) => {
   let _to = to;
-  if(href && href.startsWith('/')){
+  if (href && href.startsWith('/')) {
     _to = href;
   }
   if (_to) {
-    return <StyledLink to={ _to } {...props} />
+    return <StyledLink to={_to} {...props} />;
   }
-  return <Anchor href={href} {...props} />
+  return <Anchor href={href} {...props} />;
 };
 
 Link.propTypes = {
   nodeKey: PropTypes.any,
+  href: PropTypes.string,
+  literal: PropTypes.any,
   palette: PropTypes.string,
   reverse: PropTypes.bool,
   to: PropTypes.string,

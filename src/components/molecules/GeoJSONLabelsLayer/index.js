@@ -25,14 +25,14 @@ class GeoJSONLabelsLayer extends Component {
   }
 
   shouldComponentUpdate() { return false; }
-  
+
   addToTooltips(ref, scalerank) {
     this.tooltips.push({
       tooltipRef: ref,
       scalerank,
     });
   }
-  
+
   checkZoom() {
     const { minZoom } = this.props;
     const { map } = this.context;
@@ -49,7 +49,7 @@ class GeoJSONLabelsLayer extends Component {
       this.tooltips.forEach(this.hideTooltip);
     }
   }
-  
+
   showTooltip(tooltip) {
     if (tooltip.tooltipRef) {
       const { tooltipRef: { leafletElement } } = tooltip;
@@ -85,7 +85,7 @@ class GeoJSONLabelsLayer extends Component {
     const centroids = [];
     for (i; i < len; i += 1) {
       const feature = data.features[i];
-       
+
       if (useMultipleCentroids && feature.geometry.type === 'MultiPolygon') {
         const polygons = flatten(feature);
         polygons.features.forEach(p => (
@@ -119,7 +119,7 @@ class GeoJSONLabelsLayer extends Component {
             interactive={false}
             permanent
           >
-            { labelElement } 
+            { labelElement }
           </Tooltip>
         </CircleMarker>
       );

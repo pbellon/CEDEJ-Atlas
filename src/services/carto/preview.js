@@ -38,7 +38,7 @@ const addScaleToCanvas = (canvas, mapRef) => {
   const kmt = scaleText(kmScale);
   ctx.fillStyle = rectFill;
   ctx.fillRect(cw - offx - kmw, ch - offy - scaleHeight, kmw, scaleHeight);
-  
+
   ctx.moveTo(cw - offx, ch - offy - scaleHeight);
   ctx.lineTo(cw - offx, ch - offy);
   ctx.lineTo(cw - offx - kmw, ch - offy);
@@ -49,16 +49,13 @@ const addScaleToCanvas = (canvas, mapRef) => {
   // then the mile scale
   const mw = scaleWidth(mileScale);
   const mt = scaleText(mileScale);
-
   ctx.fillStyle = rectFill;
   ctx.fillRect(cw - offx - mw, ch - offy, mw, scaleHeight);
-  
   ctx.moveTo(cw - offx, ch - (offy - scaleHeight));
   ctx.lineTo(cw - offx, ch - offy);
   ctx.lineTo(cw - offx - mw, ch - offy);
   ctx.lineTo(cw - offx - mw, ch - (offy - scaleHeight));
   ctx.stroke();
-  
   ctx.fillStyle = '#000';
   ctx.fillText(mt, cw - offx - 4, ch - (offy - 14), mw);
   ctx.closePath();

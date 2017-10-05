@@ -27,7 +27,7 @@ const CircleTypesFilters = ({ onToggle, types, layer }) => (
       onToggle={onToggle(types.B)}
       label={'Régimes à deux saisons de pluies'}
     />
-    
+
     <Heading
       style={{ marginBottom: 0 }}
       level={6}
@@ -47,14 +47,14 @@ const CircleTypesFilters = ({ onToggle, types, layer }) => (
       onToggle={onToggle(types.D)}
       label={'Régimes à deux saisons de pluies'}
     />
-    
+
     <Heading
       style={{ marginBottom: 0 }}
       level={6}
     >
       Régimes de transition
     </Heading>
-    
+
     <ToggleFilter
       layer={layer}
       toggled={types.E.visible}

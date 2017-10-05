@@ -72,7 +72,7 @@ class AtlasContainer extends Component {
     loadData: PropTypes.func.isRequired,
     bindMapReference: PropTypes.func.isRequired,
   }
-  
+
   componentDidMount() {
     this.props.loadData();
   }
