@@ -200,7 +200,10 @@ export default class Atlas extends Component {
           circles={circles.features}
         />
 
-        <WaterLabelsLayer data={waterLabels} />
+        <WaterLabelsLayer
+          minZoom={3}
+          data={waterLabels}
+        />
         <DesertLabelsLayer minZoom={4} data={deserts} />
       </Map>
     );
