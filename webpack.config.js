@@ -92,8 +92,6 @@ const config = createConfig([
       'lodash.upperfirst',
       'lodash.camelcase',
       'prop-types',
-      'rc-slider',
-      'rc-tooltip',
       'react',
       'react-dom',
       'react-facebook',
