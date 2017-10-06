@@ -4,9 +4,25 @@ import { LayerGroup, Pane, CircleMarker, Tooltip } from 'react-leaflet';
 
 import centroid from '@turf/centroid';
 import flatten from '@turf/flatten';
+import bbox from '@turf/bbox';
+import bboxPolygon from '@turf/bbox-polygon';
+
+import { isFunction } from 'utils';
+
+const POSITIONS = {
+  bbox: 'LABEL_BBOX_POSITION',
+  centroid: 'LABEL_CENTROID_POSITION',
+};
+
 
 class GeoJSONLabelsLayer extends Component {
+  static positioning = POSITIONS;
+    
   static propTypes = {
+    positioning: PropTypes.oneOfType([
+      PropTypes.oneOf([POSITIONS.bbox, POSITIONS.centroid]),
+      PropTypes.func,
+    ]),
     useMultipleCentroids: PropTypes.bool,
     layerName: PropTypes.string.isRequired,
     bindFeatureToLabel: PropTypes.func.isRequired,
@@ -15,8 +31,10 @@ class GeoJSONLabelsLayer extends Component {
       features: PropTypes.array,
     }).isRequired,
   };
+
   static defaultProps = {
     minZoom: 0,
+    positioning: POSITIONS.centroid,
     useMultipleCentroids: false,
   };
   constructor(props, context) {
@@ -69,7 +87,27 @@ class GeoJSONLabelsLayer extends Component {
       }
     }
   }
+  
+  labelPosition(feature) {
+    const { positioning } = this.props;
+    let usePositining = positioning;
+    if (isFunction(positioning)) {
+      usePositining = positioning(feature);
+    }
 
+    if (usePositining === POSITIONS.bbox) {
+      return centroid(
+        bboxPolygon(
+          bbox(feature)
+        )
+      );
+    }
+
+    if (usePositining === POSITIONS.centroid) {
+      return centroid(feature);
+    }
+  }
+  
   render() {
     const {
       data,
@@ -90,12 +128,12 @@ class GeoJSONLabelsLayer extends Component {
         const polygons = flatten(feature);
         polygons.features.forEach(p => (
           centroids.push(
-            { centroid: centroid(p), feature }
+            { centroid: this.labelPosition(p), feature }
           )
         ));
       } else {
         centroids.push(
-          { centroid: centroid(feature), feature }
+          { centroid: this.labelPosition(feature), feature }
         );
       }
     }
