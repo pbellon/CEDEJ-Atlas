@@ -30,6 +30,9 @@ import './Atlas.css';
 
 import {
   BASE_LAYER_URL,
+  BASE_LAYER_ATTRIBUTION,
+  UNESCO_ATTRIBUTION,
+  NATURAL_EARTH_ATTRIBUTION,
 } from './constants';
 
 export default class Atlas extends Component {
@@ -170,7 +173,7 @@ export default class Atlas extends Component {
         <ZoomControl position={'topright'} />
         <CedejWatermark position={'bottomright'} width={50} />
         <ScaleControl position={'bottomright'} />
-        <TileLayer url={BASE_LAYER_URL} />
+        <TileLayer url={BASE_LAYER_URL} attribution={BASE_LAYER_ATTRIBUTION} />
 
         <AridityTemperaturesLayer
           onRendered={onRender}
@@ -179,11 +182,13 @@ export default class Atlas extends Component {
           zIndex={400}
           data={aridityAndTemperatures}
           counts={counts}
+          attribution={UNESCO_ATTRIBUTION}
         />
 
         <WaterLayer
           data={lakesAndRivers}
           zIndex={500}
+          attribution={NATURAL_EARTH_ATTRIBUTION}
         />
 
         <CirclesLayer
