@@ -21,6 +21,7 @@ import {
   AridityTemperaturesLayer,
   WaterLayer,
 } from 'components';
+import AtlasPropTypes from 'atlas-prop-types';
 
 import { filterFeatures } from 'utils/data';
 
@@ -33,15 +34,15 @@ import {
 
 export default class Atlas extends Component {
   static propTypes = {
-    data: PropTypes.object,
-    counts: PropTypes.object,
+    data: AtlasPropTypes.geojsonObject,
+    counts: AtlasPropTypes.countObject,
+    circleTypes: AtlasPropTypes.filters,
     showAridity: PropTypes.bool,
     showTemperatures: PropTypes.bool,
     showCircles: PropTypes.bool,
-    circleTypes: PropTypes.object,
     print: PropTypes.bool,
-    onRender: PropTypes.func,
     isSidebarOpened: PropTypes.bool,
+    onRender: PropTypes.func,
     onCirclesCreated: PropTypes.func.isRequired,
     onCirclesAdded: PropTypes.func.isRequired,
     onZoom: PropTypes.func,
@@ -86,6 +87,15 @@ export default class Atlas extends Component {
     }
   }
 
+  onZoomEnd() {
+    if (!this.zoomEndTimeoutID) {
+      this.zoomEndTimeoutID = setTimeout(() => {
+        this.props.onZoom();
+        this.zoomEndTimeoutID = null;
+      }, 1000);
+    }
+  }
+  
   hideTooltip() {
     this.setState({ showTooltip: false });
   }
@@ -93,14 +103,12 @@ export default class Atlas extends Component {
   showTooltip(tooltipPosition, tooltipData) {
     this.setState({ showTooltip: true, tooltipPosition, tooltipData });
   }
-
+  
   bindContainer(mapRef) {
     if (!mapRef) { return; }
     this.mapRef = mapRef;
     this.map = mapRef.leafletElement;
-    this.map.on('zoomend', () => {
-      setTimeout(() => this.props.onZoom(), 1000);
-    });
+    this.map.on('zoomend', () => this.onZoomEnd());
     this.props.bindMapReference(this.map);
   }
 

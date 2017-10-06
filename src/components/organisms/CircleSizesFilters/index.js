@@ -8,6 +8,8 @@ import { toggleCircleSizeVisibility } from 'store/actions';
 import { ToggleFilter, Heading } from 'components';
 import { monthsDescription } from 'utils/circles';
 
+import AtlasPropTypes from 'atlas-prop-types';
+
 const Cols = styled.div`
   display: flex;
   justify-content: space-around;
@@ -46,7 +48,8 @@ const CircleSizesFilters = ({
           <Col key={`col-circlefilter-${colKey}`}>
             { colSizes.map(size => (
               <ToggleFilter
-                key={`circle-filter-${size.name}`}
+                id={`circle-size-${size.name}-filter`}
+                key={`circle-size-filter-${size.name}`}
                 layer={layer}
                 toggled={size.visible}
                 onToggle={onToggle(size)}
@@ -62,8 +65,8 @@ const CircleSizesFilters = ({
 
 CircleSizesFilters.propTypes = {
   onToggle: PropTypes.func,
-  sizes: PropTypes.object,
-  layer: PropTypes.object,
+  sizes: AtlasPropTypes.filters,
+  layer: AtlasPropTypes.layer,
 };
 
 const mapDispatchToProps = dispatch => ({

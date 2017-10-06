@@ -73,11 +73,24 @@ class CirclesLayer extends Component {
     this.renderedElements += 1;
     if (this.renderedElements === this.props.circles.length) {
       this.props.onRender();
-      setTimeout(() => {
-        setTimeout(() => {
-          this.props.onCirclesAdded(this.sizes);
-        }, 1000);
-      }, 100);
+
+      // this extra complicated timeout nesting is here for a complicated
+      // reason: we want to let know other components (especially the
+      // printed circle legend) the various sizes of the draw circles in
+      // order to represent them correctly. However we must wait a bit to
+      // be sure the circles have been properly rendered by leaflet and
+      // there is no simple way to do that except to wait & see.
+      if (!this.fTimeoutID) {
+        this.fTimeoutID = setTimeout(() => {
+          if (!this.sTimeoutID) {
+            this.sTimeoutID = setTimeout(() => {
+              this.props.onCirclesAdded(this.sizes);
+              this.fTimeoutID = null;
+              this.sTimeoutID = null;
+            }, 1000);
+          }
+        }, 100);
+      }
     }
   }
 

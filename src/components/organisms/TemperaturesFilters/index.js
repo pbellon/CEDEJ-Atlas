@@ -51,67 +51,85 @@ const TemperaturesFilters = ({
 }, { layer }) => (
   <div>
     <ErrorMessage visible={noCorrelation(error)}>
+      {
+        // i18n
+      }
       <span>Les types de températures sélectionnés ne sont pas corrélés.</span>
     </ErrorMessage>
     <Heading
       style={{ marginBottom: 0 }}
       level={6}
     >
+      {
+        // i18n
+      }
       Type(s) d&#39;hiver
     </Heading>
     <ErrorMessage visible={noWinterSelected(error)}>
+      {
+        // i18n
+      }
       <span>Vous devez sélectionner au moins un type d&#39;hiver</span>
     </ErrorMessage>
     <ToggleFilter
       layer={layer}
+      id="temperature-winter-a-filter"
       toggled={wTypes.A.visible}
       onToggle={toggleWinterType(wTypes.A)}
-      label={'Hiver chaud (20 à 30°C)'}
+      label={'Hiver chaud (20 à 30°C)'} // i18n
     />
     <ToggleFilter
       layer={layer}
+      id="temperature-winter-b-filter"
       toggled={wTypes.B.visible}
       onToggle={toggleWinterType(wTypes.B)}
-      label={'Hiver tempéré (10 à 20°C)'}
+      label={'Hiver tempéré (10 à 20°C)'} // i18n
     />
     <ToggleFilter
       layer={layer}
+      id="temperature-winter-c-filter"
       toggled={wTypes.C.visible}
       onToggle={toggleWinterType(wTypes.C)}
-      label={'Hiver frais (0 à 10°C)'}
+      label={'Hiver frais (0 à 10°C)'} // i18n
     />
     <ToggleFilter
       layer={layer}
+      id="temperature-winter-d-filter"
       toggled={wTypes.D.visible}
       onToggle={toggleWinterType(wTypes.D)}
-      label={'Hiver froid (moins de 0°C)'}
+      label={'Hiver froid (moins de 0°C)'} // i18n
     />
     <Heading
       style={{ marginBottom: 0 }}
       level={6}
     >
+      { /* i18n */ }
       Type(s) d&#39;été
     </Heading>
     <ErrorMessage visible={noSummerSelected(error)}>
+      { /* i18n */ }
       <span>Vous devez sélectionner au moins un type d&#39;été</span>
     </ErrorMessage>
     <ToggleFilter
+      id="temperature-summer-a-filter"
       layer={layer}
       toggled={sTypes.A.visible}
       onToggle={toggleSummerType(sTypes.A)}
-      label={'Été très chaud (plus de 30°C)'}
+      label={'Été très chaud (plus de 30°C)'} // i18n
     />
     <ToggleFilter
       layer={layer}
+      id="temperature-summer-b-filter"
       toggled={sTypes.B.visible}
       onToggle={toggleSummerType(sTypes.B)}
-      label={'Été chaud (20 à 30°C)'}
+      label={'Été chaud (20 à 30°C)'} // i18n
     />
     <ToggleFilter
       layer={layer}
+      id="temperature-summer-c-filter"
       toggled={sTypes.C.visible}
       onToggle={toggleSummerType(sTypes.C)}
-      label={'Été tempéré (10 à 20°C)'}
+      label={'Été tempéré (10 à 20°C)'} // i18n
     />
   </div>
 );

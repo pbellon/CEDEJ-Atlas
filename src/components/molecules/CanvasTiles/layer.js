@@ -6,9 +6,9 @@ import {
 } from 'leaflet';
 
 export const CanvasTiles = GridLayer.extend({
-  isCanvasLayer: function () { return true; },
+  isCanvasLayer() { return true; },
 
-  initialize: function (drawDelegate, onRendered, options) {
+  initialize(drawDelegate, onRendered, options) {
     this._drawDelegate = drawDelegate;
 
     this._drawDelegate.setLayer(this);
@@ -17,22 +17,22 @@ export const CanvasTiles = GridLayer.extend({
     return this;
   },
 
-  drawing: function (drawDelegate) {
+  drawing(drawDelegate) {
     this._drawDelegate = drawDelegate;
     return this;
   },
 
-  params: function (options) {
+  params(options) {
     setOptions(this, options);
     return this;
   },
 
-  addTo: function (map) {
+  addTo(map) {
     map.addLayer(this);
     return this;
   },
 
-  _drawDebugInfo: function (tileCanvas, tilePoint, zoom) {
+  _drawDebugInfo(tileCanvas, tilePoint, zoom) {
     const max = this.options.tileSize;
     const g = tileCanvas.getContext('2d');
     g.globalCompositeOperation = 'destination-over';
@@ -48,7 +48,7 @@ export const CanvasTiles = GridLayer.extend({
     g.strokeText(`${tilePoint.x} ${tilePoint.y} ${zoom}`, (max / 2) - 30, (max / 2) - 10);
   },
 
-  tilePoint: function (map, coords, tilePoint, tileSize) {
+  tilePoint(map, coords, tilePoint, tileSize) {
     // start coords to tile 'space'
     const s = tilePoint.multiplyBy(tileSize);
 
@@ -64,7 +64,7 @@ export const CanvasTiles = GridLayer.extend({
   /**
    * Creates a query for the quadtree from bounds
    */
-  _boundsToQuery: function (bounds) {
+  _boundsToQuery(bounds) {
     if (bounds.getSouthWest() === undefined) {
       return { x: 0, y: 0, width: 0.1, height: 0.1 };
     }
@@ -77,11 +77,11 @@ export const CanvasTiles = GridLayer.extend({
     };
   },
 
-  getZoom: function () {
+  getZoom() {
     return this._map.getZoom();
   },
 
-  createTile: function (coords) {
+  createTile(coords) {
     const tile = DomUtil.create('canvas', 'leaflet-tile');
     const size = this.getTileSize();
     const zoom = this.getZoom();

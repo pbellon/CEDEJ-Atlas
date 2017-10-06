@@ -13,17 +13,25 @@ const Wrapper = styled.span`
 
 class Checkbox extends Component {
   static propTypes = {
+    id: PropTypes.string.isRequired,
     onChange: PropTypes.func,
     onBeforeChange: PropTypes.func,
     disabled: PropTypes.bool,
     checked: PropTypes.bool,
-  };
+    label: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.node,
+    ]),
+  }
 
   onChange() {
     this.props.onBeforeChange && this.props.onBeforeChange();
-    setTimeout(() => {
-      this.props.onChange && this.props.onChange();
-    }, 100);
+    if (!this.onChangeTimeoutID) {
+      this.onChangeTimeoutID = setTimeout(() => {
+        this.props.onChange();
+        this.onChangeTimeoutID = null;
+      }, 100);
+    }
   }
 
   bindLabel(label) {
@@ -55,11 +63,12 @@ class Checkbox extends Component {
     return (
       <Wrapper disabled={this.props.disabled}>
         <input
+          id={this.props.id}
           type="checkbox"
           ref={(ref) => this.bindInput(ref)}
           disabled={this.props.disabled}
         />
-        <label ref={(ref) => this.bindLabel(ref)}>
+        <label htmlFor={this.props.id}>
           { this.props.label }
         </label>
       </Wrapper>

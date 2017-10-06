@@ -11,6 +11,7 @@ import MdVisibilityOff from 'react-icons/lib/md/visibility-off';
 
 
 // inner depencies
+import AtlasPropTypes from 'atlas-prop-types';
 import { toggleLayerVisibility } from 'store/actions';
 import { Heading as GenericHeading } from 'components';
 import { fromLayers } from 'store/selectors';
@@ -37,18 +38,14 @@ const LayerContainer = styled.div`
 class LayerFilterGroup extends Component {
   static propTypes = {
     headingStyle: PropTypes.object,
-    hidden: PropTypes.bool,
-    layer: PropTypes.object.isRequired,
-    heading: PropTypes.string,
     toggleVisibility: PropTypes.func.isRequired,
-    children: PropTypes.oneOfType([
-      PropTypes.node,
-      PropTypes.arrayOf(PropTypes.node),
-    ]),
+    hidden: PropTypes.bool,
+    layer: AtlasPropTypes.layer,
+    heading: AtlasPropTypes.heading,
+    children: AtlasPropTypes.children,
   };
-  static childContextTypes = {
-    layer: PropTypes.object,
-  };
+
+  static childContextTypes = AtlasPropTypes.layerContextTypes;
 
   getChildContext() {
     return {

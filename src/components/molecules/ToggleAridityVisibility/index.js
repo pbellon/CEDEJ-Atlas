@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import AtlasPropTypes from 'atlas-prop-types';
 import { connect } from 'react-redux';
 import { toggleAridityVisibility } from 'store/actions';
 import { fromFilters } from 'store/selectors';
@@ -13,6 +14,7 @@ const ToggleAridityFilter = ({
 }, { layer }) => (
   <ToggleFilter
     layer={layer}
+    id={`aridity-type-${aridity.name}-filter`}
     onToggle={onToggle(aridity)}
     toggled={toggled}
     label={label}
@@ -23,12 +25,12 @@ ToggleAridityFilter.propTypes = {
   onToggle: PropTypes.func,
   toggle: PropTypes.func,
   toggled: PropTypes.bool,
-  aridity: PropTypes.object,
-  label: PropTypes.string,
+  aridity: AtlasPropTypes.filter,
+  label: AtlasPropTypes.label,
 };
 
 ToggleAridityFilter.contextTypes = {
-  layer: PropTypes.object,
+  layer: AtlasPropTypes.layer,
 };
 
 const mapStateToProps = (state, props) => {
