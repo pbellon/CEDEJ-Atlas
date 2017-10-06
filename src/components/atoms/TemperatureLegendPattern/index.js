@@ -16,7 +16,7 @@ class AreaPattern extends Component {
     let temperature = pTemperature;
     if (aridity) { pattern = patterns.findByKey(aridity.name); }
     const p = areaPatternPath(canvas);
-    const props = new boundaries.pathProperties(p);
+    const props = boundaries.pathProperties.addPath(p, `path-${aridity.name}`);
     const path = {
       isExterior: true,
       path: p,

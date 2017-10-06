@@ -3,45 +3,57 @@ const TEETH_GAP = 20;
 const BOUNDARY_WIDTH = 1.33;
 
 // inspiration from svg-path-properties
-export class pathProperties {
+class PathProperties {
+  constructor(){
+    this.paths = {};
+  }
 
-  constructor(pathStr, id) {
-    let path = document.querySelector(`#path-${id}`);
+  addPath(pathStr, id) {
+    let path = this.paths[id];
     if (!path) {
       path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
       path.setAttribute('id', `path-${id}`);
-      const util = document.querySelector('#pathUtil');
-      util.append(path);
+      this.paths[id] = path;
     }
     path.setAttribute('d', pathStr);
-    this.path = path;
+    return this.wrap(path);
   }
 
-  tanAt(l) {
-    const p1 = this.pointAt(l);
-    const p2 = this.pointAt(l + 1);
-    // took from https://github.com/rveciana/svg-path-properties/blob/master/src/linear.js
-    const module = Math.sqrt(
-      (
-        (p2.x - p1.x) * (p2.x - p1.x)
-      ) + (
-        (p2.y - p1.y) * (p2.y - p1.y)
-      )
-    );
+  wrap(path) {
+    const tanAt = (l) => {
+      const p1 = pointAt(l);
+      const p2 = pointAt(l + 1);
+      // took from https://github.com/rveciana/svg-path-properties/blob/master/src/linear.js
+      const module = Math.sqrt(
+        (
+          (p2.x - p1.x) * (p2.x - p1.x)
+        ) + (
+          (p2.y - p1.y) * (p2.y - p1.y)
+        )
+      );
+      return {
+        x: (p2.x - p1.x) / module,
+        y: (p2.y - p1.y) / module,
+      };
+    }
+
+    const pointAt = (l) => {
+      return path.getPointAtLength(l);
+    }
+
+    const totalLength = () => {
+      return path.getTotalLength();
+    }
+
     return {
-      x: (p2.x - p1.x) / module,
-      y: (p2.y - p1.y) / module,
-    };
-  }
-
-  pointAt(l) {
-    return this.path.getPointAtLength(l);
-  }
-
-  totalLength() {
-    return this.path.getTotalLength();
+      tanAt,
+      totalLength,
+      pointAt,
+    }; 
   }
 }
+
+export const pathProperties = new PathProperties();
 
 export const BOUNDARIES = {
   TEETH: 'teeth',
@@ -162,7 +174,7 @@ const initData = ({ boundaries, context, drawPath }) => {
     const path = fnPath(boundary);
     const id = `${boundary.tags.OBJECTID_1}-${i}`;
     // console.log('boundary id:', id);
-    const properties = new pathProperties(path, id);
+    const properties = pathProperties.addPath(path, id);
     _boundaries.push({
       isExterior: true,
       boundary,
