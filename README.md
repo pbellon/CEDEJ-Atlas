@@ -87,3 +87,8 @@ We would like to thank these awesome projects that helped to make this applicati
 - [jszip](https://github.com/Stuk/jszip)
 - [FileSaver.js](https://github.com/eligrey/FileSaver.js)
 - [html2canvas](https://github.com/niklasvh/html2canvas)
+
+### Mapping Data & resources
+
+- [ESRI ArcGis](http://www.arcgis.com/) for the basemap
+- [Natural Earth Data](http://www.naturalearthdata.com/) for deserts labels and water polygons & labels.
