@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { layerContextTypes } from 'atlas-prop-types';
+import AtlasPropTypes from 'atlas-prop-types';
 import { CircleSizesFilters, CircleTypesFilters } from 'components';
 
 const DryFilters = (props, { layer }) => (
@@ -10,6 +10,6 @@ const DryFilters = (props, { layer }) => (
   </div>
 );
 
-DryFilters.contextTypes = layerContextTypes;
+DryFilters.contextTypes = AtlasPropTypes.layerContextTypes;
 
 export default DryFilters;

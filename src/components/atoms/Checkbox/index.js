@@ -53,22 +53,26 @@ class Checkbox extends Component {
       this.input.checked = this.props.checked;
       this.input.value = this.props.checked ? 'on' : 'off';
       this.input.onclick = () => {
-        // this.input.checked = !this.input.checked;
-        this.onChange();
+        const { disabled } = this.props;
+        if(!disabled){
+          // this.input.checked = !this.input.checked;
+          this.onChange();
+        }
       };
     }
   }
 
   render() {
+    const { disabled, id } = this.props;
     return (
-      <Wrapper disabled={this.props.disabled}>
+      <Wrapper disabled={disabled}>
         <input
-          id={this.props.id}
+          id={id}
           type="checkbox"
           ref={(ref) => this.bindInput(ref)}
-          disabled={this.props.disabled}
+          disabled={disabled}
         />
-        <label htmlFor={this.props.id}>
+        <label htmlFor={disabled ? '' : id}>
           { this.props.label }
         </label>
       </Wrapper>
