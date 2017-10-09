@@ -71,7 +71,7 @@ const Holder = styled.div`
   margin: auto;
   left: 0;
   right: 0;
-  top: 22em;
+  top: 2em;
   bottom: 2em;
   z-index: 10;
   @media (max-width: 1200px){
