@@ -71,7 +71,7 @@ const Holder = styled.div`
   margin: auto;
   left: 0;
   right: 0;
-  top: 2em;
+  top: 22em;
   bottom: 2em;
   z-index: 10;
   @media (max-width: 1200px){
@@ -115,7 +115,7 @@ const Center = styled.div`
 `;
 
 const Copyright = styled.div`
-  left: 6.55em;
+  left: 6.75em;
   position: absolute;
   z-index: 200;
   bottom: 3.6em;
@@ -127,8 +127,8 @@ const TitleHolder = styled.div`
   flex-direction: row;
   align-items: center;
   position: absolute;
-  left: 6.55em;
-  top: 50px;
+  left: 6.75em;
+  top: 2em;
   font-family: ${font('primary')};
   z-index: 200;
 
