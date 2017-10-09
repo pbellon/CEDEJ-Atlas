@@ -4,6 +4,6 @@ export const FACEBOOK_SDK_VERSION = 'v2.10';
 
 export const TWEET_INTENT_URL = 'https://twitter.com/intent/tweet';
 
-export const TWEET_TEXT = 'Créez votre carte personnalisée des zones arides sur aridityworldmap.| @CEDEJ_Egypte';
+export const TWEET_TEXT = 'Créez votre carte personnalisée des zones arides sur Aridity World Map.| @CEDEJ_Egypte';
 
 export const TWEET_HASHTAGS = '';
