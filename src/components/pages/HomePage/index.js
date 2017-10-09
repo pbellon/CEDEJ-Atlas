@@ -71,7 +71,7 @@ const Holder = styled.div`
   margin: auto;
   left: 0;
   right: 0;
-  top: 4em;
+  top: 2em;
   bottom: 2em;
   z-index: 10;
   @media (max-width: 1200px){
@@ -114,17 +114,31 @@ const Center = styled.div`
   right: 0;
 `;
 
+const Copyright = styled.div`
+  left: 6.55em;
+  position: absolute;
+  z-index: 200;
+  bottom: 3.6em;
+  font-family: ${font('primary')};
+`;
+
 const TitleHolder = styled.div`
   display:flex;
   flex-direction: row;
   align-items: center;
+  position: absolute;
+  left: 6.55em;
+  top: 50px;
+  font-family: ${font('primary')};
+  z-index: 200;
+
 `;
+
 const MainTitle = styled(Heading)`
   display: block;
-  padding-right: 1em;
-  width: 225px;
-  font-size: 4em;
-  line-height: 1em;
+  width: 195px;
+  font-size: 3em !important;
+  line-height: 0.85em;
   margin: 0 !important;
   border-right: 2px solid ${palette('grayscale', 2)};
   text-transform: uppercase;
@@ -135,9 +149,16 @@ const MainTitle = styled(Heading)`
 
 const MainDescription = styled(Markdown)`
   width: 300px;
-  font-size: 1.33em;
+  font-size: 1.1em;
   padding-left: 1em;
 `;
+
+const HomeTitle = () => (
+  <TitleHolder>
+    <MainTitle level={1}>Aridity <span className={'grey'}>World</span> Map</MainTitle>
+    <MainDescription source={HomeTitleDescription} />
+  </TitleHolder>
+);
 
 const Content = styled(GenericContent)`
   position: absolute;
@@ -158,24 +179,17 @@ const Middle = styled.div`
   justify-content: space-around;
 `;
 
-const HomeTitle = () => (
-  <TitleHolder>
-    <MainTitle level={1}>Aridity <span className={'grey'}>World</span> Map</MainTitle>
-    <MainDescription source={HomeTitleDescription} />
-  </TitleHolder>
-);
 
 const HomePage = ({ isLoading }) => {
   return (
     <div>
       <AtlasBackground />
+      <HomeTitle />
+      <Copyright>
+        <Bold>© CEDEJ - 2017</Bold>
+      </Copyright>
       <Holder>
         <Content>
-          <Top>
-            <Left>
-              <HomeTitle />
-            </Left>
-          </Top>
           <Middle>
             <Centered>
               <Markdown source={HomeActionText} />
@@ -191,10 +205,6 @@ const HomePage = ({ isLoading }) => {
               </Button>
             </Centered>
           </Middle>
-
-          <Bottom style={{ height: '3.1em' }}>
-            <Left><Bold>© CEDEJ - 2017</Bold></Left>
-          </Bottom>
           <BottomBar>
             <Center style={{ maxWidth: '500px', margin: 'auto' }}>
               <PartnersLogo height={'120px'} horizontal />
