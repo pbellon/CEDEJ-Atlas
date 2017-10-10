@@ -12,7 +12,7 @@ const Content = styled.div`
   & h2 {
     font-size: 2.2em;
   }
-  p {
+  p, ul, li {
     text-align: justify;
   }
   a {
