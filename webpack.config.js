@@ -126,6 +126,10 @@ const config = createConfig([
       template: path.join(process.cwd(), 'public/index.html'),
     }),
     new HtmlWebpackPlugin({
+      filename: '404.html',
+      template: path.join(process.cwd(), 'public/404.html'),
+    }),
+    new HtmlWebpackPlugin({
       filename: '200.html',
       template: path.join(process.cwd(), 'public/index.html'),
     }),
