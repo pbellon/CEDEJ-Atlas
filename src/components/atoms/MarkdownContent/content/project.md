@@ -1,6 +1,6 @@
 # Le projet
 
-Aridity World Map permet de créer des cartes personnalisables à différentes échelles, avec un calcul en temps réel des données relatives à l’aridité. Cette interface offre un support exceptionnel pour modéliser et envisager différents scenarii d’évolution des zones arides.
+_Aridity World Map_ permet de créer des cartes personnalisables à différentes échelles, avec un calcul en temps réel des données relatives à l’aridité. Cette interface offre un support exceptionnel pour modéliser et envisager différents scenarii d’évolution des zones arides.
 
 Cette carte interactive a été conçue à partir de la carte mondiale des zones arides et semi-arides, préparée au Laboratoire de cartographie thématique du CNRS et publiée en 1977 par l’UNESCO à l’échelle 1/25 000 000e. En analysant sa légende, deux laboratoires de recherche ont élaboré une base de données à référence spatiale (SIRS) : à Paris, le Laboratoire d’Informatique et de Systèmes Complexes (LaISC) de l’[École Pratique des Hautes Études](https://www.ephe.fr/) (EPHE) aujourd’hui devenu [Laboratoire Cognition Artificielle et humaine](http://www.cognition-usages.org/chart2/) (CHArt) et, au Caire, le [Centre d’Études et de Documentation Juridiques, Économiques et sociales](cedej-eg.org) (CEDEJ) rattaché au CNRS.
 
@@ -27,6 +27,6 @@ Les zones subhumides, arides et hyperarides de la carte de l’aridité (1977) o
 
 ![Calques d'aridité](/images/Fig_4.jpg)
 
-- En 2017, le pôle « Humanités numériques » du CEDEJ lance le portail *http://aridityworldmap.com*, en libre accès, sous la conduite de Hala Bayoumi, ingénieure de recherches au CNRS. Cette interface propose une carte mondiale de l’aridité à référence spatiale (SIRS) associée à la base de données établie avec les quatre variables initiales (type d’aridité, température, durée de la sécheresse, régime pluviométrique). Cette carte mondiale SIRS est une carte interactive : elle permet la sélection ou/et la combinaison des variables de l’aridité à différentes échelles spatiales.
+- En 2017, le pôle « Humanités numériques » du CEDEJ lance le portail *http://aridityworldmap.org*, en libre accès, sous la conduite de Hala Bayoumi, ingénieure de recherches au CNRS. Cette interface propose une carte mondiale de l’aridité à référence spatiale (SIRS) associée à la base de données établie avec les quatre variables initiales (type d’aridité, température, durée de la sécheresse, régime pluviométrique). Cette carte mondiale SIRS est une carte interactive : elle permet la sélection ou/et la combinaison des variables de l’aridité à différentes échelles spatiales.
 
 - *Aridity World Map* s’inscrit dans une démarche de science participative et citoyenne. La base de données sur l’aridité à référence spatiale pourra être actualisée et enrichie d’illustrations et de données, grâce à la [collaboration de la communauté scientifique, des décideurs ou des acteurs de la société civile](/page/contribute).
