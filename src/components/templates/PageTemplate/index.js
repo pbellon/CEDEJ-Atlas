@@ -25,7 +25,7 @@ const Container = styled.div`
 `;
 
 
-const AppTemplate = ({ children }) => (
+const PageTemplate = ({ children }) => (
   <div className="page-template">
     <Navbar />
     <ContainerHolder>
@@ -36,8 +36,8 @@ const AppTemplate = ({ children }) => (
   </div>
 );
 
-AppTemplate.propTypes = {
+PageTemplate.propTypes = {
   children: PropTypes.node,
 };
 
-export default AppTemplate;
+export default PageTemplate;
