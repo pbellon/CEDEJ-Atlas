@@ -2,7 +2,7 @@ import React from 'react';
 import { SvgIcon } from 'components';
 
 // took from https://github.com/simple-icons/simple-icons/
-const Facebook = (props) => (
+const FacebookIcon = (props) => (
   <SvgIcon
     {...props}
     viewBox="0 0 24 24"
@@ -11,4 +11,4 @@ const Facebook = (props) => (
   </SvgIcon>
 );
 
-export default Facebook;
+export default FacebookIcon;

@@ -37,7 +37,7 @@ WinterName.propTypes = {
   ]),
 };
 
-const TemperaturesRows = ({
+const TemperatureLegendRows = ({
   temperatures: {
     summer,
     winter,
@@ -176,4 +176,4 @@ const TemperaturesRows = ({
   ]
 );
 
-export default TemperaturesRows;
+export default TemperatureLegendRows;

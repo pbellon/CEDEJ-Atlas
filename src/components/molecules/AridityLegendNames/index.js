@@ -42,7 +42,7 @@ AridityPrecipitations.propTypes = {
   aridity: PropTypes.object,
 };
 
-const AridityNames = ({ aridity, print }) => {
+const AridityLegendNames = ({ aridity, print }) => {
   const visibleAridities = visibleTypes(aridity);
   if (!visibleAridities.length) { return null; }
   return [
@@ -63,10 +63,10 @@ const AridityNames = ({ aridity, print }) => {
   ];
 };
 
-AridityNames.propTypes = {
+AridityLegendNames.propTypes = {
   aridity: PropTypes.object,
   print: PropTypes.bool,
 };
 
 
-export default AridityNames;
+export default AridityLegendNames;

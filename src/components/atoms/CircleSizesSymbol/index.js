@@ -29,7 +29,7 @@ const triangleStyle = {
   strokeWidth: 0.7,
 };
 
-const CircleRangeSymbol = ({ width, height }) => (
+const CircleSizesSymbol = ({ width, height }) => (
   <svg
     width={width}
     height={height}
@@ -66,9 +66,9 @@ const CircleRangeSymbol = ({ width, height }) => (
   </svg>
 );
 
-CircleRangeSymbol.propTypes = {
+CircleSizesSymbol.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
 };
 
-export default CircleRangeSymbol;
+export default CircleSizesSymbol;

@@ -17,11 +17,11 @@ const Bold = styled.span`
 
 const MoreInfoTitle = () => <Bold>À propos de la légende</Bold>;
 
-const LegendMoreInfos = () => (
+const LegendMoreInfosPrint = () => (
   <Holder>
     <Heading level={2}><MoreInfoTitle /></Heading>
     <Markdown source={MarkdownContent.LegendInfos} />
   </Holder>
 );
 
-export default LegendMoreInfos;
+export default LegendMoreInfosPrint;

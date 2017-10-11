@@ -12,30 +12,30 @@ import { visibleTypes } from 'utils';
 
 import * as patternUtils from 'utils/patterns';
 
-const Temperatures = ({
+const TemperaturesLegend = ({
   print,
   filters: {
     temperatures: { summer, winter },
     aridity,
   },
   layers: {
-    temperatures: { visible: showTemperatures },
+    temperatures: { visible: showTemperaturesLegend },
     aridity: { visible: showAridity },
   },
 }) => {
   const layers = {
-    temperatures: { visible: showTemperatures },
+    temperatures: { visible: showTemperaturesLegend },
     aridity: { visible: showAridity },
   };
 
   const hasVisibleAridity = showAridity && visibleTypes(aridity).length > 0;
-  const hasVisibleTemperatures = showTemperatures && (
+  const hasVisibleTemperaturesLegend = showTemperaturesLegend && (
     visibleTypes(winter).length > 0 && visibleTypes(summer).length > 0
   );
 
   const patterns = patternUtils.initPatterns();
 
-  const temperatureRows = hasVisibleTemperatures ? TemperatureLegendRows({
+  const temperatureRows = hasVisibleTemperaturesLegend ? TemperatureLegendRows({
     temperatures: { summer, winter },
     aridity,
     patterns,
@@ -56,7 +56,7 @@ const Temperatures = ({
       {[
         aridityNamesFragment,
         tempsRowsFragment,
-        !hasVisibleTemperatures && hasVisibleAridity ? (
+        !hasVisibleTemperaturesLegend && hasVisibleAridity ? (
           <TemperatureLegendRow
             layers={layers}
             key={'aridity-row'}
@@ -69,10 +69,10 @@ const Temperatures = ({
   );
 };
 
-Temperatures.propTypes = {
+TemperaturesLegend.propTypes = {
   print: PropTypes.bool,
   layers: PropTypes.object,
   filters: PropTypes.object,
 };
 
-export default Temperatures;
+export default TemperaturesLegend;

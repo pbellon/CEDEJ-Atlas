@@ -2,7 +2,7 @@ import { CanvasDelegate } from 'components';
 
 const FILL_STYLE = 'rgba(189, 230, 224, 1)';
 
-class LakesRiversDelegate extends CanvasDelegate {
+class WaterLayerCanvasDelegate extends CanvasDelegate {
   draw({ canvas, coords, zoom }) {
     const { rivers, lakes } = this.getTileFeatures(coords);
     const context = canvas.getContext('2d');
@@ -25,4 +25,4 @@ class LakesRiversDelegate extends CanvasDelegate {
   }
 }
 
-export default LakesRiversDelegate;
+export default WaterLayerCanvasDelegate;

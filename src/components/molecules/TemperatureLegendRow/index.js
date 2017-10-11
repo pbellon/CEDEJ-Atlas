@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { visibleTypes } from 'utils';
 import { findByValue as findTemperature } from 'utils/temperatures';
-import { TemperatureLegendPattern, Td } from 'components';
+import { AreaPattern, Td } from 'components';
 
-const TemperatureRow = ({
+const TemperatureLegendRow = ({
   name,
   temperature,
   patterns,
@@ -20,7 +20,7 @@ const TemperatureRow = ({
       <Td align={'left'}>{ name }</Td>
       {
         visibleAridities.map((ar, key) => (
-          <TemperatureLegendPattern
+          <AreaPattern
             key={key}
             patterns={patterns}
             aridity={ar}
@@ -30,14 +30,14 @@ const TemperatureRow = ({
       }
       {
         (visibleAridities.length === 0) && (
-          <TemperatureLegendPattern temperature={temp} />
+          <AreaPattern temperature={temp} />
         )
       }
     </tr>
   );
 };
 
-TemperatureRow.propTypes = {
+TemperatureLegendRow.propTypes = {
   name: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node,
@@ -48,4 +48,4 @@ TemperatureRow.propTypes = {
   layers: PropTypes.object,
 };
 
-export default TemperatureRow;
+export default TemperatureLegendRow;

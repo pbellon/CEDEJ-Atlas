@@ -24,12 +24,15 @@ import {
   Atlas,
   LoadingIndicator,
   Sidebar,
-  AtlasFilters,
   SidebarToggleButton,
   AtlasExportButton,
 } from 'components';
 
-import { Sidebar as SidebarContainer, AtlasLegend } from 'containers';
+import {
+  Sidebar as SidebarContainer,
+  AtlasLegend,
+  AtlasFilters,
+} from 'containers';
 
 const Holder = styled.div`
   position: absolute;

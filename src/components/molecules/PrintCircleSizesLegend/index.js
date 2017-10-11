@@ -56,7 +56,7 @@ const Dtd = styled.td`
   vertical-align: bottom;
 `;
 
-const PrintCircleMonthRangeLegend = ({ sizes }) => {
+const PrintCircleSizesLegend = ({ sizes }) => {
   const sizesArr = Object.keys(sizes).map(key => ({
     radius: sizes[key],
     key,
@@ -91,8 +91,8 @@ const PrintCircleMonthRangeLegend = ({ sizes }) => {
   );
 };
 
-PrintCircleMonthRangeLegend.propTypes = {
+PrintCircleSizesLegend.propTypes = {
   sizes: PropTypes.object,
 };
 
-export default PrintCircleMonthRangeLegend;
+export default PrintCircleSizesLegend;
