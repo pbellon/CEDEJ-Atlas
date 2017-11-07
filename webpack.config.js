@@ -17,9 +17,11 @@ const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
 const sourceDir = process.env.SOURCE || 'src';
 const dataDir = process.env.DATA || 'data';
+const localesDir = process.env.LOCALES || 'locales';
 
 const publicPath = `/${process.env.PUBLIC_PATH || ''}/`.replace('//', '/');
 const dataPath = path.join(process.cwd(), dataDir);
+const localesPath = path.join(process.cwd(), localesDir);
 // const sourcePath = path.join(process.cwd(), sourceDir);
 const outputPath = path.join(process.cwd(), 'dist');
 
@@ -72,6 +74,8 @@ const config = createConfig([
   entryPoint({
     app: ['./src/index.js'],
     vendor: [
+      '@turf/bbox',
+      '@turf/bbox-polygon',
       '@turf/circle',
       '@turf/helpers',
       '@turf/inside',
@@ -82,6 +86,9 @@ const config = createConfig([
       'd3-scale',
       'file-saver',
       'geojson-vt',
+      'i18next',
+      'i18next-browser-languagedetector',
+      'i18next-xhr-backend',
       'jspdf',
       'jszip',
       'html2canvas',
@@ -94,6 +101,8 @@ const config = createConfig([
       'prop-types',
       'react',
       'react-dom',
+      'react-icon-base',
+      'react-i18next',
       'react-facebook',
       'react-leaflet',
       'react-markdown',
@@ -133,7 +142,18 @@ const config = createConfig([
       filename: '200.html',
       template: path.join(process.cwd(), 'public/index.html'),
     }),
-
+    new HtmlWebpackPlugin({
+      filename: 'en/index.html',
+      template: path.join(process.cwd(), 'public/en/index.html'),
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'en/404.html',
+      template: path.join(process.cwd(), 'public/en/404.html'),
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'en/200.html',
+      template: path.join(process.cwd(), 'public/en/index.html'),
+    }),
     // copie des fichiers de données qui nous intéresse.
     new CopyWebpackPlugin([
       {
@@ -145,6 +165,15 @@ const config = createConfig([
           'clean/*',
           'content/*',
           'topo-*.json',
+        ],
+      },
+    ]),
+    new CopyWebpackPlugin([
+      {
+        from: localesPath,
+        to: 'locales',
+        ignore: [
+          '*.(swo|swp|md)',
         ],
       },
     ]),

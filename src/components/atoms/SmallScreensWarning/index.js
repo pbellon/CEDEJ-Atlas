@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MediaQuery from 'react-responsive';
+import { translate } from 'react-i18next';
 
 import { Modal } from 'components';
 
@@ -19,10 +20,11 @@ class SmallScreensWarning extends Component {
 
   render() {
     const { closed } = this.state;
+    const { t } = this.props;
     return (
       <MediaQuery query="(max-width: 1200px)">
         <Modal
-          title={<Title />}
+          title={<span>{ t('title') }</span>}
           isOpen={!closed}
           closeable
           onClose={() => this.close()}
@@ -34,4 +36,4 @@ class SmallScreensWarning extends Component {
   }
 }
 
-export default SmallScreensWarning;
+export default translate('smallScreenWarning')(SmallScreensWarning);
