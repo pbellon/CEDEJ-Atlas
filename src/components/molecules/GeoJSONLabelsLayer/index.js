@@ -25,7 +25,6 @@ class GeoJSONLabelsLayer extends Component {
     ]),
     useMultipleCentroids: PropTypes.bool,
     layerName: PropTypes.string.isRequired,
-    bindFeatureToLabel: PropTypes.func.isRequired,
     minZoom: PropTypes.number,
     data: PropTypes.shape({
       features: PropTypes.array,
@@ -107,12 +106,14 @@ class GeoJSONLabelsLayer extends Component {
       return centroid(feature);
     }
   }
+  bindFeatureToLabel(){
+    throw new Error('GeoJSONLabelsLayer children classes must implement `bindFeatureToLabel`');
+  } 
   
   render() {
     const {
       data,
       layerName,
-      bindFeatureToLabel,
       useMultipleCentroids,
     } = this.props;
 
@@ -140,7 +141,7 @@ class GeoJSONLabelsLayer extends Component {
     const Tooltips = centroids.map(({ centroid: _centroid, feature }, j) => {
       const center = _centroid.geometry.coordinates;
       const label = feature.properties.name;
-      const labelElement = bindFeatureToLabel(feature, label);
+      const labelElement = this.bindFeatureToLabel(feature, label);
       return (
         <CircleMarker
           ref={(ref) => this.addToTooltips(ref, feature.properties.scalerank)}

@@ -14,7 +14,7 @@ export function* loadData() {
       aridity,
       temperatures,
       circles,
-      deserts,
+      desertLabels,
       waterLabels,
       lakes,
       rivers,
@@ -46,7 +46,7 @@ export function* loadData() {
 
     const data = {
       ...dataToTurfize,
-      deserts,
+      desertLabels,
       lakesAndRivers,
       waterLabels,
     };

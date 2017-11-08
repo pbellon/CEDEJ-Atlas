@@ -16,7 +16,9 @@
     "deploy": "npm run deploy:prepare && npm run deploy:update && npm run deploy:push",
     "deploy:prepare": "npm run build:clean && npm run build",
     "deploy:update": "git add dist && git commit -m \"Update dist\"",
-    "deploy:push": "git subtree push --prefix dist origin gh-pages"
+    "deploy:push": "git subtree push --prefix dist origin gh-pages",
+    "deploy:staging": "npm run deploy:prepare && npm run deploy:surge",
+    "deploy:surge": "surge -p dist -d cedej-atlas.surge.sh"
   },
   "devDependencies": {
     "@webpack-blocks/dev-server2": "^0.4.0",

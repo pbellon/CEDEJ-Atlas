@@ -54,7 +54,8 @@ class AtlasContainer extends Component {
       temperatures: PropTypes.object,
     }),
     data: PropTypes.shape({
-      deserts: PropTypes.object,
+      desertLabels: PropTypes.object,
+      waterLabels: PropTypes.object,
       lakesAndRivers: PropTypes.object,
       aridity: PropTypes.object,
       circles: PropTypes.object,

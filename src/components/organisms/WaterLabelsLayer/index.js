@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 
 import { WaterLabel, GeoJSONLabelsLayer } from 'components';
 
@@ -17,10 +18,12 @@ class WaterLabelsLayer extends GeoJSONLabelsLayer {
     layerName: 'water-labels',
     useMultipleCentroids: true,
     positioning: featurePositioning,
-    bindFeatureToLabel: (feature, label) => (
-      <WaterLabel feature={feature}>{ label }</WaterLabel>
-    ),
   };
+
+  bindFeatureToLabel(feature, label){
+    const { t } = this.props;
+    return <WaterLabel feature={feature}>{ t(label) }</WaterLabel>
+  } 
 }
 
-export default WaterLabelsLayer;
+export default translate('waterLabels', { wait: true })(WaterLabelsLayer);

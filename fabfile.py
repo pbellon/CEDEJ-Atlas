@@ -5,9 +5,30 @@ import shapefile
 import codecs
 from shapely.geometry import Polygon
 
+
+def extractLabels():
+    extract_label = lambda feature: feature['properties']['name']
+    labels_geojson = [
+        'data/clean/desertLabels.json',
+        'data/clean/waterLabels.json',
+    ]
+    for fn in labels_geojson:
+        f = codecs.open(fn, 'r', encoding='utf-8')
+        geojson = json.load(f)
+        labels = {name:name for name in map(extract_label,geojson['features'])}
+
+        locale_fn = 'locales/fr/{fn}'.format(
+            fn=fn.split('/')[-1]
+        )
+
+        with codecs.open(locale_fn, 'w', encoding='utf-8') as out:
+            json.dump(labels, out, indent=True, ensure_ascii=False)
+
+
+
 def cleanProps(el, keys):
     el['properties'] = { key: el['properties'][key] for key in keys }
-    for k in keys: 
+    for k in keys:
         val = el['properties'][k]
         if k == 'Temperatur' and (val == 0 or val == '0'):
             el['properties'] = None
@@ -31,11 +52,11 @@ def cleanJSON(fn, keys_to_keep, ftype='geo', topo_key=None):
     if ftype == 'topo':
         for o in data['objects'][topo_key]['geometries']:
             o = cleanProps(o, keys_to_keep)
-    
+
     with open("data/clean/%s" % fn, 'w') as out:
         json.dump(data, out)
 
-    
+
 # Used to remove unused keys
 def cleanData():
     cleanJSON('circles.json', ['size_', 'colours']);
@@ -43,14 +64,14 @@ def cleanData():
     cleanJSON('aridity.json', ['d_TYPE', 'OBJECTID_1']);
 
 def combineDataFiles(out='data/compiled.json'):
-    files = ['circles','temperatures', 'deserts', 'aridity', 'rivers', 'lakes', 'waterLabels']
+    files = ['circles','temperatures', 'desertLabels', 'aridity', 'rivers', 'lakes', 'waterLabels']
     result = {}
     for name in files:
         fd = codecs.open("data/clean/%s.json" % name, 'r', 'utf-8')
         fdata = json.load(fd)
         result[name] = fdata
         fd.close()
-    
+
     with codecs.open(out, 'w', 'utf-8') as outd:
         json.dump(result, outd, separators=(',',':'))
 

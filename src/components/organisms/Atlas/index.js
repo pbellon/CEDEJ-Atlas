@@ -131,9 +131,9 @@ export default class Atlas extends Component {
       isSidebarOpened,
     } = this.props;
     const {
-      deserts,
       lakesAndRivers,
       circles,
+      desertLabels,
       waterLabels,
       ...aridityAndTemperatures
     } = data;
@@ -204,7 +204,7 @@ export default class Atlas extends Component {
           minZoom={3}
           data={waterLabels}
         />
-        <DesertLabelsLayer minZoom={4} data={deserts} />
+        <DesertLabelsLayer minZoom={4} data={desertLabels} />
       </Map>
     );
   }
