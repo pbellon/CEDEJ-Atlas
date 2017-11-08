@@ -1,9 +1,11 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import styled from 'styled-components';
 import Markdown from 'react-markdown';
 
-import { MarkdownContent, Heading } from 'components';
+import { Heading } from 'components';
 import formats from 'utils/formats';
+import { LegendInfos } from 'content';
 
 const Holder = styled.div`
   margin-top: 1em;
@@ -15,13 +17,13 @@ const Bold = styled.span`
   font-weight: bold;
 `;
 
-const MoreInfoTitle = () => <Bold>À propos de la légende</Bold>;
-
-const LegendMoreInfosPrint = () => (
+const LegendMoreInfosPrint = ({ t }) => (
   <Holder>
-    <Heading level={2}><MoreInfoTitle /></Heading>
-    <Markdown source={MarkdownContent.LegendInfos} />
+    <Heading level={2}>
+      <Bold>{ t('moreInfos.title') }</Bold>
+    </Heading>
+    <Markdown source={LegendInfos} />
   </Holder>
 );
 
-export default LegendMoreInfosPrint;
+export default translate('legend')(LegendMoreInfosPrint);

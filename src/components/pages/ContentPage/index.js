@@ -2,12 +2,13 @@ import React from 'react';
 
 import { Route, Redirect } from 'react-router-dom';
 import { ContentContainer } from 'containers';
-import { MarkdownContent, Markdown } from 'components';
+import { Markdown } from 'components';
+import { About, Project, Contribute } from 'content';
 
 const content = {
-  about: MarkdownContent.About,
-  project: MarkdownContent.Project,
-  contribute: MarkdownContent.Contribute,
+  about: About,
+  project: Project,
+  contribute: Contribute,
 };
 
 const ContentPage = () => {

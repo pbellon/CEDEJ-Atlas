@@ -22,7 +22,7 @@ class WaterLabelsLayer extends GeoJSONLabelsLayer {
 
   bindFeatureToLabel(feature, label){
     const { t } = this.props;
-    return <WaterLabel feature={feature}>{ t(label) }</WaterLabel>
+    return (<WaterLabel feature={feature}>{ t(label) }</WaterLabel>);
   } 
 }
 

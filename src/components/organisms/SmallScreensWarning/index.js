@@ -24,16 +24,18 @@ class SmallScreensWarning extends Component {
     return (
       <MediaQuery query="(max-width: 1200px)">
         <Modal
-          title={<span>{ t('title') }</span>}
+          title={<span>{ t('smallScreenWarning.title') }</span>}
           isOpen={!closed}
           closeable
           onClose={() => this.close()}
         >
-          <p>Cette application est conçue pour les écrans larges et risque de mal fonctionner. <br /> Optimisez la taille de la fenêtre de votre navigateur, ou privilégiez une expérience sur ordinateur.</p>
+          <p
+              dangerouslySetInnerHTML={()=>({__html: t('smallScreenWarning.description')})}
+          />
         </Modal>
       </MediaQuery>
     );
   }
 }
 
-export default translate('smallScreenWarning')(SmallScreensWarning);
+export default translate('modals')(SmallScreensWarning);

@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Markdown from 'react-markdown';
 
-import { Link, Modal, MarkdownContent } from 'components';
+import { Link, Modal } from 'components';
 import { showMoreInfos, hideMoreInfos } from 'store/actions';
 import { fromLegend } from 'store/selectors';
+
+import { LegendInfos } from 'content';
+
 
 const Holder = styled.div`
   margin-top: 1em;
@@ -23,7 +26,7 @@ const LegendMoreInfos = ({ opened, show, hide }) => (
       onClose={hide}
       closeable
     >
-      <Markdown source={MarkdownContent.LegendInfos} />
+      <Markdown source={LegendInfos} />
     </Modal>
   </Holder>
 );

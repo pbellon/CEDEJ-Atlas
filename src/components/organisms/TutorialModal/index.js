@@ -1,9 +1,9 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import {
-  MarkdownContent as Content,
   Modal,
   Markdown,
 } from 'components';
@@ -11,16 +11,16 @@ import {
 import { fromTutorial } from 'store/selectors';
 import { hideTutorial } from 'store/actions';
 
-const TutorialTitle = () => <span>Comment utiliser la carte</span>;
+import { Tutorial } from 'content';
 
-const TutorialModal = ({ isOpen, inMap, onClose }) => (
+const TutorialModal = ({ isOpen, inMap, onClose, t}) => (
   <Modal
-    title={<TutorialTitle />}
+    title={<span>{ t('tutorial.title') }</span>}
     isOpen={isOpen && inMap}
     onClose={onClose}
     closeable
   >
-    <Markdown source={Content.Tutorial} />
+    <Markdown source={Tutorial} />
   </Modal>
 );
 
@@ -39,4 +39,6 @@ const mapDispatchToProps = dispatch => ({
   onClose: () => dispatch(hideTutorial()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TutorialModal);
+const I18nTutorialModal = translate('modals')(TutorialModal)
+
+export default connect(mapStateToProps, mapDispatchToProps)(I18nTutorialModal);
