@@ -18,16 +18,16 @@ const Nav = styled.ul`
 `;
 
 
-const NavbarTabs = () => (
+const NavbarTabs = ({ match:{ url }}) => (
   <Nav>
     <NavItem
       isHome
-      to={'/'}
+      to={`${url}`}
       icon={<HomeIcon />}
       title={'Accueil'}
     />
     <NavItem
-      to={'/map'}
+      to={`${url}map`}
       icon={<AtlasIcon />}
       title={'Carte numérique mondiale des zones arides'}
     />
@@ -35,16 +35,16 @@ const NavbarTabs = () => (
     <NavItem
       icon={<ProjectIcon />}
       title={'Le projet'}
-      to={'/page/project'}
+      to={`${url}page/project`}
     />
     <NavItem
       icon={<AboutIcon />}
-      to={'/page/about'}
+      to={`${url}page/about`}
       title={'À propos'}
     />
     <NavItem
       icon={<ContributeIcon />}
-      to={'/page/contribute'}
+      to={`${url}page/contribute`}
       title={'Participer'}
     />
   </Nav>

@@ -180,7 +180,7 @@ const Middle = styled.div`
 `;
 
 
-const HomePage = ({ isLoading }) => {
+const HomePage = ({ isLoading, match}) => {
   return (
     <div>
       <AtlasBackground />
@@ -193,7 +193,7 @@ const HomePage = ({ isLoading }) => {
           <Middle>
             <Centered>
               <Markdown source={HomeActionText} />
-              <Button to={'/map'}>
+              <Button to={`${match.url}map`}>
                 { isLoading && (
                   <LoadingHolder>
                     <LoadingIcon reverse />Chargement de la carte

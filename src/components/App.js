@@ -15,8 +15,10 @@ import {
   ExportModal,
 } from 'components';
 import { Atlas } from 'containers';
+
 // https://github.com/diegohaz/arc/wiki/Styling
 import { navbar } from 'utils/styles';
+import { detect_locales } from 'utils/locales';
 import theme from './themes/default';
 
 injectGlobal`
@@ -79,16 +81,18 @@ const OverlayHolder = styled.div`
 
 `;
 
-const App = () => {
+const App = ({ match }) => {
+  detect_locales(match);
+  if(!match){ return null; }
   return (
     <ThemeProvider theme={theme}>
-      <PageTemplate>
+      <PageTemplate match={match}>
         <SmallScreensWarning />
         <ExportModal />
         <AtlasHolder className="atlas-holder">
           <Atlas />
           <Route
-            path="/map"
+            path={`${match.url}map`}
             exact
             children={(mapProps) => (
               <TutorialModal inMap={mapProps.match != null} />
@@ -96,26 +100,27 @@ const App = () => {
           />
         </AtlasHolder>
         <Route
-          path="/"
+          path={match.url}
           exact
           children={(homeProps) => {
             const inHome = homeProps.match != null;
             return (
               <OverlayHolder className="home-page-holder" visible={inHome}>
-                <HomePage />
+                <HomePage match={match}/>
               </OverlayHolder>
             );
           }}
         />
         <Route
-          path="/page"
+          path={`${match.url}page/:pageName`}
           children={(pageProps) => {
             const inPage = pageProps.match != null;
+            const pageName = inPage ? pageProps.match.params.pageName : null;
             return (
               <div>
                 <OverlayHolder className="content-page-holder" visible={inPage}>
                   { inPage && (
-                    <ContentPage />
+                    <ContentPage pageName={pageName}/>
                   )}
                 </OverlayHolder>
                 <FixedPartnersLogo visible={inPage} />

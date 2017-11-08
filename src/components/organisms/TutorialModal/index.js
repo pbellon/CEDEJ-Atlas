@@ -20,7 +20,7 @@ const TutorialModal = ({ isOpen, inMap, onClose, t}) => (
     onClose={onClose}
     closeable
   >
-    <Markdown source={Tutorial} />
+    <Markdown source={Tutorial.localized()} />
   </Modal>
 );
 

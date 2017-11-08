@@ -25,16 +25,19 @@ const Container = styled.div`
 `;
 
 
-const PageTemplate = ({ children }) => (
-  <div className="page-template">
-    <Navbar />
-    <ContainerHolder>
-      <Container>
-        { children }
-      </Container>
-    </ContainerHolder>
-  </div>
-);
+const PageTemplate = ({ children, match }) => {
+  console.log('PageTemplate.match', match);
+  return (
+    <div className="page-template">
+      <Navbar match={match}/>
+      <ContainerHolder>
+        <Container>
+          { children }
+        </Container>
+      </ContainerHolder>
+    </div>
+  );
+}
 
 PageTemplate.propTypes = {
   children: PropTypes.node,

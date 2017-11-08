@@ -11,24 +11,17 @@ const content = {
   contribute: Contribute,
 };
 
-const ContentPage = () => {
-  return (
-    <ContentContainer>
-      <Route
-        path={'/page/:pageName'}
-        render={({ match }) => {
-          const md = content[match.params.pageName];
-          let res;
-          if (!md) {
-            res = <Redirect to={'/map'} />;
-          } else {
-            res = <Markdown source={content[match.params.pageName]} />;
-          }
-          return res;
-        }}
-      />
-    </ContentContainer>
-  );
+const ContentPage = ({ pageName }) => {
+  const md = content[pageName];
+  if (!md) {
+    return <Redirect to='/map' />;
+  } else {
+    return (
+      <ContentContainer>
+        <Markdown source={md.localized()} />
+      </ContentContainer>
+    );
+  }
 };
 
 export default ContentPage;

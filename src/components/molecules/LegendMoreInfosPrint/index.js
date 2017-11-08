@@ -22,7 +22,7 @@ const LegendMoreInfosPrint = ({ t }) => (
     <Heading level={2}>
       <Bold>{ t('moreInfos.title') }</Bold>
     </Heading>
-    <Markdown source={LegendInfos} />
+    <Markdown source={LegendInfos.localized()} />
   </Holder>
 );
 

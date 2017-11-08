@@ -26,7 +26,7 @@ const LegendMoreInfos = ({ opened, show, hide }) => (
       onClose={hide}
       closeable
     >
-      <Markdown source={LegendInfos} />
+      <Markdown source={LegendInfos.localized()} />
     </Modal>
   </Holder>
 );

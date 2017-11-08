@@ -31,7 +31,7 @@ const NavLeft = styled.div`
 const Navbar = (props) => (
   <Nav {...props}>
     <NavLeft>
-      <NavbarTabs />
+      <NavbarTabs match={props.match}/>
     </NavLeft>
     <NavRight><SocialSharing /></NavRight>
   </Nav>

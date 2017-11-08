@@ -12,6 +12,7 @@ i18n
   .use(reactI18nextModule)
   .init({
     fallbackLng: 'fr',
+    preload: ['en', 'fr'],
     debug: true,
     interpolation: {
       escapeValue: false,
@@ -23,5 +24,7 @@ i18n
       nsMode: 'default'
     }
   });
+
+i18n.languages = ['fr', 'en'];
 
 export default i18n;
