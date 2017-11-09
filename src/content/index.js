@@ -1,25 +1,23 @@
-import i18n from '../i18n';
-import Project from './project.md';
-import Contribute from './participate.md';
-import LegendInfos from './modal.md';
-import Tutorial from './tutorial.md';
+import i18n from 'i18n'; 
 
 const _default = {};
-const frReq = require.context('./fr', true, /.+\.md$/)
-const enReq = require.context('./en', true, /.+\.md$/)
 
-frReq.keys().forEach((key) => {
-  _default[key]['fr'] = frReq(key).default;
-})
+const fnToName = (fn) => {
+  const splitted = fn.split('/');
+  return splitted[splitted.length - 1].split('.')[0];
+};
 
-enReq.keys().forEach((key) => {
-  _default[key]['en'] = enReq(key).default;
-})
+const req = require.context('.', true, /.md$/);
 
-_default.keys().forEach((key) => {
-  _default[key].localized = () => {
-    const lng = i18n.language;
-    return _default[key][lng];
-  }
-})
-module.exports = _default;
+req.keys().forEach(fn => {
+  const lng = fn.substring(2, 4);
+  const name = fnToName(fn);
+  module.exports[name] = module.exports[name] || {
+    localized: function(){
+      const lng = i18n.language || i18n.options.fallbackLng[0];
+      return this[lng];
+    }
+  };
+  module.exports[name][lng] = req(`./${lng}/${name}.md`);
+});
+
