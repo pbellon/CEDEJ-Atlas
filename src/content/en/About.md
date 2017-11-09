@@ -1,4 +1,4 @@
-# À Propos
+# Àbout
 
 Le **[Centre d’Études et de Documentation Économiques, Juridiques et sociales](cedej-eg.org)** (CEDEJ) est un centre de recherches en sciences humaines et sociales spécialisé sur l’Égypte contemporaine. Ce centre, créé en 1968, est implanté au Caire. Il constitue une Unité Mixte des Instituts Français de Recherche à l’Étranger (UMIFRE) placée sous la double tutelle du Ministère de l'Europe et des Affaires Etrangères (MEAE) ainsi que du Centre National de la Recherche Scientifique (CNRS) dont il constitue, depuis 2006, une Unité de Service et de Recherche, l’USR 3123.</br>
 Au sein du CEDEJ, Manal Ghoneim, Mahmoud Abdallah, Mohammed El-Samman et Mahmoud Hassab El-Nabi ont apporté une contribution décisive à la réalisation de la carte numérique mondiale de l'aridité.

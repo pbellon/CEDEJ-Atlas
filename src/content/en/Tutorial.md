@@ -1,4 +1,4 @@
-### Légende
+### Legend
 La légende se trouve à gauche de l'écran, vous pouvez la masquer. Vous pouvez afficher des informations supplémentaires
 à l'aide des éléments <span data-tip data-for="tutorial-tootlip">soulignés en pointillés</span>. [Voir note explicative de la légende](http://www.aridityworldmap.org/Notice-explicative-legende-AridityWorldMap.docx)
 
