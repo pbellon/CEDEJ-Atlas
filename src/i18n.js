@@ -12,13 +12,13 @@ i18n
   .use(reactI18nextModule)
   .init({
     fallbackLng: 'fr',
-    preload: ['en', 'fr'],
+    preload: ['fr', 'en'],
     debug: true,
     interpolation: {
       escapeValue: false,
     },
     react: {
-      wait: false,
+      wait: true,
       bindI18n: 'languageChanged loaded',
       bindStore: 'added removed',
       nsMode: 'default'
@@ -26,5 +26,5 @@ i18n
   });
 
 i18n.languages = ['fr', 'en'];
-
+i18n.changeLanguage('fr');
 export default i18n;

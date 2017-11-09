@@ -1,0 +1,17 @@
+{
+  "popup": {
+    "summerTemperatures": "Températures en été",
+    "summerRange": "Plus de {{ s0 }} degrés",
+    "summerRange_plural": "Entre {{ s0 }} et {{ s1 }} degrés",
+    "temperatureRange": "Entre {{ first }} et {{ second }} degrés",
+    "winterTemperatures": "Températures en hiver",
+    "winterRange": "Moins de {{ w0 }} degrés",
+    "winterRange_plural": "Entre {{ w0 }} et {{ w1 }} degrés",
+    "precipitationRegime": "Régime de précipitation",
+    "droughtMonthsLabel": "Nombre de mois de sécheresse",
+    "droughtMonths_0": "Moins de {d0} mois",
+    "droughtMonths_1": "{d0} mois",
+    "droughtMonths_2": "De {d0} à {d1} mois",
+    "aridityType": "Type d'ardité"
+  }
+}

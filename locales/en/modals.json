@@ -1,0 +1,9 @@
+{
+  "tutorial": {
+    "title": "Comment utiliser la carte"
+  },
+  "smallScreenWarning": {
+    "title": "Écran non supporté",
+    "description": "Cette application est conçue pour les écrans larges et risque de mal fonctionner. <br /> Optimisez la taille de la fenêtre de votre navigateur, ou privilégiez une expérience sur ordinateur."
+  }
+}
