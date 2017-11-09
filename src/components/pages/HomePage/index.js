@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
@@ -15,11 +16,6 @@ import {
 import { fromAtlas } from 'store/selectors';
 
 import Background from './background.png';
-
-const HomeTitleDescription = 'Un portail élaboré par le [CEDEJ](http://cedej-eg.org/), une unité mixte française de recherche à l’étranger du [CNRS](http://www.cnrs.fr/) et du [Ministère de l\'Europe et des Affaires étrangères](http://www.diplomatie.gouv.fr/fr/)';
-
-
-const HomeActionText = '**CRÉER votre carte personnalisée des zones arides  \n CONTRIBUER à l’actualisation de la base de données sur l’aridité**';
 
 const Centered = styled.div`
   text-align: center;
@@ -153,13 +149,6 @@ const MainDescription = styled(Markdown)`
   padding-left: 1em;
 `;
 
-const HomeTitle = () => (
-  <TitleHolder>
-    <MainTitle level={1}>Aridity <span className={'grey'}>World</span> Map</MainTitle>
-    <MainDescription source={HomeTitleDescription} />
-  </TitleHolder>
-);
-
 const Content = styled(GenericContent)`
   position: absolute;
   top: 0;
@@ -180,39 +169,42 @@ const Middle = styled.div`
 `;
 
 
-const HomePage = ({ isLoading, match}) => {
+const HomePage = ({ isLoading, match, t}) => {
   return (
-    <div>
-      <AtlasBackground />
-      <HomeTitle />
-      <Copyright>
-        <Bold>© CEDEJ - 2017</Bold>
-      </Copyright>
-      <Holder>
-        <Content>
-          <Middle>
-            <Centered>
-              <Markdown source={HomeActionText} />
-              <Button to={`${match.url}map`}>
-                { isLoading && (
-                  <LoadingHolder>
-                    <LoadingIcon reverse />Chargement de la carte
-                  </LoadingHolder>
-                )}
-                { !isLoading && (
-                  <span>Démarrer</span>
-                )}
-              </Button>
-            </Centered>
-          </Middle>
-          <BottomBar>
-            <Center style={{ maxWidth: '500px', margin: 'auto' }}>
-              <PartnersLogo height={'120px'} horizontal />
-            </Center>
-          </BottomBar>
-        </Content>
-      </Holder>
-    </div>
+      <div>
+        <AtlasBackground />
+        <TitleHolder>
+          <MainTitle level={1}>Aridity <span className={'grey'}>World</span> Map</MainTitle>
+          <MainDescription source={t('titleDescription')} />
+        </TitleHolder>
+        <Copyright>
+          <Bold>© CEDEJ - 2017</Bold>
+        </Copyright>
+        <Holder>
+          <Content>
+            <Middle>
+              <Centered>
+                <Markdown source={t('actionText')} />
+                <Button to={`${match.url}map`}>
+                  { isLoading && (
+                    <LoadingHolder>
+                      <LoadingIcon reverse />{ t('button.loading') }
+                    </LoadingHolder>
+                  )}
+                  { !isLoading && (
+                    <span>{ t('button.start') }</span>
+                  )}
+                </Button>
+              </Centered>
+            </Middle>
+            <BottomBar>
+              <Center style={{ maxWidth: '500px', margin: 'auto' }}>
+                <PartnersLogo height={'120px'} horizontal />
+              </Center>
+            </BottomBar>
+          </Content>
+        </Holder>
+      </div> 
   );
 };
 
@@ -224,4 +216,6 @@ const mapStateToProps = state => ({
   isLoading: fromAtlas.isRendering(state),
 });
 
-export default connect(mapStateToProps)(HomePage);
+export default connect(mapStateToProps)(
+  translate('home')(HomePage)
+);
