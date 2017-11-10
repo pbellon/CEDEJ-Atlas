@@ -15,6 +15,9 @@ const config = {
   production: {
     apiUrl: 'http://www.aridityworldmap.org',
   },
+  staging: {
+    apiUrl: 'http://cedej-atlas.surge.sh'
+  }
 };
 
 module.exports = merge(config.all, config[config.all.env]);

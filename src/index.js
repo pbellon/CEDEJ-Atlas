@@ -1,5 +1,3 @@
-import 'babel-polyfill';
-
 import React from 'react';
 
 import { I18nextProvider, translate } from 'react-i18next';
