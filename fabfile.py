@@ -3,10 +3,12 @@
 import json
 import shapefile
 import codecs
+import re
 from shapely.geometry import Polygon
 
 
 def extractLabels():
+    key = lambda name: re.sub(r'\W', '', name)
     extract_label = lambda feature: feature['properties']['name']
     labels_geojson = [
         'data/clean/desertLabels.json',
@@ -15,7 +17,7 @@ def extractLabels():
     for fn in labels_geojson:
         f = codecs.open(fn, 'r', encoding='utf-8')
         geojson = json.load(f)
-        labels = {name:name for name in map(extract_label,geojson['features'])}
+        labels = { key(name):name for name in map(extract_label,geojson['features'])}
 
         locale_fn = 'locales/fr/{fn}'.format(
             fn=fn.split('/')[-1]
