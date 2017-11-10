@@ -7,6 +7,7 @@
     "env:dev": "cross-env NODE_ENV=development",
     "env:prod": "cross-env NODE_ENV=production",
     "lint": "eslint src src-example private webpack.config.js",
+    "prod": "npm run env:prod -- webpack-dev-server",
     "dev": "npm run env:dev -- webpack-dev-server",
     "build:clean": "rimraf \"dist/!(.git*|Procfile)**\"",
     "build:copy": "copyfiles -u 1 public/* public/**/* dist",
