@@ -30,7 +30,7 @@ class SmallScreensWarning extends Component {
           onClose={() => this.close()}
         >
           <p
-              dangerouslySetInnerHTML={()=>({__html: t('smallScreenWarning.description')})}
+              dangerouslySetInnerHTML={{__html: t('smallScreenWarning.description')}}
           />
         </Modal>
       </MediaQuery>
