@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
 import createFragment from 'react-addons-create-fragment';
 
@@ -13,6 +14,7 @@ import { visibleTypes } from 'utils';
 import * as patternUtils from 'utils/patterns';
 
 const TemperaturesLegend = ({
+  t,
   print,
   filters: {
     temperatures: { summer, winter },
@@ -37,6 +39,7 @@ const TemperaturesLegend = ({
 
   const temperatureRows = hasVisibleTemperaturesLegend ? TemperatureLegendRows({
     temperatures: { summer, winter },
+    t,
     aridity,
     patterns,
     layers,
@@ -45,6 +48,7 @@ const TemperaturesLegend = ({
   const tempsRowsFragment = createFragment({ temperatures: temperatureRows });
 
   const aridityNamesRows = hasVisibleAridity ? AridityLegendNames({
+    t,
     aridity,
     print,
   }) : null;
@@ -62,6 +66,7 @@ const TemperaturesLegend = ({
             key={'aridity-row'}
             aridity={aridity}
             patterns={patterns}
+            t={t}
           />
         ) : null,
       ]}
@@ -70,9 +75,10 @@ const TemperaturesLegend = ({
 };
 
 TemperaturesLegend.propTypes = {
+  t: PropTypes.func,
   print: PropTypes.bool,
   layers: PropTypes.object,
   filters: PropTypes.object,
 };
 
-export default TemperaturesLegend;
+export default translate('atlas')(TemperaturesLegend);

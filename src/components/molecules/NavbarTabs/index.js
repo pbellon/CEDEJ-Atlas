@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import styled from 'styled-components';
 
 // icons to use.
@@ -18,36 +19,35 @@ const Nav = styled.ul`
 `;
 
 
-const NavbarTabs = ({ match:{ url }}) => (
+const NavbarTabs = ({ t, match:{ url }}) => (
   <Nav>
     <NavItem
       isHome
       to={`${url}`}
       icon={<HomeIcon />}
-      title={'Accueil'}
+      title={t('home')}
     />
     <NavItem
       to={`${url}map`}
       icon={<AtlasIcon />}
-      title={'Carte numérique mondiale des zones arides'}
+      title={t('map')}
     />
-
     <NavItem
       icon={<ProjectIcon />}
-      title={'Le projet'}
+      title={t('project')}
       to={`${url}page/project`}
     />
     <NavItem
       icon={<AboutIcon />}
       to={`${url}page/about`}
-      title={'À propos'}
+      title={t('about')}
     />
     <NavItem
       icon={<ContributeIcon />}
       to={`${url}page/contribute`}
-      title={'Participer'}
+      title={t('participate')}
     />
   </Nav>
 );
 
-export default NavbarTabs;
+export default translate('navbar')(NavbarTabs);

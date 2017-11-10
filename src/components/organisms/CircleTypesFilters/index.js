@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -6,13 +7,13 @@ import { fromFilters } from 'store/selectors';
 import { toggleCircleTypeVisibility } from 'store/actions';
 import { ToggleFilter, Heading } from 'components';
 
-const CircleTypesFilters = ({ onToggle, types, layer }) => (
+const CircleTypesFilters = ({ t, onToggle, types, layer }) => (
   <div>
     <Heading
-      style={{ marginBottom: 0 }} // i18n
+      style={{ marginBottom: 0 }}
       level={6}
     >
-      Sécheresse d’été dominante
+      { t('drought.summer') }
     </Heading>
 
     <ToggleFilter
@@ -20,21 +21,21 @@ const CircleTypesFilters = ({ onToggle, types, layer }) => (
       layer={layer}
       toggled={types.A.visible}
       onToggle={onToggle(types.A)}
-      label={'Régimes à pluie d\'hiver'} // i18n
+      label={t('drought.A.regime')}
     />
     <ToggleFilter
       id="circle-type-b-filter"
       layer={layer}
       toggled={types.B.visible}
       onToggle={onToggle(types.B)}
-      label={'Régimes à deux saisons de pluies'} // i18n
+      label={t('drought.B.regime')} 
     />
 
     <Heading
       style={{ marginBottom: 0 }}
       level={6}
     >
-      Sécheresse d’hiver dominante
+      { t('drought.winter') }
     </Heading>
 
     <ToggleFilter
@@ -42,21 +43,21 @@ const CircleTypesFilters = ({ onToggle, types, layer }) => (
       id="circle-type-c-filter"
       toggled={types.C.visible}
       onToggle={onToggle(types.C)}
-      label={'Régimes à pluies d\'été'}
+      label={t('drought.C.regime')}
     />
     <ToggleFilter
       layer={layer}
       id="circle-type-d-filter"
       toggled={types.D.visible}
       onToggle={onToggle(types.D)}
-      label={'Régimes à deux saisons de pluies'} // i18n
+      label={t('drought.D.regime')} // i18n
     />
 
     <Heading
       style={{ marginBottom: 0 }} // i18n
       level={6}
     >
-      Régimes de transition
+      { t('drought.transition') }
     </Heading>
 
     <ToggleFilter
@@ -64,14 +65,14 @@ const CircleTypesFilters = ({ onToggle, types, layer }) => (
       id="circle-type-e-filter"
       toggled={types.E.visible}
       onToggle={onToggle(types.E)}
-      label={'Régimes à deux saisons de pluies'} // i18n
+      label={t('drought.E.regime')} // i18n
     />
     <ToggleFilter
       layer={layer}
       toggled={types.F.visible}
       id="circle-type-f-filter"
       onToggle={onToggle(types.F)}
-      label={'Régimes à irréguliers'} // i18n
+      label={t('drought.F.regime')} // i18n
     />
   </div>
 );
@@ -91,4 +92,6 @@ const mapStateToProps = (state, ownProps) => ({
   layer: ownProps.layer,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CircleTypesFilters);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  translate('atlas')(CircleTypesFilters)
+);

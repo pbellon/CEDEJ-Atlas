@@ -1,4 +1,6 @@
 import React from 'react';
+import { translate } from 'react-i18next';
+
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
@@ -165,4 +167,6 @@ const mapDispatchToProps = (dispatch) => ({
   ),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TemperaturesFilters);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  translate('atlas')(TemperaturesFilters)
+);

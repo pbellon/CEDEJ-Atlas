@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
@@ -23,7 +24,7 @@ const Holder = styled.div`
 const AtlasExportButton = (props) => (
   <Holder>
     <Button {...props}>
-      Exporter
+      { props.t('sidebar.export') }
     </Button>
   </Holder>
 );
@@ -37,4 +38,6 @@ const mapDispatchToProps = dispatch => ({
   onClick: () => (dispatch(openExportModal())),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AtlasExportButton);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  translate('atlas')(AtlasExportButton)
+);

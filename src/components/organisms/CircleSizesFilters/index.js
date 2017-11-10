@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
@@ -23,6 +24,7 @@ const Col = styled.div`
 
 const Holder = styled.div``;
 const CircleSizesFilters = ({
+  t,
   onToggle,
   sizes,
   layer,
@@ -41,7 +43,7 @@ const CircleSizesFilters = ({
         style={{ marginBottom: 0 }}
         level={6}
       >
-        Nombre de mois secs
+        { t('sidebar.numberOfMonths') } 
       </Heading>
       <Cols>
         { cols.map((colSizes, colKey) => (
@@ -81,4 +83,6 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(CircleSizesFilters);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  translate('atlas')(CircleSizesFilters)
+);

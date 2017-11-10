@@ -1,5 +1,19 @@
 {
+  "noData": "Pas de données à visualiser",
   "moreInfos": {
     "title": "À propos de la légende"
+  },
+  "drought":{
+    "categoryName": "Sécheresse",
+    "numberOfMonths": "Nombre de mois secs",
+    "numberOfMonthsDescription": "recevant moins de 30mm de précipitations",
+    "circleSizeHelp":"Valeur exacte disponible au clic sur chaque cercle",
+    "periods":"Périodes des sécheresses",
+    "periodsPrint": "et régimes des précipitations",
+    "types": {
+      "summer": "Sécheresse d'été dominante",
+      "winter": "Sécheresse d'hiver dominante",
+      "transition": "Régimes de transition"
+    }
   }
 }

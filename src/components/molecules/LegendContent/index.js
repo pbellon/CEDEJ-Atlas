@@ -1,4 +1,6 @@
 import React from 'react';
+import { translate } from 'react-i18next';
+
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
@@ -15,7 +17,7 @@ const Holder = styled.div`
   overflow: auto;
 `;
 
-const LegendContent = ({ filters, layers, circleSizes, print }) => {
+const LegendContent = ({ filters, layers, circleSizes, print, t}) => {
   const {
     aridity: { visible: showAridity },
     temperatures: { visible: showTemperatures },
@@ -40,13 +42,14 @@ const LegendContent = ({ filters, layers, circleSizes, print }) => {
         />
         { showCircles && (
           <CirclesLegend
+            t={t}
             print={print}
             filters={filters}
             circleSizes={circleSizes}
           />
-        )}
+        ) }
         { noData && (
-          <tbody><tr><th>Pas de données à visualiser</th></tr></tbody>
+          <tbody><tr><th>{ t('legend.noData') }</th></tr></tbody>
         )}
       </Table>
       { !print && (
@@ -65,4 +68,4 @@ LegendContent.defaultProps = {
   print: false,
 };
 
-export default LegendContent;
+export default translate('atlas')(LegendContent);

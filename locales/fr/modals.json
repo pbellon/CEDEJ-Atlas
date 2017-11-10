@@ -5,5 +5,10 @@
   "smallScreenWarning": {
     "title": "Écran non supporté",
     "description": "Cette application est conçue pour les écrans larges et risque de mal fonctionner. <br /> Optimisez la taille de la fenêtre de votre navigateur, ou privilégiez une expérience sur ordinateur."
+  },
+  "export": {
+    "exportInPNG": "Exporter en PNG",
+    "exportInPDF": "Exporter en PDF",
+    "altPreviewImage": "Apperçu de la carte avant export"
   }
 }

@@ -42,12 +42,14 @@ AridityPrecipitations.propTypes = {
   aridity: PropTypes.object,
 };
 
-const AridityLegendNames = ({ aridity, print }) => {
+const AridityLegendNames = ({ aridity, print, t }) => {
   const visibleAridities = visibleTypes(aridity);
   if (!visibleAridities.length) { return null; }
   return [
     <tr>
-      <TrName><TrNameContent>Aridité</TrNameContent></TrName>
+      <TrName><TrNameContent>
+        { t('legend.aridity') }
+      </TrNameContent></TrName>
       { visibleAridities.map((aridity, key) => (
         <AridityName aridity={aridity} key={key} />
       ))}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -9,11 +10,11 @@ const PreviewImage = styled.img`
   max-width: 100%;
 `;
 
-const ExportPreview = ({ isPreviewing, mapPreview }) => (
+const ExportPreview = ({ isPreviewing, mapPreview, t }) => (
   <PreviewHolder>
     <LoadingIndicator isLoading={isPreviewing} />
     { !isPreviewing && mapPreview && (
-      <PreviewImage src={mapPreview.url} alt="Apperçu de la carte avant export" />
+      <PreviewImage src={mapPreview.url} alt={t('export.altPreviewImage')} />
     )}
   </PreviewHolder>
 );
@@ -23,4 +24,4 @@ ExportPreview.propTypes = {
   isPreviewing: PropTypes.bool,
 };
 
-export default ExportPreview;
+export default translate('modals')(ExportPreview);

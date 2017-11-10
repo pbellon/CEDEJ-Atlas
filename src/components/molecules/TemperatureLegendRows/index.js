@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -23,12 +24,19 @@ const SummerName = styled(Reduced)`
   padding-left: 7px;
 `;
 
-const VeryHotSummer = () => (
-  <SummerName>été très chaud (plus de 30°)</SummerName>
+const __VeryHotSummer = ({ t }) => (
+  <SummerName>{ t('temperatures.summer.A') }</SummerName>
+);
+const __HotSummer = ({ t }) => (
+  <SummerName>{ t('temperatures.summer.B') }</SummerName>
+);
+const __TemperedSummer = ({ t }) => (
+  <SummerName>{ t('temperatures.summer.C') }</SummerName>
 );
 
-const HotSummer = () => (<SummerName>été chaud (20 à 30°)</SummerName>);
-const TemperedSummer = () => (<SummerName>été tempéré (10 à 20°)</SummerName>);
+const VeryHotSummer = translate('atlas')(__VeryHotSummer);
+const HotSummer = translate('atlas')(__HotSummer);
+const TemperedSummer = translate('atlas')(__TemperedSummer);
 
 WinterName.propTypes = {
   children: PropTypes.oneOfType([
@@ -38,6 +46,7 @@ WinterName.propTypes = {
 };
 
 const TemperatureLegendRows = ({
+  t,
   temperatures: {
     summer,
     winter,
@@ -48,11 +57,15 @@ const TemperatureLegendRows = ({
 }) => (
   [
     (<tr key={'h-h'}>
-      <TrName><TrNameContent>Températures</TrNameContent></TrName>
+      <TrName><TrNameContent>
+        { t('legend.temperatures') }
+      </TrNameContent></TrName>
     </tr>
     ),
     winter.A.visible && ([
-      (<WinterName key={'h-0'}>Hiver chaud (20 à 30°C)</WinterName>),
+      (<WinterName key={'h-0'}>
+        { t('temperatures.winter.A') }
+      </WinterName>),
       summer.A.visible ? (
         <TemperatureLegendRow
           layers={layers}
@@ -75,7 +88,9 @@ const TemperatureLegendRows = ({
       ) : null,
     ]),
     winter.B.visible && ([
-      (<WinterName key={'h-1'}>Hiver tempéré (10 à 20°)</WinterName>),
+      (<WinterName key={'h-1'}>
+        { t('temperatures.winter.B') }
+      </WinterName>),
       summer.A.visible ? (
         <TemperatureLegendRow
           layers={layers}
@@ -108,7 +123,9 @@ const TemperatureLegendRows = ({
       ) : null,
     ]),
     winter.C.visible && ([
-      (<WinterName key={'h-2'}>Hiver frais (0 à 10°)</WinterName>),
+      (<WinterName key={'h-2'}>
+        { t('temperatures.winter.C') }
+      </WinterName>),
       summer.A.visible ? (
         <TemperatureLegendRow
           layers={layers}
@@ -141,7 +158,9 @@ const TemperatureLegendRows = ({
       ) : null,
     ]),
     winter.D.visible && ([
-      (<WinterName key={'h-3'}>Hiver froid (moins de 0°)</WinterName>),
+      (<WinterName key={'h-3'}>
+        { t('temperatures.winter.C') }
+      </WinterName>),
       summer.A.visible ? (
         <TemperatureLegendRow
           layers={layers}

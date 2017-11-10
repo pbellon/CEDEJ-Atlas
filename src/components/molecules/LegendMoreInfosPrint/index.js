@@ -20,10 +20,10 @@ const Bold = styled.span`
 const LegendMoreInfosPrint = ({ t }) => (
   <Holder>
     <Heading level={2}>
-      <Bold>{ t('moreInfos.title') }</Bold>
+      <Bold>{ t('legend.moreInfos.title') }</Bold>
     </Heading>
     <Markdown source={LegendInfos.localized()} />
   </Holder>
 );
 
-export default translate('legend')(LegendMoreInfosPrint);
+export default translate('atlas')(LegendMoreInfosPrint);

@@ -8,8 +8,7 @@ import { Link, Modal } from 'components';
 import { showMoreInfos, hideMoreInfos } from 'store/actions';
 import { fromLegend } from 'store/selectors';
 
-import { LegendInfos } from 'content';
-
+// import { LegendInfos } from 'content';
 
 const Holder = styled.div`
   margin-top: 1em;
@@ -26,7 +25,9 @@ const LegendMoreInfos = ({ opened, show, hide }) => (
       onClose={hide}
       closeable
     >
-      <Markdown source={LegendInfos.localized()} />
+  { 
+    // <Markdown source={LegendInfos.localized()} />
+  }
     </Modal>
   </Holder>
 );

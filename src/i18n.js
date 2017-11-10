@@ -14,6 +14,7 @@ i18n
     fallbackLng: 'fr',
     preload: ['fr', 'en'],
     debug: true,
+    ns: ['home', 'atlas','modals','navbar'],
     interpolation: {
       escapeValue: false,
     },

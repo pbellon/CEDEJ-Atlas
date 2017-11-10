@@ -1,6 +1,6 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-
+import { key } from 'utils/locales';
 import { WaterLabel, GeoJSONLabelsLayer } from 'components';
 
 import './WaterLabelsLayer.css';
@@ -22,7 +22,7 @@ class WaterLabelsLayer extends GeoJSONLabelsLayer {
 
   bindFeatureToLabel(feature, label){
     const { t } = this.props;
-    return (<WaterLabel feature={feature}>{ t(label) }</WaterLabel>);
+    return (<WaterLabel feature={feature}>{ t(key(label)) }</WaterLabel>);
   } 
 }
 

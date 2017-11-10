@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import formats from 'utils/formats';
@@ -30,6 +31,7 @@ const exportModalStyle = {
   minWidth: '600px',
 };
 const ExportModal = ({
+  t,
   isOpen,
   exportData,
   exportInPNG,
@@ -55,11 +57,11 @@ const ExportModal = ({
 
     <LoadingIndicator isLoading={isRendering} />
     <Button onClick={exportInPNG(exportData)}>
-      <PNGIcon height={25} width={25} />&nbsp;Exporter en PNG
+      <PNGIcon height={25} width={25} />&nbsp;{ t('export.exportInPDF') }
     </Button>
     &nbsp;
     <Button onClick={exportInPDF(exportData)}>
-      <PDFIcon height={25} width={25} />&nbsp;Exporter en PDF
+      <PDFIcon height={25} width={25} />&nbsp;{ t('export.exportInPDF') }
     </Button>
   </Modal>
 );
@@ -104,4 +106,6 @@ const mapDispatchToProps = dispatch => ({
   onAfterOpen: (mapRef) => dispatch(previewExport(mapRef)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExportModal);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  translate('modals')(ExportModal)
+);

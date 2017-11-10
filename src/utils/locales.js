@@ -5,3 +5,5 @@ export const detect_locales = (match) => {
     i18n.changeLanguage(locale);
   }
 }
+
+export const key = (name) => name.replace(/\W/g, '')

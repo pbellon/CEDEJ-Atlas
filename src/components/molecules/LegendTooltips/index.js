@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
 import Markdown from 'react-markdown';
 import Tooltip from 'react-tooltip';
 import styled from 'styled-components';
 import { font } from 'styled-theme';
 import * as circles from 'utils/circles';
-import * as aridity from 'utils/aridity';
 import { visibleTypes, updateTooltips } from 'utils';
 
 const LegendTooltipContent = styled.div`
@@ -48,49 +48,63 @@ class LegendTooltips extends Component {
     return false;
   }
   render() {
+    const { t } = this.props;
+    const aridity = t('aridity', { returnObjects: true });
+    const droughts = t('drought', { returnObjects: true });
     return (
       <Holder>
         <Tooltip id="tooltip-nb-months">
           <LegendTooltipContent>
             <span>
-              Recevant moins de 30mm de précipitations
+              {t('legend.drought.numberOfMonthsDescription')}
             </span>
           </LegendTooltipContent>
         </Tooltip>
         <Tooltip id="tooltip-regime" place="right">
           <LegendTooltipContent>
             <span>
-              Et régime des précipitations
+              { t('legend.drought.periodsPrint') }
             </span>
           </LegendTooltipContent>
         </Tooltip>
 
-        { aridity.allAridity()
-            .map(({ value, description }, key) => (
-              <Tooltip
-                key={key}
-                place="right"
-                id={`tooltip-aridity-${value}`}
-              >
-                <LegendTooltipContent>
-                  <Markdown source={description} />
-                </LegendTooltipContent>
-              </Tooltip>
-            )
-        )}
-        { circles.allDroughtRegimes()
-            .map(({ value, regime_full }, key) => (
-              <Tooltip
-                key={key}
-                place="right"
-                class="custom-tooltip"
-                id={`tooltip-circle-${value}`}
-              >
-                <LegendTooltipContent>
-                  <Markdown source={regime_full} />
-                </LegendTooltipContent>
-              </Tooltip>
-          ))
+        {
+          Object.keys(aridity)
+            .map((key) => {
+              const { description } = aridity[key];
+              if(!description){ return null; }
+              return (
+                <Tooltip
+                  key={key}
+                  place="right"
+                  id={`tooltip-aridity-${key}`}
+                >
+                  <LegendTooltipContent>
+                    <Markdown source={description} />
+                  </LegendTooltipContent>
+                </Tooltip>
+              )
+            })
+        }
+        {
+          Object.keys(droughts).map(
+            (key) => {
+              const { regime_full } = droughts[key];
+              if(!regime_full){ return null; }
+              return (
+                <Tooltip
+                  key={key}
+                  place="right"
+                  className="custom-tooltip"
+                  id={`tooltip-circle-${key}`}
+                >
+                  <LegendTooltipContent>
+                    <Markdown source={regime_full} />
+                  </LegendTooltipContent>
+                </Tooltip>
+              );
+            }
+          )
         }
       </Holder>
     );
@@ -102,4 +116,4 @@ LegendTooltips.propTypes = {
   filters: PropTypes.object,
 };
 
-export default LegendTooltips;
+export default translate('atlas',{wait: true})(LegendTooltips);
