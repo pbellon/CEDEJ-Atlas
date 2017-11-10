@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import styled from 'styled-components';
 
 import { ToggleAridityVisibility } from 'components';
@@ -13,17 +14,17 @@ const Col = styled.div`
   flex-base: 1;
 `;
 
-const AridityFilters = () => (
+const AridityFilters = ({ t }) => (
   <Cols>
     <Col>
-      <ToggleAridityVisibility label={'Hyper Aride'} aridity={'hyper'} />
-      <ToggleAridityVisibility label={'Aride'} aridity={'arid'} />
+      <ToggleAridityVisibility label={t('aridity.Hyper.name')} aridity={'hyper'} />
+      <ToggleAridityVisibility label={t('aridity.Aride.name')} aridity={'arid'} />
     </Col>
     <Col>
-      <ToggleAridityVisibility label={'Semi Aride'} aridity={'semi'} />
-      <ToggleAridityVisibility label={'Sub Humide'} aridity={'subHumide'} />
+      <ToggleAridityVisibility label={t('aridity.Semi.name')} aridity={'semi'} />
+      <ToggleAridityVisibility label={t('aridity.Sub_humide.name')} aridity={'subHumide'} />
     </Col>
   </Cols>
 );
 
-export default AridityFilters;
+export default translate('atlas')(AridityFilters);

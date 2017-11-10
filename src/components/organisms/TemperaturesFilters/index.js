@@ -45,6 +45,7 @@ const ErrorMessage = styled.div`
 `;
 
 const TemperaturesFilters = ({
+  t,
   error,
   winterTypes: wTypes,
   summerTypes: sTypes,
@@ -53,53 +54,46 @@ const TemperaturesFilters = ({
 }, { layer }) => (
   <div>
     <ErrorMessage visible={noCorrelation(error)}>
-      {
-        // i18n
-      }
-      <span>Les types de températures sélectionnés ne sont pas corrélés.</span>
+      <span>
+        { t('sidebar.errors.uncorelated') }
+      </span>
     </ErrorMessage>
     <Heading
       style={{ marginBottom: 0 }}
       level={6}
     >
-      {
-        // i18n
-      }
-      Type(s) d&#39;hiver
+      { t('sidebar.winter') }
     </Heading>
     <ErrorMessage visible={noWinterSelected(error)}>
-      {
-        // i18n
-      }
-      <span>Vous devez sélectionner au moins un type d&#39;hiver</span>
+      <span>{ t('sidebar.errors.noWinterSelected') }</span>
     </ErrorMessage>
     <ToggleFilter
       layer={layer}
       id="temperature-winter-a-filter"
       toggled={wTypes.A.visible}
       onToggle={toggleWinterType(wTypes.A)}
-      label={'Hiver chaud (20 à 30°C)'} // i18n
+      label={t('temperatures.winter.A')}
     />
     <ToggleFilter
       layer={layer}
       id="temperature-winter-b-filter"
       toggled={wTypes.B.visible}
       onToggle={toggleWinterType(wTypes.B)}
-      label={'Hiver tempéré (10 à 20°C)'} // i18n
+      label={t('temperatures.winter.B')}
     />
     <ToggleFilter
       layer={layer}
       id="temperature-winter-c-filter"
       toggled={wTypes.C.visible}
       onToggle={toggleWinterType(wTypes.C)}
-      label={'Hiver frais (0 à 10°C)'} // i18n
+      label={t('temperatures.winter.C')}
     />
     <ToggleFilter
       layer={layer}
       id="temperature-winter-d-filter"
       toggled={wTypes.D.visible}
       onToggle={toggleWinterType(wTypes.D)}
-      label={'Hiver froid (moins de 0°C)'} // i18n
+      label={t('temperatures.winter.D')}
     />
     <Heading
       style={{ marginBottom: 0 }}
@@ -110,28 +104,28 @@ const TemperaturesFilters = ({
     </Heading>
     <ErrorMessage visible={noSummerSelected(error)}>
       { /* i18n */ }
-      <span>Vous devez sélectionner au moins un type d&#39;été</span>
+      <span>{ t('sidebar.errors.noSummerSelected') }</span>
     </ErrorMessage>
     <ToggleFilter
       id="temperature-summer-a-filter"
       layer={layer}
       toggled={sTypes.A.visible}
       onToggle={toggleSummerType(sTypes.A)}
-      label={'Été très chaud (plus de 30°C)'} // i18n
+      label={t('temperatures.summer.A')} // i18n
     />
     <ToggleFilter
       layer={layer}
       id="temperature-summer-b-filter"
       toggled={sTypes.B.visible}
       onToggle={toggleSummerType(sTypes.B)}
-      label={'Été chaud (20 à 30°C)'} // i18n
+      label={t('temperatures.summer.B')} // i18n
     />
     <ToggleFilter
       layer={layer}
       id="temperature-summer-c-filter"
       toggled={sTypes.C.visible}
       onToggle={toggleSummerType(sTypes.C)}
-      label={'Été tempéré (10 à 20°C)'} // i18n
+      label={t('temperatures.summer.C')} // i18n
     />
   </div>
 );

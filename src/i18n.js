@@ -15,6 +15,7 @@ i18n
     whitelist: ['fr', 'en'],
     preload: ['fr', 'en'],
     debug: true,
+    defaultNS: 'atlas',
     ns: ['home', 'atlas','modals','navbar'],
     interpolation: {
       escapeValue: false,
