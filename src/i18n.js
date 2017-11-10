@@ -12,6 +12,7 @@ i18n
   .use(reactI18nextModule)
   .init({
     fallbackLng: 'fr',
+    whitelist: ['fr', 'en'],
     preload: ['fr', 'en'],
     debug: true,
     ns: ['home', 'atlas','modals','navbar'],
@@ -26,6 +27,4 @@ i18n
     }
   });
 
-i18n.languages = ['fr', 'en'];
-i18n.changeLanguage('fr');
 export default i18n;
