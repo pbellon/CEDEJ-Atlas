@@ -16,8 +16,17 @@
     }
   },
   "sidebar": {
+    "errors": {
+      "noSummerSelected": "Vous devez sélectionner au moins un type d'été",
+      "noWinterSelected": "Vous devez sélectionner au moins un type d'hiver",
+      "uncorelated": "Les types de températures sélectionnés ne sont pas corrélés."
+    },
+    "winter": "Types d'hiver",
     "export": "Exporter",
     "numberOfMonths": "Nombre de mois secs"
+    "aridity": "Aridité",
+    "drought": "Sécheresse",
+    "temperatures": "Températures"
   },
   "aridity": {
     "Hyper": {
@@ -93,9 +102,9 @@
   },
   "temperatures": {
     "summer": {
-      "A": "été très chaud (plus de 30°)",
-      "B": "été chaud (20 à 30°)",
-      "C": "été tempéré (10 à 20°)"
+      "A": "Été très chaud (plus de 30°)",
+      "B": "Été chaud (20 à 30°)",
+      "C": "Été tempéré (10 à 20°)"
     },
     "winter": {
       "A": "Hiver chaud (20 à 30°C)",
