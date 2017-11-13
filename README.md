@@ -88,7 +88,7 @@ We would like to thank these awesome projects that helped to make this applicati
 - [TurfJS](turfjs.org)
 - [D3.js](https://d3js.org/) for the d3-path & d3-scale modules
 - [geojson-vt](https://github.com/mapbox/geojson-vt)
--
+
 ### Utilitaries
 
 - [jsPDF](https://github.com/MrRio/jsPDF)
