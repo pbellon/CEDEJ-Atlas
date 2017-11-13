@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
@@ -24,24 +25,24 @@ const headingStyle = {
   fontWeight: 'bold',
 };
 
-const AtlasFilters = ({ visible }) => (
+const AtlasFilters = ({ visible, t }) => (
   <Container visible={visible}>
-    <Heading level={3} style={headingStyle}>Personnaliser la carte</Heading>
+    <Heading level={3} style={headingStyle}>{ t('sidebar.customize') }</Heading>
     <LayerFilterGroup
       layer={'aridity'}
-      heading={'Aridité'}
+      heading={t('sidebar.aridity')}
     >
       <AridityFilters />
     </LayerFilterGroup>
     <LayerFilterGroup
       layer={'temperatures'}
-      heading={'Températures'}
+      heading={t('sidebar.temperatures')}
     >
       <TemperaturesFilters />
     </LayerFilterGroup>
     <LayerFilterGroup
       layer={'circles'}
-      heading={'Sécheresse'}
+      heading={t('sidebar.drought')}
       headingStyle={{ marginTop: 0 }}
     >
       <DryFilters />
@@ -55,4 +56,6 @@ AtlasFilters.propTypes = {
 
 export default connect(state => ({
   visible: fromSidebar.isOpened(state),
-}))(AtlasFilters);
+}))(
+  translate()(AtlasFilters)
+);

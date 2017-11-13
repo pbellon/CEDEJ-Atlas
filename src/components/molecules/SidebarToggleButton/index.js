@@ -7,7 +7,7 @@ import { fromSidebar } from 'store/selectors';
 import { ToggleButton } from 'components';
 
 const SidebarToggleButton = (props) => (
-  <ToggleButton align={'left'} {...props}>Masquer les filtres</ToggleButton>
+  <ToggleButton align={'left'} {...props}>{ props.t('sidebar.toggle') }</ToggleButton>
 );
 
 const mapStateToProps = (state = fromSidebar.initialState) => ({

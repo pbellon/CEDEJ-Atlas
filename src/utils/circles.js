@@ -32,37 +32,30 @@ export const allDroughtRegimes = () => DROUGHTS;
 const NUMBER_OF_MONTHS = [
   {
     value: '01',
-    description: 'moins de 1',
     months: [1],
   },
   {
     value: '02',
-    description: '1,2,3',
     months: [1, 3],
   },
   {
     value: '03',
-    description: '4,5',
     months: [4, 5],
   },
   {
     value: '04',
-    description: '6,7',
     months: [6, 7],
   },
   {
     value: '05',
-    description: '8,9',
     months: [8, 9],
   },
   {
     value: '06',
-    description: '10,11',
     months: [10, 11],
   },
   {
     value: '07',
-    description: '12 mois',
     months: [12],
   },
 ];
@@ -92,4 +85,6 @@ export const circleMonths = ({ properties: { size_ } }) => (
   NB_MONTHS_OBJ[size_].months
 );
 
-export const monthsDescription = (size) => NB_MONTHS_OBJ[size].description;
+export const monthsDescription = (size) => (
+  i18n.t(`atlas:drought.monthDescription.${size}`)
+);
