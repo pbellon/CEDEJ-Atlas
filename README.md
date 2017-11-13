@@ -63,8 +63,8 @@ You'll find those main components to be the key elements of the application:
 
 ## Translation
 Currently this app is developed only in french. To translate it in english (the only additional supported language) you'll need to translate multiple elements:
-- all locale files located under `/locales/fr`. 
-- all content files located under `/src/content/fr`. 
+- all locale files located under `/locales/en`. 
+- all content files located under `/src/content/en`. 
 - the index.html file located under `/public/en/index.html`
 
 All translatable files are already in place but they need to be translated.
