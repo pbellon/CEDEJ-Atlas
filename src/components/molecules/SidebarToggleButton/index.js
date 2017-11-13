@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 
 import { toggleSidebar } from 'store/actions';
@@ -18,4 +19,6 @@ const mapDispatchToProps = (dispatch) => ({
   toggle: () => dispatch(toggleSidebar()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SidebarToggleButton);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  translate()(SidebarToggleButton)
+);
