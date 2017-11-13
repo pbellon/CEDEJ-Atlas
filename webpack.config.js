@@ -70,6 +70,19 @@ const commonsChunkPlugin = () => {
   });
 };
 
+const copyIndexTo = (list, locale) => {
+  const lng = locale ? `${locale}/` : '';
+  const filenames = list.map(
+    (prefix) => `${lng}${prefix}index.html`
+  );
+  return filenames.map((fn) => {
+    return new HtmlWebpackPlugin({
+      filename: fn,
+      template: path.join(process.cwd(),`public/${lng}index.html`)
+    })
+  });
+};
+
 const config = createConfig([
   entryPoint({
     app: ['./src/index.js'],
@@ -130,10 +143,20 @@ const config = createConfig([
     'process.env.PUBLIC_PATH': publicPath.replace(/\/$/, ''),
   }),
   addPlugins([
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: path.join(process.cwd(), 'public/index.html'),
-    }),
+    ...copyIndexTo([
+      '',
+      'map/',
+      'page/about/',
+      'page/contribute/',
+      'page/project/',
+    ]),
+    ...copyIndexTo([
+      '',
+      'map/',
+      'page/about/',
+      'page/contribute/',
+      'page/project/',
+    ], 'en'),
     new HtmlWebpackPlugin({
       filename: '404.html',
       template: path.join(process.cwd(), 'public/404.html'),
@@ -141,10 +164,6 @@ const config = createConfig([
     new HtmlWebpackPlugin({
       filename: '200.html',
       template: path.join(process.cwd(), 'public/index.html'),
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'en/index.html',
-      template: path.join(process.cwd(), 'public/en/index.html'),
     }),
     new HtmlWebpackPlugin({
       filename: 'en/404.html',
