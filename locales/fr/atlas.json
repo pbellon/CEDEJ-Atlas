@@ -1,5 +1,6 @@
 {
   "legend": {
+    "toggle":"Masquer la légende",
     "temperatures": "Températures",
     "aridity": "Aridité",
     "noData": "Pas de données à visualiser",
@@ -17,6 +18,8 @@
     }
   },
   "sidebar": {
+    "toggle": "Masquer les filtres",
+    "customize": "Personnaliser la carte",
     "errors": {
       "noSummerSelected": "Vous devez sélectionner au moins un type d'été",
       "noWinterSelected": "Vous devez sélectionner au moins un type d'hiver",
@@ -52,6 +55,15 @@
     }
   },
   "drought":{
+    "monthDescription": {
+      "01": "Moins de 1",
+      "02": "1,2,3",
+      "03": "4,5",
+      "04": "6,7",
+      "05": "8,9",
+      "06": "10,11",
+      "07": "12 mois"
+    },
     "summer": "Sécheresse d'été dominante",
     "winter": "Sécheresse d'hiver dominante",
     "transition": "Régimes de transition",
