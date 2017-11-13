@@ -4,7 +4,8 @@
     "aridity": "Aridité",
     "noData": "Pas de données à visualiser",
     "moreInfos": {
-      "title": "À propos de la légende"
+      "title": "À propos de la légende",
+      "link": "Plus d'infos sur la légende"
     },
     "drought":{
       "categoryName": "Sécheresse",
@@ -16,8 +17,15 @@
     }
   },
   "sidebar": {
+    "errors": {
+      "uncorelated":"Les types de températures sélectionnés ne sont pas corrélés.",
+      "noWinterSelected":"Vous devez sélectionner au moins un type d'hiver",
+      "noSummerSelected":"Vous devez sélectionner au moins un type d'été"
+    },
     "export": "Exporter",
-    "numberOfMonths": "Nombre de mois secs"
+    "numberOfMonths": "Nombre de mois secs",
+    "winter": "Type(s) d'hiver",
+    "summer": "Type(s) d'été"
   },
   "aridity": {
     "Hyper": {
