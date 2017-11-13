@@ -57,7 +57,7 @@ const ExportModal = ({
 
     <LoadingIndicator isLoading={isRendering} />
     <Button onClick={exportInPNG(exportData)}>
-      <PNGIcon height={25} width={25} />&nbsp;{ t('export.exportInPDF') }
+      <PNGIcon height={25} width={25} />&nbsp;{ t('export.exportInPNG') }
     </Button>
     &nbsp;
     <Button onClick={exportInPDF(exportData)}>
