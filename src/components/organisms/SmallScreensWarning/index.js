@@ -4,8 +4,6 @@ import { translate } from 'react-i18next';
 
 import { Modal } from 'components';
 
-const Title = () => <span>Écran non supporté</span>;
-
 class SmallScreensWarning extends Component {
   constructor(props) {
     super(props);
@@ -24,7 +22,7 @@ class SmallScreensWarning extends Component {
     return (
       <MediaQuery query="(max-width: 1200px)">
         <Modal
-          title={<span>{ t('smallScreenWarning.title') }</span>}
+          title={t('smallScreenWarning.title')}
           isOpen={!closed}
           closeable
           onClose={() => this.close()}

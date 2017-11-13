@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { palette } from 'styled-theme';
 import { navbar, sidebar } from 'utils/styles';
 
-import { SocialSharing, NavbarTabs } from 'components';
+import { SocialSharing, NavbarTabs, ChangeLanguageLink } from 'components';
 
 const Nav = styled.div`
   background:${palette('grayscale', 0)};
@@ -21,6 +21,8 @@ const Nav = styled.div`
 const NavRight = styled.div`
   float: right;
   width: ${sidebar.width}px;
+  display: flex;
+  padding-right: 10px;
 `;
 
 const NavLeft = styled.div`
@@ -33,7 +35,10 @@ const Navbar = (props) => (
     <NavLeft>
       <NavbarTabs match={props.match}/>
     </NavLeft>
-    <NavRight><SocialSharing /></NavRight>
+    <NavRight>
+      <SocialSharing />
+      <ChangeLanguageLink />
+    </NavRight>
   </Nav>
 );
 

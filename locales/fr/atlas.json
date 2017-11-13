@@ -4,7 +4,8 @@
     "aridity": "Aridité",
     "noData": "Pas de données à visualiser",
     "moreInfos": {
-      "title": "À propos de la légende"
+      "title": "À propos de la légende",
+      "link": "Plus d'infos sur la légende"
     },
     "drought":{
       "categoryName": "Sécheresse",
@@ -23,7 +24,7 @@
     },
     "winter": "Types d'hiver",
     "export": "Exporter",
-    "numberOfMonths": "Nombre de mois secs"
+    "numberOfMonths": "Nombre de mois secs",
     "aridity": "Aridité",
     "drought": "Sécheresse",
     "temperatures": "Températures"

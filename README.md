@@ -61,6 +61,14 @@ You'll find those main components to be the key elements of the application:
   - CircleSizesFilters
   - CircleTypesFilters
 
+## Translation
+Currently this app is developed only in french. To translate it in english (the only additional supported language) you'll need to translate multiple elements:
+- all locale files located under `/locales/fr`. 
+- all content files located under `/src/content/fr`. 
+- the index.html file located under `/public/en/index.html`
+
+All translatable files are already in place but they need to be translated.
+
 ## Credits
 
 We would like to thank these awesome projects that helped to make this application a reality.
@@ -92,3 +100,4 @@ We would like to thank these awesome projects that helped to make this applicati
 
 - [ESRI ArcGis](http://www.arcgis.com/) for the basemap
 - [Natural Earth Data](http://www.naturalearthdata.com/) for deserts labels and water polygons & labels.
+

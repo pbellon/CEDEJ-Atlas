@@ -15,7 +15,7 @@ import { Tutorial } from 'content';
 
 const TutorialModal = ({ isOpen, inMap, onClose, t}) => (
   <Modal
-    title={<span>{ t('tutorial.title') }</span>}
+    title={t('tutorial.title')}
     isOpen={isOpen && inMap}
     onClose={onClose}
     closeable

@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
@@ -8,7 +9,7 @@ import { Link, Modal } from 'components';
 import { showMoreInfos, hideMoreInfos } from 'store/actions';
 import { fromLegend } from 'store/selectors';
 
-// import { LegendInfos } from 'content';
+import { LegendInfos } from 'content';
 
 const Holder = styled.div`
   margin-top: 1em;
@@ -16,18 +17,16 @@ const Holder = styled.div`
 
 const MoreInfoTitle = () => <span>À propos de la légende</span>;
 
-const LegendMoreInfos = ({ opened, show, hide }) => (
+const LegendMoreInfos = ({ t, opened, show, hide }) => (
   <Holder>
-    <Link onClick={show}>Plus d&#39;infos sur la légende</Link>
+    <Link onClick={show}>{ t('legend.moreInfos.link') }</Link>
     <Modal
       isOpen={opened}
-      title={<MoreInfoTitle />}
+      title={t('legend.moreInfos.title')}
       onClose={hide}
       closeable
     >
-  { 
-    // <Markdown source={LegendInfos.localized()} />
-  }
+    <Markdown source={LegendInfos.localized()} />
     </Modal>
   </Holder>
 );
@@ -47,4 +46,6 @@ const mapDispatchToProps = dispatch => ({
   hide: () => dispatch(hideMoreInfos()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LegendMoreInfos);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  translate('atlas')(LegendMoreInfos)
+);

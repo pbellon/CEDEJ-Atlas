@@ -20,6 +20,9 @@ const Holder = styled.div`
   justify-content: space-around;
   align-items: center;
   padding: 0 50px;
+  width: 250px;
+  flex-grow: 0;
+  flex-shring: 0;
 `;
 
 const twitterHref = () => {
