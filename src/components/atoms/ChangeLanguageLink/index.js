@@ -28,7 +28,7 @@ const ChangeLanguageLink = ({ t })=>{
         <a
           target=""
           key={lng}
-          style={{color: 'white'}}
+          style={{color: 'white', textDecoration: 'none'}}
           href={to}
           title={t(`seeThisSiteIn_${lng}`)}>
           {lng}
