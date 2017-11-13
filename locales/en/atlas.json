@@ -1,5 +1,6 @@
 {
   "legend": {
+    "toggle":"Masquer la légende",
     "temperatures": "Températures",
     "aridity": "Aridité",
     "noData": "Pas de données à visualiser",
@@ -17,15 +18,19 @@
     }
   },
   "sidebar": {
+    "toggle": "Masquer les filtres",
+    "customize": "Personnaliser la carte",
     "errors": {
-      "uncorelated":"Les types de températures sélectionnés ne sont pas corrélés.",
-      "noWinterSelected":"Vous devez sélectionner au moins un type d'hiver",
-      "noSummerSelected":"Vous devez sélectionner au moins un type d'été"
+      "noSummerSelected": "Vous devez sélectionner au moins un type d'été",
+      "noWinterSelected": "Vous devez sélectionner au moins un type d'hiver",
+      "uncorelated": "Les types de températures sélectionnés ne sont pas corrélés."
     },
+    "winter": "Types d'hiver",
     "export": "Exporter",
     "numberOfMonths": "Nombre de mois secs",
-    "winter": "Type(s) d'hiver",
-    "summer": "Type(s) d'été"
+    "aridity": "Aridité",
+    "drought": "Sécheresse",
+    "temperatures": "Températures"
   },
   "aridity": {
     "Hyper": {
@@ -50,6 +55,15 @@
     }
   },
   "drought":{
+    "monthDescription": {
+      "01": "Moins de 1",
+      "02": "1,2,3",
+      "03": "4,5",
+      "04": "6,7",
+      "05": "8,9",
+      "06": "10,11",
+      "07": "12 mois"
+    },
     "summer": "Sécheresse d'été dominante",
     "winter": "Sécheresse d'hiver dominante",
     "transition": "Régimes de transition",
@@ -101,9 +115,9 @@
   },
   "temperatures": {
     "summer": {
-      "A": "été très chaud (plus de 30°)",
-      "B": "été chaud (20 à 30°)",
-      "C": "été tempéré (10 à 20°)"
+      "A": "Été très chaud (plus de 30°)",
+      "B": "Été chaud (20 à 30°)",
+      "C": "Été tempéré (10 à 20°)"
     },
     "winter": {
       "A": "Hiver chaud (20 à 30°C)",
