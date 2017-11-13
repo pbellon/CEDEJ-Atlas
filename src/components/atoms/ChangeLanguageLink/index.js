@@ -12,6 +12,7 @@ const ChangeLanguageLink = ({ t })=>{
   const defaultLng = i18n.options.fallbackLng;
   const lngList = i18n.options.whitelist;
   const path = window.location.pathname;
+  const { protocol, host } = window.location;
   const links = lngList
     .filter((lng) => [curLng, 'cimode'].indexOf(lng) < 0)
     .map(lng => {
@@ -22,14 +23,16 @@ const ChangeLanguageLink = ({ t })=>{
       if(curLng == defaultLng[0]){
         to = `/${lng}${path}`;
       }
+      to = `${protocol}//${host}${to}`;
       return (
-        <Link
+        <a
+          target=""
           key={lng}
           style={{color: 'white'}}
-          to={to}
+          href={to}
           title={t(`seeThisSiteIn_${lng}`)}>
           {lng}
-        </Link>
+        </a>
       );
     });
   return (
