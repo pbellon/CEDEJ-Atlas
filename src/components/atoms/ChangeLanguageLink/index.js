@@ -12,7 +12,6 @@ const ChangeLanguageLink = ({ t })=>{
   const defaultLng = i18n.options.fallbackLng;
   const lngList = i18n.options.whitelist;
   const path = window.location.pathname;
-  console.log('ChangeLanguageLink', path, curLng, defaultLng);
   const links = lngList
     .filter((lng) => [curLng, 'cimode'].indexOf(lng) < 0)
     .map(lng => {
