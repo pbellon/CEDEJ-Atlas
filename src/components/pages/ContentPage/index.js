@@ -7,7 +7,7 @@ import { MarkdownContent, Markdown } from 'components';
 const content = {
   about: MarkdownContent.About,
   project: MarkdownContent.Project,
-  contribute: MarkdownContent.Contribute,
+  // contribute: MarkdownContent.Contribute,
 };
 
 const ContentPage = () => {
