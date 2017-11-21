@@ -2,7 +2,7 @@
 
 _Aridity World Map_ permet de créer des cartes à différentes échelles, avec un calcul en temps réel des données relatives à l’aridité. Cette interface offre un support exceptionnel pour modéliser et envisager différents scenarii d’évolution des zones arides.
 
-Cette carte interactive a été conçue à partir de la carte mondiale des zones arides et semi-arides, préparée au Laboratoire de cartographie thématique du CNRS et publiée en 1977 par l’UNESCO à l’échelle 1/25 000 000e. En analysant sa légende, deux laboratoires de recherche ont élaboré une base de données à référence spatiale (SIRS) : à Paris, le Laboratoire d’Informatique et de Systèmes Complexes (LaISC) de l’[École Pratique des Hautes Études](https://www.ephe.fr/) (EPHE) aujourd’hui devenu [Laboratoire Cognition Artificielle et humaine](http://www.cognition-usages.org/chart2/) (CHArt) et, au Caire, le [Centre d’Études et de Documentation Juridiques, Économiques et sociales](cedej-eg.org) (CEDEJ) rattaché au CNRS.
+Cette carte interactive a été conçue à partir de la carte mondiale des zones arides et semi-arides réalisée par le Centre d’Études et de Réalisations Cartographiques et Géographiques (CERCG) du CNRS et publiée en 1977 par l’UNESCO à l’échelle 1/25 000 000e. En analysant sa légende, deux laboratoires de recherche ont élaboré une base de données à référence spatiale (SIRS) : à Paris, le Laboratoire d’Informatique et de Systèmes Complexes (LaISC) de l’[École Pratique des Hautes Études](https://www.ephe.fr/) (EPHE) aujourd’hui devenu [Laboratoire Cognition Artificielle et humaine](http://www.cognition-usages.org/chart2/) (CHArt) et, au Caire, le [Centre d’Études et de Documentation Juridiques, Économiques et sociales](cedej-eg.org) (CEDEJ) rattaché au CNRS.
 
 ## Les étapes
 
