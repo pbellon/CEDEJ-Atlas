@@ -19,7 +19,7 @@ import Background from './background.png';
 const HomeTitleDescription = 'Un portail élaboré par le [CEDEJ](http://cedej-eg.org/), une unité mixte française de recherche à l’étranger du [CNRS](http://www.cnrs.fr/) et du [Ministère de l\'Europe et des Affaires étrangères](http://www.diplomatie.gouv.fr/fr/)';
 
 
-const HomeActionText = '**CRÉER votre carte personnalisée des zones arides  \n CONTRIBUER à l’actualisation de la base de données sur l’aridité**';
+const HomeActionText = '**CRÉER votre carte personnalisée des zones arides**';
 
 const Centered = styled.div`
   text-align: center;
