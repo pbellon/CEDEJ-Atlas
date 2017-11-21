@@ -42,11 +42,12 @@ const NavbarTabs = () => (
       to={'/page/about'}
       title={'À propos'}
     />
+    { /*
     <NavItem
       icon={<ContributeIcon />}
       to={'/page/contribute'}
       title={'Participer'}
-    />
+    /> */ }
   </Nav>
 );
 
