@@ -6,7 +6,7 @@ Cette carte interactive a été conçue à partir de la carte mondiale des zones
 
 ## Les étapes
 
-- En 2011, à l’issue de la 3ème conférence internationale WATARID, et sur proposition de Marie-Françoise Courel, le comité scientifique de la manifestation suggère la création d’une carte mondiale interactive des zones arides.
+- En 2011, à l’issue de la 3ème conférence internationale WATARID, et sur proposition de Marie-Françoise COUREL, le comité scientifique de la manifestation suggère la création d’une carte mondiale interactive des zones arides.
 
 - Entre 2011 et 2014, le CEDEJ et le LaISC se sont employés à constituer une base de données sur l’aridité à partir d’une lecture minutieuse et approfondie de la carte mondiale éditée par l’UNESCO. Cette carte (fig.1) combine plusieurs types de projections astronomiques et différents systèmes géodésiques : les régions du monde n’y sont pas représentées selon le même référentiel géographique. Une projection conforme bipolaire oblique est utilisée pour les Amériques tandis que le système Miller stéréographique aplati est employé pour le reste du monde.
 
